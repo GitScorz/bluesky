@@ -1,0 +1,9 @@
+{
+    "name": "mongodb-wrapper",
+    "version": "1.0.0",
+    "main": "./core/sv_database.js",
+    "license": "MIT",
+    "dependencies": {
+        "mongodb": "^3.1.3"
+    }
+}

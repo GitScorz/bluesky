@@ -1,0 +1,72 @@
+Config = {
+	BaseCost = 5,
+	ShowNearestGasStationOnly = true,
+	ShowAllGasStations = false,
+	Strings = {
+		ExitVehicle = 'Exit the vehicle to refuel',
+		EToRefuel = 'Press ~r~[E] ~w~to refuel vehicle',
+		JerryCanEmpty = 'Jerry can is empty',
+		FullTank = 'Tank is full',
+		CancelFuelingPump = 'Press ~r~[DELETE] ~w~to cancel the fueling',
+		CancelFuelingJerryCan = 'Press ~r~[DELETE] ~w~to cancel the fueling',
+		NotEnoughCash = 'Not enough cash',
+		RefillJerryCan = 'Press ~r~[E] ~w~ to refill the jerry can for $',
+		NotEnoughCashJerryCan = 'Not enough cash to refill jerry can',
+		JerryCanFull = 'Jerry can is full'
+	},
+	PumpModels = {
+		[-2007231801] = true,
+		[1339433404] = true,
+		[1694452750] = true,
+		[1933174915] = true,
+		[-462817101] = true,
+		[-469694731] = true,
+		[-164877493] = true
+	},
+	Blacklist = {
+		[`tesla3`] = true,
+		[`teslar`] = true,
+		[`teslas`] = true,
+		[`teslax`] = true,
+	},
+	Classes = {
+		[0] = 0.7, -- Compacts
+		[1] = 0.8, -- Sedans
+		[2] = 1.0, -- SUVs
+		[3] = 0.8, -- Coupes
+		[4] = 1.0, -- Muscle
+		[5] = 1.0, -- Sports Classics
+		[6] = 1.0, -- Sports
+		[7] = 1.5, -- Super
+		[8] = 0.4, -- Motorcycles
+		[9] = 1.0, -- Off-road
+		[10] = 1.2, -- Industrial
+		[11] = 1.2, -- Utility
+		[12] = 1.2, -- Vans
+		[13] = 0.0, -- Cycles
+		[14] = 1.3, -- Boats
+		[15] = 1.0, -- Helicopters
+		[16] = 0.2, -- Planes
+		[17] = 1.2, -- Service
+		[18] = 0.8, -- Emergency
+		[19] = 1.4, -- Military
+		[20] = 1.2, -- Commercial
+		[21] = 0.0, -- Trains
+	},
+	FuelUsage = {
+		[1.3] = 2.0,
+		[1.2] = 1.8,
+		[1.1] = 1.6,
+		[1.0] = 1.4,
+		[0.9] = 1.2,
+		[0.8] = 1.0,
+		[0.7] = 0.9,
+		[0.6] = 0.8,
+		[0.5] = 0.7,
+		[0.4] = 0.5,
+		[0.3] = 0.4,
+		[0.2] = 0.2,
+		[0.1] = 0.1,
+		[0.0] = 0.0,
+	}
+}

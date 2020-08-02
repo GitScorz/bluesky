@@ -1,0 +1,14 @@
+export const APP_SHOW = 'APP_SHOW';
+export const APP_HIDE = 'APP_HIDE';
+export const SET_STATE = 'SET_STATE';
+export const SET_DATA = 'SET_DATA';
+export const LOADING_SHOW = 'LOADING_SHOW';
+export const LOADING_HIDE = 'LOADING_HIDE';
+export const SET_CHARACTERS = 'SET_CHARACTERS';
+export const CREATE_CHARACTER = 'CREATE_CHARACTER';
+export const PLAY_CHARACTER = 'PLAY_CHARACTER';
+export const DELETE_CHARACTER = 'DELETE_CHARACTER';
+export const SELECT_CHARACTER = 'SELECT_CHARACTER';
+export const DESELECT_CHARACTER = 'DESELECT_CHARACTER';
+export const SET_SPAWNS = 'SET_SPAWNS';
+export const UPDATE_PLAYED = 'UPDATE_PLAYED';

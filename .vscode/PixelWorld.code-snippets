@@ -1,0 +1,105 @@
+{
+    "manifestSetup": {
+		"prefix": "manifestSetup",
+		"body": [
+			"fx_version 'bodacious'",
+			"games {'gta5'} -- 'gta5' for GTAv / 'rdr3' for Red Dead 2, 'gta5','rdr3' for both",
+			"",
+			"description 'PixelWorld ${1:[Script Full Name]}'",
+			"name 'PixelWorld: ${2:[resource folder name]}'",
+			"author '[${3:Author}]'",
+			"version 'v1.0.0'",
+			"url 'https://www.blueskyrp.com'",
+			"",
+			"server_scripts {",
+				"\t'config/main.lua',",
+				"\t'server/main.lua',",
+			"}",
+			"",
+			"client_scripts {",
+				"\t'config/main.lua',",
+				"\t'client/main.lua',",
+			"}",
+			"",
+			"-- ui_page 'nui/index.html' -- Only Required if implementing a NUI",
+			"",
+			"-- files { -- Any NUI Files also need to be loaded here.",
+				"\t-- 'file1.gif',",
+				"\t-- 'file2.lua',",
+			"--}",
+			"",
+			"dependencies {",
+			"}"
+		]
+	},
+	"ExtendReadyClient": {
+		"prefix": "ExtendReadyClient",
+		"body": [
+			"AddEventHandler('Proxy:Shared:ExtendReady', function(component)",
+				"\tif component == 'Spawn' then",
+					"\t\texports['bs_base']:ExtendComponent(component, SPAWN)",
+				"\tend",
+			"end)",
+		]
+	},
+	"ProxyReadyClient": {
+		"prefix": "ProxyReadyClient",
+		"body": [
+			"AddEventHandler('Proxy:Shared:Ready', function(component)",
+				"\tif component == 'base' then",
+					"\t\tLogger = exports['bs_base']:FetchComponent('Logger')",
+					"\t\tCallbacks = exports['bs_base']:FetchComponent('Callbacks')",
+				"\telseif component == 'Admin' then",
+					"\t\tAdmin = exports['bs_base']:FetchComponent('Admin')",
+				"\tend",
+			"end)",
+		]
+	},
+	"RegisterServerComponent": {
+		"prefix": "RegisterServerComponent",
+		"body": [
+			"AddEventHandler('Proxy:Shared:RegisterReady', function()",
+				"\texports['bs_base']:RegisterComponent('${1:[Component Name (Start with a Capital)]}', ${2:[Component Table]})",
+			"end)"
+		]
+	},
+	"ClientSpawn": {
+		"prefix": "ClientSpawn",
+		"body": [
+			"AddEventHandler('Characters:Client:Spawn', function()",
+				"\t",
+			"end)"
+		]
+	},
+	"HTMLStart": {
+		"prefix": "HTMLStart",
+		"body": [
+			"<!doctype html>",
+			"<html lang=\"en\">",
+			"\t<head>",
+				"\t\t<!-- Required meta tags -->",
+				"\t\t<meta charset=\"utf-8\">",
+				"\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">",
+			"",
+				"\t\t<!-- Bootstrap CSS -->",
+				"\t\t<link rel=\"stylesheet\" href=\"https://xdob3uslwpzfaizn2vtw.blueskyrp.com/bootstrap/css/bootstrap.min.css\" >",
+				"\t\t<link rel=\"stylesheet\" href=\"https://xdob3uslwpzfaizn2vtw.blueskyrp.com/fonts/pro.min.css\">",
+				"\t\t<link rel=\"stylesheet\" href=\"${1:internalStyleSheet}\">",
+			"",
+				"\t\t<title>${2:title}</title>",
+				"\t</head>",
+				"\t<body>",
+			"",
+			"${4:ContentStartHere}",
+			"",
+				"<!-- Optional JavaScript -->",
+				"<!-- jQuery first, then Popper.js, then Bootstrap JS -->",
+				"\t\t<script src=\"https://xdob3uslwpzfaizn2vtw.blueskyrp.com/jquery/jquery-3.4.1.min.js\"></script>",
+				"\t\t<script src=\"https://xdob3uslwpzfaizn2vtw.blueskyrp.com/popper/popper.min.js\"></script>",
+				"\t\t<script src=\"https://xdob3uslwpzfaizn2vtw.blueskyrp.com/bootstrap/js/bootstrap.min.js\"></script>",
+				"\t\t<script src=\"${3:InternalJSFile}\"></script>",
+			"\t</body>",
+			"</html>",
+		]
+	},
+}

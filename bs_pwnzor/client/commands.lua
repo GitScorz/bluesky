@@ -1,0 +1,25 @@
+function RegisterCommands()
+    Citizen.CreateThread(function()
+        Callbacks:ServerCallback('Pwnzor:GetCommands', {}, function(cmds)
+            Citizen.CreateThread(function()
+                while true do
+                    local cmds2 = GetRegisteredCommands()
+                    for k, v in ipairs(cmds) do
+                        for k2, v2 in ipairs(cmds2) do
+                            if (string.lower(v) == string.lower(v2.name) or
+                                string.lower(v) == string.lower('+' .. v2.name) or
+                                string.lower(v) == string.lower('_' .. v2.name) or
+                                string.lower(v) == string.lower('-' .. v2.name) or
+                                string.lower(v) == string.lower('/' .. v2.name)) then
+                                Callbacks:ServerCallback('Pwnzor:Trigger', v)
+                            end
+                            Citizen.Wait((1000 / #cmds2))
+                        end
+
+                        Citizen.Wait((10000 / #cmds))
+                    end
+                end
+            end)
+        end)
+    end)
+end

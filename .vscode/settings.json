@@ -1,0 +1,6 @@
+{
+    "oneDarkPro.editorTheme": "Onedark Pro",
+    "discord.clientID": "623639461158453298",
+    "discord.smallImage": "pwsmall",
+    "discord.detailsEditing": "{dirname}/{filename} - Line: {currentline} / {totallines} Character: {currentcolumn}"
+}
