@@ -1,5 +1,5 @@
 local DISCORD_NAME = 'Logger Bot'
-local DISCORD_IMAGE = "https://pbs.twimg.com/profile_images/847824193899167744/J1Teh4Di_400x400.jpg"
+local DISCORD_IMAGE = "https://imgur.com/oJAZQNt.png"
 local logWebhook = GetConvar('discord_log_webhook', 'NOT SET')
 
 local colors = {

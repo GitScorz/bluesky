@@ -1,5 +1,4 @@
 Config = {
-
     Components = {
         AFK = {
             Enabled = true,

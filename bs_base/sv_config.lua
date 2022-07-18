@@ -8,7 +8,7 @@ COMPONENTS.Config = {
         Priority = {},
     },
     Discord = {
-        Server = '592078397409067008'
+        Server = '998680467496767598'
     },
     Currency = {
         Sign = '$'
