@@ -1,7 +1,6 @@
 COMPONENTS.Convar = {}
 Citizen.CreateThread(function()
     COMPONENTS.Convar = {
-        MDT_ADDRESS = { key = 'mdt_address', value = GetConvar('mdt_address', 'CONVAR_DEFAULT'), stop = true },
         MDT_API_ADDRESS = { key = 'mdt_api_address', value = GetConvar('mdt_api_address', 'CONVAR_DEFAULT'), stop = true },
         API_ADDRESS = { key = 'api_address', value = GetConvar('api_address', 'CONVAR_DEFAULT'), stop = true },
         API_TOKEN = { key = 'api_token', value = GetConvar('api_token', 'CONVAR_DEFAULT'), stop = true },

@@ -121,6 +121,9 @@ COMPONENTS.WebAPI = {
     
             -- idfk, im too tired and fucking done with all this bullshit to try to think of a better way to do this retarded fucking bullshit.
             -- Fuck everyone
+            
+            -- Calm down i'm here babe // Scorz
+
             local first = true
             if params ~= nil then
                 for k, v in pairs(params) do
