@@ -82,6 +82,10 @@ MOTELS = {
         },
         AssignRandom = function(self, source)
             Locations:GetAll('motel', function(locations)
+                if #locations == 0 then
+                    Logger:Error('No Motels Available')
+                    return
+                end
                 local random = math.random(#locations)
                 self.Data.AssignLocations[source] = locations[random]
                 TriggerClientEvent('Motel:Client:AssignRandom', source, locations[random])
