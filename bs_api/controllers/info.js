@@ -17,8 +17,8 @@ class InfoController {
 
 	onlineList = async (req, res) => {
 		setImmediate(() => {
-            let fetch = global.exports['bs_base'].FetchComponent('Fetch');
-            let players = fetch.All(fetch)
+			let fetch = global.exports['bs_base'].FetchComponent('Fetch');
+			let players = fetch.All(fetch)
 
 			res.setHeader('content-type', 'application/json');
 			res.status(200).send(players.map(player => {
@@ -30,7 +30,7 @@ class InfoController {
 
 	playerList = async (req, res) => {
 		setImmediate(() => {
-            let fetch = global.exports['bs_base'].FetchComponent('Fetch');
+			let fetch = global.exports['bs_base'].FetchComponent('Fetch');
 			let players = Array();
 			fetch.All(fetch).map(player => {
 				players.push(player.GetData(player));
@@ -42,8 +42,8 @@ class InfoController {
 
 	charList = async (req, res) => {
 		setImmediate(() => {
-            let fetch = global.exports['bs_base'].FetchComponent('Fetch');
-            let config = global.exports['bs_base'].FetchComponent('Config');
+			let fetch = global.exports['bs_base'].FetchComponent('Fetch');
+			let config = global.exports['bs_base'].FetchComponent('Config');
 			let players = fetch.All(fetch)
 			let chars = Array();
 			Object.keys(players).map((key) => {
