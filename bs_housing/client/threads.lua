@@ -23,7 +23,7 @@ Citizen.CreateThread(function()
             print(nearest.location.backdoor)
             if not isBackdoor then
                 DrawMarker(25, nearest.location.front.x, nearest.location.front.y, nearest.location.front.z - 0.99, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 1.0, 139, 16, 20, 250, false, false, 2, false, false, false, false)
-            elseif nearest.location.backdoor ~= nil
+            elseif nearest.location.backdoor ~= nil then
                 DrawMarker(25, nearest.location.backdoor.x, nearest.location.backdoor.y, nearest.location.backdoor.z - 0.99, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 1.0, 139, 16, 20, 250, false, false, 2, false, false, false, false)
             end
 
