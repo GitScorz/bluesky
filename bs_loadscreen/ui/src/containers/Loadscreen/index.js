@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles, useTheme, LinearProgress } from '@material-ui/core';
-import Particles from 'react-particles-js';
+import Particles from 'react-tsparticles';
 import GlitchClip from 'react-glitch-effect/core/Clip';
 import { Dot } from 'react-animated-dots';
 import { useSelector } from 'react-redux';
@@ -135,7 +135,7 @@ export default () => {
 		<div className={classes.background}>
 			<Particles
 				className={classes.particles}
-				params={{
+				options={{
 					particles: {
 						number: {
 							value: 300,
