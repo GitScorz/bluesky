@@ -123,11 +123,11 @@ const AccountCreate = ({ type }) => {
         >
           <FormGroup className={classes.form}>
             <TextField required autoFocus
-                       error={isStringEmpty(name)}
-                       label="Account name"
-                       value={name}
-                       onChange={handleNameChange}
-                       disabled={loading}
+              error={isStringEmpty(name)}
+              label="Account name"
+              value={name}
+              onChange={handleNameChange}
+              disabled={loading}
             />
           </FormGroup>
         </div>
