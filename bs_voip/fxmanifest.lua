@@ -1,30 +1,69 @@
-fx_version 'bodacious'
-games {'gta5'} -- 'gta5' for GTAv / 'rdr3' for Red Dead 2, 'gta5','rdr3' for both
+fx_version 'cerulean'
+game 'gta5'
 
-description 'Blue Sky TokoVoip'
-name 'Blue Sky: [bs_voip]'
-author '[Chris Rogers + Dylan "Itokoyamato" Thuillier]'
-version 'v1.0.0'
-url 'https://www.blueskyrp.com'
-
-server_scripts {
-    'config/s_config.lua',
-    'server/main.lua',
-    'server/utils.lua',
+dependencies {
+  '/onesync',
 }
+
+lua54 'yes'
+
 
 client_scripts {
-    'client/utils.lua',
-    'config/c_config.lua',
-    'client/main.lua',
-    'client/tokovoip.lua',
-    'client/nuiProxy.js',
+	'client/utils/*',
+	'client/init/proximity.lua',
+	'client/init/init.lua',
+	'client/init/main.lua',
+	'client/module/*.lua',
+  'client/*.lua',
 }
 
-ui_page "ui/html/index.html"
+server_scripts {
+  'server/**/*.lua',
+	'server/**/*.js'
+}
 
-files({
-    "ui/html/index.html",
-    "ui/html/main.js",
-    "ui/html/*.png",
-})
+shared_scripts {
+  'shared/*.lua'
+}
+
+files {
+  'ui/*.ogg',
+  'ui/css/*.css',
+  'ui/js/*.js',
+  'ui/index.html',
+}
+
+ui_page 'ui/index.html'
+
+provides {
+	'mumble-voip',
+  'tokovoip',
+  'toko-voip',
+  'tokovoip_script'
+}
+
+convar_category 'PMA-Voice' {
+  "PMA-Voice Configuration Options",
+  {
+    { "Use native audio", "$voice_useNativeAudio", "CV_BOOL", "false" },
+    { "Use 2D audio", "$voice_use2dAudio", "CV_BOOL", "false" },
+    { "Use sending range only", "$voice_useSendingRangeOnly", "CV_BOOL", "false" },
+    { "Enable UI", "$voice_enableUi", "CV_INT", "1" },
+    { "Enable F11 proximity key", "$voice_enableProximityCycle", "CV_INT", "1" },
+    { "Proximity cycle key", "$voice_defaultCycle", "CV_STRING", "F11" },
+    { "Voice radio volume", "$voice_defaultRadioVolume", "CV_INT", "30" },
+    { "Voice call volume", "$voice_defaultCallVolume", "CV_INT", "60" },
+    { "Enable radios", "$voice_enableRadios", "CV_INT", "1" },
+    { "Enable calls", "$voice_enableCalls", "CV_INT", "1" },
+    { "Enable submix", "$voice_enableSubmix", "CV_INT", "1" },
+    { "Enable radio animation", "$voice_enableRadioAnim", "CV_INT", "0" },
+    { "Radio key", "$voice_defaultRadio", "CV_STRING", "LALT" },
+    { "UI refresh rate", "$voice_uiRefreshRate", "CV_INT", "200" },
+    { "Allow players to set audio intent", "$voice_allowSetIntent", "CV_INT", "1" },
+    { "External mumble server address", "$voice_externalAddress", "CV_STRING", "" },
+    { "External mumble server port", "$voice_externalPort", "CV_INT", "0" },
+    { "Voice debug mode", "$voice_debugMode", "CV_INT", "0" },
+    { "Disable players being allowed to join", "$voice_externalDisallowJoin", "CV_INT", "0" },
+    { "Hide server endpoints in logs", "$voice_hideEndpoints", "CV_INT", "1" },
+  }
+}
