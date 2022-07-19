@@ -81,8 +81,7 @@ function doLog(level, component, log, flags, data)
         if flags.file then
             local currDate = os.date('%Y-%m-%d')
             local timestamp = os.date('%I:%M:%S %p')
-            os.execute("mkdir logs")
-            os.execute(('mkdir logs/%s'):format(component))
+            os.execute(('mkdir logs/Convar'):format(component))
             local logFile, errorReason = io.open(('logs/%s/%s.log'):format(component, currDate), 'a')
             if not logFile then
                 return print(errorReason)
