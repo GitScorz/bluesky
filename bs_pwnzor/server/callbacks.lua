@@ -3,7 +3,7 @@ local _blacklistedClientEvents = {
 }
 
 local _blacklistedCommands = {
-    'pk',
+    -- 'pk',
     'haha',
     'lol',
     'xddd',
