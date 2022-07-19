@@ -25,8 +25,8 @@ AddEventHandler('Core:Shared:Ready', function()
 			'Convar',
 			'Logger',
     }, function(error)  
-        if #error > 0 then return; end
-		RetrieveComponents()
+			if #error > 0 then return; end
+			RetrieveComponents()
 		
 		TokoVoipConfig = {
 			refreshRate = 500, -- Rate at which the data is sent to the TSPlugin
