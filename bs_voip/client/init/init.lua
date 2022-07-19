@@ -1,8 +1,20 @@
+local firstInitialize = true
 
-AddEventHandler('onClientResourceStart', function(resource)
-	if resource ~= GetCurrentResourceName() then
-		return
-	end
+function RetrieveComponents()
+	Callbacks = exports['bs_base']:FetchComponent('Callbacks')
+	Notification = exports['bs_base']:FetchComponent('Notification')
+	Action = exports['bs_base']:FetchComponent('Action')
+	Progress = exports['bs_base']:FetchComponent('Progress')
+	VoipStuff = exports['bs_base']:FetchComponent('Voip')
+	Utils = exports['bs_base']:FetchComponent('Utils')
+	Sounds = exports['bs_base']:FetchComponent('Sounds')
+	Convar = exports['bs_base']:FetchComponent('Convar')
+	Logger = exports['bs_base']:FetchComponent('Logger')
+end
+AddEventHandler('Voip:Shared:DependencyUpdate', RetrieveComponents)
+
+--- Initialize the plugin
+local function InitializeVoip()
 	print('Starting script initialization')
 
 	-- Some people modify pma-voice and mess up the resource Kvp, which means that if someone
@@ -20,7 +32,7 @@ AddEventHandler('onClientResourceStart', function(resource)
 	end)
 
 	if not success then
-		logger.warn('Failed to load resource Kvp, likely was inappropriately modified by another server, resetting the Kvp.')
+		Logger.Warn('Voip', 'Failed to load resource Kvp, likely was inappropriately modified by another server, resetting the Kvp.')
 		SetResourceKvp('pma-voice_enableMicClicks', tostring(true))
 		micClicks = 'true'
 	end
@@ -39,4 +51,40 @@ AddEventHandler('onClientResourceStart', function(resource)
 		setCallChannel(LocalPlayer.state.callChannel)
 	end
 	print('Script initialization finished.')
+end
+
+AddEventHandler('Core:Shared:Ready', function()
+	exports['bs_base']:RequestDependencies('Voip', {
+		'Callbacks',
+		'Notification',
+		'Action',
+		'Progress',
+		'Voip',
+		'Sounds',
+		'Utils',
+		'Convar',
+		'Logger',
+	}, function(error)  
+		if #error > 0 then return; end
+		RetrieveComponents()
+
+		CreateThread(function()
+			if Convar.VOIP_CHANNEL.value ~= "NOT SET" then
+				InitializeVoip()
+				firstInitialize = false
+			else
+				Logger.Error('Voip', 'Please set all the required Convars before starting the voip.')
+			end
+		end);
+	end)
+end)
+
+AddEventHandler('onClientResourceStart', function(resource)
+	if resource ~= GetCurrentResourceName() then
+		return
+	end
+
+	if not firstInitialize then
+		InitializeVoip()
+	end
 end)
