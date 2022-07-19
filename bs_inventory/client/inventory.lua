@@ -12,7 +12,7 @@ function RetrieveComponents()
     Utils = exports['bs_base']:FetchComponent('Utils')
     Notification = exports['bs_base']:FetchComponent('Notification')
     Action  = exports['bs_base']:FetchComponent('Action')
-    Weapons = exports['bs_base']:FetchComponent('Weapons')
+    -- Weapons = exports['bs_base']:FetchComponent('Weapons')
 end
 
 AddEventHandler('Core:Shared:Ready', function()
@@ -22,7 +22,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'Utils',
         'Notification',
         'Action',
-        'Weapons',
+        -- 'Weapons',
     }, function(error)  
         if #error > 0 then return; end
         RetrieveComponents()
@@ -222,7 +222,7 @@ INVENTORY = {
 
 RegisterNetEvent('Inventory:RemoveWeapon')
 AddEventHandler('Inventory:RemoveWeapon', function(id)
-    Weapons.UnEquip:UnequipFromInventory(id)
+    -- Weapons.UnEquip:UnequipFromInventory(id)
 end)
 
 RegisterNetEvent('Inventory:client:loadSecondary')
