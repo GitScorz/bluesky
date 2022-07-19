@@ -2,10 +2,10 @@ TokoVoipConfig = {}
 
 AddEventHandler('Voip:Shared:DependencyUpdate', RetrieveComponents)
 function RetrieveComponents()
-    Callbacks = exports['bs_base']:FetchComponent('Callbacks')
-    Notification = exports['bs_base']:FetchComponent('Notification')
-    Action = exports['bs_base']:FetchComponent('Action')
-    Progress = exports['bs_base']:FetchComponent('Progress')
+	Callbacks = exports['bs_base']:FetchComponent('Callbacks')
+	Notification = exports['bs_base']:FetchComponent('Notification')
+	Action = exports['bs_base']:FetchComponent('Action')
+	Progress = exports['bs_base']:FetchComponent('Progress')
 	VoipStuff = exports['bs_base']:FetchComponent('Voip')
 	Utils = exports['bs_base']:FetchComponent('Utils')
 	Sounds = exports['bs_base']:FetchComponent('Sounds')
@@ -15,15 +15,15 @@ end
 
 AddEventHandler('Core:Shared:Ready', function()
     exports['bs_base']:RequestDependencies('Voip', {
-        'Callbacks',
-        'Notification',
-        'Action',
-        'Progress',
-		'Voip',
-		'Sounds',
-		'Utils',
-		'Convar',
-		'Logger',
+			'Callbacks',
+			'Notification',
+			'Action',
+			'Progress',
+			'Voip',
+			'Sounds',
+			'Utils',
+			'Convar',
+			'Logger',
     }, function(error)  
         if #error > 0 then return; end
 		RetrieveComponents()
