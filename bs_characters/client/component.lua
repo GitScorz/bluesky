@@ -55,3 +55,8 @@ CHARACTERS = {
 AddEventHandler('Proxy:Shared:RegisterReady', function()
     exports['bs_base']:RegisterComponent('Characters', CHARACTERS)
 end)
+
+RegisterNetEvent('Characters:Client:SetFocus')
+AddEventHandler('Characters:Client:SetFocus', function(state)
+    SetNuiFocus(state, state)
+end)
