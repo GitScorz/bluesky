@@ -7,21 +7,45 @@ AddEventHandler('Logger:Critical', function(component, log) COMPONENTS.Logger:Cr
 COMPONENTS.Logger = {
     _required = { 'Log' },
     _name = 'base',
+
+    --- @param component string
+    --- @param log string
+    --- @param flags table
     Trace = function(self, component, log, flags, data)
         doLog(1, component, log)
     end,
+
+    --- @param component string
+    --- @param log string
+    --- @param flags table
     Info = function(self, component, log, flags, data)
         doLog(2, component, log)
     end,
+
+    --- @param component string
+    --- @param log string
+    --- @param flags table
     Warn = function(self, component, log, flags, data)
         doLog(3, component, log)
     end,
+
+    --- @param component string
+    --- @param log string
+    --- @param flags table
     Error = function(self, component, log, flags, data)
         doLog(4, component, log)
     end,
+
+    --- @param component string
+    --- @param log string
+    --- @param flags table
     Critical = function(self, component, log, flags, data)
         doLog(5, component, log)
     end,
+
+    --- @param component string
+    --- @param log string
+    --- @param flags table
     Log = function (self, component, log, flags, extra)
         doLog(0, component, log)
     end
