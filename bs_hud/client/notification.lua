@@ -4,6 +4,9 @@ Notification = {
             type = 'CLEAR_ALERTS'
         })
     end,
+
+    --- @param message string
+    --- @param duration number
     Success = function(self, message, duration)
         if duration == nil then
             duration = 2500
@@ -18,6 +21,9 @@ Notification = {
             }
         })
     end,
+
+    --- @param message string
+    --- @param duration number
     Warn = function(self, message, duration)
         if duration == nil then
             duration = 2500
@@ -32,6 +38,9 @@ Notification = {
             }
         })
     end,
+
+    --- @param message string
+    --- @param duration number
     Error = function(self, message, duration)
         if duration == nil then
             duration = 2500
@@ -46,6 +55,9 @@ Notification = {
             }
         })
     end,
+
+    --- @param message string
+    --- @param duration number
     Info = function(self, message, duration)
         if duration == nil then
             duration = 2500
@@ -60,6 +72,9 @@ Notification = {
             }
         })
     end,
+
+    --- @param message string
+    --- @param duration number
     Standard = function(self, message, duration)
         if duration == nil then
             duration = 2500
@@ -74,6 +89,10 @@ Notification = {
             }
         })
     end,
+
+    --- @param message string
+    --- @param duration number
+    --- @param style table
     Custom = function(self, message, duration, style)
         if duration == nil then
             duration = 2500
@@ -89,7 +108,10 @@ Notification = {
             }
         })
     end,
+
     Persistent = {
+        --- @param id string
+        --- @param message string
         Success = function(self, id, message)
             SendNUIMessage({
                 type = 'SHOW_PERSISTENT_ALERT',
@@ -100,6 +122,9 @@ Notification = {
                 }
             })
         end,
+
+        --- @param id string
+        --- @param message string
         Warn = function(self, id, message)
             SendNUIMessage({
                 type = 'SHOW_PERSISTENT_ALERT',
@@ -110,6 +135,9 @@ Notification = {
                 }
             })
         end,
+
+        --- @param id string
+        --- @param message string
         Error = function(self, id, message)
             SendNUIMessage({
                 type = 'SHOW_PERSISTENT_ALERT',
@@ -120,6 +148,9 @@ Notification = {
                 }
             })
         end,
+
+        --- @param id string
+        --- @param message string
         Info = function(self, id, message)
             SendNUIMessage({
                 type = 'SHOW_PERSISTENT_ALERT',
@@ -130,6 +161,9 @@ Notification = {
                 }
             })
         end,
+
+        --- @param id string
+        --- @param message string
         Standard = function(self, id, message)
             SendNUIMessage({
                 type = 'SHOW_PERSISTENT_ALERT',
@@ -140,6 +174,10 @@ Notification = {
                 }
             })
         end,
+        
+        --- @param id string
+        --- @param message string
+        --- @param style table
         Custom = function(self, id, message, style)
             SendNUIMessage({
                 type = 'SHOW_PERSISTENT_ALERT',
@@ -151,6 +189,8 @@ Notification = {
                 }
             })
         end,
+
+        --- @param id string
         Remove = function(self, id)
             SendNUIMessage({
                 type = 'REMOVE_PERSISTENT_ALERT',
