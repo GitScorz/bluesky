@@ -1,5 +1,9 @@
 local mutedPlayers = {}
 
+local _character = nil
+local currentJob = nil
+local _isloggedIn = false
+
 -- we can't use GetConvarInt because its not a integer, and theres no way to get a float... so use a hacky way it is!
 local volumes = {
 	-- people are setting this to 1 instead of 1.0 and expecting it to work.
@@ -103,7 +107,7 @@ local disableSubmixReset = {}
 ---@param moduleType string the volume & submix to use for the voice.
 function toggleVoice(plySource, enabled, moduleType)
 	if mutedPlayers[plySource] then return end
-	logger.verbose('[main] Updating %s to talking: %s with submix %s', plySource, enabled, moduleType)
+	Logger.Trace('Voip', ("Updating %s to talking: %s with submix %s"):format(plySource, enabled, moduleType))
 	if enabled then
 		MumbleSetVolumeOverrideByServerId(plySource, enabled and volumes[moduleType])
 		if GetConvarInt('voice_enableSubmix', 1) == 1 and gameVersion == 'fivem' then
@@ -143,11 +147,11 @@ function playerTargets(...)
 		for id, _ in pairs(targets[i]) do
 			-- we don't want to log ourself, or listen to ourself
 			if addedPlayers[id] and id ~= playerServerId then
-				logger.verbose('[main] %s is already target don\'t re-add', id)
+				Logger.Trace('Voip', ("%s is already target don\'t re-add"):format(id))
 				goto skip_loop
 			end
 			if not addedPlayers[id] then
-				logger.verbose('[main] Adding %s as a voice target', id)
+				Logger.Trace('Voip', ("Adding %s as a voice target"):format(id))
 				addedPlayers[id] = true
 				MumbleAddVoiceTargetPlayerByServerId(voiceTarget, id)
 			end
@@ -160,7 +164,7 @@ end
 ---plays the mic click if the player has them enabled.
 ---@param clickType boolean whether to play the 'on' or 'off' click. 
 function playMicClicks(clickType)
-	if micClicks ~= 'true' then return logger.verbose("Not playing mic clicks because client has them disabled") end
+	if micClicks ~= 'true' then return Logger.Trace('Voip', "Not playing mic clicks because client has them disabled") end
 	sendUIMessage({
 		sound = (clickType and "audio_on" or "audio_off"),
 		volume = (clickType and volumes["radio"] or 0.05)
@@ -222,20 +226,67 @@ CreateThread(function()
 	end
 end)
 
+local VOIP = {
+	Add = {
+		addPlayerToRadio = function(self, channel)
+			setRadioChannel(channel)
+			-- TODO PERMISSION CHANNELS
+		end,
+		addPlayerToCall = function(self, channel)
+			setCallChannel(channel)
+		end,
+	},
+	Remove = {
+		removePlayerFromRadio = function(self)
+			setRadioChannel(0)
+		end,
+		removePlayerFromCall = function(self)
+			setCallChannel(0)
+		end,
+	},
+	Check = {
+		isPlayerInRadio = function(self, channel)
+			isPlayerInChannel(channel)
+		end,
+		isPlayerInCall = function(self, channel)
+			isPlayerInChannel((1000 + channel))
+		end,
+	},
+	RestrictedChannels = function(self)
+		-- TODO
+		return {}
+	end,
+}
 
-if gameVersion == 'redm' then
-	CreateThread(function()
-		while true do
-			if IsControlJustPressed(0, 0xA5BDCD3C --[[ Right Bracket ]]) then
-				ExecuteCommand('cycleproximity')
-			end
-			if IsControlJustPressed(0, 0x430593AA --[[ Left Bracket ]]) then
-				ExecuteCommand('+radiotalk')
-			elseif IsControlJustReleased(0, 0x430593AA --[[ Left Bracket ]]) then
-				ExecuteCommand('-radiotalk')
-			end
+AddEventHandler('Proxy:Shared:RegisterReady', function()
+	exports['bs_base']:RegisterComponent('Voip', VOIP)
+end)
 
-			Wait(0)
+RegisterNetEvent('Characters:Client:SetData')
+AddEventHandler('Characters:Client:SetData', function()
+	local currentRadioChannel = LocalPlayer.state.radioChannel
+
+	_character = exports['bs_base']:FetchComponent('Player').LocalPlayer:GetData('Character')
+	Utils:Print(_character:GetData())
+	
+	if _character:GetData('Job').job ~= currentJob then
+		if currentRadioChannel ~= 0 then
+			VoipStuff.Remove:removePlayerFromRadio()
 		end
-	end)
-end
+	end
+
+	if not _character:GetData('JobDuty') then
+		if currentRadioChannel ~= 0 then
+			VoipStuff.Remove:removePlayerFromRadio()
+		end
+	end
+
+	currentJob = _character:GetData('Job').job
+end)
+
+RegisterNetEvent('Characters:Client:Spawn')
+AddEventHandler('Characters:Client:Spawn', function()
+	_character = exports['bs_base']:FetchComponent('Player').LocalPlayer:GetData('Character')
+	currentJob = _character:GetData('Job').job
+	_isloggedIn = true
+end)
