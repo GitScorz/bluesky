@@ -34,7 +34,7 @@ function addNearbyPlayers()
 		if addProximityCheck(ply) then
 			if isTarget then goto skip_loop end
 
-			Logger.Trace('Voip', ("Adding %s as a voice target"):format(serverId))
+			-- Logger.Trace('Voip', ("Adding %s as a voice target"):format(serverId))
 			MumbleAddVoiceTargetChannel(voiceTarget, serverId)
 		end
 
@@ -51,7 +51,7 @@ function setSpectatorMode(enabled)
 			local ply = players[i]
 			local serverId = GetPlayerServerId(ply)
 			if serverId == playerServerId then goto skip_loop end
-			Logger.Trace('Voip', ("Adding %s as a voice target"):format(serverId))
+			-- Logger.Trace('Voip', ("Adding %s as a voice target"):format(serverId))
 			MumbleAddVoiceChannelListen(serverId)
 			::skip_loop::
 		end

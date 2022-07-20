@@ -151,7 +151,7 @@ function playerTargets(...)
 				goto skip_loop
 			end
 			if not addedPlayers[id] then
-				Logger.Trace('Voip', ("Adding %s as a voice target"):format(id))
+				-- Logger.Trace('Voip', ("Adding %s as a voice target"):format(id))
 				addedPlayers[id] = true
 				MumbleAddVoiceTargetPlayerByServerId(voiceTarget, id)
 			end
