@@ -8,7 +8,7 @@ local disableRadioAnim = false
 ---@param localPlyRadioName string the local players name
 function syncRadioData(radioTable, localPlyRadioName)
 	radioData = radioTable
-	logger.info('[radio] Syncing radio table.')
+	Logger.Info('Voip', 'Syncing radio table.')
 	if GetConvarInt('voice_debugMode', 0) >= 4 then
 		print('-------- RADIO TABLE --------')
 		tPrint(radioData)
@@ -49,10 +49,10 @@ function addPlayerToRadio(plySource, plyRadioName)
 		radioNames[plySource] = plyRadioName
 	end
 	if radioPressed then
-		logger.info('[radio] %s joined radio %s while we were talking, adding them to targets', plySource, radioChannel)
+		Logger.Info('Voip', ('%s joined radio %s while we were talking, adding them to targets'):format(plySource, radioChannel))
 		playerTargets(radioData, MumbleIsPlayerTalking(PlayerId()) and callData or {})
 	else
-		logger.info('[radio] %s joined radio %s', plySource, radioChannel)
+		Logger.Info('Voip', ('%s joined radio %s'):format(plySource, radioChannel))
 	end
 end
 RegisterNetEvent('pma-voice:addPlayerToRadio', addPlayerToRadio)
@@ -62,7 +62,7 @@ RegisterNetEvent('pma-voice:addPlayerToRadio', addPlayerToRadio)
 ---@param plySource number the players server id to remove from the radio.
 function removePlayerFromRadio(plySource)
 	if plySource == playerServerId then
-		logger.info('[radio] Left radio %s, cleaning up.', radioChannel)
+		Logger.Info('Voip', ('Left radio %s, cleaning up.'):format(radioChannel))
 		for tgt, _ in pairs(radioData) do
 			if tgt ~= playerServerId then
 				toggleVoice(tgt, false, 'radio')
@@ -78,10 +78,10 @@ function removePlayerFromRadio(plySource)
 	else
 		toggleVoice(plySource, false)
 		if radioPressed then
-			logger.info('[radio] %s left radio %s while we were talking, updating targets.', plySource, radioChannel)
+			Logger.Info('Voip', ('%s left radio %s while we were talking, updating targets'):format(plySource, radioChannel))
 			playerTargets(radioData, MumbleIsPlayerTalking(PlayerId()) and callData or {})
 		else
-			logger.info('[radio] %s has left radio %s', plySource, radioChannel)
+			Logger.Info('Voip', ('%s has left radio %s'):format(plySource, radioChannel))
 		end
 		radioData[plySource] = nil
 		if GetConvarInt("voice_syncPlayerNames", 0) == 1 then
@@ -156,7 +156,7 @@ RegisterCommand('+radiotalk', function()
 
 	if not radioPressed and radioEnabled then
 		if radioChannel > 0 then
-			logger.info('[radio] Start broadcasting, update targets and notify server.')
+			Logger.Info('Voip', "Start broadcasting, update targets and notify server.")
 			playerTargets(radioData, MumbleIsPlayerTalking(PlayerId()) and callData or {})
 			TriggerServerEvent('pma-voice:setTalkingOnRadio', true)
 			radioPressed = true
@@ -203,7 +203,7 @@ end
 ---@param _radioChannel number the radio channel to set the player to.
 function syncRadio(_radioChannel)
 	if GetConvarInt('voice_enableRadios', 1) ~= 1 then return end
-	logger.info('[radio] radio set serverside update to radio %s', radioChannel)
+	Logger.Info('Voip', ('radio set serverside update to radio %s'):format(_radioChannel))
 	radioChannel = _radioChannel
 end
 RegisterNetEvent('pma-voice:clSetPlayerRadio', syncRadio)

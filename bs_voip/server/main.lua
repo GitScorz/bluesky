@@ -53,24 +53,16 @@ CreateThread(function()
 			if sendingRangeOnly == 'false' then
 				SetConvarReplicated('voice_useSendingRangeOnly', 'true')
 			end
-			logger.info('No convars detected for voice mode, defaulting to \'setr voice_useNativeAudio true\' and \'setr voice_useSendingRangeOnly true\'')
+			Logger.Info('No convars detected for voice mode, defaulting to \'setr voice_useNativeAudio true\' and \'setr voice_useSendingRangeOnly true\'')
 		else
 			SetConvarReplicated('voice_use3dAudio', 'true')
 			if sendingRangeOnly == 'false' then
 				SetConvarReplicated('voice_useSendingRangeOnly', 'true')
 			end
-			logger.info('No convars detected for voice mode, defaulting to \'setr voice_use3dAudio true\' and \'setr voice_useSendingRangeOnly true\'')
+			Logger.Info('No convars detected for voice mode, defaulting to \'setr voice_use3dAudio true\' and \'setr voice_useSendingRangeOnly true\'')
 		end
 	elseif sendingRangeOnly == 'false' then
-		logger.warn('It\'s recommended to have \'voice_useSendingRangeOnly\' set to true you can do that with \'setr voice_useSendingRangeOnly true\', this prevents players who directly join the mumble server from broadcasting to players.')
-	end
-
-	if GetConvar('gamename', 'fivem') == 'rdr3' then
-		if nativeAudio == 'true' then
-			logger.warn("RedM doesn't currently support native audio, automatically switching to 3d audio. This also means that submixes will not work.")
-			SetConvarReplicated('voice_useNativeAudio', 'false')
-			SetConvarReplicated('voice_use3dAudio', 'true')
-		end
+		Logger.Warn('It\'s recommended to have \'voice_useSendingRangeOnly\' set to true you can do that with \'setr voice_useSendingRangeOnly true\', this prevents players who directly join the mumble server from broadcasting to players.')
 	end
 
 	local radioVolume = GetConvarInt("voice_defaultRadioVolume", 30)
@@ -85,7 +77,7 @@ CreateThread(function()
 		SetConvarReplicated("voice_defaultCallVolume", 60)
 		for i = 1, 5 do
 			Wait(5000)
-			logger.warn("`voice_defaultRadioVolume` or `voice_defaultCallVolume` have their value set as a float, this is going to automatically be fixed but please update your convars.")
+			Logger.Warn('Voip', "`voice_defaultRadioVolume` or `voice_defaultCallVolume` have their value set as a float, this is going to automatically be fixed but please update your convars.")
 		end
 	end
 end)

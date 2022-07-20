@@ -34,7 +34,7 @@ function addNearbyPlayers()
 		if addProximityCheck(ply) then
 			if isTarget then goto skip_loop end
 
-			logger.verbose('Added %s as a voice target', serverId)
+			Logger.Trace('Voip', ("Adding %s as a voice target"):format(serverId))
 			MumbleAddVoiceTargetChannel(voiceTarget, serverId)
 		end
 
@@ -43,7 +43,7 @@ function addNearbyPlayers()
 end
 
 function setSpectatorMode(enabled)
-	logger.info('Setting spectate mode to %s', enabled)
+	Logger.Info('Voip', ("Setting spectator mode to %s"):format(enabled))
 	isListenerEnabled = enabled
 	local players = GetActivePlayers()
 	if isListenerEnabled then
@@ -51,7 +51,7 @@ function setSpectatorMode(enabled)
 			local ply = players[i]
 			local serverId = GetPlayerServerId(ply)
 			if serverId == playerServerId then goto skip_loop end
-			logger.verbose("Adding %s to listen table", serverId)
+			Logger.Trace('Voip', ("Adding %s as a voice target"):format(serverId))
 			MumbleAddVoiceChannelListen(serverId)
 			::skip_loop::
 		end
@@ -60,7 +60,7 @@ function setSpectatorMode(enabled)
 			local ply = players[i]
 			local serverId = GetPlayerServerId(ply)
 			if serverId == playerServerId then goto skip_loop end
-			logger.verbose("Removing %s from listen table", serverId)
+			Logger.Trace('Voip', ("Removing %s as a voice target"):format(serverId))
 			MumbleRemoveVoiceChannelListen(serverId)
 			::skip_loop::
 		end
@@ -70,14 +70,14 @@ end
 RegisterNetEvent('onPlayerJoining', function(serverId)
 	if isListenerEnabled then
 		MumbleAddVoiceChannelListen(serverId)
-		logger.verbose("Adding %s to listen table", serverId)
+		Logger.Trace('Voip', ("Adding %s to listen table"):format(serverId))
 	end
 end)
 
 RegisterNetEvent('onPlayerDropped', function(serverId)
 	if isListenerEnabled then
 		MumbleRemoveVoiceChannelListen(serverId)
-		logger.verbose("Removing %s from listen table", serverId)
+		Logger.Trace('Voip', ("Removing %s from listen table"):format(serverId))
 	end
 end)
 
@@ -124,7 +124,7 @@ end)
 
 exports("setVoiceState", function(_voiceState, channel)
 	if _voiceState ~= "proximity" and _voiceState ~= "channel" then
-		logger.error("Didn't get a proper voice state, expected proximity or channel, got %s", _voiceState)
+		Logger.Error('Voip', ("Didn't get a proper voice state, expected 'proximity' or 'channel', got '%s'"):format(_voiceState))
 	end
 	voiceState = _voiceState
 	if voiceState == "channel" then
@@ -149,7 +149,7 @@ AddEventHandler("onClientResourceStop", function(resource)
 			local isResource = string.match(proximityCheckRef, resource)
 			if isResource then
 				addProximityCheck = orig_addProximityCheck
-				logger.warn('Reset proximity check to default, the original resource [%s] which provided the function restarted', resource)
+				Logger.Warn('Voip', ('Reset proximity check to default, the original resource [%s] which provided the function has restarted'):format(resource))
 			end
 		end
 	end

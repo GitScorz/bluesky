@@ -24,7 +24,7 @@ function addChannelCheck(channel, cb)
 		error(("'cb' expected 'function' got '%s'"):format(cbType))
 	end
 	radioChecks[channel] = cb
-	logger.info("%s added a check to channel %s", GetInvokingResource(), channel)
+	Logger.Info('Voip', ("%s added a check to channel %s"):format(GetInvokingResource(), channel))
 end
 exports('addChannelCheck', addChannelCheck)
 
@@ -41,7 +41,7 @@ function overrideRadioNameGetter(channel, cb)
 		error(("'cb' expected 'function' got '%s'"):format(cbType))
 	end
 	radioNameGetter = cb
-	logger.info("%s added a check to channel %s", GetInvokingResource(), channel)
+	Logger.Info('Voip', ("%s added a check to channel %s"):format(GetInvokingResource(), channel))
 end
 exports('overrideRadioNameGetter', overrideRadioNameGetter)
 
@@ -53,7 +53,7 @@ function addPlayerToRadio(source, radioChannel)
 		-- remove the player from the radio client side
 		return TriggerClientEvent('pma-voice:removePlayerFromRadio', source, source)
 	end
-	logger.verbose('[radio] Added %s to radio %s', source, radioChannel)
+	Logger.Trace('Voip', ("Added %s to radio %s"):format(source, radioChannel))
 
 	-- check if the channel exists, if it does set the varaible to it
 	-- if not create it (basically if not radiodata make radiodata)
@@ -72,7 +72,7 @@ end
 ---@param source number the player to remove
 ---@param radioChannel number the current channel to remove them from
 function removePlayerFromRadio(source, radioChannel)
-	logger.verbose('[radio] Removed %s from radio %s', source, radioChannel)
+	Logger.Trace('Voip', ("Removed %s from radio %s"):format(source, radioChannel))
 	radioData[radioChannel] = radioData[radioChannel] or {}
 	for player, _ in pairs(radioData[radioChannel]) do
 		TriggerClientEvent('pma-voice:removePlayerFromRadio', player, source)
@@ -97,7 +97,7 @@ function setPlayerRadio(source, _radioChannel)
 		if isResource then
 			error(("'radioChannel' expected 'number', got: %s"):format(type(_radioChannel))) 
 		else
-			return logger.warn("%s sent a invalid radio, 'radioChannel' expected 'number', got: %s", source,type(_radioChannel))
+			return Logger.Warn('Voip', ("%s sent a invalid radio, 'radioChannel' expected 'number', got: %s"):format(source,type(_radioChannel)))
 		end
 	end
 	if isResource then
@@ -130,11 +130,11 @@ function setTalkingOnRadio(talking)
 	local radioTbl = radioData[plyVoice.radio]
 	if radioTbl then
 		radioTbl[source] = talking
-		logger.verbose('[radio] Set %s to talking: %s on radio %s',source, talking, plyVoice.radio)
+		Logger.Trace('Voip', ("Set %s to talking: %s on radio %s"):format(source, talking, plyVoice.radiol))
 		for player, _ in pairs(radioTbl) do
 			if player ~= source then
 				TriggerClientEvent('pma-voice:setTalkingOnRadio', player, source, talking)
-				logger.verbose('[radio] Sync %s to let them know %s is %s',player, source, talking and 'talking' or 'not talking')
+				Logger.Trace('Voip', ("Sync %s to let them know %s is %s"):format(splayer, source, talking and 'talking' or 'not talking'))
 			end
 		end
 	end
@@ -147,7 +147,7 @@ AddEventHandler("onResourceStop", function(resource)
 		local functionResource = string.match(functionRef, resource)
 		if functionResource then
 			radioChecks[channel] = nil
-			logger.warn('Channel %s had its radio check removed because the resource that gave the checks stopped', channel)
+			Logger.Warn('Voip', ('Channel %s had its radio check removed because the resource that gave the checks stopped'):format(channel))
 		end
 	end
 
@@ -157,7 +157,7 @@ AddEventHandler("onResourceStop", function(resource)
 			local isResource = string.match(functionRef, resource)
 			if isResource then
 				radioNameGetter = radioNameGetter_orig
-				logger.warn('Radio name getter is resetting to default because the resource that gave the cb got turned off')
+				Logger.Warn('Voip', 'Radio name getter is resetting to default because the resource that gave the cb got turned off')
 			end
 		end
 	end
