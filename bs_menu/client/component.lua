@@ -5,7 +5,6 @@ submenus = {}
 --RetrieveComponents
 AddEventHandler('Menu:Shared:DependencyUpdate', SomeBullshitNameThatIsntFuckingUsedFUCKYOUBITCH)
 function SomeBullshitNameThatIsntFuckingUsedFUCKYOUBITCH()
-    print('^3I literally wanna die^7')
     UISounds = exports['bs_base']:FetchComponent('UISounds')
 end
 
