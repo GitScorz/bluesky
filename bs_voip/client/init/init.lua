@@ -68,14 +68,8 @@ AddEventHandler('Core:Shared:Ready', function()
 		if #error > 0 then return; end
 		RetrieveComponents()
 
-		CreateThread(function()
-			if Convar.VOIP_CHANNEL.value ~= "NOT SET" then
-				InitializeVoip()
-				firstInitialize = false
-			else
-				Logger.Error('Voip', 'Please set all the required Convars before starting the voip.')
-			end
-		end);
+		InitializeVoip()
+		firstInitialize = false
 	end)
 end)
 

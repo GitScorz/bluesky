@@ -10,8 +10,7 @@ Citizen.CreateThread(function()
         GAME_URL = { key = 'mongodb_game_url', value = GetConvar('mongodb_game_url', 'CONVAR_DEFAULT'), stop = true },
         GAME_DB = { key = 'mongodb_game_database', value = GetConvar('mongodb_game_database', 'CONVAR_DEFAULT'), stop = true },
         LOGGING = { value = GetConvarInt('log_level', 0), key = 'log_level', stop = false },
-        RRP_VERSION = { value = GetConvar('rrp_version', "UNKNOWN"), key = 'rrp_version', stop = false },
-        VOIP_CHANNEL = { value = GetConvar('voip_channel', 'CONVAR_DEFAULT'), key = 'voip_channel', stop = false }
+        RRP_VERSION = { value = GetConvar('rrp_version', "UNKNOWN"), key = 'rrp_version', stop = false }
     }
 end)
 
