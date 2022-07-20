@@ -47,7 +47,7 @@ function setPlayerCall(source, _callChannel)
 		if isResource then
 			error(("'callChannel' expected 'number', got: %s"):format(type(_callChannel)))
 		else
-			return logger.warn("%s sent a invalid call, 'callChannel' expected 'number', got: %s", source,type(_callChannel))
+			return Logger.Warn('Voip', ("%s sent a invalid call, 'callChannel' expected 'number', got: %s"):format(source,type(_callChannel)))
 		end
 	end
 	if isResource then
