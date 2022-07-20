@@ -28,7 +28,7 @@ AddEventHandler('mumbleConnected', function(address, isReconnecting)
 
 	handleInitialState()
 
-	Logger.Trace('Voip', 'Finished connection logic'.')
+	Logger.Trace('Voip', 'Finished connection logic.')
 end)
 
 AddEventHandler('mumbleDisconnected', function(address)
