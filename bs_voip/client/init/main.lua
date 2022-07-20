@@ -229,7 +229,11 @@ end)
 local VOIP = {
 	Add = {
 		addPlayerToRadio = function(self, channel)
-			setRadioChannel(channel)
+			if channel < 1000 then
+				setRadioChannel(channel)
+			else
+				Notification:Error('Channel number must be below 1000', 3500)
+			end
 			-- TODO PERMISSION CHANNELS
 		end,
 		addPlayerToCall = function(self, channel)
@@ -242,14 +246,6 @@ local VOIP = {
 		end,
 		removePlayerFromCall = function(self)
 			setCallChannel(0)
-		end,
-	},
-	Check = {
-		isPlayerInRadio = function(self, channel)
-			isPlayerInChannel(channel)
-		end,
-		isPlayerInCall = function(self, channel)
-			isPlayerInChannel((1000 + channel))
 		end,
 	},
 	RestrictedChannels = function(self)
