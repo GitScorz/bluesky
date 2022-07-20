@@ -75,7 +75,7 @@ Spawn = {
         end
     
         TransitionFromBlurred(500)
-        cb()
+        cb("ok")
     end
 }
 
