@@ -129,3 +129,76 @@ function getPlayersInRadioChannel(channel)
 end
 exports('getPlayersInRadioChannel', getPlayersInRadioChannel)
 exports('GetPlayersInRadioChannel', getPlayersInRadioChannel)
+
+AddEventHandler('Voip:Shared:DependencyUpdate', RetrieveComponents)
+function RetrieveComponents()
+	Callbacks = exports['bs_base']:FetchComponent('Callbacks')
+	Middleware = exports['bs_base']:FetchComponent('Middleware')
+	Database = exports['bs_base']:FetchComponent('Database')
+	VoipStuff = exports['bs_base']:FetchComponent('Voip')
+	Fetch = exports['bs_base']:FetchComponent('Fetch')
+	Logger = exports['bs_base']:FetchComponent('Logger')
+end
+
+AddEventHandler('Core:Shared:Ready', function()
+	exports['bs_base']:RequestDependencies('Voip', {
+		'Callbacks',
+		'Middleware',
+		'Database',
+		'Voip',
+		'Fetch',
+		'Logger'
+	}, function(error)  
+		if #error > 0 then return end
+		RetrieveComponents()
+		RegisterMiddleware()
+	end)
+end)
+
+function RegisterMiddleware()
+	Middleware:Add('Characters:Logout', function(source)
+		VoipStuff.Remove:removeFromAllChannels(source)
+	end)
+end
+
+VOIP = {
+	Add = {
+		addPlayerToRadio = function(self, channel, playreid)
+			if channel < 1000 then
+				addPlayerToRadio(channel, playerid)
+			else
+				Notification:Error('Channel number must be below 1000', 3500)
+			end
+		end,
+		addPlayerToCall = function(self, channel, playerid)
+			addPlayerToCall(playerid, channel)
+		end,
+	},
+	Remove = {
+		removePlayerFromRadio = function(self, channel, playerid)
+			removePlayerFromRadio(channel, playerid)
+		end,
+		removePlayerFromCall = function(self, channel, playerid)
+			removePlayerFromCall(playerid, channel)
+		end,
+		removeFromAllChannels = function(self, playerServerId)
+			if voiceData[playerServerId] then
+				local plyData = voiceData[playerServerId]
+		
+				if plyData.radio ~= 0 then
+					removePlayerFromRadio(plyData.radio, playerServerId)
+				end
+		
+				if plyData.call ~= 0 then
+					removePlayerFromCall(playerServerId, plyData.call)
+				end
+		
+				voiceData[playerServerId] = nil
+			end
+		end
+	},
+}
+
+AddEventHandler('Proxy:Shared:RegisterReady', function()
+	exports['bs_base']:RegisterComponent('Voip', VOIP)
+end)
