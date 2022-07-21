@@ -83,7 +83,7 @@ MOTELS = {
         AssignRandom = function(self, source)
             Locations:GetAll('motel', function(locations)
                 if #locations == 0 then
-                    Logger:Error('Motels', 'No motels available in the town.')
+                    Logger:Warn('Motels', 'No motels available in the town.')
                     return
                 end
                 local random = math.random(#locations)
