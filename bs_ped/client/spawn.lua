@@ -8,7 +8,6 @@ end)
 
 SPAWN = {
     SpawnToWorld = function(self, data, cb)
-        TriggerEvent('Characters:Client:SetFocus', false)
         DoScreenFadeOut(500)
         while not IsScreenFadedOut() do Citizen.Wait(10) end
 
@@ -65,6 +64,7 @@ SPAWN = {
         SetEntityHealth(player, 200)
         SetPedArmour(player, 100)
         DisplayHud(true)
+        SetNuiFocus(false, false)
         TriggerEvent('Characters:Client:SetFocus', false)
         
         Ped:ApplyToPed(LocalPed)
