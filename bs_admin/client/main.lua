@@ -614,7 +614,6 @@ AddEventHandler("Admin:noclip", function(t)
 
     buttons = setupScaleform("instructional_buttons")
     currentSpeed = config.speeds[noClipIndex].speed
-    print('getting here?')
     TriggerEvent('Admin:startNoClipping')
 end)
 
@@ -692,51 +691,51 @@ RegisterNetEvent('Admin:startNoClipping')
 AddEventHandler('Admin:startNoClipping', function()
     while noClip do
         Citizen.Wait(1)
-            DrawScaleformMovieFullscreen(buttons)
+        DrawScaleformMovieFullscreen(buttons)
 
-            local yoff = 0.0
-            local zoff = 0.0
+        local yoff = 0.0
+        local zoff = 0.0
 
-            if IsControlJustPressed(1, config.controls.changeSpeed) then
-                if noClipIndex ~= 8 then
-                    noClipIndex = noClipIndex+1
-                    currentSpeed = config.speeds[noClipIndex].speed
-                else
-                    currentSpeed = config.speeds[1].speed
-                    noClipIndex = 1
-                end
-                setupScaleform("instructional_buttons")
+        if IsControlJustPressed(1, config.controls.changeSpeed) then
+            if noClipIndex ~= 8 then
+                noClipIndex = noClipIndex+1
+                currentSpeed = config.speeds[noClipIndex].speed
+            else
+                currentSpeed = config.speeds[1].speed
+                noClipIndex = 1
             end
+            setupScaleform("instructional_buttons")
+        end
 
-            if IsControlPressed(0, config.controls.goForward) then
-                yoff = config.offsets.y
-            end
-            
-            if IsControlPressed(0, config.controls.goBackward) then
-                yoff = -config.offsets.y
-            end
-            
-            if IsControlPressed(0, config.controls.turnLeft) then
-                SetEntityHeading(noclipEntity, GetEntityHeading(noclipEntity)+config.offsets.h)
-            end
-            
-            if IsControlPressed(0, config.controls.turnRight) then
-                SetEntityHeading(noclipEntity, GetEntityHeading(noclipEntity)-config.offsets.h)
-            end
-            
-            if IsControlPressed(0, config.controls.goUp) then
-                zoff = config.offsets.z
-            end
-            
-            if IsControlPressed(0, config.controls.goDown) then
-                zoff = -config.offsets.z
-            end
-            
-            local newPos = GetOffsetFromEntityInWorldCoords(noclipEntity, 0.0, yoff * (currentSpeed + 0.3), zoff * (currentSpeed + 0.3))
-            local heading = GetEntityHeading(noclipEntity)
-            SetEntityVelocity(noclipEntity, 0.0, 0.0, 0.0)
-            SetEntityRotation(noclipEntity, 0.0, 0.0, 0.0, 0, false)
-            SetEntityHeading(noclipEntity, heading)
-            SetEntityCoordsNoOffset(noclipEntity, newPos.x, newPos.y, newPos.z, noClip, noClip, noClip)
+        if IsControlPressed(0, config.controls.goForward) then
+            yoff = config.offsets.y
+        end
+        
+        if IsControlPressed(0, config.controls.goBackward) then
+            yoff = -config.offsets.y
+        end
+        
+        if IsControlPressed(0, config.controls.turnLeft) then
+            SetEntityHeading(noclipEntity, GetEntityHeading(noclipEntity)+config.offsets.h)
+        end
+        
+        if IsControlPressed(0, config.controls.turnRight) then
+            SetEntityHeading(noclipEntity, GetEntityHeading(noclipEntity)-config.offsets.h)
+        end
+        
+        if IsControlPressed(0, config.controls.goUp) then
+            zoff = config.offsets.z
+        end
+        
+        if IsControlPressed(0, config.controls.goDown) then
+            zoff = -config.offsets.z
+        end
+        
+        local newPos = GetOffsetFromEntityInWorldCoords(noclipEntity, 0.0, yoff * (currentSpeed + 0.3), zoff * (currentSpeed + 0.3))
+        local heading = GetEntityHeading(noclipEntity)
+        SetEntityVelocity(noclipEntity, 0.0, 0.0, 0.0)
+        SetEntityRotation(noclipEntity, 0.0, 0.0, 0.0, 0, false)
+        SetEntityHeading(noclipEntity, heading)
+        SetEntityCoordsNoOffset(noclipEntity, newPos.x, newPos.y, newPos.z, noClip, noClip, noClip)
     end
 end)
