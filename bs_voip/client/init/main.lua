@@ -1,6 +1,6 @@
 local mutedPlayers = {}
 
-local _character = nil
+local _character = {}
 local currentJob = nil
 local _isloggedIn = false
 
@@ -258,27 +258,27 @@ AddEventHandler('Proxy:Shared:RegisterReady', function()
 	exports['bs_base']:RegisterComponent('Voip', VOIP)
 end)
 
-RegisterNetEvent('Characters:Client:SetData')
-AddEventHandler('Characters:Client:SetData', function()
-	local currentRadioChannel = LocalPlayer.state.radioChannel
+-- RegisterNetEvent('Characters:Client:SetData')
+-- AddEventHandler('Characters:Client:SetData', function()
+-- 	local currentRadioChannel = LocalPlayer.state.radioChannel
 
-	_character = exports['bs_base']:FetchComponent('Player').LocalPlayer:GetData('Character')
-	Utils:Print(_character:GetData())
+-- 	_character = exports['bs_base']:FetchComponent('Player').LocalPlayer:GetData('Character')
+-- 	Utils:Print(_character:GetData())
 	
-	if _character:GetData('Job').job ~= currentJob then
-		if currentRadioChannel ~= 0 then
-			VoipStuff.Remove:removePlayerFromRadio()
-		end
-	end
+-- 	if _character:GetData('Job').job ~= currentJob then
+-- 		if currentRadioChannel ~= 0 then
+-- 			VoipStuff.Remove:removePlayerFromRadio()
+-- 		end
+-- 	end
 
-	if not _character:GetData('JobDuty') then
-		if currentRadioChannel ~= 0 then
-			VoipStuff.Remove:removePlayerFromRadio()
-		end
-	end
+-- 	if not _character:GetData('JobDuty') then
+-- 		if currentRadioChannel ~= 0 then
+-- 			VoipStuff.Remove:removePlayerFromRadio()
+-- 		end
+-- 	end
 
-	currentJob = _character:GetData('Job').job
-end)
+-- 	currentJob = _character:GetData('Job').job
+-- end)
 
 RegisterNetEvent('Characters:Client:Spawn')
 AddEventHandler('Characters:Client:Spawn', function()
