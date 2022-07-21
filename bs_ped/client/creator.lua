@@ -93,6 +93,7 @@ CREATOR = {
     End = function(self)
         local player = PlayerPedId()
         Spawn:PlacePedIntoWorld(_data)
+        TriggerEvent('Characters:Client:SetFoucs', false)
         FROZEN = false
     end
 }
