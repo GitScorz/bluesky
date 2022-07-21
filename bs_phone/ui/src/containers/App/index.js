@@ -13,7 +13,7 @@ import { Router } from 'react-router';
 import { createBrowserHistory } from 'history';
 import Phone from '../Phone';
 
-library.add(far, fab, fas, fal, fad);
+library.add(fab);
 const customHistory = createBrowserHistory();
 
 import Stylized from '../../LLPIXEL3.ttf';

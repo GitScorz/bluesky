@@ -1,7 +1,7 @@
 import Nui from '../../util/Nui';
 
 export const initialState = {
-	visible: true,
+	visible: false,
 	clear: false,
 	expanded: true,
 	apps: {
