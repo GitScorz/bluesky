@@ -42,11 +42,11 @@ function Logout(source)
             charId = char:GetData('ID')
         end
 
-        WebAPI.MDT:Request('POST', 'user/logoutGame', {}, {
-            job = job,
-            user = player:GetData('ID'),
-            charId = charId
-        })
+        -- WebAPI.MDT:Request('POST', 'user/logoutGame', {}, {
+        --     job = job,
+        --     user = player:GetData('ID'),
+        --     charId = charId
+        -- })
     end
 end
 
@@ -68,9 +68,9 @@ function RegisterMiddleware()
                 end
             end
         
-            WebAPI.MDT:Request('POST', 'user/logoutGame', {}, {
-                user = player:GetData('ID')
-            })
+            -- WebAPI.MDT:Request('POST', 'user/logoutGame', {}, {
+            --     user = player:GetData('ID')
+            -- })
         end
     end, 9000)
     Middleware:Add('playerDropped', function(source)
@@ -85,9 +85,9 @@ function RegisterMiddleware()
                 })
             end
         
-            WebAPI.MDT:Request('POST', 'user/logoutGame', {}, {
-                user = player:GetData('ID')
-            })
+            -- WebAPI.MDT:Request('POST', 'user/logoutGame', {}, {
+            --     user = player:GetData('ID')
+            -- })
         end
     end, 9000)
 end
@@ -99,8 +99,8 @@ AddEventHandler('Characters:Server:Spawn', function()
 
     local char = player:GetData('Character'):GetData()
     char.Server = Config.Server.ID
-    WebAPI.MDT:Request('POST', 'user/loginGame', {}, {
-        user = player:GetData('ID'),
-        character = char
-    })
+    -- WebAPI.MDT:Request('POST', 'user/loginGame', {}, {
+    --     user = player:GetData('ID'),
+    --     character = char
+    -- })
 end)
