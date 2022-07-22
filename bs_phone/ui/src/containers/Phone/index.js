@@ -3,8 +3,8 @@ import { compose } from 'redux';
 import { connect, useSelector } from 'react-redux';
 import { makeStyles, Slide } from '@material-ui/core';
 import Loadable from 'react-loadable';
-import { Route, Switch, Redirect } from 'react-router';
-import { withRouter } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import withRouter from '../../hooks/withRouter';
 
 import {
 	Header,
@@ -36,19 +36,19 @@ export default compose(
 	const useStyles = makeStyles((theme) => ({
 		wrapper: expanded
 			? {
-					height: 1000,
-					width: 500,
+					height: 750,
+					width: 365,
 					position: 'absolute',
-					top: 0,
+					top: '30%',
 					bottom: 0,
-					left: 0,
+					left: '80%',
 					right: 0,
 					margin: 'auto',
 					overflow: 'hidden',
 			  }
 			: {
-					height: 1000,
-					width: 500,
+					height: 750,
+					width: 365,
 					position: 'absolute',
 					bottom: '2%',
 					right: '2%',
@@ -75,7 +75,7 @@ export default compose(
 		phone: {
 			height: '100%',
 			width: '100%',
-			padding: '35px 30px',
+			padding: '20px 20px',
 			overflow: 'hidden',
 		},
 		screen: {
@@ -113,65 +113,66 @@ export default compose(
 					<Header />
 					<Alerts />
 					<div className={classes.screen}>
-						<Switch>
-							<Route exact path="/" component={Home} />
-							<Route exact path="/apps" component={List} />
-							<Route
-								exact
-								path="/notifications"
-								component={Notifications}
-							/>
-							{Object.keys(apps).length > 0 &&
-							installed.length > 0
-								? installed
-										.filter((app, i) => app !== 'home')
-										.map((app, i) => {
-											let routes = [];
-											routes.push(
-												<Route
-													key={i}
-													exact
-													path={`/apps/${app}/${apps[app].params}`}
-													component={DynamicLoad(app)}
-												/>,
-											);
+						<BrowserRouter>
+							<Routes>
+								<Route exact path="/" component={Home} />
+								<Route exact path="/apps" component={List} />
+								<Route
+									exact
+									path="/notifications"
+									component={Notifications}
+								/>
+								{Object.keys(apps).length > 0 &&
+								installed.length > 0
+									? installed
+											.filter((app, i) => app !== 'home')
+											.map((app, i) => {
+												let routes = [];
+												routes.push(
+													<Route
+														key={i}
+														exact
+														path={`/apps/${app}/${apps[app].params}`}
+														component={DynamicLoad(app)}
+													/>,
+												);
 
-											if (apps[app].internal != null) {
-												{
-													apps[app].internal.map(
-														(subapp, k) => {
-															routes.push(
-																<Route
-																	key={
-																		installed.length +
-																		k
-																	}
-																	exact
-																	path={`/apps/${app}/${
-																		subapp.app
-																	}/${
-																		subapp.params !=
-																		null
-																			? subapp.params
-																			: ''
-																	}`}
-																	component={DynamicLoad(
-																		app,
-																		subapp,
-																	)}
-																/>,
-															);
-														},
-													);
+												if (apps[app].internal != null) {
+													{
+														apps[app].internal.map(
+															(subapp, k) => {
+																routes.push(
+																	<Route
+																		key={
+																			installed.length +
+																			k
+																		}
+																		exact
+																		path={`/apps/${app}/${
+																			subapp.app
+																		}/${
+																			subapp.params !=
+																			null
+																				? subapp.params
+																				: ''
+																		}`}
+																		component={DynamicLoad(
+																			app,
+																			subapp,
+																		)}
+																	/>,
+																);
+															},
+														);
+													}
 												}
-											}
 
-											return routes;
-										})
-								: null}
-							<Redirect to="/" />
-						</Switch>
-
+												return routes;
+											})
+									: null}
+								<Route to="/" element={<Navigate to="/" replace />} />
+							</Routes>
+						</BrowserRouter>
 						<Incoming call={callData} />
 					</div>
 					<Footer />
