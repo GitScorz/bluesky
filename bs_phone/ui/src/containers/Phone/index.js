@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { connect, useSelector } from 'react-redux';
 import { makeStyles, Slide } from '@material-ui/core';
@@ -20,7 +19,6 @@ import Incoming from '../../Apps/phone/incoming';
 import { Wallpapers } from '../../util/Wallpapers';
 
 import phoneImg from '../../s10.png';
-import banner from '../../banner.png';
 
 export default compose(
 	withRouter,
@@ -170,7 +168,7 @@ export default compose(
 												return routes;
 											})
 									: null}
-								<Route to="/" element={<Navigate to="/" replace />} />
+								<Navigate to="/" />
 							</Routes>
 						</BrowserRouter>
 						<Incoming call={callData} />
