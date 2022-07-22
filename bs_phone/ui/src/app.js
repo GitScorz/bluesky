@@ -1,10 +1,10 @@
 import '@babel/polyfill';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 
-import App from 'containers/App';
+import App from './containers/App';
 
 import WindowListener from 'containers/WindowListener';
 import KeyListener from 'containers/KeyListener';
@@ -15,22 +15,27 @@ const initialState = {};
 const store = configureStore(initialState);
 const MOUNT_NODE = document.getElementById('app');
 
+const root = ReactDOM.createRoot(
+  MOUNT_NODE
+);
+
 const render = () => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <KeyListener>
-        <WindowListener>
-          <App />
-        </WindowListener>
-      </KeyListener>
-    </Provider>,
-    MOUNT_NODE,
+  root.render(
+    <React.StrictMode>
+      <Provider store={store}>
+        <KeyListener>
+          <WindowListener>
+            <App />
+          </WindowListener>
+        </KeyListener>
+      </Provider>,
+    </React.StrictMode>
   );
 };
 
 if (module.hot) {
   module.hot.accept(['containers/App'], () => {
-    ReactDOM.unmountComponentAtNode(MOUNT_NODE);
+    root.unmount();
     render();
   });
 }
