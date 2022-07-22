@@ -2,18 +2,15 @@ import React, { useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
+import { MuiThemeProvider, createTheme } from '@material-ui/core';
 import { library } from '@fortawesome/fontawesome-svg-core';
-// import { far } from '@fortawesome/pro-regular-svg-icons';
-// import { fal } from '@fortawesome/pro-light-svg-icons';
-// import { fad } from '@fortawesome/pro-duotone-svg-icons';
-// import { fas } from '@fortawesome/pro-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 import { Router } from 'react-router';
 import { createBrowserHistory } from 'history';
 import Phone from '../Phone';
 
-library.add(fab);
+library.add(fas, fab);
 const customHistory = createBrowserHistory();
 
 import Stylized from '../../LLPIXEL3.ttf';
@@ -41,7 +38,7 @@ export default connect()((props) => {
     }
   }, [clear])
 
-  const muiTheme = createMuiTheme({
+  const muiTheme = createTheme({
     typography: {
       fontFamily: ['Roboto', 'sans-serif'],
     },
@@ -88,7 +85,7 @@ export default connect()((props) => {
   return (
     <MuiThemeProvider theme={muiTheme}>
       <CssBaseline />
-      <Router history={customHistory}>
+      <Router navigator={customHistory}>
         <Phone />
       </Router>
     </MuiThemeProvider>
