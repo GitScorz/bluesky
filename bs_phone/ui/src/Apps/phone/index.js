@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles, Tabs, Tab } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DialpadIcon from '@material-ui/icons/Dialpad';
@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 
 export default connect(null, { readCalls })((props) => {
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate()
     const callData = useSelector(state => state.call.call);
     const callHistory = useSelector(state => state.data.data.calls);
 
@@ -59,7 +59,7 @@ export default connect(null, { readCalls })((props) => {
 
     useEffect(() => {
         if (callData != null && callData.state !== 1) {
-            history.push(`/apps/phone/call/${callData.number}`);
+            navigate(`/apps/phone/call/${callData.number}`);
         }
     }, []);
 

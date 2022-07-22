@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles, Grid, Avatar, IconButton } from '@material-ui/core';
 import { green, red } from '@material-ui/core/colors';
 import PhoneIcon from '@material-ui/icons/Phone';
@@ -74,14 +74,14 @@ const useStyles = makeStyles(theme => ({
 
 export default connect(null, { acceptCall, endCall, dismissIncoming })((props) => {
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate()
     const contacts = useSelector(state => state.data.data.contacts);
     const isContact = props.call == null ? null : contacts.filter((c) => c.number === props.call.number)[0];
     const isDismissed = useSelector(state => state.call.incomingDismissed);
 
     const acceptCall = e => {
         props.acceptCall(props.call.number);
-        history.push(`/apps/phone/call/${props.call.number}`)
+        navigate(`/apps/phone/call/${props.call.number}`)
 
     }
 

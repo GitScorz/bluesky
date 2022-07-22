@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles, AppBar, Grid, Chip, IconButton } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const processString = require('react-process-string');
@@ -15,7 +15,7 @@ import { createCall } from '../phone/action';
 import ActionButtons from './ActionButtons';
 
 export default connect(null, { createCall })((props) => {
-	const history = useHistory();
+	const navigate = useNavigate()
 	const { id } = props.match.params;
 	const myId = useSelector((state) => state.data.data.myData.sid);
 	const adverts = useSelector((state) => state.data.data.adverts);
@@ -36,13 +36,13 @@ export default connect(null, { createCall })((props) => {
         if (advert.id === myId) return;
 		if (callData == null) {
 			props.createCall(advert.number);
-			history.push(`/apps/phone/call/${advert.number}`);
+			navigate(`/apps/phone/call/${advert.number}`);
 		}
 	};
 
 	const textAdvert = () => {
         if (advert.id === myId) return;
-		history.push(`/apps/messages/convo/${advert.number}`);
+		navigate(`/apps/messages/convo/${advert.number}`);
 	};
 
 	const useStyles = makeStyles((theme) => ({
@@ -132,7 +132,7 @@ export default connect(null, { createCall })((props) => {
 	const classes = useStyles();
 
 	const categoryClick = (category) => {
-		history.push(`/apps/adverts/category-view/${category}`);
+		navigate(`/apps/adverts/category-view/${category}`);
 	};
 
 	const config = [

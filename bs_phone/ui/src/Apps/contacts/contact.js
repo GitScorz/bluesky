@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles, withStyles, Grid, Avatar, ExpansionPanel as MuiExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Paper } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -71,22 +71,22 @@ const useStyles = makeStyles(theme => ({
 
 export default connect(null, { createCall })((props) => {
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate()
     const callData = useSelector(state => state.call.call);
 
     const callContact = () => {
         if (callData == null) {
             props.createCall(props.contact.number);
-            history.push(`/apps/phone/call/${props.contact.number}`);
+            navigate(`/apps/phone/call/${props.contact.number}`);
         }
     }
 
     const textContact = () => {
-        history.push(`/apps/messages/convo/${props.contact.number}`);
+        navigate(`/apps/messages/convo/${props.contact.number}`);
     }
 
     const editContact = () => {
-        history.push(`/apps/contacts/edit/${props.contact._id}`);
+        navigate(`/apps/contacts/edit/${props.contact._id}`);
     }
 
     return(

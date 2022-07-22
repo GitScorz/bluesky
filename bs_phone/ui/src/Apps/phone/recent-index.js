@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
 
 export default connect()((props) => {
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate()
     const data = useSelector(state => state.data.data);
     const [expanded, setExpanded] = useState(-1);
 

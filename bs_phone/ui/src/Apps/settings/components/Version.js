@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
 
@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
 
 export default connect()((props) => {
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate()
 
 	useEffect(() => {
 		return () => {
@@ -28,7 +28,7 @@ export default connect()((props) => {
 	let clickHoldTimer = null;
 	const versionStart = () => {
 		clickHoldTimer = setTimeout(() => {
-			history.push(`/apps/settings/software`);
+			navigate(`/apps/settings/software`);
 		}, 2000);
 	};
 

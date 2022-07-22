@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles, TextField, Avatar, Grid, InputAdornment, IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import InputMask from 'react-input-mask';
@@ -94,7 +94,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default connect(null, { showAlert })((props) => {
-    const history = useHistory();
+    const navigate = useNavigate()
     const contacts = useSelector(state => state.data.data.contacts);
     const classes = useStyles();
 
@@ -115,14 +115,14 @@ export default connect(null, { showAlert })((props) => {
 	}
 
 	const onContactClick = (contact) => {
-        history.push(`/apps/messages/convo/${contact.number}`);
+        navigate(`/apps/messages/convo/${contact.number}`);
 	}
 
     const sendMessageToRaw = () => {
         let r = /([0-9]){3}\-([0-9]){3}\-([0-9]){4}/gm.exec(rawNumber);
 
         if (r != null) {
-            history.push(`/apps/messages/convo/${rawNumber}`);
+            navigate(`/apps/messages/convo/${rawNumber}`);
         } else {
             props.showAlert('Not A Valid Number');
         }

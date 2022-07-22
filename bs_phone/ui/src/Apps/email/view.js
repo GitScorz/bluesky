@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
 	makeStyles,
 	Grid,
@@ -104,7 +104,7 @@ const calendarStrings = {
 export default connect(null, { showAlert, ReadEmail, DeleteEmail, GPSRoute })(
 	(props) => {
 		const classes = useStyles();
-		const history = useHistory();
+		const navigate = useNavigate()
 		const { id } = props.match.params;
 		const emails = useSelector((state) => state.data.data.emails);
 		const email = emails.filter((e) => e._id === id)[0];

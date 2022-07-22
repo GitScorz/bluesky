@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import RandomMC from 'random-material-color';
 import {
 	makeStyles,
@@ -144,7 +144,7 @@ const useStyles = makeStyles(theme => ({
 
 export default connect(null, { createContact, showAlert })(props => {
 	const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate()
     const contacts = useSelector(state => state.data.data).contacts;
     const { number } = props.match.params;
 	const [contact, setContact] = useState({ name: '', number: number == null ? '' : number, favorite: false, color: RandomMC.getColor(), avatar: '' });

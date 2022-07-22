@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles, Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
@@ -63,13 +63,13 @@ const useStyles = makeStyles(theme => ({
 
 export default connect(null, { showAlert, deleteContact })((props) => {
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate()
     const data = useSelector(state => state.data.data);
     const contacts = data.contacts;
     const [expanded, setExpanded] = useState(-1);
 
     const create = () => {
-        history.push('/apps/contacts/add');
+        navigate('/apps/contacts/add');
     }
 
     const handleClick = (index) => (event, newExpanded) => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles, withStyles, Tabs, Tab } from '@material-ui/core';
 
 import RestoreIcon from '@material-ui/icons/Restore';
@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default connect(null, { DeleteAdvert, BumpAdvert })((props) => {
 	const classes = useStyles();
-	const history = useHistory();
+	const navigate = useNavigate()
 	const myAdvertId = useSelector((state) => state.data.data.myData.sid);
 	const myAdvert = useSelector((state) => state.data.data.adverts)[myAdvertId];
 

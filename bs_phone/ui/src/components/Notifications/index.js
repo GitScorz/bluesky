@@ -82,7 +82,7 @@ const useStyles = makeStyles(theme => ({
 
 export default connect(null, { showAlert, dismissNotif, openedApp, dismissNotifAll })((props) => {
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate()
     const notifications = useSelector(state => state.notifications.notifications);
 
     const [open, setOpen] = useState(false)
@@ -103,7 +103,7 @@ export default connect(null, { showAlert, dismissNotif, openedApp, dismissNotifA
 
     const onClick = (notif) => {
         props.openedApp(notif.app);
-        history.push(`/apps/${notif.app}${notif.app_data != null ? '/' + notif.app_data : ''}`);
+        navigate(`/apps/${notif.app}${notif.app_data != null ? '/' + notif.app_data : ''}`);
     }
 
     const dismiss = (index) => {

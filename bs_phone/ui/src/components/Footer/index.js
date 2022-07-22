@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 
 export default connect()(props => {
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate()
 	const expanded = useSelector((state) => state.phone.expanded);
 
     const ToggleExpando = () => {
@@ -35,7 +35,7 @@ export default connect()(props => {
     }
 
     const GoHome = () => {
-        history.push('/');
+        navigate('/');
     }
 
     const GoBack = () => {
@@ -45,13 +45,13 @@ export default connect()(props => {
     return (
         <Grid container className={classes.footer}>
             <Grid item xs={4} className={classes.fButton} onClick={ToggleExpando}>
-                <FontAwesomeIcon icon={['fal', expanded ? 'compress-arrows-alt' : 'expand-arrows']} />
+                <FontAwesomeIcon icon={expanded ? 'fa-solid fa-minimize' : 'fa-solid fa-maximize'} />
             </Grid>
             <Grid item xs={4} className={classes.fButton} onClick={GoHome}>
-                <FontAwesomeIcon icon={['far', 'circle']} />
+                <FontAwesomeIcon icon="fa-solid fa-circle" />
             </Grid>
             <Grid item xs={4} className={classes.fButton} onClick={GoBack}>
-                <FontAwesomeIcon icon='chevron-left' />
+                <FontAwesomeIcon icon="fa-solid fa-chevron-left" />
             </Grid>
         </Grid>
     );

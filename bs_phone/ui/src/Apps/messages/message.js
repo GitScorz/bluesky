@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles, Grid, Avatar, Paper } from '@material-ui/core';
 import Moment from 'react-moment';
 
@@ -68,12 +68,12 @@ const useStyles = makeStyles(theme => ({
 
 export default connect()((props) => {
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate()
     const contacts = useSelector(state => state.data.data.contacts);
     const isContact = contacts.filter((c) => c.number === props.message.number)[0];
 
     const onClick = () => {
-        history.push(`/apps/messages/convo/${props.message.number}`);
+        navigate(`/apps/messages/convo/${props.message.number}`);
     }
 
     return(

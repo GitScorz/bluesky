@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
 	makeStyles,
 	withStyles,
@@ -181,12 +181,12 @@ export default connect(null, {
 
 	const onClick = app => {
 		props.openedApp(app);
-		history.push(`/apps/${app}`);
+		navigate(`/apps/${app}`);
 	};
 
 	const openApp = () => {
 		props.openedApp(contextApp);
-		history.push(`/apps/${contextApp}`);
+		navigate(`/apps/${contextApp}`);
 	};
 
 	const onRightClick = (e, app) => {

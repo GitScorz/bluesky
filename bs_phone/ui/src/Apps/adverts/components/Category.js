@@ -3,7 +3,7 @@ import { connect, useSelector } from 'react-redux';
 import { makeStyles, Grid, IconButton, Zoom } from '@material-ui/core';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Advert from './Advert';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
 	wrapper: {
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default connect()((props) => {
 	const classes = useStyles();
-	const history = useHistory();
+	const navigate = useNavigate()
 	const adObjs = useSelector((state) => state.data.data.adverts);
 
 	const adverts = Object.keys(adObjs).filter(a => a !== '0').filter((ad) => {
@@ -53,7 +53,7 @@ export default connect()((props) => {
 	});
 
 	const onClick = () => {
-		history.push(`/apps/adverts/category-view/${props.category.label}`);
+		navigate(`/apps/adverts/category-view/${props.category.label}`);
 	}
 
 	return (

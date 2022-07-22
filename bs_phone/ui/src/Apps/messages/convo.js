@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
 	makeStyles,
 	AppBar,
@@ -30,7 +30,7 @@ export default connect(null, {
 	addNotif,
 	createCall
 })(props => {
-	const history = useHistory();
+	const navigate = useNavigate()
 	const { number } = props.match.params;
 	const isContact = useSelector(state => state.data.data.contacts).filter(
 		c => c.number === number,
@@ -221,7 +221,7 @@ export default connect(null, {
 	const callNumber = () => {
         if (callData == null) {
             props.createCall(number);
-            history.push(`/apps/phone/call/${number}`);
+            navigate(`/apps/phone/call/${number}`);
         }
 	};
 
@@ -237,9 +237,9 @@ export default connect(null, {
 
 	const editNumber = () => {
 		if (isContact != null) {
-			history.push(`/apps/contacts/edit/${isContact._id}`);
+			navigate(`/apps/contacts/edit/${isContact._id}`);
 		} else {
-			history.push(`/apps/contacts/add/${number}`);
+			navigate(`/apps/contacts/add/${number}`);
 		}
 	};
 

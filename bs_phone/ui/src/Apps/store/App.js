@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles, Grid, CircularProgress, Fab, Avatar, Paper } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { green, red, yellow, grey } from '@material-ui/core/colors';
@@ -95,7 +95,7 @@ const useStyles = makeStyles(theme => ({
 
 export default connect(null, { addNotif, showAlert, install, uninstall })(props => {
 	const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate()
     
 	const installing = useSelector(state => state.store.installing).includes(props.appKey);
     const installPending = useSelector(state => state.store.installPending).includes(props.appKey);

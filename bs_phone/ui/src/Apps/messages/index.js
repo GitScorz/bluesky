@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
 	makeStyles,
 	TextField,
@@ -76,7 +76,7 @@ const useStyles = makeStyles(theme => ({
 
 export default connect()((props) => {
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate()
     const data = useSelector(state => state.data.data);
     const allMsgs = useSelector(state => state.data.data.messages);
     const myData = data.myData;
@@ -109,7 +109,7 @@ export default connect()((props) => {
                     return(<Message key={key} message={convo} unread={allMsgs.filter(m => m.number === convo.number && m.unread).length} />);
                 })
             }
-            <Fab className={classes.add} color="primary" onClick={() => history.push('/apps/messages/new')}  >
+            <Fab className={classes.add} color="primary" onClick={() => navigate('/apps/messages/new')}  >
                 <AddIcon />
             </Fab>
         </div>

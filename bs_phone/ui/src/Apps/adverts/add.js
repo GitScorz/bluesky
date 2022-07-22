@@ -8,7 +8,7 @@ import {
 	Chip,
 	InputAdornment,
 } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Autocomplete } from '@material-ui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -76,7 +76,7 @@ const initState = {
 
 export default connect(null, { CreateAdvert, showAlert })((props) => {
 	const classes = useStyles();
-	const history = useHistory();
+	const navigate = useNavigate()
 	const myData = useSelector((state) => state.data.data.myData);
 
 	const [state, setState] = useState(initState);

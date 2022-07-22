@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles, Avatar, Grid, Button, IconButton } from '@material-ui/core';
 import { grey, red } from '@material-ui/core/colors';
 import { Inline } from '@zendeskgarden/react-loaders';
@@ -97,7 +97,7 @@ const useStyles = makeStyles(theme => ({
 
 export default connect(null, { addToCall, endCall })((props) => {
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate()
     const { number } = props.match.params;
     const contacts = useSelector(state => state.data.data.contacts);
     const callData = useSelector(state => state.call.call);

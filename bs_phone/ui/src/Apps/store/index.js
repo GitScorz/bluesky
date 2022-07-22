@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles, Tabs, Tab } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AppsIcon from '@material-ui/icons/Apps';
@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 
 export default connect()(props => {
 	const classes = useStyles();
-	const history = useHistory();
+	const navigate = useNavigate()
 	const activeTab = useSelector(state => state.store.tab);
 
 	const handleTabChange = (event, tab) => {

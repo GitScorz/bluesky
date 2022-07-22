@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles, Grid, Paper, Chip } from '@material-ui/core';
 import Moment from 'react-moment';
 import NumberFormat from 'react-number-format';
@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default connect(null, { DeleteAdvert })((props) => {
 	const classes = useStyles();
-	const history = useHistory();
+	const navigate = useNavigate()
 	const myId = useSelector((state) => state.data.data.myData.sid);
 	const cats = Categories.filter((cat) => {
 		return props.advert.categories.includes(cat.label);
@@ -98,7 +98,7 @@ export default connect(null, { DeleteAdvert })((props) => {
 
 	const onClick = () => {
 		console.log(props.advert.id);
-		history.push(`/apps/adverts/view/${props.advert.id}`);
+		navigate(`/apps/adverts/view/${props.advert.id}`);
 	};
 
 	return (

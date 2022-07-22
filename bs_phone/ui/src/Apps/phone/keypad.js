@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles, Input, Grid, Button, IconButton } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import InputMask from 'react-input-mask';
@@ -65,7 +65,7 @@ const useStyles = makeStyles(theme => ({
 
 export default connect(null, { showAlert, createCall })((props) => {
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate()
     const data = useSelector(state => state.data.data);
     const myData = data.myData;
     const callData = useSelector(state => state.call.call);
@@ -103,7 +103,7 @@ export default connect(null, { showAlert, createCall })((props) => {
             if (dialNumber !== myData.number) {
                 if (callData == null) {
                     props.createCall(dialNumber);
-                    history.push(`/apps/phone/call/${dialNumber}`);
+                    navigate(`/apps/phone/call/${dialNumber}`);
                 }
             } else {
                 props.showAlert('Cannot Call Yourself, Idiot');

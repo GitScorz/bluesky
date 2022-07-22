@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles, Fab } from '@material-ui/core';
 
 import AddIcon from '@material-ui/icons/Add';
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default connect(null, { DeleteAdvert, BumpAdvert, showAlert })((props) => {
 	const classes = useStyles();
-	const history = useHistory();
+	const navigate = useNavigate();
 	const myAdvertId = useSelector((state) => state.data.data.myData.sid);
 	const myAdvert = useSelector((state) => state.data.data.adverts)[
 		myAdvertId
@@ -80,7 +80,7 @@ export default connect(null, { DeleteAdvert, BumpAdvert, showAlert })((props) =>
 				<>
 					<Fab
 						className={classes.add}
-						onClick={() => history.push('/apps/adverts/edit')}
+						onClick={() => navigate('/apps/adverts/edit')}
 					>
 						<EditIcon />
 					</Fab>
@@ -100,7 +100,7 @@ export default connect(null, { DeleteAdvert, BumpAdvert, showAlert })((props) =>
 			) : (
 				<Fab
 					className={classes.add}
-					onClick={() => history.push('/apps/adverts/add')}
+					onClick={() => navigate('/apps/adverts/add')}
 				>
 					<AddIcon />
 				</Fab>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
 	makeStyles,
 	Avatar,
@@ -206,7 +206,7 @@ const useStyles = makeStyles(theme => ({
 
 export default connect(null, { showAlert, updateContact })(props => {
 	const classes = useStyles();
-	const history = useHistory();
+	const navigate = useNavigate()
     const { id } = props.match.params;
     const contacts = useSelector(state => state.data.data).contacts;
 	const [contact, setContact] = useState(useSelector(state => state.data.data.contacts).filter(c => c._id == id)[0]);
@@ -217,7 +217,7 @@ export default connect(null, { showAlert, updateContact })(props => {
 	const callContact = () => {};
 
 	const textContact = () => {
-        history.push(`/apps/messages/convo/${contact.number}`);
+        navigate(`/apps/messages/convo/${contact.number}`);
     };
 
 	const onChange = e => {

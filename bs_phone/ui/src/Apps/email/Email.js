@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles, Grid, Avatar, Paper } from '@material-ui/core';
 import Moment from 'react-moment';
 
@@ -83,10 +83,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default connect(null, { DeleteEmail })((props) => {
 	const classes = useStyles();
-	const history = useHistory();
+	const navigate = useNavigate()
 
 	const onClick = () => {
-		history.push(`/apps/email/view/${props.email._id}`);
+		navigate(`/apps/email/view/${props.email._id}`);
 	};
     
     useEffect(() => {

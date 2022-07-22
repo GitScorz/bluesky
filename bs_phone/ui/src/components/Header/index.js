@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { compose } from 'redux';
 import { connect, useSelector } from 'react-redux';
-import { useHistory, withRouter } from "react-router-dom";
-import { Grid, makeStyles, Fade, CircularProgress, Collapse } from '@material-ui/core';
+import { useNavigate } from "react-router-dom";
+import withRouter from '../../hooks/withRouter';
+import { Grid, makeStyles, CircularProgress, Collapse } from '@material-ui/core';
 import Moment from 'react-moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { grey, green, red } from '@material-ui/core/colors';
@@ -90,7 +91,7 @@ export default compose(withRouter, connect(null, { removeNewNotif, showIncoming 
     }));
 
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate()
     const [show, setShow] = useState(false);
     const [newTimer, setNewTimer] = useState(null);
 
@@ -113,7 +114,7 @@ export default compose(withRouter, connect(null, { removeNewNotif, showIncoming 
 
     const onClick = () => {
         if (notifications.length > 0 && props.location.pathname != '/notifications') {
-            history.push('/notifications');
+            navigate('/notifications');
         }
     }
 
@@ -122,7 +123,7 @@ export default compose(withRouter, connect(null, { removeNewNotif, showIncoming 
             if (callData.state === 1) {
                 props.showIncoming();
             } else {
-                history.push(`/apps/phone/call/${callData.number}`);
+                navigate(`/apps/phone/call/${callData.number}`);
             }
         }
     }
@@ -137,7 +138,7 @@ export default compose(withRouter, connect(null, { removeNewNotif, showIncoming 
             }, 500);
         }
 
-        history.push(`/apps/${app}`);
+        navigate(`/apps/${app}`);
     }
 
     if ((callData == null) || (props.location.pathname.startsWith('/apps/phone/call')))

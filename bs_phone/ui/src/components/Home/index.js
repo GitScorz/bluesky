@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
 	makeStyles,
 	withStyles,
@@ -89,7 +89,7 @@ const useStyles = makeStyles(theme => ({
 		color: '#fff',
 	},
 	appLabel: {
-		fontSize: 16,
+		fontSize: 13,
 		whiteSpace: 'nowrap',
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',
@@ -125,7 +125,6 @@ const useStyles = makeStyles(theme => ({
 	dock: {
 		background: 'rgba(0, 0, 0, 0.25)',
 		height: '12.5%',
-		padding: 10,
 		display: 'flex',
 		justifyContent: 'space-evenly',
 	},
@@ -208,17 +207,17 @@ export default connect(null, {
 	}, []);
 
 	const viewList = () => {
-		history.push('/apps');
+		navigate('/apps');
 	};
 
 	const onClick = app => {
 		props.openedApp(app);
-		history.push(`/apps/${app}`);
+		navigate(`/apps/${app}`);
 	};
 
 	const openApp = () => {
 		props.openedApp(contextApp);
-		history.push(`/apps/${contextApp}`);
+		navigate(`/apps/${contextApp}`);
 	};
 
 	const onRightClick = (e, app, isDock = false) => {

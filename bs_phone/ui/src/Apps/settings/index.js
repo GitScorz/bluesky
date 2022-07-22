@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { connect, useSelector } from 'react-redux';
 import {
 	makeStyles,
@@ -130,28 +130,28 @@ const useStyles = makeStyles(theme => ({
 
 export default connect(null, { UpdateSetting })(props => {
 	const classes = useStyles();
-	const history = useHistory();
+	const navigate = useNavigate()
 	const settings = useSelector(state => state.data.data.settings);
 	const [notifs, setNotifs] = useState(settings.notifications);
 
 	const profileClicked = () => {
-		history.push(`/apps/settings/profile`);
+		navigate(`/apps/settings/profile`);
 	};
 
 	const soundsClicked = () => {
-		history.push(`/apps/settings/sounds`);
+		navigate(`/apps/settings/sounds`);
 	};
 
 	const appNotifsClicked = () => {
-		history.push(`/apps/settings/app_notifs`);
+		navigate(`/apps/settings/app_notifs`);
 	};
 
 	const wallpaperClicked = () => {
-		history.push(`/apps/settings/wallpaper`);
+		navigate(`/apps/settings/wallpaper`);
 	};
 
 	const colorsClicked = () => {
-		history.push(`/apps/settings/colors`);
+		navigate(`/apps/settings/colors`);
 	};
 
 	const toggleNotifs = () => {
