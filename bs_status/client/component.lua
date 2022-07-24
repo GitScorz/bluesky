@@ -1,6 +1,6 @@
 Callbacks = nil
 Status = nil
-Hud = nil
+-- Hud = nil
 
 local _statuses = {}
 local _recentCd = {}
@@ -12,7 +12,7 @@ function RetrieveComponents()
     Callbacks = exports['bs_base']:FetchComponent('Callbacks')
     Logger = exports['bs_base']:FetchComponent('Logger')
     Damage = exports['bs_base']:FetchComponent('Damage')
-    Hud = exports['bs_base']:FetchComponent('Hud')
+    -- Hud = exports['bs_base']:FetchComponent('Hud')
     Status = exports['bs_base']:FetchComponent('Status')
     Utils = exports['bs_base']:FetchComponent('Utils')
 end
@@ -22,7 +22,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'Callbacks',
         'Logger',
         'Damage',
-        'Hud',
+        -- 'Hud',
         'Status',
         'Utils'
     }, function(error)
@@ -162,13 +162,13 @@ AddEventHandler('Characters:Client:Spawn', function()
             waiting = false
             if v.type == Status.TYPES.FLOAT then
                 DecorSetFloat(PlayerPedId(), v.name, val)
-                Hud:RegisterStatus(v.name, val, v.max, v.icon, v.flash, false)
+                -- Hud:RegisterStatus(v.name, val, v.max, v.icon, v.flash, false)
             elseif v.type == Status.TYPES.BOOL then
                 DecorSetBool(PlayerPedId(), v.name, val)
-                Hud:RegisterStatus(v.name, val, v.max, v.icon, v.flash, false)
+                -- Hud:RegisterStatus(v.name, val, v.max, v.icon, v.flash, false)
             else
                 DecorSetInt(PlayerPedId(), v.name, val)
-                Hud:RegisterStatus(v.name, val, v.max, v.icon, v.flash, false)
+                -- Hud:RegisterStatus(v.name, val, v.max, v.icon, v.flash, false)
             end
         end, v.name)
         while waiting do
@@ -182,7 +182,7 @@ RegisterNetEvent('Characters:Client:Logout')
 AddEventHandler('Characters:Client:Logout', function()
     spawned = false
     isEnabled = true
-    Hud:ResetStatus()
+    -- Hud:ResetStatus()
 end)
 
 AddEventHandler('Proxy:Shared:RegisterReady', function()
