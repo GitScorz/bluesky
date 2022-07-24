@@ -3,6 +3,9 @@
 <div align="center">
 A custom framework for FiveM that works with components.
 </div>
+<h4>
+The reason that i decided to rework in this project is because i think the framework has such a good potential, and of course for myself learning purposes.
+</h4>
 
 ## Requirements
 * [Node JS](https://nodejs.org/en/)
