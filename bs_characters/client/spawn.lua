@@ -64,7 +64,7 @@ Spawn = {
         SetEntityMaxHealth(PlayerPedId(), 200)
         SetEntityHealth(player, data.HP)
         SetPedArmour(player, data.Armor)
-        DisplayHud(true)
+        DisplayRadar(true)
         SetNuiFocus(false, false)
         
         if data.action ~= nil then
