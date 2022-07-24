@@ -1,27 +1,10 @@
-fx_version 'adamant'
-
+fx_version 'cerulean'
 game 'gta5'
-
-ui_page 'ui/html/index.html'
-
-files {
-  'ui/html/*.js',
-  'ui/html/index.html',
-  'ui/html/*.ttf',
-  'ui/html/*.jpg',
-  'ui/html/*.png',
-  'ui/html/*.webp',
-}
   
 client_scripts {
-  'client/*.lua',
-  'client/apps/*.lua',
-}
-shared_scripts {
-  'config.lua',
+  'client/cl_*.lua',
 }
 
 server_scripts {
-  'server/*.lua',
-  'server/apps/*.lua',
+  'server/sv_*.lua',
 }
