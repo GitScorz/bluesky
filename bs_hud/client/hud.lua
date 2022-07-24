@@ -36,7 +36,7 @@ function RetrieveComponents()
     Hud = exports['bs_base']:FetchComponent('Hud')
     Action = exports['bs_base']:FetchComponent('Action')
     Vehicle = exports['bs_base']:FetchComponent('Vehicle')
-    Phone = exports['bs_base']:FetchComponent('Phone')
+    -- Phone = exports['bs_base']:FetchComponent('Phone')
 end
 
 AddEventHandler('Core:Shared:Ready', function()
@@ -44,7 +44,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'Hud',
         'Action',
         'Vehicle',
-        'Phone',
+        -- 'Phone',
     }, function(error)  
         if #error > 0 then return; end
         RetrieveComponents()
@@ -79,9 +79,9 @@ HUD = {
         })
         _toggled = false
 
-        if not Phone:IsOpen() then
-            DisplayRadar(false)
-        end
+        -- if not Phone:IsOpen() then
+        --     DisplayRadar(false)
+        -- end
         Hud.Vehicle:Hide()
     end,
     Toggle = function(self)
@@ -98,9 +98,9 @@ HUD = {
                 Hud.Vehicle:Hide()
             end
         else
-            if not Phone:IsOpen() then
-                DisplayRadar(false)
-            end
+            -- if not Phone:IsOpen() then
+            --     DisplayRadar(false)
+            -- end
             Hud.Vehicle:Hide()
         end
     end,
