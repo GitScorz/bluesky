@@ -159,7 +159,7 @@ VOIP = {
 			if channel < 1000 then
 				addPlayerToRadio(channel, playerid)
 			else
-				Notification:Error('Channel number must be below 1000', 3500)
+				Notification:SendError('Channel number must be below 1000', 3500)
 			end
 		end,
 		addPlayerToCall = function(self, channel, playerid)

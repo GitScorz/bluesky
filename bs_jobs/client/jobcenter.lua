@@ -67,7 +67,7 @@ JOBS.JobCenter = {
                 end
                 root:Show()
             else
-                Notification:Error('You Cannot Use the Job Center')
+                Notification:SendError('You Cannot Use the Job Center')
             end
         end)
     end,
@@ -91,12 +91,12 @@ JOBS.JobCenter = {
                 if signed then
                     Callbacks:ServerCallback('Jobs:GetJobFromJobCenter', targetJob.job, function(done)
                         if done then
-                            Notification:Success('You Were Accepted and Recieved the '.. targetJob.label .. ' Job.')
+                            Notification:SendAlert('You Were Accepted and Recieved the '.. targetJob.label .. ' Job.')
                             self:OpenInfoForJob(targetJob.job, charName)
                         end
                     end)
                 else
-                    Notification:Error('You Didn\'t Sign the Job Application.')
+                    Notification:SendError('You Didn\'t Sign the Job Application.')
                 end
             end)
 

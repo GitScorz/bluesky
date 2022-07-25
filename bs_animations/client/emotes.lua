@@ -27,7 +27,7 @@ ANIMATIONS.Emotes = {
             elseif AnimData.PropEmotes[name] ~= nil then
                 animInfo = AnimData.PropEmotes[name]
             else
-                Notification:Error('Invalid Emote')
+                Notification:SendError('Invalid Emote')
             end
             local animTime = (time ~= nil and tonumber(time) or nil)
             local notCancellable = notCancellable ~= nil and notCancellable or false
@@ -147,7 +147,7 @@ function DoAnEmote(emoteData, fromUserInput, length, notCancellable)
                 PtfxInfo = emoteData.AdditionalOptions.PtfxInfo
                 PtfxWait = emoteData.AdditionalOptions.PtfxWait
                 PtfxPrompt = true
-                Notification:Info(PtfxInfo, 5000)
+                Notification:SendAlert(PtfxInfo, 5000)
                 Citizen.CreateThread(function()
                     while PtfxPrompt do
                         if IsControlPressed(0, 47) then

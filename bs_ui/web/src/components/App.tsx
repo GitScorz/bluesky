@@ -4,7 +4,6 @@ import { debugData } from "../utils/debugData";
 
 import Hud from './hud/Hud';
 import Balance from './balance/Balance';
-import Notification from './notification/Notification';
 import Phone from './phone/Phone';
 import Radio from './radio/Radio';
 
@@ -21,7 +20,6 @@ const App: React.FC = () => {
     <div className="nui-wrapper">
       <Hud />
       <Balance />
-      <Notification />
       <Phone /> 
       <Radio />
     </div>

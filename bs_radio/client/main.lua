@@ -187,7 +187,7 @@ RegisterNUICallback('setChannel', function(data, cb)
                             latestChannel = channel
                             radioOn = true
                         else
-                            Notification:Error('This is a restricted radio channel.', 3500)
+                            Notification:SendError('This is a restricted radio channel.', 3500)
                         end
                     else
                         for k, v in pairs(channels[channel]) do
@@ -213,9 +213,9 @@ RegisterNUICallback('setChannel', function(data, cb)
                     
                 if not success then
                     if not _character:GetData('JobDuty') and (_character:GetData('Job').job == "police" or _character:GetData('Job').job == "ems" or _character:GetData('Job').job == "doctor" or _character:GetData('Job').job == "fire" or _character:GetData('Job').job == "corrections") then
-                        Notification:Error('You can not access this channel off duty.', 3500)
+                        Notification:SendError('You can not access this channel off duty.', 3500)
                     else
-                        Notification:Error('This is a restricted radio channel.', 3500)
+                        Notification:SendError('This is a restricted radio channel.', 3500)
                     end
                 end
             else

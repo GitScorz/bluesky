@@ -227,14 +227,14 @@ function doAdminMenuToggle()
                         adminUtilities.Add:Button((noClip and "Disable NoClip" or "Enable NoClip"), { disabled = false, success = noClip }, function(data)
                             noClip = not noClip
                             TriggerEvent('Admin:noclip')
-                            Notification:Info('NoClip has been: '..(noClip and "Enabled" or "Disabled"), 2500)
+                            Notification:SendAlert('NoClip has been: '..(noClip and "Enabled" or "Disabled"), 2500)
                             adminUtilities.Update:Item(data.id, (noClip and "Disable NoClip" or "Enable NoClip"), { success = noClip })
                             root.Close()
                         end)
 
                         adminUtilities.Add:Button((showCoords and "Disable Coords" or "Enable Coords"), { disabled = false, success = showCoords }, function(data)
                             showCoords = not showCoords
-                            Notification:Info('Coordinates have been '..(showCoords and "Enabled" or "Disabled"), 3500)
+                            Notification:SendAlert('Coordinates have been '..(showCoords and "Enabled" or "Disabled"), 3500)
                             Citizen.CreateThread(function()
                                 while showCoords do
                                     local playerX, playerY, playerZ = table.unpack(GetEntityCoords(PlayerPedId()))
@@ -248,12 +248,12 @@ function doAdminMenuToggle()
 
                         adminUtilities.Add:Button((Status:Check() and "Needs Enabled" or "Needs Disabled"), { disabled = false, success = Status:Check() }, function(data)
                             Status:Toggle()
-                            Notification:Info('Needs have been '..(Status:Check() and "Enabled" or "Disabled"), 3500) 
+                            Notification:SendAlert('Needs have been '..(Status:Check() and "Enabled" or "Disabled"), 3500) 
                             adminUtilities.Update:Item(data.id, (Status:Check() and "Needs Enabled" or "Needs Disabled"), { success = Status:Check() })
                         end)
                         adminUtilities.Add:Button("Reset Needs", { disabled = false, success = true }, function(data)
                             TriggerEvent('Status:Client:Reset')
-                            Notification:Info('Needs have been Reset', 3500)
+                            Notification:SendAlert('Needs have been Reset', 3500)
                         end)
                         
                         if recentDisconnectsData ~= nil then
@@ -356,7 +356,7 @@ function doAdminMenuToggle()
                                         kickReason = nil
                                         root.Close()
                                     else
-                                        Notification:Error('Please state a reason for kicking '..q.name, 3500)
+                                        Notification:SendError('Please state a reason for kicking '..q.name, 3500)
                                     end
                                 end)
 
@@ -400,10 +400,10 @@ function doAdminMenuToggle()
                                         end
                                         TriggerServerEvent('Admin:server:banPlayer', q.source, banTime, banReason)
                                         banTime, banReason = nil, nil
-                                        Notification:Success(q.name..' has been banned from the server '..(banTime == -1 and "permanently" or "for "..lengthName), 3500)
+                                        Notification:SendAlert(q.name..' has been banned from the server '..(banTime == -1 and "permanently" or "for "..lengthName), 3500)
                                         root.Close()
                                     else
-                                        Notification:Error('You need to complete all the required information', 3500)
+                                        Notification:SendError('You need to complete all the required information', 3500)
                                     end
                                 end)
                                 
@@ -453,7 +453,7 @@ function doAdminMenuToggle()
                                 x, y, z = nil, nil, nil
                                 root.Close()
                             else
-                                Notification:Error("You have not specified a location to teleport to.", 3500)
+                                Notification:SendError("You have not specified a location to teleport to.", 3500)
                             end
                         end)
 
@@ -504,7 +504,7 @@ function doAdminMenuToggle()
                                 end
                                 success = true
                             else
-                                Notification:Error('No Waypoint has been marked.', 3500)
+                                Notification:SendError('No Waypoint has been marked.', 3500)
                             end
 
                             if success then
@@ -516,7 +516,7 @@ function doAdminMenuToggle()
                                     end
                                 end
                                 blipFound = false
-                                Notification:Success('Moved successfully', 3500)
+                                Notification:SendAlert('Moved successfully', 3500)
                                 root.Close()
                             end
                         end)
@@ -536,7 +536,7 @@ function doAdminMenuToggle()
                                 TriggerEvent('Commands:Client:SpawnVehicle', spawnVeh)
                                 root.Close()
                             else
-                                Notification:Error("You have not specified a vehicle modal spawn.", 3500)
+                                Notification:SendError("You have not specified a vehicle modal spawn.", 3500)
                             end
                         end)
 

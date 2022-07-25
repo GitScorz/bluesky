@@ -357,7 +357,7 @@ function startThreads()
                                 SetVehicleDoorOpen(vehicle, 5, true, false)
                                 Inventory.Check:TrunkDistance()
                             else
-                                Notification:Error('Vehicle locked.', 3500)
+                                Notification:SendError('Vehicle locked.', 3500)
                             end
                         end
 
@@ -416,9 +416,9 @@ RegisterNUICallback('MoveSlot', function(data, cb)
             end)
         else
             if success and success.reason then
-                Notification:Error(success.reason, 3600)
+                Notification:SendError(success.reason, 3600)
             else
-                Notification:Error("There was an error processing your inventory request.", 3600)
+                Notification:SendError("There was an error processing your inventory request.", 3600)
             end
         end
     end)
@@ -440,11 +440,11 @@ RegisterNUICallback('SendNotify', function(data, cb)
     cb('OK')
     if data then
         if data.alert == "success" then
-            Notification:Success(data.message, data.time)
+            Notification:SendAlert(data.message, data.time)
         elseif data.alert == "warning" then
-            Notification:Warning(data.message, data.time)
+            Notification:SendAlert(data.message, data.time)
         elseif data.alert == "error" then
-            Notification:Error(data.message, data.time)
+            Notification:SendError(data.message, data.time)
         end
     end
 end)

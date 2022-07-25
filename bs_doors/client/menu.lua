@@ -49,7 +49,7 @@ function AddDoor(sets, men)
             sets.static = doors[sets.multi].Static
             sets.lockpickable = doors[sets.multi].Lockpickable
         else
-            Notification:Error('Multi Door ID not found')
+            Notification:SendError('Multi Door ID not found')
             return
         end
     end
@@ -57,9 +57,9 @@ function AddDoor(sets, men)
         settings = sets
     }, function(done)
         if done then
-            Notification:Success('Added door')
+            Notification:SendAlert('Added door')
         else
-            Notification:Error('Failed to add door')
+            Notification:SendError('Failed to add door')
         end
     end)
 
@@ -113,7 +113,7 @@ function SetGrades(jobs, sets)
         menu.Add:Button('Next', { success = true }, function(data)
             for k,v in pairs(sets.auth) do
                 if not v.grade or v.grade == -1 then
-                    Notification:Error('Failed to select one or more grades')
+                    Notification:SendError('Failed to select one or more grades')
                     return
                 end
             end
@@ -206,9 +206,9 @@ function AdjustDoor(door, setting, value)
         value = value
     }, function(done)
         if done then
-            Notification:Success('Door updated')
+            Notification:SendAlert('Door updated')
         else
-            Notification:Error('Error updating Door')
+            Notification:SendError('Error updating Door')
         end
         SettingsMenu(door)
     end)
@@ -254,7 +254,7 @@ function EditAuthFieldGrade(jobs, auth, door)
         current = -1,
         list = grades
     }, function(data)
-        if data.data.value == -1 then Notification:Error('Select a grade'); return end
+        if data.data.value == -1 then Notification:SendError('Select a grade'); return end
         doors[door].Auth[auth].grade = data.data.value
         AdjustDoor(door, 'Auth', doors[door].Auth)
     end)
@@ -355,7 +355,7 @@ function NewAuthGrades(jobs, pickedJob, door)
     end)
 
     menu.Add:Button('Confirm', { success = true }, function(data)
-        if not pickedJob.grade then Notification:Error('You must pick a grade level')
+        if not pickedJob.grade then Notification:SendError('You must pick a grade level')
         else NewAuthDuty(jobs, pickedJob, door) end
     end)
 
@@ -456,9 +456,9 @@ function SettingsMenu(door, setting)
                 value = tonumber(data.data.value)
             }, function(done)
                 if done then
-                    Notification:Success('Door updated')
+                    Notification:SendAlert('Door updated')
                 else
-                    Notification:Error('Error updating Door')
+                    Notification:SendError('Error updating Door')
                 end
                 SettingsMenu(door):Show()
             end)
@@ -479,9 +479,9 @@ function SettingsMenu(door, setting)
                 value = data.data.value
             }, function(done)
                 if done then
-                    Notification:Success('Door updated')
+                    Notification:SendAlert('Door updated')
                 else
-                    Notification:Error('Error updating Door')
+                    Notification:SendError('Error updating Door')
                 end
             end)
         end)
@@ -499,9 +499,9 @@ function SettingsMenu(door, setting)
                 value = data.data.value
             }, function(done)
                 if done then
-                    Notification:Success('Door updated')
+                    Notification:SendAlert('Door updated')
                 else
-                    Notification:Error('Error updating Door')
+                    Notification:SendError('Error updating Door')
                 end
             end)
         end)
@@ -535,7 +535,7 @@ function SettingsMenu(door, setting)
                     end
                 end)
             else
-                Notification:Error('Can\'t lockdown emergency services doors')
+                Notification:SendError('Can\'t lockdown emergency services doors')
             end
         end)
         setMenu.Add:SubMenu('Authorization', EditAuth(door))
@@ -557,9 +557,9 @@ function ManageDoorMenu(door)
             door = doors[door].id
         }, function(done)
             if done then
-                Notification:Success('Door deleted')
+                Notification:SendAlert('Door deleted')
             else
-                Notification:Error('Error deleting Door')
+                Notification:SendError('Error deleting Door')
             end
         end)
     end)
@@ -692,7 +692,7 @@ AddEventHandler('Doors:AddDoor', function()
                         newDoorMenu:Show()
                         Notification.Persistent:Remove('addingDoor')
                     else
-                        Notification:Error('Door not found')
+                        Notification:SendError('Door not found')
                     end
                 end
 

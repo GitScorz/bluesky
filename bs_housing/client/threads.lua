@@ -41,9 +41,9 @@ Citizen.CreateThread(function()
                 elseif IsControlJustReleased(1,47) then
                     Callbacks:ServerCallback('Housing:ToggleLock', nearest.id, function(status)
                         if status then
-                            Notification:Info('House Locked')
+                            Notification:SendAlert('House Locked')
                         else
-                            Notification:Info('House Unlocked')
+                            Notification:SendAlert('House Unlocked')
                         end
                     end)
                 end

@@ -15,12 +15,12 @@ UI = {
   Hud = {
     Show = function(self)
       UI:SendUIMessage('hud:status:visible', true)
+      StartThreads()
     end,
     Hide = function(self)
       UI:SendUIMessage('hud:status:visible', false)
     end,
     Update = function(self, data)
-      print(table.dump(data))
       UI:SendUIMessage('hud:status:update', data)
     end,
     Reset = function(self)

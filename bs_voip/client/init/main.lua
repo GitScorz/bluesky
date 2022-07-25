@@ -230,7 +230,7 @@ local VOIP = {
 			if channel < 1000 then
 				setRadioChannel(channel)
 			else
-				Notification:Error('Channel number must be below 1000', 3500)
+				Notification:SendError('Channel number must be below 1000', 3500)
 			end
 			-- TODO PERMISSION CHANNELS
 		end,

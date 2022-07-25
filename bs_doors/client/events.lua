@@ -98,7 +98,7 @@ AddEventHandler('Doors:client:usedLockpick', function(item)
                     Citizen.SetTimeout((math.random(Config.Lockpick.animDuration) * 1000), function() 
                         Progress:Fail()
                         Callbacks:ServerCallback('Inventory:Server:RemoveItem', { item = item }, function(done)
-                            Notification:Error('Your lockpick broke')    
+                            Notification:SendError('Your lockpick broke')    
                         end)
                     end)
                 end
@@ -121,7 +121,7 @@ AddEventHandler('Doors:client:usedLockpick', function(item)
                 }, function(status)
                     if not status then
                         Doors:SetLock(showing, false)
-                        Notification:Success('The door is now open')
+                        Notification:SendAlert('The door is now open')
                     end
                 end)
             end
@@ -171,15 +171,15 @@ AddEventHandler('Doors:Lockdown', function()
                         end
                     end)
                 else
-                    Notification:Error('You can\'t lockdown emergency services doors')
+                    Notification:SendError('You can\'t lockdown emergency services doors')
                 end
             else
-                Notification:Error('This door is already locked by the Police')
+                Notification:SendError('This door is already locked by the Police')
             end
         else
-            Notification:Error('Not near a door')
+            Notification:SendError('Not near a door')
         end
     else
-        Notification:Error('Not near a door')
+        Notification:SendError('Not near a door')
     end
 end)

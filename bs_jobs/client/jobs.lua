@@ -37,8 +37,8 @@ end)
 RegisterNetEvent('Jobs:Client:ViewJobInformation')
 AddEventHandler('Jobs:Client:ViewJobInformation', function(jobData, jobDuty)
     if jobData.job == 'unemployed' then
-        Notification:Info('You\'re Unemployed')
+        Notification:SendAlert('You\'re Unemployed')
     else
-        Notification:Info('Your Job Is: '.. jobData.label .. ' - Grade: ' .. jobData.grade.label .. (jobData.workplace.id == 0 and '' or (' - Workplace: '.. jobData.workplace.label)) .. ' - Salary: '.. jobData.salary .. '. You Are '..(onDuty and 'On' or 'Off')..' Duty.', 12000)
+        Notification:SendAlert('Your Job Is: '.. jobData.label .. ' - Grade: ' .. jobData.grade.label .. (jobData.workplace.id == 0 and '' or (' - Workplace: '.. jobData.workplace.label)) .. ' - Salary: '.. jobData.salary .. '. You Are '..(onDuty and 'On' or 'Off')..' Duty.', 12000)
     end
 end)

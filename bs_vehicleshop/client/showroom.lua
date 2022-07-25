@@ -161,7 +161,7 @@ function EditSpot(dealer, spot)
                 type = 'color'
             }, function(s)
                 if s then
-                    Notification:Success('Color updated')
+                    Notification:SendAlert('Color updated')
                 end
             end)
         end)
@@ -182,7 +182,7 @@ function EditSpot(dealer, spot)
                 type = 'price'
             }, function(s)
                 if s then
-                    Notification:Success('Price updated')
+                    Notification:SendAlert('Price updated')
                 end
             end)
         end)
@@ -242,7 +242,7 @@ function EditSpot(dealer, spot)
                 type = 'remove'
             }, function(s)
                 if s then
-                    Notification:Success('Vehicle removed from showroom spot #'..spot)
+                    Notification:SendAlert('Vehicle removed from showroom spot #'..spot)
                 end
                 Wait(50)
                 ManageShowroom():Show()

@@ -322,7 +322,7 @@ function ManageDoubleDoors(door)
         end
 
         if showNotif then
-            Notification:Error('There was something preventing one of the doors from closing', 5000)
+            Notification:SendError('There was something preventing one of the doors from closing', 5000)
         end
     else
         TriggerServerEvent('Doors:server:updateLockingState', door, false)
@@ -387,7 +387,7 @@ function ManageDoor(door)
             end
 
             if showNotif then
-                Notification:Error('There was something preventing the door from closing', 5000)
+                Notification:SendError('There was something preventing the door from closing', 5000)
             end
 
             TriggerServerEvent('Doors:server:updateLockingState', door, false)
@@ -451,7 +451,7 @@ function ShowInfo(door)
                                     else
                                         if not showedNotif then
                                             showedNotif = true
-                                            Notification:Error('You need to be closer the door')
+                                            Notification:SendError('You need to be closer the door')
                                             Citizen.SetTimeout(3000, function() showedNotif = false end)
                                         end
                                     end

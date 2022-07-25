@@ -149,7 +149,7 @@ function RunThreads()
             
                                 end)
                             else
-                                Notification:Error('Not Enough Cash')
+                                Notification:SendError('Not Enough Cash')
                             end
                         end)
                         

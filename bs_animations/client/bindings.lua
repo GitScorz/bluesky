@@ -54,7 +54,7 @@ ANIMATIONS.EmoteBinds = {
         Callbacks:ServerCallback('Animations:UpdateEmoteBinds', temp, function(success)
             if success then
                 emoteBinds = temp
-                Notification:Success('Successfully Updated and Saved Keybinds', 5000)
+                Notification:SendAlert('Successfully Updated and Saved Keybinds', 5000)
             end
         end)
     end,

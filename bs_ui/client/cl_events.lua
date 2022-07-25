@@ -17,8 +17,10 @@ AddEventHandler('UI:Client:ChangeHudState', function()
   local state = true -- We don't have settings yet, so just assume true
   if state then
     UI.Hud:Hide()
+    state = false
   else
     UI.Hud:Show()
+    state = true
   end
 end)
 
@@ -64,8 +66,8 @@ function StartThreads()
         -- })
         -- Citizen.Wait(200)
         UI.Hud:Update({ id = 'health', value = (GetEntityHealth(GLOBAL_PED) - 100) })
+        Wait(500)
         UI.Hud:Update({ id = 'armor', value = GetPedArmour(GLOBAL_PED) })
-        Citizen.Wait(200)
       else
         if not IsPauseMenuActive() then
           -- SendNUIMessage({
@@ -76,7 +78,7 @@ function StartThreads()
         end
       end
 
-      Wait(500)
+      Wait(1000)
     end
   end)
 end

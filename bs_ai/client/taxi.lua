@@ -50,7 +50,7 @@ AICONTROL.Taxi = {
                     TaskVehicleDriveToCoord(taxiPed, vehicle, x, y, z, 20.0, 1, `taxi`, 786603, 3.0, true)
                     SetPedKeepTask(taxiPed, true)
 
-                    Notification:Info('A Taxi Has Been Dispatched To Your Location. It Will be there As Soon As Possible.', 8000)
+                    Notification:SendAlert('A Taxi Has Been Dispatched To Your Location. It Will be there As Soon As Possible.', 8000)
                     while distance > 15.0 do
                         vehicleCoords = GetEntityCoords(vehicle)
                         distance = #(pedCoords - vehicleCoords)
@@ -60,7 +60,7 @@ AICONTROL.Taxi = {
 
                     local hasPedEnteredTheVehicle = false
                     SetVehicleDoorsLockedForAllPlayers(vehicle, false)
-                    Notification:Success('The Taxi has Reached the Destination you Called From. Press F to Get In to The Back', 8000)
+                    Notification:SendAlert('The Taxi has Reached the Destination you Called From. Press F to Get In to The Back', 8000)
                     Citizen.CreateThread(function()
                         while not hasPedEnteredTheVehicle do
                             Citizen.Wait(5)
@@ -73,7 +73,7 @@ AICONTROL.Taxi = {
                                 if distance < 50.0 then
                                     TaskEnterVehicle(playerPed, vehicle, -1, 2, 1.0, 1, 0)
                                     Citizen.Wait(3000)
-                                    Notification:Info('Please set a waypoint on The GPS for the taxi driver to follow. Press E when you have set it. You can override this at any time in the journey. Press SPACEBAR to cancel the journey at any time.', 20000)
+                                    Notification:SendAlert('Please set a waypoint on The GPS for the taxi driver to follow. Press E when you have set it. You can override this at any time in the journey. Press SPACEBAR to cancel the journey at any time.', 20000)
                                     hasPedEnteredTheVehicle = true
                                 end
                             end
@@ -118,11 +118,11 @@ AICONTROL.Taxi = {
 
                                     TaskVehicleDriveToCoord(taxiPed, vehicle, blipX, blipY, blipZ, 20.0, 1, `taxi`, 786603, 20.0, true)
                                     SetPedKeepTask(taxiPed, true)
-                                    Notification:Success('Route Redirected')
+                                    Notification:SendAlert('Route Redirected')
                                 end
                             elseif IsControlJustReleased(1, 55) or IsControlJustReleased(1, 23) then -- SPACE or If They Decide to Fucking Jump Out of a Moving Car
                                 driving = false
-                                Notification:Success('Taxi Journey Completed Early.')
+                                Notification:SendAlert('Taxi Journey Completed Early.')
                                 endTaxi()
                             end
                         end
@@ -136,7 +136,7 @@ AICONTROL.Taxi = {
                             print(distance)
                             if distance < 10.0 then
                                 driving = false
-                                Notification:Success('You Have Reached Your Destination.')
+                                Notification:SendAlert('You Have Reached Your Destination.')
                                 endTaxi()
                             end
                         end
@@ -145,7 +145,7 @@ AICONTROL.Taxi = {
 
             end)
         else
-            Notification:Error('Cannot Call Taxi at This Time.')
+            Notification:SendError('Cannot Call Taxi at This Time.')
         end
     end
 }

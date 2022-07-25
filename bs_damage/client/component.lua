@@ -68,15 +68,15 @@ DAMAGE = {
             end
         end,
         Debug = function(self, ped, bone, weapon, damageDone)
-            Notification:Standard('Bone: ' .. Config.Bones[bone])
+            Notification:SendAlert('Bone: ' .. Config.Bones[bone])
             if (Config.MinorInjurWeapons[weapon] ~= nil) then
-                Notification:Standard('Minor Weapon : ' .. weapon, 10000)
+                Notification:SendAlert('Minor Weapon : ' .. weapon, 10000)
             else
-                Notification:Standard('Major Weapon : ' .. weapon, 10000)
+                Notification:SendAlert('Major Weapon : ' .. weapon, 10000)
             end
-            Notification:Standard('Crit Area: ' .. tostring(Config.CriticalAreas[Config.Bones[bone]] ~= nil), 10000)
-            Notification:Standard('Stagger Area: ' .. tostring(Config.StaggerAreas[Config.Bones[bone]] ~= nil and (Config.StaggerAreas[Config.Bones[bone]].armored or GetPedArmour(ped) <= 0)), 10000)
-            Notification:Standard('Dmg Done: ' .. damageDone, 10000)
+            Notification:SendAlert('Crit Area: ' .. tostring(Config.CriticalAreas[Config.Bones[bone]] ~= nil), 10000)
+            Notification:SendAlert('Stagger Area: ' .. tostring(Config.StaggerAreas[Config.Bones[bone]] ~= nil and (Config.StaggerAreas[Config.Bones[bone]].armored or GetPedArmour(ped) <= 0)), 10000)
+            Notification:SendAlert('Dmg Done: ' .. damageDone, 10000)
         end,
     },
     CheckDamage = function(self, ped, bone, weapon, damageDone)

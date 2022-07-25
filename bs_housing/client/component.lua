@@ -40,7 +40,7 @@ HOUSING = {
                     _housePoints = data[2]
                 end
             else
-                Notification:Error('House Is Locked & You Don\'t Have A Key')
+                Notification:SendError('House Is Locked & You Don\'t Have A Key')
             end
         end)
     end,

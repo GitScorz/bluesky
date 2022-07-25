@@ -69,7 +69,7 @@ AddEventHandler('Bank:OpenATMUI', function(data)
     if atm and dist < 2.0 then
         Bank:OpenUI('ATM', data)
     else
-        Notification:Error("No ATM Nearby")
+        Notification:SendError("No ATM Nearby")
     end
 end)
 

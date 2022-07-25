@@ -8,7 +8,7 @@ ANIMATIONS.PedFeatures = {
             walkStyle = walk
             Callbacks:ServerCallback('Animations:UpdatePedFeatures', { type = 'walk', data = 'default'}, function(success)
                 if success then
-                    Notification:Info('Reset Walking Style', 5000)
+                    Notification:SendAlert('Reset Walking Style', 5000)
                 end
             end)
         else
@@ -18,7 +18,7 @@ ANIMATIONS.PedFeatures = {
             walkStyle = walk
             Callbacks:ServerCallback('Animations:UpdatePedFeatures', { type = 'walk', data = walk}, function(success)
                 if success then
-                    Notification:Success('Saved Walking Style: ' .. label, 5000)
+                    Notification:SendAlert('Saved Walking Style: ' .. label, 5000)
                 end
             end)
         end
@@ -29,7 +29,7 @@ ANIMATIONS.PedFeatures = {
             facialExpression = expression
             Callbacks:ServerCallback('Animations:UpdatePedFeatures', { type = 'expression', data = 'default'}, function(success)
                 if success then
-                    Notification:Info('Expression Reset', 5000)
+                    Notification:SendAlert('Expression Reset', 5000)
                 end
             end)
         else
@@ -37,7 +37,7 @@ ANIMATIONS.PedFeatures = {
             facialExpression = expression
             Callbacks:ServerCallback('Animations:UpdatePedFeatures', { type = 'expression', data = expression}, function(success)
                 if success then
-                    Notification:Success('Saved Expression: ' .. label, 5000)
+                    Notification:SendAlert('Saved Expression: ' .. label, 5000)
                 end
             end)
         end

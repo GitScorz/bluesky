@@ -35,6 +35,6 @@ AddEventHandler('Housing:Client:CalcOffset', function()
         local offset = { x = ( ply.x  - shell.x), y = ( ply.y - shell.y ), z = ( ply.z - shell.z ) }
         TriggerServerEvent('Housing:Server:LogOffset', offset)
     else
-        Notification:Error('You Must Be In An Interior To Use This Command')
+        Notification:SendError('You Must Be In An Interior To Use This Command')
     end
 end)

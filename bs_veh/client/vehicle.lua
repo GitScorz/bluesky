@@ -91,10 +91,10 @@ VEHICLE = {
         Off = function(self, veh)
             local plate = GetVehicleNumberPlateText(veh)
             if (DecorExistOn(veh, 'VEH_HOTWIRED') and DecorGetBool(veh, 'VEH_HOTWIRED')) then
-                Notification:Error('This Vehicle\'s Ignition Is Damaged')
+                Notification:SendError('This Vehicle\'s Ignition Is Damaged')
                 return
             elseif not _keys[plate] then 
-                Notification:Error('You Don\'t Have Keys For This Vehicle')
+                Notification:SendError('You Don\'t Have Keys For This Vehicle')
                 return
             end
 
@@ -102,7 +102,7 @@ VEHICLE = {
 
             SetVehicleEngineOn(veh, false, true, true)
             SetVehicleUndriveable(veh, true)
-            Notification:Info('Engine Turned Off', 1500)
+            Notification:SendAlert('Engine Turned Off', 1500)
 
             TriggerEvent('Vehicle:Client:Ignition', false)
 
@@ -114,7 +114,7 @@ VEHICLE = {
         On = function(self, veh)
             local plate = GetVehicleNumberPlateText(veh)
             if not _keys[plate] and not (DecorExistOn(veh, 'VEH_HOTWIRED') and DecorGetBool(veh, 'VEH_HOTWIRED')) then 
-                Notification:Error('You Don\'t Have Keys For This Vehicle')
+                Notification:SendError('You Don\'t Have Keys For This Vehicle')
                 return
             end
 
@@ -122,7 +122,7 @@ VEHICLE = {
 
             SetVehicleEngineOn(veh, true, false, true)
             SetVehicleUndriveable(veh, false)
-            Notification:Info('Engine Turned On', 1500)
+            Notification:SendAlert('Engine Turned On', 1500)
             TriggerEvent('Vehicle:Client:Ignition', true)
             if _actionShowing then
                 Action:Hide()
@@ -132,7 +132,7 @@ VEHICLE = {
         Toggle = function(self, veh)
             local plate = GetVehicleNumberPlateText(veh)
             if not _keys[plate] and not (DecorExistOn(veh, 'VEH_HOTWIRED') and DecorGetBool(veh, 'VEH_HOTWIRED')) then 
-                Notification:Error('You Don\'t Have Keys For This Vehicle')
+                Notification:SendError('You Don\'t Have Keys For This Vehicle')
                 return
             end
 
@@ -147,7 +147,7 @@ VEHICLE = {
         GetKeys = function(self, plate, hideNotif)
             Callbacks:ServerCallback('Vehicle:AddKey', plate, function()
                 if not hideNotif then
-                    Notification:Info('You Recieved Keys To A Vehicle')
+                    Notification:SendAlert('You Recieved Keys To A Vehicle')
                 end
 
                 _keys[plate] = true
@@ -156,7 +156,7 @@ VEHICLE = {
         TakeKeys = function(self, plate, hideNotif)
             Callbacks:ServerCallback('Vehicle:RemoveKey', plate, function()
                 if not hideNotif then
-                    Notification:Info('Keys To A Vehicle Were Taken')
+                    Notification:SendAlert('Keys To A Vehicle Were Taken')
                 end
 
                 _keys[plate] = nil
@@ -169,7 +169,7 @@ VEHICLE = {
             if not _keys[plate] then return end
             DecorSetBool(veh, 'VEH_LOCKS', true)
 
-            Notification:Info('Vehicle Locked', 1500)
+            Notification:SendAlert('Vehicle Locked', 1500)
             if not IsPedInAnyVehicle(GLOBAL_PED, true) or GetVehiclePedIsTryingToEnter(GLOBAL_PED) ~= veh then
                 Citizen.CreateThread(function()
                     TaskPlayAnim(GLOBAL_PED, 'anim@mp_player_intmenu@key_fob@', 'fob_click', 2.0, 2.5, -1, 48, 0, 0, 0, 0 )
@@ -188,7 +188,7 @@ VEHICLE = {
             DecorSetBool(veh, 'VEH_LOCKS', false)
 
             SetVehicleDoorsLocked(veh, 1)
-            Notification:Info('Vehicle Unlocked', 1500)
+            Notification:SendAlert('Vehicle Unlocked', 1500)
 
             if not IsPedInAnyVehicle(GLOBAL_PED, true) or GetVehiclePedIsTryingToEnter(GLOBAL_PED) ~= veh then
                 Citizen.CreateThread(function()
@@ -243,7 +243,7 @@ VEHICLE = {
                 local stageComplete = false
                 if wasCancelled then
                     canAttemptHotwire = true
-                    Notification:Error('Hotwire Cancelled')
+                    Notification:SendError('Hotwire Cancelled')
                     return
                 end
             
@@ -284,15 +284,15 @@ VEHICLE = {
                     canAttemptHotwire = false
                     canSearchForKey = false
                     SetVehicleAlarm(veh, false)
-                    Notification:Success('Vehicle Hotwired')
+                    Notification:SendAlert('Vehicle Hotwired')
                 else
                     canAttemptHotwire = false
                     Vehicle.Engine:Force(veh, false)
-                    Notification:Error('Hotwire Failed')
+                    Notification:SendError('Hotwire Failed')
                 end
             end
         else
-            Notification:Error('Cannot Hotwire This Vehicle')
+            Notification:SendError('Cannot Hotwire This Vehicle')
         end
     end,
     Search = function(self, veh, success, alarm)
@@ -316,7 +316,7 @@ VEHICLE = {
                 local stageComplete = false
                 if wasCancelled then
                     canSearchForKey = true
-                    Notification:Error('Search Cancelled')
+                    Notification:SendError('Search Cancelled')
                     return
                 end
             
@@ -357,15 +357,15 @@ VEHICLE = {
                     canAttemptHotwire = false
                     canSearchForKey = false
                     SetVehicleAlarm(veh, false)
-                    Notification:Success('You Found A Key!')
+                    Notification:SendAlert('You Found A Key!')
                 else
                     canSearchForKey = false
                     Vehicle.Engine:Force(veh, false)
-                    Notification:Error('You Found Nothing')
+                    Notification:SendError('You Found Nothing')
                 end
             end
         else
-            Notification:Error('Nothing To Search')
+            Notification:SendError('Nothing To Search')
         end
     end,
 }
