@@ -83,7 +83,7 @@ SOUNDS.Do = {
                 while _sounds[playerNetId] ~= nil do
                     local lCoords = GetEntityCoords(PlayerPedId())
                     local eCoords = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(playerNetId)))
-                    local distIs  = #(vectory3(lCoords.x, lCoords.y, lCoords.z) - vector3(eCoords.x, eCoords.y, eCoords.z))
+                    local distIs  = #(vector3(lCoords.x, lCoords.y, lCoords.z) - vector3(eCoords.x, eCoords.y, eCoords.z))
                     SendNUIMessage({
                         action = 'changeVol',
                         source = playerNetId,
