@@ -11,7 +11,6 @@ function RetrieveComponents()
     Chat = exports['bs_base']:FetchComponent('Chat')
     Status = exports['bs_base']:FetchComponent('Status')
     Inventory = exports['bs_base']:FetchComponent('Inventory')
-    Wallet = exports['bs_base']:FetchComponent('Wallet')
     RegisterChatCommands()
     registerUsables()
 end
@@ -24,7 +23,6 @@ AddEventHandler('Core:Shared:Ready', function()
         'Chat',
         'Status',
         'Inventory',
-        'Wallet'
     }, function(error)
         if #error > 0 then return end -- Do something to handle if not all dependencies loaded
         RetrieveComponents()
@@ -51,14 +49,6 @@ STATUS = {
                     return v
                 end
             end
-        end,
-    },
-    Set = {
-        All = function(self, data)
-
-        end,
-        Single = function(self, name, data)
-
         end,
     },
 }

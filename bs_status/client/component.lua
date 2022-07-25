@@ -39,6 +39,12 @@ STATUS = {
         BOOL = 2,
         INT = 3,
     },
+    --- @param name string The name of the status.
+    --- @param type any The type of the status check TYPES.
+    --- @param max number The maximum value of the status.
+    --- @param id string The id of the status.
+    --- @param flash boolean Whether or not the status should flash.
+    --- @param modify function The function to call when the status is modified.
     Register = function(self, name, type, max, id, flash, modify)
         local update = false
         if _statuses[name] ~= nil then
@@ -63,7 +69,9 @@ STATUS = {
     GetRegistered = function(self)
         return _statuses
     end,
-    Set = { -- Really much more performant to just interact directly with Decor natives ... but available just in case?
+    Set = { -- Really much more performant to just interact directly with Decor natives ... but available just in case?~
+        --- @param entity any
+        --- @param value number
         All = function(self, entity, value)
             for k, v in pairs(_statuses) do
                 if v.type == Status.TYPES.FLOAT then
@@ -77,6 +85,10 @@ STATUS = {
                 TriggerEvent('Status:Client:Update', v.name, value)
             end
         end,
+
+        --- @param entity any
+        --- @param name string
+        --- @param value number
         Single = function(self, entity, name, value)
             if _statuses[name] ~= nil then
                 if _statuses[name].type == Status.TYPES.FLOAT then
@@ -87,7 +99,7 @@ STATUS = {
                     DecorSetInt(entity, _statuses[name].name, value)
                 end
                 TriggerServerEvent('Status:Server:Update', { status = name, value = value })
-                TriggerEvent('Status:Client:Update', v.name, value)
+                TriggerEvent('Status:Client:Update', _statuses[name].id, value)
             end
         end,
     },
@@ -181,7 +193,7 @@ RegisterNetEvent('Characters:Client:Logout')
 AddEventHandler('Characters:Client:Logout', function()
     spawned = false
     isEnabled = true
-    UI.Hud:Reset()
+    UI.Hud:Hide()
 end)
 
 AddEventHandler('Proxy:Shared:RegisterReady', function()
