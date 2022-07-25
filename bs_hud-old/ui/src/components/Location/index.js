@@ -67,7 +67,7 @@ export default () => {
 
   return (
     <div className={inVehicle || isShifted ? classes.location : classes.locationFoot}>
-      <div className={classes.areaWrap}>
+      {/* <div className={classes.areaWrap}>
         <span className={classes.area}>{location.area}</span>
       </div>
       <div className={classes.locationMain}>
@@ -82,7 +82,7 @@ export default () => {
             </span>
           ) : null}
         </span>
-      </div>
+      </div> */}
     </div>
   );
 };
