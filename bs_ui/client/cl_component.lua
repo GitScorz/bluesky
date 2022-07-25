@@ -12,12 +12,21 @@ UI = {
     SetNuiFocus(shouldFocus, shouldFocus)
   end,
 
-  HUD = {
+  Hud = {
     Show = function(self)
       UI:SendUIMessage('hud:status:visible', true)
     end,
     Hide = function(self)
       UI:SendUIMessage('hud:status:visible', false)
+    end,
+  },
+
+  Balance = {
+    ShowBank = function(self)
+      UI:SendUIMessage('hud:balance:setBankVisible', true)
+    end,
+    ShowCash = function(self)
+      UI:SendUIMessage('hud:balance:setCashVisible', true)
     end,
   }
 }

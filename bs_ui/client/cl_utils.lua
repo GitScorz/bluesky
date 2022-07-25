@@ -5,7 +5,7 @@ function RetrieveComponents()
 end
 
 AddEventHandler('Core:Shared:Ready', function()
-  exports['bs_base']:RequestDependencies('Motels', {
+  exports['bs_base']:RequestDependencies('UI', {
     'Logger',
     'Callbacks',
   }, function(error)  

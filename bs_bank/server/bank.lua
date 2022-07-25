@@ -102,23 +102,23 @@ function RegisterItemUse()
 end
 
 function RegisterChatCommands()
-    Chat:RegisterAdminCommand('bank', function(source, args, rawCommand)
-        TriggerClientEvent('Bank:OpenBankUI', source)
-    end, {
-        help = 'Debug Bank',
-    }, 0)
+    -- Chat:RegisterAdminCommand('bank', function(source, args, rawCommand)
+    --     TriggerClientEvent('Bank:OpenBankUI', source)
+    -- end, {
+    --     help = 'Debug Bank',
+    -- }, 0)
 
-    Chat:RegisterAdminCommand('loan', function(source, args, rawCommand)
-        TriggerClientEvent('Bank:TestLoan', source)
-    end, {
-        help = 'Debug Loan',
-    }, 0)
+    -- Chat:RegisterAdminCommand('loan', function(source, args, rawCommand)
+    --     TriggerClientEvent('Bank:TestLoan', source)
+    -- end, {
+    --     help = 'Debug Loan',
+    -- }, 0)
 
-    Chat:RegisterAdminCommand('bankreset', function(source, args, rawCommand)
-        TriggerEvent('Bank:ResetBanks')
-    end, {
-        help = 'Debug Loan',
-    }, 0)
+    -- Chat:RegisterAdminCommand('bankreset', function(source, args, rawCommand)
+    --     TriggerEvent('Bank:ResetBanks')
+    -- end, {
+    --     help = 'Debug Loan',
+    -- }, 0)
 end
 
 function RegisterCallbacks()

@@ -1,0 +1,19 @@
+.balance-wrapper {
+  position: absolute;
+  right: 1%;
+  top: 15%;
+  color: #157811;
+  font-size: 3rem;
+  text-shadow: 2px 2px #000;
+  animation: fadeIn .7s;
+  user-select: none;
+}
+
+.money {
+  color: #fff;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
