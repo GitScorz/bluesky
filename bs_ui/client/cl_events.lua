@@ -1,6 +1,7 @@
 GLOBAL_PED = PlayerPedId()
 GLOBAL_VEH = GetVehiclePedIsIn(GLOBAL_PED, false)
 local _paused = false
+local state = true -- We don't have settings yet, so just assume true
 
 RegisterNetEvent('UI:Client:ShowBank')
 AddEventHandler('UI:Client:ShowBank', function()
@@ -14,14 +15,12 @@ end)
 
 RegisterNetEvent('UI:Client:ChangeHudState')
 AddEventHandler('UI:Client:ChangeHudState', function()
-  local state = true -- We don't have settings yet, so just assume true
   if state then
     UI.Hud:Hide()
-    state = false
   else
     UI.Hud:Show()
-    state = true
   end
+  state = not state
 end)
 
 AddEventHandler('Status:Client:Update', function(status, value)
