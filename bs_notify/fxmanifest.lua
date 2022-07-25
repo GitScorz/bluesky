@@ -3,10 +3,10 @@ game 'gta5'
 
 client_script "client.lua"
 
-ui_page 'index.html'
+ui_page 'ui/index.html'
 
 files {
-  "index.html",
-  "scripts.js",
-  "css/style.css"
+  "ui/index.html",
+  "ui/scripts.js",
+  "ui/style.css"
 }
