@@ -12,7 +12,7 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(1000)
 		--TriggerServerEvent('mythic_pwnzor:server:PingCheck', securityToken, isLoggedIn)
-		local playerPed = GetPlayerPed(-1)
+		local playerPed = PlayerPedId()
 		if playerPed then
 			currentPos = GetEntityCoords(playerPed)
 			if prevPos ~= nil then

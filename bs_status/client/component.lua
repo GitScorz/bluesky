@@ -173,6 +173,7 @@ AddEventHandler('Characters:Client:Spawn', function()
             waiting = false
             if v.type == Status.TYPES.FLOAT then
                 DecorSetFloat(PlayerPedId(), v.name, val)
+                Wait(500) -- We need this...
                 UI.Hud:Update({ id = v.id, value = val })
             elseif v.type == Status.TYPES.BOOL then
                 DecorSetBool(PlayerPedId(), v.name, val)
@@ -183,7 +184,7 @@ AddEventHandler('Characters:Client:Spawn', function()
             end
         end, v.name)
         while waiting do
-            Citizen.Wait(100)
+            Wait(100)
         end
     end
 

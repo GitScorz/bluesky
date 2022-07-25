@@ -59,7 +59,7 @@ SOUNDS.Do = {
         end,
         Distance = function(self, playerNetId, maxDistance, soundFile, soundVolume)
             Logger:Trace('Sounds', ('^2Looping Sound %s Per Request From %s For Distance %s^7'):format(soundFile, playerNetId, maxDistance))
-            local lCoords = GetEntityCoords(GetPlayerPed(-1))
+            local lCoords = GetEntityCoords(PlayerPedId())
             local eCoords = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(playerNetId)))
             local distIs  = #(vector3(lCoords.x, lCoords.y, lCoords.z) - vector3(eCoords.x, eCoords.y, eCoords.z))
             if(distIs <= maxDistance) then
@@ -81,7 +81,7 @@ SOUNDS.Do = {
         
             Citizen.CreateThread(function()
                 while _sounds[playerNetId] ~= nil do
-                    local lCoords = GetEntityCoords(GetPlayerPed(-1))
+                    local lCoords = GetEntityCoords(PlayerPedId())
                     local eCoords = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(playerNetId)))
                     local distIs  = #(vectory3(lCoords.x, lCoords.y, lCoords.z) - vector3(eCoords.x, eCoords.y, eCoords.z))
                     SendNUIMessage({
@@ -112,7 +112,7 @@ SOUNDS.Do = {
         end,
         Distance = function(self, playerNetId, maxDistance, soundFile, soundVolume)
             Logger:Trace('Sounds', ('^2Playing Sound %s Once Per Request From %s For Distance %s^7'):format(soundFile, playerNetId, maxDistance))
-            local lCoords = GetEntityCoords(GetPlayerPed(-1))
+            local lCoords = GetEntityCoords(PlayerPedId())
             local eCoords = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(playerNetId)))
             local distIs  = #(vector3(lCoords.x, lCoords.y, lCoords.z) - vector3(eCoords.x, eCoords.y, eCoords.z))
             if(distIs <= maxDistance) then
