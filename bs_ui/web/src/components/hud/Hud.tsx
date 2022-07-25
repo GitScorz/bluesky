@@ -29,7 +29,7 @@ export default function Hud() {
         thirst: 50,
       });
     }
-  }, [visible]);
+  }, [visible, status]);
   
   useNuiEvent('hud:status:visible', (shouldShow: boolean) => {
     setVisible(shouldShow);
@@ -38,7 +38,8 @@ export default function Hud() {
   useNuiEvent('hud:status:update', (data: UI.Status.UpdateData) => {
     switch (data.id) {
       case 'voice':
-        setStatus({ ...status, voice: data.value });
+        const voiceStates = [30,  70, 100];
+        setStatus({ ...status, voice: voiceStates[data.value] });
         break;
       case 'health':
         setStatus({ ...status, health: data.value });
@@ -55,14 +56,6 @@ export default function Hud() {
       default:
         break;
     }
-    
-    // setStatus({ 
-    //   voice: data.voice,
-    //   health: data.health, 
-    //   armor: data.armor, 
-    //   thirst: data.thirst, 
-    //   hunger: data.hunger 
-    // });
   });
 
   useNuiEvent('hud:status:reset', function() {
