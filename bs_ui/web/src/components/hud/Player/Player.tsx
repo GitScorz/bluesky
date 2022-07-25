@@ -7,7 +7,7 @@ import { SizeProp } from '@fortawesome/fontawesome-svg-core';
 
 export default function Player(props: UI.Status.HudProps) {
   const thickSize = 6.5;
-  const size = 55;
+  const size = 53;
   const iconSize: SizeProp = "lg";
 
   return (
