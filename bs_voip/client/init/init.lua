@@ -3,13 +3,11 @@ local firstInitialize = true
 function RetrieveComponents()
 	Callbacks = exports['bs_base']:FetchComponent('Callbacks')
 	Notification = exports['bs_base']:FetchComponent('Notification')
-	Action = exports['bs_base']:FetchComponent('Action')
-	Progress = exports['bs_base']:FetchComponent('Progress')
 	VoipStuff = exports['bs_base']:FetchComponent('Voip')
 	Utils = exports['bs_base']:FetchComponent('Utils')
-	Sounds = exports['bs_base']:FetchComponent('Sounds')
 	Convar = exports['bs_base']:FetchComponent('Convar')
 	Logger = exports['bs_base']:FetchComponent('Logger')
+	UI = exports['bs_base']:FetchComponent('UI')
 end
 AddEventHandler('Voip:Shared:DependencyUpdate', RetrieveComponents)
 
@@ -36,11 +34,13 @@ local function InitializeVoip()
 		SetResourceKvp('pma-voice_enableMicClicks', tostring(true))
 		micClicks = 'true'
 	end
-	sendUIMessage({
-		uiEnabled = GetConvarInt("voice_enableUi", 1) == 1,
-		voiceModes = json.encode(Cfg.voiceModes),
-		voiceMode = mode - 1
-	})
+
+	UI.Hud:Update({ id = "voice", value = mode - 1})
+	-- sendUIMessage({
+	-- 	uiEnabled = GetConvarInt("voice_enableUi", 1) == 1,
+	-- 	voiceModes = json.encode(Cfg.voiceModes),
+	-- 	voiceMode = mode - 1
+	-- })
 
 	-- Reinitialize channels if they're set.
 	if LocalPlayer.state.radioChannel ~= 0 then
@@ -50,6 +50,7 @@ local function InitializeVoip()
 	if LocalPlayer.state.callChannel ~= 0 then
 		setCallChannel(LocalPlayer.state.callChannel)
 	end
+
 	print('Script initialization finished.')
 end
 
@@ -57,13 +58,11 @@ AddEventHandler('Core:Shared:Ready', function()
 	exports['bs_base']:RequestDependencies('Voip', {
 		'Callbacks',
 		'Notification',
-		'Action',
-		'Progress',
 		'Voip',
-		'Sounds',
 		'Utils',
 		'Convar',
 		'Logger',
+		'UI',
 	}, function(error)  
 		if #error > 0 then return; end
 		RetrieveComponents()
