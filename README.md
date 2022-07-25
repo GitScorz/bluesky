@@ -14,7 +14,7 @@ The reason that i decided to rework in this project is because i think the frame
 * [Discord Bot API Key](https://discordapp.com/developers/applications/)
  
 ## Documentation
-I will try to provide a documentation as soon as possible.
+I will try to provide a documentation as soon as possible, you can check the CONTRIBUTING file for now.
 
 ## Credits
 
