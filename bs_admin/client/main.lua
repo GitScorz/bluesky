@@ -238,7 +238,7 @@ function doAdminMenuToggle()
                             Citizen.CreateThread(function()
                                 while showCoords do
                                     local playerX, playerY, playerZ = table.unpack(GetEntityCoords(PlayerPedId()))
-                                    local playerH = GetEntityHeading(GLOBAL_PED)
+                                    local playerH = GetEntityHeading(PlayerPedId())
                                     DrawGenericText(("~g~X~w~: %s ~g~Y~w~: %s ~g~Z~w~: %s ~g~H~w~: %s"):format(FormatCoord(playerX), FormatCoord(playerY), FormatCoord(playerZ), FormatCoord(playerH)))                
                                     Citizen.Wait(1)
                                 end
