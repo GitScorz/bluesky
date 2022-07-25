@@ -73,7 +73,7 @@ function RegisterStatuses()
             val = val + change
         end
         DecorSetInt(player, 'PLAYER_HUNGER', val)
-        TriggerEvent('Status:Client:Update', 'PLAYER_HUNGER', val)
+        TriggerEvent('Status:Client:Update', 'hunger', val)
         TriggerServerEvent('Status:Server:Update', { status = 'PLAYER_HUNGER', value = val })
 
         if val <= 25 then
@@ -112,7 +112,7 @@ function RegisterStatuses()
             val = val + change
         end
         DecorSetInt(player, 'PLAYER_THIRST', val)
-        TriggerEvent('Status:Client:Update', 'PLAYER_THIRST', val)
+        TriggerEvent('Status:Client:Update', 'thirst', val)
         TriggerServerEvent('Status:Server:Update', { status = 'PLAYER_THIRST', value = val })
     end)
 end

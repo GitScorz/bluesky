@@ -21,7 +21,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'Callbacks',
         'Logger',
         'Damage',
-        'UI'
+        'UI',
         'Status',
         'Utils'
     }, function(error)
@@ -87,7 +87,7 @@ STATUS = {
                     DecorSetInt(entity, _statuses[name].name, value)
                 end
                 TriggerServerEvent('Status:Server:Update', { status = name, value = value })
-                TriggerEvent('Status:Client:Update', name, value)
+                TriggerEvent('Status:Client:Update', v.name, value)
             end
         end,
     },
@@ -161,13 +161,13 @@ AddEventHandler('Characters:Client:Spawn', function()
             waiting = false
             if v.type == Status.TYPES.FLOAT then
                 DecorSetFloat(PlayerPedId(), v.name, val)
-                UI.Hud.Update({ id = v.id, value = val })
+                UI.Hud:Update({ id = v.id, value = val })
             elseif v.type == Status.TYPES.BOOL then
                 DecorSetBool(PlayerPedId(), v.name, val)
-                UI.Hud.Update({ id = v.id, value = val })
+                UI.Hud:Update({ id = v.id, value = val })
             else
                 DecorSetInt(PlayerPedId(), v.name, val)
-                UI.Hud.Update({ id = v.id, value = val })
+                UI.Hud:Update({ id = v.id, value = val })
             end
         end, v.name)
         while waiting do
