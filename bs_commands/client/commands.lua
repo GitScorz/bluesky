@@ -54,3 +54,20 @@ AddEventHandler('Commands:Client:RemoveVehicle', function()
         end
     end)
 end)
+
+RegisterNetEvent('Commands:Client:FixVehicle')
+AddEventHandler('Commands:Client:FixVehicle', function()
+    Callbacks:ServerCallback('Commands:ValidateAdmin', {}, function(isAdmin)
+        if isAdmin then
+            local playerPed = PlayerPedId()
+            local vehicle = Game.Vehicles:GetInFrontOfPlayer(5.0)
+            if IsPedInAnyVehicle(playerPed) then
+                vehicle = GetVehiclePedIsIn(playerPed)
+            end
+            
+            SetVehicleEngineHealth(vehicle, 1000)
+            SetVehicleEngineOn( vehicle, true, true )
+            SetVehicleFixed(vehicle)
+        end
+    end)
+end)

@@ -162,7 +162,7 @@ function doAdminMenuToggle()
                         end
 
                         local x, y, z = nil, nil, nil
-                        local spawnVeh, spawnProp = "nismo20", nil
+                        local spawnVeh, spawnProp = "gtr", nil
 
                         local root = Menu:Create('adminMenu', 'Admin Menu', function(id, back)
                             menuOpen = true
@@ -526,7 +526,7 @@ function doAdminMenuToggle()
                         vehicleManagement.Add:Input('Vehicle Spawn', {
                             disabled = false,
                             max = 30,
-                            current = "nismo20",
+                            current = "",
                         }, function(data)
                             spawnVeh = data.data.value
                         end)
@@ -542,7 +542,10 @@ function doAdminMenuToggle()
 
                         vehicleManagement.Add:Button("Delete Vehicle", { disabled = false }, function(data)
                             TriggerEvent('Commands:Client:RemoveVehicle')
-                            root.Close()
+                        end)
+
+                        vehicleManagement.Add:Button("Fix Vehicle", { disabled = false }, function(data)
+                            TriggerEvent('Commands:Client:FixVehicle')
                         end)
 
                         vehicleManagement.Add:SubMenuBack('Back')
