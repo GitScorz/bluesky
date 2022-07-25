@@ -3,14 +3,15 @@
   left: 1%;
   display: flex;
   gap: .5vh;
-  bottom: .7vh;
+  bottom: .4vh;
 }
 
 .background {
   position: absolute;
   z-index: 1;
+  top: 2.5%; /* 3d Effect i guess */
   background-color: #1a1a1a;
-  border-radius: 54%;
+  border-radius: 50%;
 }
 
 .foreground {
