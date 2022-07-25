@@ -18,13 +18,3 @@ AddEventHandler('Characters:Client:Logout', function()
   UI.SetFocus(false)
   UI.Hud:Hide()
 end)
-
-RegisterNetEvent('UI:Client:ShowBank')
-AddEventHandler('UI:Client:ShowBank', function()
-  UI.Balance:ShowBank()
-end)
-
-RegisterNetEvent('UI:Client:ShowCash')
-AddEventHandler('UI:Client:ShowCash', function()
-  UI.Balance:ShowCash()
-end)

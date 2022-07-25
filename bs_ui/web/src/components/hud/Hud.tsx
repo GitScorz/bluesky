@@ -8,7 +8,13 @@ export default function Hud() {
   const [visible, setVisible] = useState(false);
 
   // Default values for the HUD
-  const [status, setStatus] = useState<UI.Status.HudProps>({ voice: 70, health: 50, armor: 10, hunger: 50, thirst: 50 });
+  const [status, setStatus] = useState<UI.Status.HudProps>({ 
+    voice: 0, 
+    health: 0,
+    armor: 0, 
+    hunger: 0, 
+    thirst: 0 
+  });
 
   useEffect(() => {
     if (isEnvBrowser()) {
@@ -29,13 +35,43 @@ export default function Hud() {
     setVisible(shouldShow);
   });
 
-  useNuiEvent('hud:status:update', (data: UI.Status.HudProps) => {
+  useNuiEvent('hud:status:update', (data: UI.Status.UpdateData) => {
+    switch (data.id) {
+      case 'voice':
+        setStatus({ ...status, voice: data.value });
+        break;
+      case 'health':
+        setStatus({ ...status, health: data.value });
+        break;
+      case 'armor':
+        setStatus({ ...status, armor: data.value });
+        break;
+      case 'hunger':
+        setStatus({ ...status, hunger: data.value });
+        break;
+      case 'thirst':
+        setStatus({ ...status, thirst: data.value });
+        break;
+      default:
+        break;
+    }
+    
+    // setStatus({ 
+    //   voice: data.voice,
+    //   health: data.health, 
+    //   armor: data.armor, 
+    //   thirst: data.thirst, 
+    //   hunger: data.hunger 
+    // });
+  });
+
+  useNuiEvent('hud:status:reset', function() {
     setStatus({ 
-      voice: data.voice,
-      health: data.health, 
-      armor: data.armor, 
-      thirst: data.thirst, 
-      hunger: data.hunger 
+      voice: 0,
+      health: 0, 
+      armor: 0, 
+      thirst: 0, 
+      hunger: 0 
     });
   });
 

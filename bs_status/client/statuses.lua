@@ -55,7 +55,7 @@ AddEventHandler('Status:Client:updateStatus', function(need, action, amount)
 end)
 
 function RegisterStatuses()
-    Status:Register('PLAYER_HUNGER', Status.TYPES.INT, 100, 'hamburger', true, function(change)
+    Status:Register('PLAYER_HUNGER', Status.TYPES.INT, 100, 'hunger', true, function(change)
         local player = PlayerPedId()
         if IsEntityDead(player) then
             return
@@ -95,7 +95,7 @@ function RegisterStatuses()
             end
         end
     end)
-    Status:Register('PLAYER_THIRST', Status.TYPES.INT, 100, 'tint', true, function(change)
+    Status:Register('PLAYER_THIRST', Status.TYPES.INT, 100, 'thirst', true, function(change)
         local player = PlayerPedId()
         if IsEntityDead(player) then
             return

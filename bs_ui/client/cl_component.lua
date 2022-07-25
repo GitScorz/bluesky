@@ -19,6 +19,13 @@ UI = {
     Hide = function(self)
       UI:SendUIMessage('hud:status:visible', false)
     end,
+    Update = function(self, data)
+      print(table.dump(data))
+      UI:SendUIMessage('hud:status:update', data)
+    end,
+    Reset = function(self)
+      UI:SendUIMessage('hud:status:reset')
+    end,
   },
 
   Balance = {

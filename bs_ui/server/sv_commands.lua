@@ -18,6 +18,12 @@ AddEventHandler('Core:Shared:Ready', function()
 end)
 
 function RegisterChatCommands()
+  Chat:RegisterCommand('hud', function(source, args, rawCommand)
+    TriggerClientEvent('UI:Client:ChangeHudState', source)
+  end, {
+    help = 'Turns HUD off/on.',
+  }, 0)
+
   Chat:RegisterCommand('bank', function(source, args, rawCommand)
     TriggerClientEvent('UI:Client:ShowBank', source)
   end, {
@@ -29,5 +35,4 @@ function RegisterChatCommands()
   end, {
     help = 'Show your current cash.',
   }, 0)
-
 end
