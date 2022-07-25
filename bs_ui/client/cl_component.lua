@@ -1,4 +1,6 @@
 UI = {
+  _required = { 'SendUIMessage', 'SetFocus' },
+
   --- @param action string The action you wish to target
   --- @param data any The data you wish to send along with this action
   SendUIMessage = function(self, action, data)
@@ -9,6 +11,15 @@ UI = {
   SetFocus = function(self, shouldFocus)
     SetNuiFocus(shouldFocus, shouldFocus)
   end,
+
+  HUD = {
+    Show = function(self)
+      UI:SendUIMessage('hud:status:visible', true)
+    end,
+    Hide = function(self)
+      UI:SendUIMessage('hud:status:visible', false)
+    end,
+  }
 }
 
 AddEventHandler('Proxy:Shared:RegisterReady', function()
