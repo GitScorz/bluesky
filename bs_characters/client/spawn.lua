@@ -65,6 +65,7 @@ Spawn = {
         SetEntityHealth(player, data.HP)
         SetPedArmour(player, data.Armor)
         DisplayRadar(true)
+        DisplayHud(false)
         SetNuiFocus(false, false)
         
         if data.action ~= nil then
