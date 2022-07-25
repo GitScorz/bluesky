@@ -194,9 +194,7 @@ RegisterCommand('-radiotalk', function()
 		TriggerServerEvent('pma-voice:setTalkingOnRadio', false)
 	end
 end, false)
-if gameVersion == 'fivem' then
-	RegisterKeyMapping('+radiotalk', 'Talk over Radio', 'keyboard', GetConvar('voice_defaultRadio', 'LMENU'))
-end
+RegisterKeyMapping('+radiotalk', 'Talk in the radio.', 'keyboard', GetConvar('voice_defaultRadio', 'CAPSLOCK'))
 
 --- event syncRadio
 --- syncs the players radio, only happens if the radio was set server side.

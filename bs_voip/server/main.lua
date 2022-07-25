@@ -48,19 +48,11 @@ CreateThread(function()
 		and _3dAudio == 'false'
 		and _2dAudio == 'false'
 	then
-		if gameVersion == 'fivem' then
-			SetConvarReplicated('voice_useNativeAudio', 'true')
-			if sendingRangeOnly == 'false' then
-				SetConvarReplicated('voice_useSendingRangeOnly', 'true')
-			end
-			Logger.Info(nil, 'Voip', 'No convars detected for voice mode, defaulting to \'setr voice_useNativeAudio true\' and \'setr voice_useSendingRangeOnly true\'', { console = true })
-		else
-			SetConvarReplicated('voice_use3dAudio', 'true')
-			if sendingRangeOnly == 'false' then
-				SetConvarReplicated('voice_useSendingRangeOnly', 'true')
-			end
-			Logger.Info(nil, 'Voip', 'No convars detected for voice mode, defaulting to \'setr voice_use3dAudio true\' and \'setr voice_useSendingRangeOnly true\'', { console = true })
+		SetConvarReplicated('voice_useNativeAudio', 'true')
+		if sendingRangeOnly == 'false' then
+			SetConvarReplicated('voice_useSendingRangeOnly', 'true')
 		end
+		Logger.Info(nil, 'Voip', 'No convars detected for voice mode, defaulting to \'setr voice_useNativeAudio true\' and \'setr voice_useSendingRangeOnly true\'', { console = true })
 	elseif sendingRangeOnly == 'false' then
 		Logger.Warn(nil, 'Voip', 'It\'s recommended to have \'voice_useSendingRangeOnly\' set to true you can do that with \'setr voice_useSendingRangeOnly true\', this prevents players who directly join the mumble server from broadcasting to players.', { console = true })
 	end

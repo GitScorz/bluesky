@@ -36,11 +36,6 @@ local function InitializeVoip()
 	end
 
 	UI.Hud:Update({ id = "voice", value = mode - 1})
-	-- sendUIMessage({
-	-- 	uiEnabled = GetConvarInt("voice_enableUi", 1) == 1,
-	-- 	voiceModes = json.encode(Cfg.voiceModes),
-	-- 	voiceMode = mode - 1
-	-- })
 
 	-- Reinitialize channels if they're set.
 	if LocalPlayer.state.radioChannel ~= 0 then

@@ -63,19 +63,17 @@ end)
 -- o_freq_lo = 348.0
 -- 0_freq_hi = 4900.0
 
-if gameVersion == 'fivem' then
-	radioEffectId = CreateAudioSubmix('Radio')
-	SetAudioSubmixEffectRadioFx(radioEffectId, 0)
-	SetAudioSubmixEffectParamInt(radioEffectId, 0, `default`, 1)
-	AddAudioSubmixOutput(radioEffectId, 0)
+radioEffectId = CreateAudioSubmix('Radio')
+SetAudioSubmixEffectRadioFx(radioEffectId, 0)
+SetAudioSubmixEffectParamInt(radioEffectId, 0, `default`, 1)
+AddAudioSubmixOutput(radioEffectId, 0)
 
-	callEffectId = CreateAudioSubmix('Call')
-	SetAudioSubmixEffectRadioFx(callEffectId, 1)
-	SetAudioSubmixEffectParamInt(callEffectId, 1, `default`, 1)
-	SetAudioSubmixEffectParamFloat(callEffectId, 1, `freq_low`, 300.0)
-	SetAudioSubmixEffectParamFloat(callEffectId, 1, `freq_hi`, 6000.0)
-	AddAudioSubmixOutput(callEffectId, 1)
-end
+callEffectId = CreateAudioSubmix('Call')
+SetAudioSubmixEffectRadioFx(callEffectId, 1)
+SetAudioSubmixEffectParamInt(callEffectId, 1, `default`, 1)
+SetAudioSubmixEffectParamFloat(callEffectId, 1, `freq_low`, 300.0)
+SetAudioSubmixEffectParamFloat(callEffectId, 1, `freq_hi`, 6000.0)
+AddAudioSubmixOutput(callEffectId, 1)
 
 --- export setEffectSubmix
 --- Sets a user defined audio submix for radio and phonecall effects
