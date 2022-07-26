@@ -43,31 +43,31 @@ export default function Player({ voice, health, armor, hunger, thirst }: UI.Stat
     <div className="hud-player">
       <Box sx={{ position: "relative", display: "inline-flex" }}>
         <CircularProgress variant="determinate" value={voice} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundYellow("rgba(255,255,255,255)") }} />
-        <CircularProgress variant="determinate" value={100} thickness={thickSize} size={size} className="background" sx={{ color: backgroundYellow("rgba(255,255,255,0.5)") }} />
+        <div className="background" style={{ outline: backgroundYellow("rgba(255,255,255,0.5)") }} />
         <FontAwesomeIcon className="hud-icon" icon={onRadio ? faHeadset : faMicrophone} size={iconSize} />
       </Box>
 
       <Box sx={{ position: "relative", display: "inline-flex" }}>
         <CircularProgress variant="determinate" value={health} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(health, "rgba(59,160,122,255)") }} />
-        <CircularProgress variant="determinate" value={100} thickness={thickSize} size={size} className="background" sx={{ color: backgroundRed(health, "rgba(59,160,122,0.5)") }} />
+        <div className="background" style={{ outline: `.9vh solid ${backgroundRed(health, "rgba(59,160,122,0.5)")}` }} />
         <FontAwesomeIcon className="hud-icon" icon={faHeart} size={iconSize} />
       </Box>
 
       <Box sx={{ position: "relative", display: "inline-flex" }}>
         <CircularProgress variant="determinate" value={armor} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(armor, "rgba(27,101,181,255)") }} />
-        <CircularProgress variant="determinate" value={100} thickness={thickSize} size={size} className="background" sx={{ color: backgroundRed(armor, "rgba(27,101,181,0.5)") }} />
+        <div className="background" style={{ outline: `.9vh solid ${backgroundRed(armor, "rgba(27,101,181,0.5)")}` }} />
         <FontAwesomeIcon className="hud-icon" icon={faShieldHalved} size={iconSize} />
       </Box>
 
       <Box sx={{ position: "relative", display: "inline-flex" }}>
         <CircularProgress variant="determinate" value={hunger} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(hunger, "rgba(255,118,10,255)") }} />
-        <CircularProgress variant="determinate" value={100} thickness={thickSize} size={size} className="background" sx={{ color: backgroundRed(hunger, "rgba(255,118,10,0.5)") }} />
+        <div className="background" style={{ outline: `.9vh solid ${backgroundRed(hunger, "rgba(255,118,10,0.5)")}` }} />
         <FontAwesomeIcon className="hud-icon" icon={faBurger} size={iconSize} />
       </Box>
 
       <Box sx={{ position: "relative", display: "inline-flex" }}>
         <CircularProgress variant="determinate" value={thirst} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(thirst, "rgba(13,121,180,255)") }} />
-        <CircularProgress variant="determinate" value={100} thickness={thickSize} size={size} className="background" sx={{ color: backgroundRed(thirst, "rgba(13,121,180,0.5)") }} />
+        <div className="background" style={{ outline: `.9vh solid ${backgroundRed(thirst, "rgba(13,121,180,0.5)")}` }} />
         <FontAwesomeIcon className="hud-icon" icon={faDroplet} size={iconSize} />
       </Box>
     </div>

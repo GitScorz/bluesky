@@ -23,7 +23,7 @@ export default function Hud() {
       // Set the HUD to the browser values
       setStatus({
         voice: 70,
-        health: 100,
+        health: 50,
         armor: 75,
         hunger: 50,
         thirst: 50,
