@@ -1,9 +1,14 @@
 COMPONENTS.Fetch = {
     _required = { 'Source', 'PlayerData', 'All' },
     _name = 'base',
+
+    --- @param source number
     Source = function(self, source)
         return COMPONENTS.Players[source]
     end,
+
+    --- @param key string The key to fetch the data from.
+    --- @param value any The value to fetch the data from.
     PlayerData = function(self, key, value)
         for k, v in pairs(COMPONENTS.Players) do
             if v:GetData(key) == value then
@@ -13,6 +18,9 @@ COMPONENTS.Fetch = {
     
         return nil
     end,
+
+    --- @param key string The key to fetch the data from.
+    --- @param value any The value to fetch the data from.
     Database = function(self, key, value)
         local retVal = -1
 
@@ -48,6 +56,7 @@ COMPONENTS.Fetch = {
 
         return retVal
     end,
+    
     All = function(self)
         return COMPONENTS.Players
     end
