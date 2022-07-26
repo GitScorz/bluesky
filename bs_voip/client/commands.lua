@@ -33,11 +33,6 @@ function setProximityState(proximityRange, isCustom)
 	}, true)
 
 	UI.Hud:Update({ id = "voice", value = mode - 1 })
-
-	-- sendUIMessage({
-	-- 	-- JS expects this value to be - 1, "custom" voice is on the last index
-	-- 	voiceMode = isCustom and #Cfg.voiceModes or mode - 1
-	-- })
 end
 
 exports("overrideProximityRange", function(range, disableCycle)

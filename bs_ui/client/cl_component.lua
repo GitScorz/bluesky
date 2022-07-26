@@ -20,6 +20,7 @@ UI = {
     Hide = function(self)
       UI:SendUIMessage('hud:status:visible', false)
     end,
+    --- @param data table The data you wish to send along with this action
     Update = function(self, data)
       UI:SendUIMessage('hud:status:update', data)
     end,
@@ -34,6 +35,18 @@ UI = {
     end,
     ShowCash = function(self)
       UI:SendUIMessage('hud:balance:setCashVisible', true)
+    end,
+  },
+  
+  Voip = {
+    --- @param enabled boolean Whether or not to enable the voip listener
+    ToggleTalking = function(self, enabled)
+      UI:SendUIMessage('hud:voip:toggleTalking', enabled)
+    end,
+
+    --- @param enabled boolean Whether or not to enable the voip listener
+    ToggleRadio = function(self, enabled)
+      UI:SendUIMessage('hud:voip:toggleRadio', enabled)
     end,
   }
 }

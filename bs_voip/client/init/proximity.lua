@@ -96,16 +96,15 @@ CreateThread(function()
 			Wait(100)
 		end
 		-- Leave the check here as we don't want to do any of this logic 
-		if GetConvarInt('voice_enableUi', 1) == 1 then
-			local curTalkingStatus = MumbleIsPlayerTalking(PlayerId()) == 1
-			if lastRadioStatus ~= radioPressed or lastTalkingStatus ~= curTalkingStatus then
-				lastRadioStatus = radioPressed
-				lastTalkingStatus = curTalkingStatus
-				sendUIMessage({
-					usingRadio = lastRadioStatus,
-					talking = lastTalkingStatus
-				})
-			end
+		local curTalkingStatus = MumbleIsPlayerTalking(PlayerId()) == 1
+		if lastRadioStatus ~= radioPressed or lastTalkingStatus ~= curTalkingStatus then
+			lastRadioStatus = radioPressed
+			lastTalkingStatus = curTalkingStatus
+			UI.Voip:ToggleTalking(curTalkingStatus)
+			-- sendUIMessage({
+			-- 	usingRadio = lastRadioStatus,
+			-- 	talking = lastTalkingStatus
+			-- })
 		end
 
 		if voiceState == "proximity" then
@@ -118,7 +117,7 @@ CreateThread(function()
 			end
 		end
 
-		Wait(GetConvarInt('voice_refreshRate', 200))
+		Wait(GetConvarInt('voice_refreshRate', 100))
 	end
 end)
 

@@ -194,9 +194,7 @@ exports('toggleMutePlayer', toggleMutePlayer)
 function setVoiceProperty(type, value)
 	if type == "radioEnabled" then
 		radioEnabled = value
-		-- sendUIMessage({
-		-- 	radioEnabled = value
-		-- })
+		UI.Voip:ToggleRadio(value)
 	elseif type == "micClicks" then
 		local val = tostring(value)
 		micClicks = val

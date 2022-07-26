@@ -19,6 +19,7 @@ function syncRadioData(radioTable, localPlyRadioName)
 			toggleVoice(tgt, enabled, 'radio')
 		end
 	end
+	UI.Voip:ToggleRadio(radioEnabled)
 	-- sendUIMessage({
 	-- 	radioChannel = radioChannel,
 	-- 	radioEnabled = radioEnabled
@@ -68,6 +69,9 @@ function removePlayerFromRadio(plySource)
 				toggleVoice(tgt, false, 'radio')
 			end
 		end
+		
+		UI.Voip:ToggleRadio(radioEnabled)
+
 		-- sendUIMessage({
 		-- 	radioChannel = 0,
 		-- 	radioEnabled = radioEnabled
