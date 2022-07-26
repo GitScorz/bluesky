@@ -1,4 +1,5 @@
 Characters = nil
+Callbacks = nil
 
 AddEventHandler('Characters:Shared:DependencyUpdate', RetrieveComponents)
 function RetrieveComponents()
