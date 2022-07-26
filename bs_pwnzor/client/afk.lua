@@ -20,12 +20,12 @@ Citizen.CreateThread(function()
 					if time > (AFKTimer * 2) then
 						Callbacks:ServerCallback('Pwnzor:AFK')
 					elseif time > AFKTimer then
-						Notification.Persistent:Error('pwnzor-afk', 'You Will Be Kicked In ' .. ((AFKTimer * 2) - time) .. ' Seconds For Being AFK')
+						-- Notification.Persistent:Error('pwnzor-afk', 'You Will Be Kicked In ' .. ((AFKTimer * 2) - time) .. ' Seconds For Being AFK')
 					end
 
 					time = time + 1
 				else
-					Notification.Persistent:Remove('pwnzor-afk')
+					-- Notification.Persistent:Remove('pwnzor-afk')
 					time = 0
 				end
 			end

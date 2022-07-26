@@ -37,9 +37,9 @@ end)
 RegisterNetEvent('Characters:Client:Logout')
 AddEventHandler('Characters:Client:Logout', function()
     LocalDamage = nil
-    Notification.Persistent:Remove(bleedNotifId)
-    Notification.Persistent:Remove(limbNotifId)
-    Notification.Persistent:Remove(bleedMoveNotifId)
+    -- Notification.Persistent:Remove(bleedNotifId)
+    -- Notification.Persistent:Remove(limbNotifId)
+    -- Notification.Persistent:Remove(bleedMoveNotifId)
 end)
 
 AddEventHandler('Characters:Client:Spawn', function()
@@ -150,12 +150,12 @@ function StartTracking()
                         local currPos = GetEntityCoords(player, true)
                         local moving = #(vector2(prevPos.x, prevPos.y) - vector2(currPos.x, currPos.y))
                         if (moving > 1 and not IsPedInAnyVehicle(player)) and LocalDamage.Bleed > 2 then
-                            Notification.Persistent:Custom(bleedMoveNotifId, 'You notice blood oozing from your wounds faster when you\'re moving', Config.NotifStyle)
+                            -- Notification.Persistent:Custom(bleedMoveNotifId, 'You notice blood oozing from your wounds faster when you\'re moving', Config.NotifStyle)
                             advanceBleedTimer = advanceBleedTimer + Config.BleedMovementAdvance
                             bleedTickTimer = bleedTickTimer + Config.BleedMovementTick
                             prevPos = currPos
                         else
-                            Notification.Persistent:Remove(bleedMoveNotifId)
+                            -- Notification.Persistent:Remove(bleedMoveNotifId)
                             bleedTickTimer = bleedTickTimer + 1
                         end
     

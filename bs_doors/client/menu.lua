@@ -575,11 +575,11 @@ AddEventHandler('Doors:AddDoor', function()
     addingDoor, selectedObject = false, false
     local playerPed = PlayerPedId()
     local menu = Menu:Create('doors', 'Door', function() end, function()
-        Notification.Persistent:Remove('addingDoor')
+        -- Notification.Persistent:Remove('addingDoor')
     end)
     menu.Add:Button('Add New Door', {}, function()
         menu:Toggle(false)
-        Notification.Persistent:Info('addingDoor', 'Point to a door and press SHIFT+X to add it to the door system and SHIFT+C to cancel the operation')
+        -- Notification.Persistent:Info('addingDoor', 'Point to a door and press SHIFT+X to add it to the door system and SHIFT+C to cancel the operation')
         addingDoor = true
         Citizen.CreateThread(function()
             while addingDoor do
@@ -679,7 +679,7 @@ AddEventHandler('Doors:AddDoor', function()
                         doorTypes.Add:SubMenu('Confirm', defaultSettings)
 
                         local newDoorMenu = Menu:Create('door', 'Found Door', function() end, function()
-                            Notification.Persistent:Remove('addingDoor')
+                            -- Notification.Persistent:Remove('addingDoor')
                             addingDoor, selectedObject = false, false
                         end)
                         newDoorMenu.Add:Text('Door Info', { 'heading', 'center' })
@@ -690,14 +690,14 @@ AddEventHandler('Doors:AddDoor', function()
                             TriggerEvent('Doors:AddDoor')
                         end)
                         newDoorMenu:Show()
-                        Notification.Persistent:Remove('addingDoor')
+                        -- Notification.Persistent:Remove('addingDoor')
                     else
                         Notification:SendError('Door not found')
                     end
                 end
 
                 if IsControlJustPressed(0, 79) and IsControlPressed(0, 21) then -- Shift+c
-                    Notification.Persistent:Remove('addingDoor')
+                    -- Notification.Persistent:Remove('addingDoor')
                     TriggerEvent('Doors:AddDoor')
                 end
             end

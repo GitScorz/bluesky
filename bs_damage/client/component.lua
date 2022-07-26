@@ -30,17 +30,17 @@ DAMAGE = {
         onPainKiller = 0
         wasOnPainKillers = false
 
-        Notification.Persistent:Remove(bleedNotifId)
-        Notification.Persistent:Remove(limbNotifId)
-        Notification.Persistent:Remove(bleedMoveNotifId)
+        -- Notification.Persistent:Remove(bleedNotifId)
+        -- Notification.Persistent:Remove(limbNotifId)
+        -- Notification.Persistent:Remove(bleedMoveNotifId)
     end,
     Alerts = {
         Bleed = function(self)
             local player = PlayerPedId()
             if not IsEntityDead(player) and LocalDamage.Bleed > 0 then
-                Notification.Persistent:Custom(bleedNotifId, string.format(Config.Strings.BleedAlert, Config.BleedingStates[LocalDamage.Bleed]), Config.NotifStyle)
+                -- Notification.Persistent:Custom(bleedNotifId, string.format(Config.Strings.BleedAlert, Config.BleedingStates[LocalDamage.Bleed]), Config.NotifStyle)
             else
-                Notification.Persistent:Remove(bleedNotifId)
+                -- Notification.Persistent:Remove(bleedNotifId)
             end
         end,
         Limbs = function(self)
@@ -59,12 +59,12 @@ DAMAGE = {
                         limbDamageMsg = Config.Strings.LimbAlertMultiple
                     end
 
-                    Notification.Persistent:Custom(limbNotifId, limbDamageMsg, Config.NotifStyle)
+                    -- Notification.Persistent:Custom(limbNotifId, limbDamageMsg, Config.NotifStyle)
                 else
-                    Notification.Persistent:Remove(limbNotifId)
+                    -- Notification.Persistent:Remove(limbNotifId)
                 end
             else
-                Notification.Persistent:Remove(limbNotifId)
+                -- Notification.Persistent:Remove(limbNotifId)
             end
         end,
         Debug = function(self, ped, bone, weapon, damageDone)
