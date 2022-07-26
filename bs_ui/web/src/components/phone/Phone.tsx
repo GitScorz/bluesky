@@ -11,7 +11,7 @@ export default function Phone() {
   }, [visible]);
 
   return (
-    <div className='phone-wrapper' style={{visibility: visible ? "visible" : "hidden"}}>
+    <div className='phone-container' style={{visibility: visible ? "visible" : "hidden"}}>
       
     </div>
   )

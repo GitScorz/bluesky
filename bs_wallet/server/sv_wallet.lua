@@ -3,10 +3,9 @@ function RetrieveComponents()
     Database = exports['bs_base']:FetchComponent('Database')
     Logger = exports['bs_base']:FetchComponent('Logger')
     Callbacks = exports['bs_base']:FetchComponent('Callbacks')
-    Execute = exports['bs_base']:FetchComponent('Execute')
     Wallet = exports['bs_base']:FetchComponent('Wallet')
     CurrencyConfig = exports['bs_base']:FetchComponent('Config').Currency
-    Chat = exports['bs_base']:FetchComponent('Chat')
+    UI = exports['bs_base']:FetchComponent('UI')
 end
 
 AddEventHandler('Core:Shared:Ready', function()
@@ -14,16 +13,14 @@ AddEventHandler('Core:Shared:Ready', function()
         'Database',
         'Logger',
         'Callbacks',
-        'Execute',
         'Wallet',
         'Config',
-        'Chat',
+        'UI'
     }, function(error)
         if #error > 0 then
             return
         end -- Do something to handle if not all dependencies loaded
         RetrieveComponents()
-        RegisterChatCommands()
         RegisterCallbacks()
     end)
 end)
@@ -36,18 +33,6 @@ function RegisterCallbacks()
             cb(wallet.Cash)
         end)
     end)
-end
-
-function RegisterChatCommands()
-    Chat:RegisterCommand('cash', function(source, args, rawCommand)
-        local player = exports['bs_base']:FetchComponent('Fetch'):Source(source)
-        local char = player:GetData('Character')
-        Wallet:Get(char, function(wallet)
-            Execute:Client(source, 'Notification', 'Success', "You have " .. CurrencyConfig.Sign .. wallet.Cash)
-        end)
-    end, {
-        help = 'Show Current Cash'
-    })
 end
 
 WALLET = {
@@ -113,6 +98,16 @@ AddEventHandler('Characters:Server:Spawn', function()
         if #results == 0 then
             Wallet:Create(char)
         end
+    end)
+end)
+
+RegisterNetEvent('Characters:Client:Updated')
+AddEventHandler('Characters:Client:Updated', function()
+    local player = exports['bs_base']:FetchComponent('Fetch'):Source(source)
+    local char = player:GetData('Character')
+    
+    Wallet:Get(char, function(wallet)
+        UI.Balance:UpdateCash(wallet.Cash)
     end)
 end)
 

@@ -9,7 +9,7 @@ export default function Hud() {
 
   // Default values for the HUD
   const [status, setStatus] = useState<UI.Status.HudProps>({ 
-    voice: 0, 
+    voice: 70, 
     health: 0,
     armor: 0, 
     hunger: 0, 
@@ -29,7 +29,7 @@ export default function Hud() {
         thirst: 50,
       });
     }
-  }, [visible, status]);
+  }, []);
   
   useNuiEvent('hud:status:visible', (shouldShow: boolean) => {
     setVisible(shouldShow);
@@ -71,7 +71,7 @@ export default function Hud() {
   });
 
   return (
-    <div className="hud-wrapper" style={{ visibility: visible ? 'visible' : 'hidden' }}>
+    <div className="hud-container" style={{ visibility: visible ? 'visible' : 'hidden' }}>
       <Player {...status} />
       <Vehicle />
     </div>

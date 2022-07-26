@@ -16,7 +16,7 @@ namespace UI {
   }
 
   namespace Balance {
-    interface BalanceType {
+    interface BalanceTypes {
       bank: number;
       cash: number;
     }

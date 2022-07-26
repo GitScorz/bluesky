@@ -10,44 +10,49 @@ export default function Balance() {
   const [cash, setCash] = useState(0);
   const [bank, setBank] = useState(0);
 
+  const setVisibleTimeCash = () => {
+    setCashVisible(true);
+    setTimeout(() => {
+      setCashVisible(false);
+    }, 5000);
+  }
+
+  const setVisibleTimeBank = () => {
+    setBankVisible(true);
+    setTimeout(() => {
+      setBankVisible(false);
+    }, 5000);
+  }
+
   useEffect(() => {
     if (isEnvBrowser()) {
-      setCashVisible(true);
-      setBankVisible(true);
-    }
-
-    const timeId = setTimeout(() => {
-      setCashVisible(false);
-      setBankVisible(false);
-    }, 7000);
-
-    return () => {
-      clearTimeout(timeId);
+      setVisibleTimeCash();
+      setVisibleTimeBank();
     }
   }, []);
   
-  useNuiEvent('hud:balance:setCash', (data: UI.Balance.BalanceType) => {
+  useNuiEvent('hud:balance:updateCash', (data: UI.Balance.BalanceTypes) => {
     setCash(data.cash);
   });
 
-  useNuiEvent('hud:balance:setBank', (data: UI.Balance.BalanceType) => {
+  useNuiEvent('hud:balance:updateBank', (data: UI.Balance.BalanceTypes) => {
     setBank(data.bank);
   });
   
   useNuiEvent('hud:balance:setBankVisible', (shouldShow: boolean) => {
-    setBankVisible(shouldShow);
+    setVisibleTimeBank();
   });
 
   useNuiEvent('hud:balance:setCashVisible', (shouldShow: boolean) => {
-    setCashVisible(shouldShow);
+    setVisibleTimeCash();
   });
 
   return (
-    <div className="balance-wrapper" style={{ fontFamily: "Pricedown" }}>
-      <div className="bank-container" style={{ visibility: bankVisible ? "visible" : "hidden" }}>
+    <div className="balance-container" style={{ fontFamily: "Pricedown" }}>
+      <div className={`"bank-container`} style={{ opacity: `${bankVisible ? "1" : "0"}` }}>
         <div className="bank-balance">$ <span className="money">{bank}</span></div>
       </div>
-      <div className="cash-container" style={{ visibility: cashVisible ? "visible" : "hidden" }}>
+      <div className={`cash-container`} style={{ opacity: `${cashVisible ? "1" : "0"}`}}>
         <div className="cash-balance">$ <span className="money">{cash}</span></div>
       </div>
     </div>

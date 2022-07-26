@@ -1,9 +1,8 @@
-fx_version 'bodacious'
-games { 'gta5' }
+fx_version 'cerulean'
+game 'gta5'
 
 server_only 'yes'
 
 server_scripts {
-	'config.lua',
-    'server/*.lua',
+    'server/sv_*.lua',
 }

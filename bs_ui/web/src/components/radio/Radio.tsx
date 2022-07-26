@@ -11,7 +11,7 @@ export default function Radio() {
   }, [visible]);
 
   return (
-    <div className='radio-wrapper' style={{visibility: visible ? "visible" : "hidden"}}>
+    <div className='radio-container' style={{visibility: visible ? "visible" : "hidden"}}>
 
     </div>
   )

@@ -39,8 +39,19 @@ UI = {
     ShowBank = function(self)
       UI:SendUIMessage('hud:balance:setBankVisible', true)
     end,
+    
     ShowCash = function(self)
       UI:SendUIMessage('hud:balance:setCashVisible', true)
+    end,
+
+    --- @param cash number
+    UpdateCash = function(self, cash)
+      UI:SendUIMessage('hud:balance:updateCash', cash)
+    end,
+
+    --- @param cash number
+    UpdateBank = function(self, cash)
+      UI:SendUIMessage('hud:balance:updateBank', cash)
     end,
   },
   

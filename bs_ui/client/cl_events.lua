@@ -10,6 +10,10 @@ RegisterNetEvent('Events:Client:ExitedVehicle')
 AddEventHandler('Events:Client:ExitedVehicle', function(currentVehicle, currentSeat, displayName)
   GLOBAL_VEH = currentVehicle
 end)
+RegisterNetEvent('UI:Client:UpdateCash')
+AddEventHandler('UI:Client:UpdateCash', function(cash)
+  UI.Balance:UpdateCash(cash)
+end)
 
 function StartThreads()
   CreateThread(function()
