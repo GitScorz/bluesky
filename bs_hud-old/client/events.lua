@@ -51,9 +51,9 @@ AddEventHandler('Vehicle:Client:Fuel', function(state)
     })
 end)
 
-AddEventHandler('Status:Client:Update', function(status, value)
-    SendNUIMessage({
-        type = 'UPDATE_STATUS_VALUE',
-        data = { name = status, value = value}
-    })
-end)
+-- AddEventHandler('Status:Client:Update', function(status, value)
+--     SendNUIMessage({
+--         type = 'UPDATE_STATUS_VALUE',
+--         data = { name = status, value = value}
+--     })
+-- end)

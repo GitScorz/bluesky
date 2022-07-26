@@ -1,61 +1,33 @@
 GLOBAL_PED = PlayerPedId()
 GLOBAL_VEH = GetVehiclePedIsIn(GLOBAL_PED, false)
-local _paused = false
-local state = true -- We don't have settings yet, so just assume true
 
-RegisterNetEvent('UI:Client:ShowBank')
-AddEventHandler('UI:Client:ShowBank', function()
-  UI.Balance:ShowBank()
+RegisterNetEvent('Events:Client:EnteredVehicle')
+AddEventHandler('Events:Client:EnteredVehicle', function(currentVehicle, currentSeat, displayName)
+  GLOBAL_VEH = currentVehicle
 end)
 
-RegisterNetEvent('UI:Client:ShowCash')
-AddEventHandler('UI:Client:ShowCash', function()
-  UI.Balance:ShowCash()
-end)
-
-RegisterNetEvent('UI:Client:ChangeHudState')
-AddEventHandler('UI:Client:ChangeHudState', function()
-  if state then
-    UI.Hud:Hide()
-  else
-    UI.Hud:Show()
-  end
-  state = not state
-end)
-
-AddEventHandler('Status:Client:Update', function(status, value)
-  UI.Hud:Update({ id = status, value = value })
-end)
-
-CreateThread(function()
-  while true do
-    GLOBAL_PED = PlayerPedId()
-
-    if IsPedInAnyVehicle(GLOBAL_PED, true) then
-      GLOBAL_VEH = GetVehiclePedIsIn(GLOBAL_PED, false)
-    else
-      GLOBAL_VEH = nil
-    end
-
-    Wait(500)
-  end
+RegisterNetEvent('Events:Client:ExitedVehicle')
+AddEventHandler('Events:Client:ExitedVehicle', function(currentVehicle, currentSeat, displayName)
+  GLOBAL_VEH = currentVehicle
 end)
 
 function StartThreads()
   CreateThread(function()
     while true do
+      GLOBAL_PED = PlayerPedId()
+
       if IsPauseMenuActive() and not _paused then
         _paused = true
-        
-        -- SendNUIMessage({
-        --   type = 'TOGGLE_HUD'
-        -- })
 
-        -- if _vehToggled then
-        --   SendNUIMessage({
-        --     type = 'TOGGLE_VEHICLE'
-        --   })
-        -- end
+        UI.Hud:Hide()
+
+        if GLOBAL_VEH and GetIsVehicleEngineRunning(GLOBAL_VEH) then
+          DisplayRadar(true)
+          DisplayHud(true)
+          -- SendNUIMessage({
+          --   type = 'TOGGLE_VEHICLE'
+          -- })
+        end
       end
 
       if not _paused then
@@ -65,13 +37,11 @@ function StartThreads()
         -- })
         -- Citizen.Wait(200)
         UI.Hud:Update({ id = 'health', value = (GetEntityHealth(GLOBAL_PED) - 100) })
-        Wait(500)
+        Wait(1000)
         UI.Hud:Update({ id = 'armor', value = GetPedArmour(GLOBAL_PED) })
       else
         if not IsPauseMenuActive() then
-          -- SendNUIMessage({
-          --   type = 'TOGGLE_HUD'
-          -- })
+          UI.Hud.Show()
 
           _paused = false
         end

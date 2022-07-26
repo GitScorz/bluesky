@@ -21,7 +21,7 @@ function RegisterChatCommands()
   Chat:RegisterCommand('hud', function(source, args, rawCommand)
     TriggerClientEvent('UI:Client:ChangeHudState', source)
   end, {
-    help = 'Turns HUD off/on.',
+    help = 'Turns HUD on/off.',
   }, 0)
 
   Chat:RegisterCommand('bank', function(source, args, rawCommand)

@@ -69,7 +69,7 @@ STATUS = {
     GetRegistered = function(self)
         return _statuses
     end,
-    Set = { -- Really much more performant to just interact directly with Decor natives ... but available just in case?~
+    Set = { -- Really much more performant to just interact directly with Decor natives ... but available just in case?
         --- @param entity any
         --- @param value number
         All = function(self, entity, value)
@@ -82,7 +82,8 @@ STATUS = {
                     DecorSetInt(entity, v.name, value)
                 end
                 TriggerServerEvent('Status:Server:Update', { status = v.name, value = value })
-                TriggerEvent('Status:Client:Update', v.name, value)
+                Wait(500) -- We need this...
+                TriggerEvent('Status:Client:Update', v.id, value)
             end
         end,
 
@@ -99,6 +100,7 @@ STATUS = {
                     DecorSetInt(entity, _statuses[name].name, value)
                 end
                 TriggerServerEvent('Status:Server:Update', { status = name, value = value })
+                Wait(500) -- We need this...
                 TriggerEvent('Status:Client:Update', _statuses[name].id, value)
             end
         end,
@@ -183,6 +185,7 @@ AddEventHandler('Characters:Client:Spawn', function()
                 UI.Hud:Update({ id = v.id, value = val })
             end
         end, v.name)
+
         while waiting do
             Wait(100)
         end

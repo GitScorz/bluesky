@@ -36,6 +36,8 @@ export default function Hud() {
   });
 
   useNuiEvent('hud:status:update', (data: UI.Status.UpdateData) => {
+    if (!visible) return; // If the HUD is not visible, don't update it improve performance
+
     switch (data.id) {
       case 'voice':
         const voiceStates = [30,  70, 100];
