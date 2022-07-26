@@ -526,7 +526,7 @@ function doAdminMenuToggle()
                         vehicleManagement.Add:Input('Vehicle Spawn', {
                             disabled = false,
                             max = 30,
-                            current = "",
+                            current = "gtr",
                         }, function(data)
                             spawnVeh = data.data.value
                         end)
