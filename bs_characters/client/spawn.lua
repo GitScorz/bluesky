@@ -71,6 +71,7 @@ Spawn = {
             TriggerEvent(data.action, data.data)
         else
             SetEntityCoords(player, data.spawn.location.x, data.spawn.location.y, data.spawn.location.z)
+            SetEntityHeading(player, data.spawn.location.h)
             DoScreenFadeIn(500)
         end
     
