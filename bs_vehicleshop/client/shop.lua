@@ -117,8 +117,8 @@ AddEventHandler('Characters:Client:Spawn', function()
     StartShit()
 end)
 
-RegisterNetEvent('Characters:Client:SetData')
-AddEventHandler('Characters:Client:SetData', function()
+RegisterNetEvent('Characters:Client:Updated')
+AddEventHandler('Characters:Client:Updated', function()
     _character = exports['bs_base']:FetchComponent('Player').LocalPlayer:GetData('Character'):GetData()
     showing = false
 end)
