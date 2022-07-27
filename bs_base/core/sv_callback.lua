@@ -26,7 +26,8 @@ COMPONENTS.Callbacks = {
     
     --- @param source number The source of the player.
     --- @param event string The event name of the callback.
-    --- @param data any The arguments of the callback.
+    --- @param data any The data to send.
+    --- @param cb function The callback function.
     --- @param extraId number The extra id of the callback.
     ClientCallback = function(self, source, event, data, cb, extraId)
         if data == nil then data = {} end

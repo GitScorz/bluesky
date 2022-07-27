@@ -1,6 +1,7 @@
 COMPONENTS.Notifications = {
     _name = 'base',
     Hint = {
+        --- @param message string
         ShowThisFrame = function(message)
             BeginTextCommandDisplayHelp('STRING')
             AddTextComponentSubstringPlayerName(message)
