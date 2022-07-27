@@ -1,5 +1,5 @@
-fx_version 'bodacious'
-games { 'gta5' }
+fx_version 'cerulean'
+game 'gta5'
 
 client_scripts {
     '@bs_pwnzor/token.lua',
@@ -27,8 +27,6 @@ server_scripts {
 files {
     'weapons.meta',
     'weaponanimations.meta',
-    'handling.meta',
-    'carcols.meta',
 }
 
 dependencies {

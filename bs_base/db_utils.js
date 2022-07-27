@@ -22,7 +22,7 @@ function safeObjectArgument(object) {
         }, {});
     }
     if (typeof object !== "object") return {};
-    if (object._id) object._id = mongodb.ObjectID(object._id);
+    if (object._id) object._id = mongodb.ObjectId(object._id);
     return object;
 }
 

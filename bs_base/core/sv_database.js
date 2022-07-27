@@ -146,11 +146,11 @@ AddEventHandler('Core:Shared:Ready', () => {
 
 AddEventHandler('Database:Server:Initialize', function(a_url, a_db, g_url, g_db) {
     if (Database == null || !Database.Game.isConnected() || !Database.Auth.isConnected()) {
-        mongodb.MongoClient.connect(a_url, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
+        mongodb.MongoClient.connect(a_url, function (err, client) {
             if (err) return Log("Error: " + err.message);
             authDb = client.db(a_db);
             LogTrace(`[^51^7/^52^7] Connected to authentication database "${a_db}".`);
-            mongodb.MongoClient.connect(g_url, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
+            mongodb.MongoClient.connect(g_url, function (err, client) {
                 if (err) return Log("Error: " + err.message);
                 gameDb = client.db(g_db);
                 LogTrace(`[^52^7/^52^7] ^7Connected to game database "${g_db}".`);
@@ -272,7 +272,7 @@ const Methods = {
                 utils.safeCallback(callback, false, err.message);
                 return;
             }
-            utils.safeCallback(callback, true, res.result.nModified);
+            utils.safeCallback(callback, true, res.modifiedCount);
         };
         isUpdateOne ? collection.updateOne(query, update, options, cb) : collection.updateMany(query, update, options, cb);
         process._tickCallback();
@@ -296,7 +296,7 @@ const Methods = {
                 utils.safeCallback(callback, false, err.message);
                 return;
             }
-            utils.safeCallback(callback, true, res.result.n);
+            utils.safeCallback(callback, true, res.deletedCount);
         };
         isDeleteOne ? collection.deleteOne(query, options, cb) : collection.deleteMany(query, options, cb);
         process._tickCallback();
