@@ -2,6 +2,7 @@ Callbacks = nil
 Status = nil
 
 local _statuses = {}
+
 local _recentCd = {}
 local _statusCount = 0
 local isEnabled = true
@@ -66,17 +67,19 @@ STATUS = {
 
         DecorRegister(name, type)
     end,
+
     GetRegistered = function(self)
         return _statuses
     end,
-    Set = { -- Really much more performant to just interact directly with Decor natives ... but available just in case?
+
+    Set = {
         --- @param entity any
         --- @param value number
         All = function(self, entity, value)
             for k, v in pairs(_statuses) do
-                if v.type == Status.TYPES.FLOAT then
+                if v.type == STATUS.TYPES.FLOAT then
                     DecorSetFloat(entity, v.name, value)
-                elseif v.type == Status.TYPES.BOOL then
+                elseif v.type == STATUS.TYPES.BOOL then
                     DecorSetBool(entity, v.name, value)
                 else
                     DecorSetInt(entity, v.name, value)
@@ -92,9 +95,9 @@ STATUS = {
         --- @param value number
         Single = function(self, entity, name, value)
             if _statuses[name] ~= nil then
-                if _statuses[name].type == Status.TYPES.FLOAT then
+                if _statuses[name].type == STATUS.TYPES.FLOAT then
                     DecorSetFloat(entity, _statuses[name].name, value)
-                elseif _statuses[name].type == Status.TYPES.BOOL then
+                elseif _statuses[name].type == STATUS.TYPES.BOOL then
                     DecorSetBool(entity, _statuses[name].name, value)
                 else
                     DecorSetInt(entity, _statuses[name].name, value)
@@ -106,6 +109,9 @@ STATUS = {
         end,
     },
     Modify = {
+        --- @param status string The name of the status.
+        --- @param value number The value to modify the status by.
+        --- @param addCd boolean Whether or not to add a cooldown.
         Add = function(self, status, value, addCd)
             if _statuses[status] ~= nil then
                 _statuses[status].modify(value)
@@ -117,6 +123,9 @@ STATUS = {
                 Logger:Error('Status', 'Attempt To Add To Non-Existent Status')
             end
         end,
+
+        --- @param status string The name of the status.
+        --- @param value number The value to modify the status by.
         Remove = function(self, status, value)
             if _statuses[status] ~= nil then
                 _statuses[status].modify(-value)
@@ -160,7 +169,7 @@ AddEventHandler('Status:Client:Reset', function()
     Callbacks:ServerCallback('Commands:ValidateAdmin', {}, function(isAdmin)
         if isAdmin then
             for k, v in pairs(_statuses) do
-                Status.Set:Single(PlayerPedId(), v.name, v.max)
+                STATUS.Set:Single(PlayerPedId(), v.name, v.max)
             end
         end
     end)
@@ -170,14 +179,17 @@ RegisterNetEvent('Characters:Client:Spawn')
 AddEventHandler('Characters:Client:Spawn', function()
     spawned = true
     isEnabled = true
-    for k, v in pairs(Status:GetRegistered()) do
+    print(STATUS:GetRegistered())
+    for k, v in pairs(STATUS:GetRegistered()) do
         Callbacks:ServerCallback('Status:Get', { name = v.name, type = v.type, max = v.max }, function(val)
             waiting = false
-            if v.type == Status.TYPES.FLOAT then
+            print("Loop " .. v.id .. " (" .. v.name .. "): " .. val, v.type)
+
+            if v.type == STATUS.TYPES.FLOAT then
                 DecorSetFloat(PlayerPedId(), v.name, val)
                 Wait(500) -- We need this...
                 UI.Hud:Update({ id = v.id, value = val })
-            elseif v.type == Status.TYPES.BOOL then
+            elseif v.type == STATUS.TYPES.BOOL then
                 DecorSetBool(PlayerPedId(), v.name, val)
                 UI.Hud:Update({ id = v.id, value = val })
             else

@@ -1,12 +1,10 @@
-fx_version 'bodacious'
-games { 'gta5' }
+fx_version 'cerulean'
+game 'gta5'
 
 client_scripts {
-    'config.lua',
-    'client/*.lua'
+    'client/cl_*.lua'
 }
 
 server_scripts {
-    'config.lua',
-    'server/*.lua'
+    'server/sv_*.lua'
 }
