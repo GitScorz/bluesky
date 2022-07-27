@@ -1,19 +1,20 @@
 local isHudVisible = true -- We don't have settings yet, so just assume true
 
 RegisterNUICallback('hud:setFocus', function(data, cb)
-  UI.SetFocus(data)
+  UI:SetFocus(data)
   cb({})
 end)
 
 AddEventHandler('Characters:Client:Spawn', function()
-  UI.SetFocus(false)
+  UI:SetFocus(false)
   UI.Hud:Show()
   StartThreads()
+  ToggleRadar()
 end)
 
 RegisterNetEvent('Characters:Client:Logout')
 AddEventHandler('Characters:Client:Logout', function()
-  UI.SetFocus(false)
+  UI:SetFocus(false)
   UI.Hud:Hide()
 end)
 
