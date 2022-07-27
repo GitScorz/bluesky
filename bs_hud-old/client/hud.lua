@@ -305,21 +305,21 @@ function StartVehicleThreads()
     -- end)
 end
     
-Citizen.CreateThread(function()
-    SetMapZoomDataLevel(0, 0.96, 0.9, 0.08, 0.0, 0.0)
-    SetMapZoomDataLevel(1, 1.6, 0.9, 0.08, 0.0, 0.0)
-    SetMapZoomDataLevel(2, 8.6, 0.9, 0.08, 0.0, 0.0)
-    SetMapZoomDataLevel(3, 12.3, 0.9, 0.08, 0.0, 0.0)
-    SetMapZoomDataLevel(4, 15.3, 0.9, 0.08, 0.0, 0.0)
+-- Citizen.CreateThread(function()
+--     SetMapZoomDataLevel(0, 0.96, 0.9, 0.08, 0.0, 0.0)
+--     SetMapZoomDataLevel(1, 1.6, 0.9, 0.08, 0.0, 0.0)
+--     SetMapZoomDataLevel(2, 8.6, 0.9, 0.08, 0.0, 0.0)
+--     SetMapZoomDataLevel(3, 12.3, 0.9, 0.08, 0.0, 0.0)
+--     SetMapZoomDataLevel(4, 15.3, 0.9, 0.08, 0.0, 0.0)
 
-    while true do
-        if IsControlJustReleased(0, 344) then
-            Hud:Toggle()
-        elseif IsControlJustReleased(0, 207) then
-            Hud.Minimap:In()
-        elseif IsControlJustReleased(0, 208) then
-            Hud.Minimap:Out()
-        end
-        Citizen.Wait(5)
-    end
-end)
+--     while true do
+--         if IsControlJustReleased(0, 344) then
+--             Hud:Toggle()
+--         elseif IsControlJustReleased(0, 207) then
+--             Hud.Minimap:In()
+--         elseif IsControlJustReleased(0, 208) then
+--             Hud.Minimap:Out()
+--         end
+--         Citizen.Wait(5)
+--     end
+-- end)

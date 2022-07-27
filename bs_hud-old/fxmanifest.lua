@@ -7,7 +7,7 @@ files { "ui/html/main.js", "ui/html/index.html" }
 
 client_scripts {
     'config.lua',
-    'client/*.lua'
+    'client/action.lua'
 }
 
 server_scripts {
