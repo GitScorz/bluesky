@@ -16,8 +16,9 @@ The reason that i decided to rework in this project is because i think the frame
 ## Documentation
 I will try to provide a documentation as soon as possible.
 
+## Support
+Join [**discord**](https://discord.gg/TsmqYdXxsv) if you need help.
+
 ## Credits
 
 This is a framework that was originally created by **Discworld** & [**Alzar**](https://github.com/Alzar) for [BlueSky-Development](https://github.com/BlueSky-Development)'s roleplay server, it was later retooled for PixelWorldRP which then later rebranded to React RP.
-## [**Discord**](https://discord.gg/TsmqYdXxsv)
-Join Discord if you need help.
