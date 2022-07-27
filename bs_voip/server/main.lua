@@ -52,9 +52,9 @@ CreateThread(function()
 		if sendingRangeOnly == 'false' then
 			SetConvarReplicated('voice_useSendingRangeOnly', 'true')
 		end
-		Logger.Info(nil, 'Voip', 'No convars detected for voice mode, defaulting to \'setr voice_useNativeAudio true\' and \'setr voice_useSendingRangeOnly true\'', { console = true })
+		Logger:Info(nil, 'Voip', 'No convars detected for voice mode, defaulting to \'setr voice_useNativeAudio true\' and \'setr voice_useSendingRangeOnly true\'', { console = true })
 	elseif sendingRangeOnly == 'false' then
-		Logger.Warn(nil, 'Voip', 'It\'s recommended to have \'voice_useSendingRangeOnly\' set to true you can do that with \'setr voice_useSendingRangeOnly true\', this prevents players who directly join the mumble server from broadcasting to players.', { console = true })
+		Logger:Warn(nil, 'Voip', 'It\'s recommended to have \'voice_useSendingRangeOnly\' set to true you can do that with \'setr voice_useSendingRangeOnly true\', this prevents players who directly join the mumble server from broadcasting to players.', { console = true })
 	end
 
 	local radioVolume = GetConvarInt("voice_defaultRadioVolume", 30)
@@ -69,7 +69,7 @@ CreateThread(function()
 		SetConvarReplicated("voice_defaultCallVolume", 60)
 		for i = 1, 5 do
 			Wait(5000)
-			Logger.Warn(nil, 'Voip', "`voice_defaultRadioVolume` or `voice_defaultCallVolume` have their value set as a float, this is going to automatically be fixed but please update your convars.", { console = true })
+			Logger:Warn(nil, 'Voip', "`voice_defaultRadioVolume` or `voice_defaultCallVolume` have their value set as a float, this is going to automatically be fixed but please update your convars.", { console = true })
 		end
 	end
 end)
