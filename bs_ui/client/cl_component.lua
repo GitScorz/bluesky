@@ -25,9 +25,6 @@ UI = {
     end,
     --- @param data table The data you wish to send along with this action
     Update = function(self, data)
-      if data.id == "thirst" or data.id == "hunger" then
-        print(json.encode(data))
-      end
       UI:SendUIMessage('hud:status:update', data)
     end,
     Reset = function(self)
