@@ -61,9 +61,6 @@ SPAWN = {
         NetworkSetFriendlyFireOption(true)
 
         SetEntityMaxHealth(PlayerPedId(), 200)
-        SetEntityHealth(player, 200)
-        SetPedArmour(player, 100)
-        DisplayHud(true)
         SetNuiFocus(false, false)
         TriggerEvent('Characters:Client:SetFocus', false)
         
@@ -72,10 +69,10 @@ SPAWN = {
             TriggerEvent(data.action, data.data)
         else
             SetEntityCoords(player, data.spawn.location.x, data.spawn.location.y, data.spawn.location.z)
-            DoScreenFadeIn(500)
+            DoScreenFadeIn(1500)
         end
 
-        TransitionFromBlurred(500)
+        TransitionFromBlurred(1500)
     end
 }
 
