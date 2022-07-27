@@ -18,4 +18,4 @@ I will try to provide a documentation as soon as possible, you can check the CON
 
 ## Credits
 
-This is a framework that was originally created by **Discworld** & [Alzar](https://github.com/Alzar) for [BlueSky-Development](https://github.com/BlueSky-Development)'s roleplay server, it was later retooled for PixelWorldRP which then later rebranded to React RP.
+This is a framework that was originally created by **Discworld** & [**Alzar**](https://github.com/Alzar) for [BlueSky-Development](https://github.com/BlueSky-Development)'s roleplay server, it was later retooled for PixelWorldRP which then later rebranded to React RP.
