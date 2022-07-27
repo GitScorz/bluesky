@@ -1,10 +1,15 @@
 COMPONENTS.Discord = {
     _name = 'base',
-    RichPresence = function(self)
-        SetDiscordAppId('')
-        SetDiscordRichPresenceAsset('')
-        SetDiscordRichPresenceAssetText('')
-        SetDiscordRichPresenceAssetSmall('')
+
+    --- @param appId string A Discord application id.
+    --- @param asset string The asset name for big image.
+    --- @param assetText string The title text.
+    --- @param assetSmall string The asset name for small image.
+    RichPresence = function(self, appId, asset, assetText, assetSmall)
+        SetDiscordAppId(appId)
+        SetDiscordRichPresenceAsset(asset)
+        SetDiscordRichPresenceAssetText(assetText)
+        SetDiscordRichPresenceAssetSmall(assetSmall)
         Citizen.CreateThread(function()
             while true do
                 if COMPONENTS.Player ~= nil and COMPONENTS.Player.LocalPlayer ~= nil and COMPONENTS.Player.LocalPlayer:GetData('Character') ~= nil then
@@ -22,4 +27,6 @@ COMPONENTS.Discord = {
     end
 }
 
-Citizen.CreateThread(function() COMPONENTS.Discord:RichPresence() end)
+CreateThread(function() -- Discord Rich Presence
+    COMPONENTS.Discord:RichPresence("", "", "", "") 
+end)

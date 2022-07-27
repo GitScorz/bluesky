@@ -1,4 +1,4 @@
-local DISCORD_NAME = 'Logger Bot'
+local DISCORD_NAME = 'Bob'
 local DISCORD_IMAGE = "https://imgur.com/oJAZQNt.png"
 local logWebhook = GetConvar('discord_log_webhook', 'NOT SET')
 
