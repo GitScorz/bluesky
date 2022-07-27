@@ -281,7 +281,7 @@ function StartVehicleThreads()
     end
 
     Citizen.CreateThread(function()
-        DisplayRadar(true)
+        -- DisplayRadar(true)
         while _vehToggled do
             local speed = math.ceil(GetEntitySpeed(GLOBAL_VEH) * 2.237)
             SendNUIMessage({
@@ -291,7 +291,7 @@ function StartVehicleThreads()
             Citizen.Wait(100)
         end
 
-        DisplayRadar(false)
+        -- DisplayRadar(false)
     end)
 
     -- Citizen.CreateThread(function()
