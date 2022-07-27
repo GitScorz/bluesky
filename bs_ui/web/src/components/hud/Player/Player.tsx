@@ -20,7 +20,7 @@ export default function Player({ voice, health, armor, hunger, thirst }: UI.Stat
   }
 
   const backgroundRed = (value: number, defaultColor: string) => {
-    return (value > 30) ? defaultColor : 'rgba(255, 0, 0, 0.5)';
+    return (value > 30) ? defaultColor : 'rgba(255, 0, 0, 0.3)';
   }
 
   const foregroundYellow = (defaultColor: string) => {
@@ -28,7 +28,7 @@ export default function Player({ voice, health, armor, hunger, thirst }: UI.Stat
   }
 
   const backgroundYellow = (defaultColor: string) => {
-    return !isTalking ? defaultColor : 'rgba(255, 255, 0, 0.5)';
+    return !isTalking ? defaultColor : 'rgba(255, 255, 0, 0.3)';
   }
 
   useNuiEvent("hud:voip:toggleTalking", (state: boolean) => {
@@ -43,31 +43,31 @@ export default function Player({ voice, health, armor, hunger, thirst }: UI.Stat
     <div className="hud-player">
       <Box sx={{ position: "relative", display: "flex" }}>
         <CircularProgress variant="determinate" value={voice} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundYellow("rgba(255,255,255,255)") }} />
-        <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundYellow("rgba(255,255,255,0.5)")}` }} />
+        <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundYellow("rgba(255,255,255,0.3)")}` }} />
         <FontAwesomeIcon className="hud-icon" icon={onRadio ? faHeadset : faMicrophone} size={iconSize} />
       </Box>
 
       <Box sx={{ position: "relative", display: "flex" }}>
         <CircularProgress variant="determinate" value={health} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(health, "rgba(59,160,122,255)") }} />
-        <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(health, "rgba(59,160,122,0.5)")}` }} />
+        <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(health, "rgba(59,160,122,0.3)")}` }} />
         <FontAwesomeIcon className="hud-icon" icon={faHeart} size={iconSize} />
       </Box>
 
       <Box sx={{ position: "relative", display: "flex" }}>
         <CircularProgress variant="determinate" value={armor} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(armor, "rgba(27,101,181,255)") }} />
-        <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(armor, "rgba(27,101,181,0.5)")}` }} />
+        <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(armor, "rgba(27,101,181,0.3)")}` }} />
         <FontAwesomeIcon className="hud-icon" icon={faShieldHalved} size={iconSize} />
       </Box>
 
       <Box sx={{ position: "relative", display: "flex" }}>
         <CircularProgress variant="determinate" value={hunger} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(hunger, "rgba(255,118,10,255)") }} />
-        <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(hunger, "rgba(255,118,10,0.5)")}` }} />
+        <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(hunger, "rgba(255,118,10,0.3)")}` }} />
         <FontAwesomeIcon className="hud-icon" icon={faBurger} size={iconSize} />
       </Box>
 
       <Box sx={{ position: "relative", display: "flex" }}>
         <CircularProgress variant="determinate" value={thirst} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(thirst, "rgba(13,121,180,255)") }} />
-        <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(thirst, "rgba(13,121,180,0.5)")}` }} />
+        <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(thirst, "rgba(13,121,180,0.3)")}` }} />
         <FontAwesomeIcon className="hud-icon" icon={faDroplet} size={iconSize} />
       </Box>
     </div>
