@@ -50,6 +50,9 @@ end)
 COMPONENTS.Player = {
     _required = { 'GetData' },
     _name = 'base',
+
+    --- @param source number The source of the player.
+    --- @param data string The data you want to get.
     GetData = function(self, source, data)
         local retVal = -1
 

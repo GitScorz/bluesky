@@ -1,4 +1,5 @@
 COMPONENTS.Core = {
+	--- @param reason string The reason for the error.
 	Shutdown = function(self, reason)
 		COMPONENTS.Logger:Critical('Core', 'Shutting Down Core, Reason: ' .. reason, { 
 			console = true,

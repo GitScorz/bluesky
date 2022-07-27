@@ -5,6 +5,10 @@ COMPONENTS.Default = {
     _required = { 'Add' },
     _name = { 'base' },
     _protected = true,
+
+    --- @param collection string The name of the collection.
+    --- @param date string Any date.
+    --- @param data any The data you wish to add.
     Add = function(self, collection, date, data)
         Citizen.CreateThread(function()
             -- Prevents doing this operation multiple times because earlier

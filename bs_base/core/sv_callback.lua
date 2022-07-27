@@ -4,9 +4,16 @@ local _cCallbacks = {}
 COMPONENTS.Callbacks = {
     _required = { 'RegisterServerCallback', 'DoServerCallback', 'ClientCallback' },
     _name = 'base',
+
+    --- @param event string The event name of the callback.
     RegisterServerCallback = function(self, event, cb)
         _sCallbacks[event] = cb
     end,
+
+    --- @param source number The source of the player.
+    --- @param event string The event name of the callback.
+    --- @param data any The arguments of the callback.
+    --- @param extraId number The extra id of the callback.
     DoServerCallback = function(self, source, event, data, extraId)
         if _sCallbacks[event] ~= nil then
             Citizen.CreateThread(function()
@@ -16,6 +23,11 @@ COMPONENTS.Callbacks = {
             end)
         end
     end,
+    
+    --- @param source number The source of the player.
+    --- @param event string The event name of the callback.
+    --- @param data any The arguments of the callback.
+    --- @param extraId number The extra id of the callback.
     ClientCallback = function(self, source, event, data, cb, extraId)
         if data == nil then data = {} end
 

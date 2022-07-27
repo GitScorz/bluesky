@@ -21,6 +21,7 @@ AddEventHandler('onResourceStart', function(resource)
     end
 end)
 
+--- @param component string The name of the component.
 function NotifyDependencyUpdate(component)
     if _deps[component] ~= nil then
         for k, v in ipairs(_deps[component]) do
