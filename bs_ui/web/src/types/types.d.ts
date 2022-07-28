@@ -25,6 +25,7 @@ namespace UI {
   namespace Action {
     interface ActionData {
       text: string;
+      type: string;
     }
   }
 }

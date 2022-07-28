@@ -6,24 +6,39 @@ import './Action.css';
 
 export default function Action() {
   const [visible, setVisible] = useState(false);
-  const [text, setText] = useState('');
+  const [actionData, setActionData] = useState({ action: '', colorType: '' });
 
   useEffect(() => {
     if (isEnvBrowser()) {
       setVisible(true);
-      setText('[E] Action');
+      setActionData(oldData => ({ ...oldData, action: '[E] Open', colorType: 'success' }));
     }
   }, []);
 
-  useNuiEvent('hud:action:showAction', (data: UI.Action.ActionData) => {
+  useNuiEvent('hud:action:showInteraction', (data: UI.Action.ActionData) => {
     setVisible(true);
-    setText(data.text);
+    setActionData(oldData => ({ ...oldData, ...data }));
+  });
+
+  useNuiEvent('hud:action:hideInteraction', () => {
+    setVisible(false);
   });
   
+  const getColor = (type: string) => {
+    switch (type) {
+      case 'error':
+        return '#ff0000';
+      case 'success':
+        return '#8cff82';
+      default:
+        return '#1e1f24';
+    }
+  }
+
   return (
     <Slide direction='right' timeout={{ enter: 500, exit: 500 }} in={visible}>
-      <div className='action-container'>
-        <div className='action-text'>{text.toUpperCase()}</div>
+      <div className='action-container' style={{ backgroundColor: getColor(actionData.colorType) }}>
+        <div className='action-text'>{actionData.action}</div>
       </div>
     </Slide>
   )

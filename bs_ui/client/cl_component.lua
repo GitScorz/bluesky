@@ -62,6 +62,20 @@ UI = {
     ToggleRadio = function(self, enabled)
       UI:SendUIMessage('hud:voip:toggleRadio', enabled)
     end,
+  },
+
+  Action = {
+    ShowInteraction = function(self, data)
+      local aux = {
+        action = data[1],
+        colorType = data[2],
+      }
+
+      UI:SendUIMessage('hud:action:showInteraction', aux)
+    end,
+    HideInteraction = function(self)
+      UI:SendUIMessage('hud:action:hideInteraction')
+    end,
   }
 }
 
