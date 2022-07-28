@@ -39,17 +39,18 @@ function RegisterChatCommands()
     Chat:RegisterCommand('savecar', function(source, args, rawCommand)
         TriggerClientEvent('Garage:SaveCar', source)
     end, {
-        help = 'Show Current Cash'
+        help = 'Save the current vehicle'
     })
 end
 
-function RegisterCallbacks()
-    Callbacks:RegisterServerCallback('Garage:CreateVehicle', function(source, data, cb)
-        local player = exports['bs_base']:FetchComponent('Fetch'):Source(source)
-        local char = player:GetData('Character')
-        Garage.Vehicle:Create(data.plate, char:GetData('ID'), data.props, cb)
-    end)
+RegisterNetEvent('Garage:CreateVehicle')
+AddEventHandler('Garage:CreateVehicle', function(source, data)
+    local player = exports['bs_base']:FetchComponent('Fetch'):Source(source)
+    local char = player:GetData('Character')
+    Garage.Vehicle:Create(data.plate, char:GetData('ID'), data.props, cb)
+end)
 
+function RegisterCallbacks()
     Callbacks:RegisterServerCallback('Garage:StoreVehicle', function(source, data, cb)
         Garage.Vehicle:Store(data.plate, data.location, data.damage, cb)
     end)

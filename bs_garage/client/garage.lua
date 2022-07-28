@@ -54,7 +54,7 @@ function RegisterMarkers()
         end)
         Markers.Markers:Add(v.Name, v.Name .. '_store', v.Store, 1, vector3(5, 5, 3), { r = 255, b = 255, g = 0 }, function()
             return true
-        end, '[E] Store Vehicle', 1, function()
+        end, '[E] Store', 1, function()
             StoreVehicle(v.Name)
         end)
     end
@@ -123,9 +123,7 @@ AddEventHandler('Garage:SaveCar', function()
             plate = GetVehicleNumberPlateText(vehicle),
             props = Game.Vehicles:GetProperties(vehicle)
         }
-        Callbacks:ServerCallback('Garage:CreateVehicle', data, function()
-
-        end)
+        TriggerServerEvent('Garage:CreateVehicle', data)
     end
 end)
 
