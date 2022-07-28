@@ -49,15 +49,20 @@ MOTELS = {
         Motel = nil,
         MotelExit = nil
     },
+
+    --- @param coords vector3
     Spawn = function(self, coords)
         local motel = Interiors.Create.Shell:Motel(coords)
         _objects = motel[1]
         Motels.Data.MotelExit = vector3(motel[2].exit.x + coords.x, motel[2].exit.y + coords.y, motel[2].exit.z + coords.z)
     end,
+    
     Clear = function(self)
         Interiors:Delete(_objects)
     end,
+
     Location = {
+        --- @param location string
         Register = function(self, location)
             local player = PlayerPedId()
             Markers.MarkerGroups:Add('motel', location.Coords, Config.DrawDistance)
