@@ -36,7 +36,7 @@ export default function Hud() {
     setVisible(shouldShow);
   });
 
-  useNuiEvent('hud:status:update', (data: UI.Status.UpdateData) => {
+  useNuiEvent('hud:status:update', (data: UI.Status.Data) => {
     if (!visible) return; // If the HUD is not visible, don't update it improve performance
 
     switch (data.id) {

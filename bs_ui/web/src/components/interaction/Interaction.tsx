@@ -2,22 +2,22 @@ import { Slide } from '@mui/material';
 import { useEffect, useState } from 'react'
 import { useNuiEvent } from '../../hooks/useNuiEvent';
 import { isEnvBrowser } from '../../utils/misc';
-import './Action.css';
+import './Interaction.css';
 
-export default function Action() {
+export default function Interaction() {
   const [visible, setVisible] = useState(false);
-  const [actionData, setActionData] = useState({ action: '', colorType: '' });
+  const [interactionData, setInteractionData] = useState<UI.Interaction.Data>({ action: "", colorType: "" });
 
   useEffect(() => {
     if (isEnvBrowser()) {
       setVisible(true);
-      setActionData(oldData => ({ ...oldData, action: '[E] Open', colorType: 'success' }));
+      setInteractionData(oldData => ({ ...oldData, action: "Parking", colorType: "default" }));
     }
   }, []);
 
-  useNuiEvent('hud:action:showInteraction', (data: UI.Action.ActionData) => {
+  useNuiEvent('hud:action:showInteraction', (data: UI.Interaction.Data) => {
     setVisible(true);
-    setActionData(oldData => ({ ...oldData, ...data }));
+    setInteractionData(oldData => ({ ...oldData, ...data }));
   });
 
   useNuiEvent('hud:action:hideInteraction', () => {
@@ -39,8 +39,8 @@ export default function Action() {
 
   return (
     <Slide direction='right' timeout={{ enter: 500, exit: 500 }} in={visible}>
-      <div className='action-container' style={{ backgroundColor: getColor(actionData.colorType) }}>
-        <div className='action-text'>{actionData.action}</div>
+      <div className='action-container' style={{ backgroundColor: getColor(interactionData.colorType) }}>
+        <div className='action-text'>{interactionData.action}</div>
       </div>
     </Slide>
   )

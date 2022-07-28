@@ -9,7 +9,7 @@ namespace UI {
       thirst: number;
     }
 
-    interface UpdateData {
+    interface Data {
       id: string;
       value: number;
     }
@@ -22,10 +22,10 @@ namespace UI {
     }
   }
 
-  namespace Action {
-    interface ActionData {
-      text: string;
-      type: string;
+  namespace Interaction {
+    interface Data {
+      action: string;
+      colorType: string;
     }
   }
 }

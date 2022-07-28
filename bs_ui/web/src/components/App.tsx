@@ -2,7 +2,7 @@ import './App.css';
 
 import Hud from './hud/Hud';
 import Balance from './balance/Balance';
-import Action from './action/Action';
+import Interaction from './interaction/Interaction';
 import Phone from './phone/Phone';
 import Radio from './radio/Radio';
 
@@ -11,7 +11,7 @@ export default function App() {
     <div className="nui-wrapper">
       <Hud />
       <Balance />
-      <Action />
+      <Interaction />
       <Phone /> 
       <Radio />
     </div>
