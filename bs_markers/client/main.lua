@@ -39,6 +39,10 @@ end)
 
 MARKERS = {
     MarkerGroups = {
+
+        --- @param groupName string
+        --- @param groupCoords vector3
+        --- @param groupDistance number
         Add = function(self, groupName, groupCoords, groupDistance)
             if groupName == "" or groupName == nil or type(groupName) ~= 'string' then
                 Logger:Error('Markers', 'Invalid Group Name for Marker Group: ' .. tostring(groupName))
@@ -61,6 +65,8 @@ MARKERS = {
             markerGroups[groupName] = MarkerGroup(groupName, groupCoords, groupDistance)
             withinDistanceGroups[groupName] = nil
         end,
+
+        --- @param groupName string
         Remove = function(self, groupName)
             if markerGroups[groupName] == nil then
                 Logger:Error('Markers', 'Attempting to remove non-existent Marker Group: ' .. tostring(groupName))
@@ -69,6 +75,10 @@ MARKERS = {
             markerGroups[groupName] = nil
             withinDistanceGroups[groupName] = nil
         end,
+
+        --- @param groupName string
+        --- @param groupCoords vector3
+        --- @param groupDistance number
         Update = function(self, groupName, groupCoords, groupDistance)
             if groupName == "" or groupName == nil or type(groupName) ~= 'string' then
                 Logger:Error('Markers', 'Invalid Group Name for Marker Group: ' .. tostring(groupName))
@@ -84,10 +94,22 @@ MARKERS = {
             markerGroups[groupName].markers = markers
         end
     },
+
     Markers = {
         Refresh = function(self)
             withinDistanceGroups = {}
         end,
+
+        --- @param groupName string
+        --- @param markerId number
+        --- @param markerCoords vector3
+        --- @param markerType string
+        --- @param markerScale number
+        --- @param markerColor table
+        --- @param shouldMarkerShow boolean
+        --- @param hint string
+        --- @param interfuckingactiondistance number
+        --- @param action string
         Add = function(self, groupName, markerId, markerCoords, markerType, markerScale, markerColor, shouldMarkerShow, hint, interfuckingactiondistance, action)
             if markerGroups[groupName] == nil then
                 Logger:Error('Markers', 'Invalid Group for Marker: ' .. tostring(groupName))
@@ -130,6 +152,14 @@ MARKERS = {
             withinDistanceGroups[groupName] = nil
             markerGroups[groupName].markers[markerId] = Marker(groupName, markerId, markerCoords, markerType, markerScale, markerColor, shouldMarkerShow, hint, interfuckingactiondistance, action)
         end,
+
+        --- @param groupName string
+        --- @param markerId number
+        --- @param itemName string
+        --- @param markerCoords vector3
+        --- @param hint string
+        --- @param shouldMarkerShow boolean
+        --- @param action string
         ItemAdd = function(self, groupName, markerId, itemName, markerCoords, hint, distance, shouldMarkerShow, action)
             if markerGroups[groupName] == nil then
                 Logger:Error('Markers', 'Invalid Group for Item Marker: ' .. tostring(groupName))
@@ -164,6 +194,9 @@ MARKERS = {
             end
             markerGroups[groupName].markers[markerId] = ItemMarker(groupName, markerId, itemName, markerCoords, hint, distance, shouldMarkerShow, action)
         end,
+
+        --- @param groupName string
+        --- @param markerId number
         Remove = function(self, groupName, markerId)
             if markerGroups[groupName] == nil then
                 Logger:Error('Markers', 'Invalid Group for Marker: ' .. tostring(groupName))
@@ -176,6 +209,17 @@ MARKERS = {
             end
             markerGroups[groupName].markers[markerId] = nil
         end,
+
+        --- @param groupName string
+        --- @param markerId number
+        --- @param markerCoords vector3
+        --- @param markerType string
+        --- @param markerScale number
+        --- @param markerColor table
+        --- @param shouldMarkerShow boolean
+        --- @param hint string
+        --- @param interfuckingactiondistance number
+        --- @param action string
         Update = function(self, groupName, markerId, markerCoords, markerType, markerScale, markerColor, shouldMarkerShow, hint, interfuckingactiondistance, action)
             if markerGroups[groupName] == nil then
                 Logger:Error('Markers', 'Invalid Group for Marker: ' .. tostring(groupName))
@@ -245,8 +289,7 @@ Citizen.CreateThread(function()
         for groupName, group in pairs(withinDistanceGroups) do
             for markerId, marker in pairs(group.markers) do
                 local distance = #(playerCoords - marker.coords)
-                print(json.encode(marker.distance))
-                if distance < marker.distance then
+                if distance <= 3 then
                     marker.show = marker.shouldShow()
                     if marker.show then
                         isInMarker = true
@@ -266,18 +309,18 @@ Citizen.CreateThread(function()
     end
 end)
 
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(4)
-        for _, group in pairs(withinDistanceGroups) do
-            for _, marker in pairs(group.markers) do
-                if marker.show and marker.draw then
-                    DrawMarker(marker.type, marker.coords, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, marker.scale.x, marker.scale.y, marker.scale.z, marker.colour.r, marker.colour.g, marker.colour.b, 100, false, true, 2, false, false, false, false)
-                end
-            end
-        end
-    end
-end)
+-- Citizen.CreateThread(function()
+--     while true do
+--         Citizen.Wait(4)
+--         for _, group in pairs(withinDistanceGroups) do
+--             for _, marker in pairs(group.markers) do
+--                 if marker.show and marker.draw then
+--                     DrawMarker(marker.type, marker.coords, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, marker.scale.x, marker.scale.y, marker.scale.z, marker.colour.r, marker.colour.g, marker.colour.b, 100, false, true, 2, false, false, false, false)
+--                 end
+--             end
+--         end
+--     end
+-- end)
 
 Citizen.CreateThread(function()
     local showing = false
@@ -285,7 +328,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
         if CurrentMarker and CurrentMarker.show then
             if not showing then
-                UI.Action:Show(CurrentMarker.hint or "This Hint is Empty")
+                UI.Action:Show(CurrentMarker.hint or "Hint Empty")
                 showing = true
             end
             if CurrentMarker.show and CurrentMarker.draw and IsControlJustReleased(0, 38) then
