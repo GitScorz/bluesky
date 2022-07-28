@@ -4,7 +4,7 @@ $(document).ready(function(){
 
     if (item.runProgress === true) {
       const message = item.textsent;
-      const fadeTimer = item.fadesent;
+      const fadeTimer = item.fadesent ? item.fadesent : 7500;
       const colorSent = item.colorsent;
 
       $('#colorsent' + colorSent).css('display', 'none');
