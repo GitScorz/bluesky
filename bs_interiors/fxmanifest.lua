@@ -1,16 +1,11 @@
-fx_version 'bodacious'
-
+fx_version 'cerulean'
 game 'gta5'
 
 client_scripts {
-    'client/*.lua',
+	'client/*.lua',
 }
 
 shared_script 'config.lua'
-
-server_scripts {
-    'server/*.lua',
-}
 
 files {
 	'stream/playerhouse_hotel/playerhouse_hotel.ytyp',
