@@ -13,7 +13,7 @@ UI = {
   --- @param shouldFocus boolean Whether or not to focus the NUI frame
   SetFocus = function(self, shouldFocus)
     SetNuiFocus(shouldFocus, shouldFocus)
-    Logger:Info("UI", ("Set focus status: %s"):format(shouldShow))
+    Logger:Info("UI", ("Set focus status: %s"):format(shouldFocus))
   end,
 
   Hud = {
