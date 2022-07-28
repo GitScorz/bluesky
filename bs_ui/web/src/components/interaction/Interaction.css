@@ -16,17 +16,19 @@
   align-items: center;
   justify-content: center;
 
-  list-style: none;
   font-size: 1.8vh;
   font-weight: bold;
-  font-family: sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   color: white;
   user-select: none;
-  white-space: nowrap;
-  text-shadow: 1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black;
-  transform: scale(1.2,0.9);
-  /* text-shadow: 0 0 0.1rem rgb(0, 43, 68), 
-    0 0 0.1rem rgb(0, 96, 151), 
-    0 0 0.1rem rgb(0, 96, 151), 
-    0 0 0.1rem rgb(0, 96, 151); */
+  font-variant: small-caps;
+  text-shadow: 1px 1px 0 #000,
+    -1px -1px 0px #000,
+    0px -1px 0px #000,
+    1px -1px 0px #000,
+   -1px  0px 0px #000,
+    1px  0px 0px #000,
+   -1px  1px 0px #000,
+    0px  1px 0px #000,
+    1px  1px 0px #000;
 }

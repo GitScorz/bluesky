@@ -25,7 +25,7 @@ namespace UI {
   namespace Interaction {
     interface Data {
       action: string;
-      colorType: string;
+      colorType: "default" | "success" | "error";
     }
   }
 }

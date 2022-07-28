@@ -6,7 +6,7 @@ import './Interaction.css';
 
 export default function Interaction() {
   const [visible, setVisible] = useState(false);
-  const [interactionData, setInteractionData] = useState<UI.Interaction.Data>({ action: "", colorType: "" });
+  const [interactionData, setInteractionData] = useState<UI.Interaction.Data>({ action: "", colorType: "default" });
 
   useEffect(() => {
     if (isEnvBrowser()) {
