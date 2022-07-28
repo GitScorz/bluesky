@@ -8,7 +8,7 @@ export default function Phone() {
     if (isEnvBrowser()) {
       setVisible(true);
     }
-  }, [visible]);
+  }, []);
 
   return (
     <div className='phone-container' style={{visibility: visible ? "visible" : "hidden"}}>

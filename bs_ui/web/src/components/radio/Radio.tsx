@@ -8,7 +8,7 @@ export default function Radio() {
     if (isEnvBrowser()) {
       setVisible(true);
     }
-  }, [visible]);
+  }, []);
 
   return (
     <div className='radio-container' style={{visibility: visible ? "visible" : "hidden"}}>
