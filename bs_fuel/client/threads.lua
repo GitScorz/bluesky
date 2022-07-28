@@ -66,12 +66,12 @@ function RunThreads()
             if GLOBAL_VEH == nil then
             if not _fueling and ((_nearestPump and GetEntityHealth(_nearestPump) > 0) or (GetSelectedPedWeapon(GLOBAL_PED) == 883325847 and not _nearestPump)) then
                 local veh = GetClosestVehicle(GetEntityCoords(GLOBAL_PED), 2.0, 0, 71)
-    
+                
                 if veh ~= 0 then
                     local current = DecorGetFloat(veh, 'VEH_FUEL')
                     if not actionShowing and not _fueling then
                         if current < 95.0 then
-                            UI.Action:Show('[E] To Start Fueling')
+                            UI.Action:Show('[E] Start Fueling')
                         else
                             UI.Action:Show('Fuel Full', "error")
                         end
@@ -83,7 +83,7 @@ function RunThreads()
     
                     if IsControlJustReleased(0, 38) then
                         Callbacks:ServerCallback('Fuel:Check', {}, function(cash)
-                            if cash > 0 and cash >= Config.BaseCost then
+                            if cash >= Config.BaseCost then
                                 local start = current
                                 local start = current
                                 local time = (100 - current) * 1000
