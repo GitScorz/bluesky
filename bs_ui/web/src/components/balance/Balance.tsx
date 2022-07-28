@@ -1,3 +1,4 @@
+import { Fade } from "@mui/material";
 import { useEffect, useState } from "react"
 import { useNuiEvent } from "../../hooks/useNuiEvent";
 import { isEnvBrowser } from "../../utils/misc";
@@ -49,12 +50,17 @@ export default function Balance() {
 
   return (
     <div className="balance-container" style={{ fontFamily: "Pricedown" }}>
-      <div className={`"bank-container`} style={{ opacity: `${bankVisible ? "1" : "0"}` }}>
-        <div className="bank-balance">$ <span className="money">{bank}</span></div>
-      </div>
-      <div className={`cash-container`} style={{ opacity: `${cashVisible ? "1" : "0"}`}}>
-        <div className="cash-balance">$ <span className="money">{cash}</span></div>
-      </div>
+      <Fade timeout={{ enter: 500, exit: 500 }} in={bankVisible}>
+        <div className={`"bank-container`} style={{ opacity: `${bankVisible ? "1" : "0"}` }}>
+          <div className="bank-balance">$ <span className="money">{bank}</span></div>
+        </div>
+      </Fade>
+      
+      <Fade timeout={{ enter: 500, exit: 500 }} in={cashVisible}>
+        <div className={`cash-container`} style={{ opacity: `${cashVisible ? "1" : "0"}`}}>
+          <div className="cash-balance">$ <span className="money">{cash}</span></div>
+        </div>
+      </Fade>
     </div>
   )
 }

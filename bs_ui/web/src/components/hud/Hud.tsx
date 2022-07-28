@@ -1,3 +1,4 @@
+import { Fade } from "@mui/material";
 import { useEffect, useState } from 'react';
 import { useNuiEvent } from '../../hooks/useNuiEvent';
 import { isEnvBrowser } from '../../utils/misc';
@@ -71,9 +72,11 @@ export default function Hud() {
   });
 
   return (
-    <div className="hud-container" style={{ visibility: visible ? 'visible' : 'hidden' }}>
-      <Player {...status} />
-      <Vehicle />
-    </div>
+    <Fade timeout={{ enter: 200, exit: 200 }} in={visible}>
+      <div className="hud-container">
+        <Player {...status} />
+        <Vehicle />
+      </div>
+    </Fade>
   );
 }

@@ -5,11 +5,13 @@ import './Player.css'
 import { faHeart, faShieldHalved, faBurger, faDroplet, faMicrophone, faHeadset } from '@fortawesome/free-solid-svg-icons';
 import { SizeProp } from '@fortawesome/fontawesome-svg-core';
 import { useNuiEvent } from '../../../hooks/useNuiEvent';
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 
-export default function Player({ voice, health, armor, hunger, thirst }: UI.Status.HudProps) {
+const Player = forwardRef((props: UI.Status.HudProps, ref: any) => {
   const [isTalking, setIsTalking] = useState(false);
   const [onRadio, setOnRadio] = useState(false);
+
+  const { voice, health, armor, hunger, thirst } = props;
 
   const thickSize = 6.5;
   const size = 53;
@@ -40,7 +42,7 @@ export default function Player({ voice, health, armor, hunger, thirst }: UI.Stat
   });
 
   return (
-    <div className="hud-player">
+    <div ref={ref} className="hud-player">
       <Box sx={{ position: "relative", display: "flex" }}>
         <CircularProgress variant="determinate" value={voice} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundYellow("rgba(255,255,255,255)") }} />
         <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundYellow("rgba(255,255,255,0.3)")}` }} />
@@ -72,4 +74,6 @@ export default function Player({ voice, health, armor, hunger, thirst }: UI.Stat
       </Box>
     </div>
   )
-}
+});
+
+export default Player;
