@@ -61,3 +61,8 @@ NOTIFICATION = {
 AddEventHandler('Proxy:Shared:RegisterReady', function()
   exports['bs_base']:RegisterComponent('Notification', NOTIFICATION)
 end)
+
+RegisterNetEvent('Characters:Client:Logout')
+AddEventHandler('Characters:Client:Logout', function()
+  NOTIFICATION:Clear()
+end)
