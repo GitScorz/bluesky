@@ -20,5 +20,11 @@ namespace UI {
       bank: number;
       cash: number;
     }
-  } 
+  }
+
+  namespace Action {
+    interface ActionData {
+      text: string;
+    }
+  }
 }
