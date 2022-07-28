@@ -179,15 +179,16 @@ RegisterNetEvent('Characters:Client:Spawn')
 AddEventHandler('Characters:Client:Spawn', function()
     spawned = true
     isEnabled = true
-    print(STATUS:GetRegistered())
+    
+    Wait(1000)
     for k, v in pairs(STATUS:GetRegistered()) do
+        Wait(1000) -- We need this...
         Callbacks:ServerCallback('Status:Get', { name = v.name, type = v.type, max = v.max }, function(val)
             waiting = false
             print("Loop " .. v.id .. " (" .. v.name .. "): " .. val, v.type)
 
             if v.type == STATUS.TYPES.FLOAT then
                 DecorSetFloat(PlayerPedId(), v.name, val)
-                Wait(500) -- We need this...
                 UI.Hud:Update({ id = v.id, value = val })
             elseif v.type == STATUS.TYPES.BOOL then
                 DecorSetBool(PlayerPedId(), v.name, val)
