@@ -27,8 +27,8 @@ export default function Balance() {
 
   useEffect(() => {
     if (isEnvBrowser()) {
-      setVisibleTimeCash();
-      setVisibleTimeBank();
+      // setVisibleTimeCash();
+      // setVisibleTimeBank();
     }
   }, []);
   
@@ -51,13 +51,13 @@ export default function Balance() {
   return (
     <div className="balance-container" style={{ fontFamily: "Pricedown" }}>
       <Fade timeout={{ enter: 500, exit: 500 }} in={bankVisible}>
-        <div className={`"bank-container`} style={{ opacity: `${bankVisible ? "1" : "0"}` }}>
+        <div className={`"bank-container`}>
           <div className="bank-balance">$ <span className="money">{bank}</span></div>
         </div>
       </Fade>
       
       <Fade timeout={{ enter: 500, exit: 500 }} in={cashVisible}>
-        <div className={`cash-container`} style={{ opacity: `${cashVisible ? "1" : "0"}`}}>
+        <div className={`cash-container`}>
           <div className="cash-balance">$ <span className="money">{cash}</span></div>
         </div>
       </Fade>

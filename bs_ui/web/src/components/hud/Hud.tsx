@@ -19,7 +19,7 @@ export default function Hud() {
 
   useEffect(() => {
     if (isEnvBrowser()) {
-      setVisible(true);
+      setVisible(false);
 
       // Set the HUD to the browser values
       setStatus({
