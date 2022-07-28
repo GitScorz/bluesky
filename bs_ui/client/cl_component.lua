@@ -65,15 +65,17 @@ UI = {
   },
 
   Action = {
-    ShowInteraction = function(self, data)
+    --- @param actionText string The text you wish to display on the action bar.
+    --- @param color "success" | "error" | "default" The color you wish to display the action bar in.
+    Show = function(self, actionText, color)
       local aux = {
-        action = data[1],
-        colorType = data[2],
+        action = actionText,
+        colorType = color,
       }
 
       UI:SendUIMessage('hud:action:showInteraction', aux)
     end,
-    HideInteraction = function(self)
+    Hide = function(self)
       UI:SendUIMessage('hud:action:hideInteraction')
     end,
   }

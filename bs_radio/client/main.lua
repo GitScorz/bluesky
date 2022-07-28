@@ -9,7 +9,7 @@ AddEventHandler('Radio:Shared:DependencyUpdate', RetrieveComponents)
 function RetrieveComponents()
     Callbacks = exports['bs_base']:FetchComponent('Callbacks')
     Notification = exports['bs_base']:FetchComponent('Notification')
-    Action = exports['bs_base']:FetchComponent('Action')
+    UI = exports['bs_base']:FetchComponent('UI')
     Progress = exports['bs_base']:FetchComponent('Progress')
 	Voip = exports['bs_base']:FetchComponent('Voip')
     Utils = exports['bs_base']:FetchComponent('Utils')
@@ -20,7 +20,7 @@ AddEventHandler('Core:Shared:Ready', function()
     exports['bs_base']:RequestDependencies('Radio', {
         'Callbacks',
         'Notification',
-        'Action',
+        'UI',
         'Progress',
 		'Voip',
         'Utils',

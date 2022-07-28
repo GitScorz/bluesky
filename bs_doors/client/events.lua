@@ -13,7 +13,7 @@ AddEventHandler('Doors:client:deleteDoor', function(door)
     local doorObj = GetControlOfDoor(door)
     FreezeEntityPosition(doorObj, false)
     doors[door] = nil
-    if showing == door then Action:Hide(); showing = false; Wait(100); end
+    if showing == door then UI.Action:Hide(); showing = false; Wait(100); end
 end)
 
 RegisterNetEvent('Doors:client:updateNewDoor')

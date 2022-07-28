@@ -12,7 +12,7 @@ function RetrieveComponents()
     Utils = exports['bs_base']:FetchComponent('Utils')
     Menu = exports['bs_base']:FetchComponent('Menu')
     Notification = exports['bs_base']:FetchComponent('Notification')
-    Action = exports['bs_base']:FetchComponent('Action')
+    UI = exports['bs_base']:FetchComponent('UI')
     Jobs = exports['bs_base']:FetchComponent('Jobs')
     Doors = exports['bs_base']:FetchComponent('Doors')
     Progress = exports['bs_base']:FetchComponent('Progress')
@@ -26,7 +26,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'Utils',
         'Menu',
         'Notification',
-        'Action',
+        'UI',
         'Jobs',
         'Progress',
         'Doors'
@@ -193,22 +193,25 @@ function DrawInfo(door, locking)
         if showing == door or showing == multiIndex then
             local isAuthed = Doors:IsAuthorized(door)
             local actionMsg = ""
+            local actionColor = ""
             local title = (doors[showing].DoorType == 'gate' and 'Gate' or (doors[showing].DoorType == 'garage' and 'Garage Gate' or 'Door')) .. " "
             
             if (doors[door].Locking or (doors[door].Multi > 0 and multiIndex > 0 and doors[multiIndex].Locking)) and (doors[door].Public or (not doors[door].Public and isAuthed)) then
                 actionMsg = "Locking.."
+                actionColor = "success"
             else
                 SetInitialState(door)  
                 if showing == multiIndex then SetInitialState(multiIndex); end
                 if doors[door].Public or (not doors[door].Public and isAuthed) then
                     local locked = doors[door].Lock
-                    local actionAuthed = (isAuthed == true and "Press {key}E{/key} to " .. (doors[door].Lockdown and "remove police lock" or (locked and "unlock" or "lock")) or "")
-                    actionMsg = "<center><strong>" .. title .. (not locked and "<span style='color:#00ff00'>Unlocked</span>" or "<span style='color:#ff0000'>" .. (doors[door].Lockdown and "On Lockdown" or "Locked") .. "</span>") .. "</strong><br>" .. "</center>"
-                    actionMsg = actionMsg .. actionAuthed
+                    -- local actionAuthed = (isAuthed == true and "Press {key}E{/key} to " .. (doors[door].Lockdown and "remove police lock" or (locked and "unlock" or "lock")) or "")
+                    actionMsg = ("[E] %s"):format(locked and "Locked" or "Unlocked")-- "<center><strong>" .. title .. (not locked and "<span style='color:#00ff00'>Unlocked</span>" or "<span style='color:#ff0000'>" .. (doors[door].Lockdown and "On Lockdown" or "Locked") .. "</span>") .. "</strong><br>" .. "</center>"
+                    actionColor = locked and "error" or "success"
+                    -- actionMsg = actionMsg .. actionAuthed
                 end
             end
 
-            if actionMsg ~= "" then  Action:Show(actionMsg) end
+            if actionMsg ~= "" and actionColor ~= "" then UI.Action:Show(actionMsg, actionColor) end
         end
     else
         SetInitialState(door)
@@ -482,7 +485,7 @@ Citizen.CreateThread(function()
                     end
                 elseif showing == k then
                     showing = false
-                    Action:Hide()
+                    UI.Action:Hide()
                 end
             end
         end

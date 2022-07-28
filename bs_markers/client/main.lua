@@ -1,6 +1,6 @@
 local Logger
 local Notifications
-local Action = nil
+local UI = nil
 
 AddEventHandler('Proxy:Shared:RegisterReady', function()
     exports['bs_base']:RegisterComponent('Markers', MARKERS)
@@ -10,7 +10,7 @@ AddEventHandler('Markers:Shared:DependencyUpdate', RetrieveComponents)
 function RetrieveComponents()
     Logger = exports['bs_base']:FetchComponent('Logger')
     Notifications = exports['bs_base']:FetchComponent('Notifications')
-    Action = exports['bs_base']:FetchComponent('Action')
+    UI = exports['bs_base']:FetchComponent('UI')
 end
 
 AddEventHandler('Core:Shared:Ready', function()
@@ -19,7 +19,7 @@ AddEventHandler('Core:Shared:Ready', function()
     exports['bs_base']:RequestDependencies('Markers', {
         'Logger',
         'Notifications',
-        'Action',
+        'UI',
     }, function(error)
         if #error > 0 then
             return ;
@@ -245,6 +245,7 @@ Citizen.CreateThread(function()
         for groupName, group in pairs(withinDistanceGroups) do
             for markerId, marker in pairs(group.markers) do
                 local distance = #(playerCoords - marker.coords)
+                print(json.encode(marker.distance))
                 if distance < marker.distance then
                     marker.show = marker.shouldShow()
                     if marker.show then
@@ -284,7 +285,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
         if CurrentMarker and CurrentMarker.show then
             if not showing then
-                Action:Show(CurrentMarker.hint or "This Hint is Empty")
+                UI.Action:Show(CurrentMarker.hint or "This Hint is Empty")
                 showing = true
             end
             if CurrentMarker.show and CurrentMarker.draw and IsControlJustReleased(0, 38) then
@@ -294,7 +295,7 @@ Citizen.CreateThread(function()
             end
         else
             if showing then
-                Action:Hide()
+                UI.Action:Hide()
                 showing = false
             end
         end

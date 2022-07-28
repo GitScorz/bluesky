@@ -169,7 +169,7 @@ BANK.Robbery = {
                 flags = 49,
             }
         }, function()
-            Action:Hide()
+            UI.Action:Hide()
         end, function(status)
             TriggerServerEvent('Bank:SyncDoor', bank, type, door, true)
         end)
@@ -193,7 +193,7 @@ BANK.Robbery = {
                 flags = 49,
             }
         }, function()
-            Action:Hide()
+            UI.Action:Hide()
         end, function(status)
             TriggerServerEvent('Bank:UnlockDoor', bank, type, door, true)
         end)
@@ -221,7 +221,7 @@ BANK.Robbery = {
                 coords = { x = 0.0, y = 0.0, z = 0.0 }
             }
         }, function()
-            Action:Hide()
+            UI.Action:Hide()
         end, function(status)
             TriggerServerEvent('Bank:SyncDoor', bank, type, door, true)
         end)
@@ -244,7 +244,7 @@ BANK.Robbery = {
                 flags = 49,
             }
         }, function()
-            Action:Hide()
+            UI.Action:Hide()
         end, function(status)
             TriggerServerEvent('Bank:SyncDoorScan', bank, true)
             TriggerServerEvent('Bank:RemoveAccessCard', item)
@@ -268,7 +268,7 @@ BANK.Robbery = {
                 flags = 49,
             }
         }, function()
-            Action:Hide()
+            UI.Action:Hide()
         end, function(status)
             TriggerServerEvent('Bank:SyncCounter', bank, ck, true)
             TriggerServerEvent('Bank:CounterReward', bank, ck)
@@ -290,7 +290,7 @@ BANK.Robbery = {
                 task = 'WORLD_HUMAN_WELDING'
             }
         }, function()
-            Action:Hide()
+            UI.Action:Hide()
         end, function(status)
             ClearPedTasksImmediately(PlayerPedId())
             TriggerServerEvent('Bank:SyncMSpot', bank, ck, true)
@@ -313,7 +313,7 @@ BANK.Robbery = {
                 task = 'WORLD_HUMAN_WELDING'
             }
         }, function()
-            Action:Hide()
+            UI.Action:Hide()
         end, function(status)
             ClearPedTasksImmediately(PlayerPedId())
             TriggerServerEvent('Bank:SyncVGSpot', bank, ck, true)

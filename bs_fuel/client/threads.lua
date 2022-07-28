@@ -71,9 +71,9 @@ function RunThreads()
                     local current = DecorGetFloat(veh, 'VEH_FUEL')
                     if not actionShowing and not _fueling then
                         if current < 95.0 then
-                            Action:Show('Press {key}E{/key} To Start Fueling')
+                            UI.Action:Show('[E] To Start Fueling')
                         else
-                            Action:Show('Fuel Full')
+                            UI.Action:Show('Fuel Full', "error")
                         end
                         actionShowing = true
                     end
@@ -117,7 +117,7 @@ function RunThreads()
                                     }
                                 }, function()
                                     _fueling = true
-                                    Action:Hide()
+                                    UI.Action:Hide()
                                     actionShowing = false
             
                                     Citizen.CreateThread(function()
@@ -157,14 +157,14 @@ function RunThreads()
                     Citizen.Wait(1)
                 else
                     if actionShowing then
-                        Action:Hide()
+                        UI.Action:Hide()
                         actionShowing = false
                     end
                     Citizen.Wait(1000)
                 end
             else
                 if actionShowing then
-                    Action:Hide()
+                    UI.Action:Hide()
                     actionShowing = false
                 end
     
@@ -172,7 +172,7 @@ function RunThreads()
             end
             else
                 if actionShowing then
-                    Action:Hide()
+                    UI.Action:Hide()
                     actionShowing = false
                 end
                 

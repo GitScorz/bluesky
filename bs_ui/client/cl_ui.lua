@@ -16,6 +16,7 @@ RegisterNetEvent('Characters:Client:Logout')
 AddEventHandler('Characters:Client:Logout', function()
   UI:SetFocus(false)
   UI.Hud:Hide()
+  UI.Action:Hide()
 end)
 
 RegisterNetEvent('UI:Client:ShowBank')

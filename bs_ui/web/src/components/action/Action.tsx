@@ -30,6 +30,8 @@ export default function Action() {
         return '#ff0000';
       case 'success':
         return '#8cff82';
+      case 'default':
+        return '#1e1f24';
       default:
         return '#1e1f24';
     }

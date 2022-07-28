@@ -11,7 +11,7 @@ AddEventHandler('Vehicle:Shared:DependencyUpdate', RetrieveComponents)
 function RetrieveComponents()
     Callbacks = exports['bs_base']:FetchComponent('Callbacks')
     Notification = exports['bs_base']:FetchComponent('Notification')
-    Action = exports['bs_base']:FetchComponent('Action')
+    UI = exports['bs_base']:FetchComponent('UI')
     Progress = exports['bs_base']:FetchComponent('Progress')
     Vehicle = exports['bs_base']:FetchComponent('Vehicle')
     Repair = exports['bs_base']:FetchComponent('Repair')
@@ -24,7 +24,7 @@ AddEventHandler('Core:Shared:Ready', function()
     exports['bs_base']:RequestDependencies('Vehicle', {
         'Callbacks',
         'Notification',
-        'Action',
+        'UI',
         'Progress',
         'Vehicle',
         'Repair',
@@ -50,7 +50,7 @@ Citizen.CreateThread(function()
             GLOBAL_VEH = GetVehiclePedIsIn(GLOBAL_PED) or GetVehiclePedIsTryingToEnter(GLOBAL_PED)
         else
             if _actionShowing then
-                Action:Hide()
+                UI.Action:Hide()
                 _actionShowing = false
             end
             GLOBAL_VEH = nil
@@ -83,7 +83,7 @@ VEHICLE = {
                 SetVehicleEngineOn(veh, false, true, true)
                 SetVehicleUndriveable(veh, true)
                 if _keys[GetVehicleNumberPlateText(veh)] then
-                    Action:Show('{key}F9{/key} To Turn Engine On')
+                    UI.Action:Show('{key}F9{/key} To Turn Engine On')
                     _actionShowing = true
                 end
             end
@@ -107,7 +107,7 @@ VEHICLE = {
             TriggerEvent('Vehicle:Client:Ignition', false)
 
             if not _actionShowing then
-                Action:Show('{key}F9{/key} To Turn Engine On')
+                UI.Action:Show('{key}F9{/key} To Turn Engine On')
                 _actionShowing = true
             end
         end,
@@ -125,7 +125,7 @@ VEHICLE = {
             Notification:SendAlert('Engine Turned On', 1500)
             TriggerEvent('Vehicle:Client:Ignition', true)
             if _actionShowing then
-                Action:Hide()
+                UI.Action:Hide()
                 _actionShowing = false
             end
         end,
@@ -225,7 +225,7 @@ VEHICLE = {
         local val = GetVehicleHandlingInt(veh, 'CHandlingData', 'nMonetaryValue')
 
         if _actionShowing then
-            Action:Hide()
+            UI.Action:Hide()
             _actionShowing = false
         end
     
@@ -299,7 +299,7 @@ VEHICLE = {
         local val = GetVehicleHandlingInt(veh, 'CHandlingData', 'nMonetaryValue')
     
         if _actionShowing then
-            Action:Hide()
+            UI.Action:Hide()
             _actionShowing = false
         end
     
@@ -449,11 +449,11 @@ function StartHotwireThread(veh)
                 if not _actionShowing then
                     _actionShowing = true
                     if canAttemptHotwire and canSearchForKey then
-                        Action:Show('{key}Z{/key} Hotwire | {key}G{/key} Search For Key')
+                        UI.Action:Show('{key}Z{/key} Hotwire | {key}G{/key} Search For Key')
                     elseif canAttemptHotwire and not canSearchForKey then
-                        Action:Show('{key}Z{/key} Hotwire')
+                        UI.Action:Show('{key}Z{/key} Hotwire')
                     else
-                        Action:Show('{key}G{/key} Search For Key')
+                        UI.Action:Show('{key}G{/key} Search For Key')
                     end
                 end
 

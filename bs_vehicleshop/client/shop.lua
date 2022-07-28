@@ -9,7 +9,7 @@ function RetrieveComponents()
     Game = exports['bs_base']:FetchComponent('Game')
     Menu = exports['bs_base']:FetchComponent('Menu')
     Notification = exports['bs_base']:FetchComponent('Notification')
-    Action = exports['bs_base']:FetchComponent('Action')
+    UI = exports['bs_base']:FetchComponent('UI')
     Blips = exports['bs_base']:FetchComponent('Blips')
 end
 
@@ -21,7 +21,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'Game',
         'Menu',
         'Notification',
-        'Action',
+        'UI',
         'Blips'
     }, function(error)
         if #error > 0 then return end -- Do something to handle if not all dependencies loaded
@@ -65,17 +65,17 @@ function StartShit()
                                 if not showingPrice then
                                     showingPrice = i
                                     local vehSpot = GetVehInSpot(curShowroom, i)
-                                    Action:Show('<center><strong>' .. Dealers[curShowroom].showroom[vehSpot].data.name .. "<br><span style='color: #00FF00'>$" .. spawned[i].price .. '</span></strong></center>' )
+                                    UI.Action:Show(Dealers[curShowroom].showroom[vehSpot].data.name .. " $" .. spawned[i].price .. '' )
                                 end
                             elseif showingPrice == i then
                                 showingPrice = false
-                                Action:Hide()
+                                UI.Action:Hide()
                             end
                         end
                     end
                 elseif not curShowroom and showingPrice then 
                     showingPrice = false
-                    Action:Hide()
+                    UI.Action:Hide()
                 end
             end
         end)
@@ -102,7 +102,7 @@ function StartShit()
                                     end
                                 elseif showing == k..j then
                                     showing = false
-                                    Action:Hide()
+                                    UI.Action:Hide()
                                 end
                             end
                         end
@@ -137,18 +137,16 @@ function RegisterBlips()
 end
 
 function ShowAction(type, var)
-    local title, message = "", ""
+    local message = "", ""
     if type == 'duty' then
-        message = "Press {key}E{/key} to sign on duty"
+        message = "[E] Sign In"
     elseif type ~= 'bossmenu' and type == 'dealer' then
-        title = "<strong>Dealer Menu</strong><br>"
-        message = "Press {key}E{/key} to open"
+        message = "[E] Open"
     elseif type == 'bossmenu' then
-        title = "<strong>Boss Menu</strong><br>"
-        message = "Press {key}E{/key} to open"
+        message = "[E] Open"
     end
 
-    if title ~= "" or message ~= "" then Action:Show("<center>" .. title .. message .. "</center>") end
+    if message ~= "" then UI.Action:Show(message) end
 
     Citizen.CreateThread(function()
         while showing == var do

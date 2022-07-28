@@ -15,7 +15,7 @@ function RetrieveComponents()
     Bank = exports['bs_base']:FetchComponent('Bank')
     Notification = exports['bs_base']:FetchComponent('Notification')
     Progress = exports['bs_base']:FetchComponent('Progress')
-    Action = exports['bs_base']:FetchComponent('Action')
+    UI = exports['bs_base']:FetchComponent('UI')
     Doors = exports['bs_base']:FetchComponent('Doors')
 end
 
@@ -31,7 +31,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'Blips',
         'Progress',
         'Utils',
-        'Action',
+        'UI',
         'Doors',
     }, function(error)
         if #error > 0 then

@@ -11,7 +11,7 @@ function RetrieveComponents()
     Inventory = exports['bs_base']:FetchComponent('Inventory')
     Utils = exports['bs_base']:FetchComponent('Utils')
     Notification = exports['bs_base']:FetchComponent('Notification')
-    Action  = exports['bs_base']:FetchComponent('Action')
+    UI  = exports['bs_base']:FetchComponent('UI')
     -- Weapons = exports['bs_base']:FetchComponent('Weapons')
 end
 
@@ -21,7 +21,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'Inventory',
         'Utils',
         'Notification',
-        'Action',
+        'UI',
         -- 'Weapons',
     }, function(error)  
         if #error > 0 then return; end

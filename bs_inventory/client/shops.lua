@@ -26,13 +26,13 @@ function startShopsTick()
                         if distance < 1.0 then
                             if not showingMarker then
                                 showingMarker = k
-                                Action:Show("Press {key}E{/key}")
+                                UI.Action:Show("[E]")
                                 showingKeys(k)
                             end
                         else
                             if showingMarker == k then
                                 showingMarker = false
-                                Action:Hide()
+                                UI.Action:Hide()
                             end
                         end
                         DrawMarker(25, v.shop_coords.x, v.shop_coords.y, v.shop_coords.z - 0.98, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 1.0, 139, 16, 20, 250, false, false, 2, false, false, false, false)
