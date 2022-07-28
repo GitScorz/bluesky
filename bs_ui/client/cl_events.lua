@@ -52,3 +52,10 @@ function StartThreads()
     end
   end)
 end
+
+AddEventHandler("onResourceStart", function(resource)
+  if resource == GetCurrentResourceName() then
+    ToggleRadar()
+    StartThreads()
+  end
+end)

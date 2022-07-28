@@ -8,8 +8,6 @@ end)
 AddEventHandler('Characters:Client:Spawn', function()
   UI:SetFocus(false)
   UI.Hud:Show()
-  StartThreads()
-  ToggleRadar()
 end)
 
 RegisterNetEvent('Characters:Client:Logout')
