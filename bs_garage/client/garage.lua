@@ -49,12 +49,12 @@ function RegisterMarkers()
         Markers.MarkerGroups:Add(v.Name, v.Manage, Config.DrawDistance)
         Markers.Markers:Add(v.Name, v.Name .. '_manage', v.Manage, 2, vector3(1, 1, 1), { r = 255, b = 0, g = 0 }, function()
             return true
-        end, 'Press {key}E{/key} for ' .. v.Name .. ' Parking', 1, function()
+        end, 'Parking', 1, function()
             OpenMenu(v.Name, v.Spawn)
         end)
         Markers.Markers:Add(v.Name, v.Name .. '_store', v.Store, 1, vector3(5, 5, 3), { r = 255, b = 255, g = 0 }, function()
             return true
-        end, 'Press {key}E{/key} to Store Vehicle at ' .. v.Name .. ' Parking', 1, function()
+        end, '[E] Store Vehicle', 1, function()
             StoreVehicle(v.Name)
         end)
     end

@@ -37,7 +37,7 @@ function RegisterMarkers()
         Markers.MarkerGroups:Add(v.Name .. "_tow", v.Impound, Config.DrawDistance)
         Markers.Markers:Add(v.Name .. "_tow", v.Name .. '_impound', v.Impound, 1, vector3(5, 5, 3), { r = 255, g = 255, b = 0 }, function()
             return Jobs:Has('Tow')
-        end, 'Press ~INPUT_CONTEXT~ for ' .. v.Name .. ' Impound', function()
+        end, '[H] Impound', function()
             OpenMenu(v)
         end)
     end

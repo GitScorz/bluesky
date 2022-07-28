@@ -9,7 +9,7 @@ AddEventHandler('Vehicle:Client:SetRepairLocations', function(locations)
         Markers.MarkerGroups:Add(k .. '_repair', coords, Config.DrawDistance)
         Markers.Markers:Add(k .. '_repair', k .. '_repair_place', coords, 1, vector3(3, 3, 1), { r = 0, b = 255, g = 255 }, function()
             return IsPedInAnyVehicle(PlayerPedId())
-        end, 'Press {key}E{/key} for Repair Shop', function()
+        end, '[E] Repair Shop', function()
             local playerPed = PlayerPedId()
             if IsPedInAnyVehicle(playerPed) then
                 local vehicle = GetVehiclePedIsIn(playerPed)

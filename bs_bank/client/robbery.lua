@@ -8,7 +8,7 @@ AddEventHandler('Bank:SyncBanks', function(banks)
         Markers.MarkerGroups:Add(v.name .. k, v.coords, 50)
         Markers.Markers:Add(v.name .. k, v.name .. k, v.coords, -1, vector3(0.5, 0.5, 0.5), { r = 255, b = 0, g = 0 }, function()
             return v.bankOpen
-        end, 'Press {key}E{/key} for ' .. v.name, 1, function()
+        end, '[E] Bank', 1, function()
             Bank:OpenUI('Bank')
         end)
 

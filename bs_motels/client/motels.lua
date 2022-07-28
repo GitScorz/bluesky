@@ -63,7 +63,7 @@ MOTELS = {
             Markers.MarkerGroups:Add('motel', location.Coords, Config.DrawDistance)
             Markers.Markers:Add('motel', 'motel', location.Coords, 2, vector3(0.5, 0.5, 0.5), { r = 255, b = 255, g = 0 }, function()
                 return true
-            end, 'Press {key}E{/key} to Enter Motel', function()
+            end, '[E] Enter Motel', function()
                 Callbacks:ServerCallback('Motel:SpawnMotel', {
                     motel = location
                 }, function(exitLocation)
@@ -72,14 +72,14 @@ MOTELS = {
                     Markers.MarkerGroups:Add('motel', markerCoords, Config.DrawDistance)
                     Markers.Markers:Add('motel', 'motel_exit', Motels.Data.MotelExit, 2, vector3(0.5, 0.5, 0.5), { r = 255, b = 255, g = 0 }, function()
                         return true
-                    end, 'Press {key}E{/key} to Leave Motel', function()
+                    end, '[E] Leave Motel', function()
                         SetEntityCoords(player, location.Coords)
                         Motels:Clear()
                     end)
                     local stashCoords = vector3(Motels.Data.MotelExit.x, Motels.Data.MotelExit.y + 4.5, Motels.Data.MotelExit.z)
                     Markers.Markers:Add('motel', 'motel_stash', stashCoords, 2, vector3(0.5, 0.5, 0.5), { r = 255, b = 255, g = 0 }, function()
                         return true
-                    end, 'Press {key}E{/key} to Motel Stash', function()
+                    end, '[E] Stash', function()
                         TriggerServerEvent('Motels:server:loadInventory')
                         --Callbacks:ServerCallback('Inventory:GetSecondInventory', {
                         --    invType = 2

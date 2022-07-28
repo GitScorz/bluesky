@@ -34,9 +34,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'UI',
         'Doors',
     }, function(error)
-        if #error > 0 then
-            return ;
-        end
+        if #error > 0 then return; end
         RetrieveComponents()
     end)
 end)

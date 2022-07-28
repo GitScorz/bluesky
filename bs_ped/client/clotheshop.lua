@@ -23,7 +23,7 @@ AddEventHandler('Ped:Client:SetClothesShopLocations', function(locations)
         Markers.MarkerGroups:Add(k .. '_clotheshop', coords, Config.DrawDistance)
         Markers.Markers:Add(k .. '_clotheshop', k .. '_clotheshop_shop', coords, 1, vector3(1, 1, 0.5), { r = 255, b = 255, g = 0 }, function()
             return true
-        end, 'Press {key}E{/key} for Clothes Shop', function()
+        end, '[E] Clothing', function()
             local playerPed = PlayerPedId()
             local x, y, z = table.unpack(GetEntityCoords(playerPed))
             Clotheshop:Show({

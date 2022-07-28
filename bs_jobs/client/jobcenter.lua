@@ -17,9 +17,8 @@ JOBS.JobCenter = {
         Markers.MarkerGroups:Add('jobcenter', location, 10.0)
         Markers.Markers:Add('jobcenter', 'jobcenter', location, 27, vector3(0.5, 0.5, 0.5), ({ r = 200, b = 255, g = 0 }), function()
             return true
-        end, ' {key}E{/key} Access Job Center', 2.0, function()
+        end, ' [E] Job Center', 2.0, function()
             Jobs.JobCenter:OpenMainMenu()
-            print('fuking cunt')
         end)
     end,
     RemoveMarkers = function(self)
