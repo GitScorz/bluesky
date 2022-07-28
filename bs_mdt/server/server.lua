@@ -57,7 +57,6 @@ function RegisterMiddleware()
         if player ~= nil then
             local char = player:GetData('Character')
     
-            print(char ~= nil)
             if char ~= nil then
                 if char:GetData('JobDuty') then
                     WebAPI.MDT:Request('POST', 'user/offDuty', {}, {
