@@ -182,10 +182,10 @@ AddEventHandler('Characters:Client:Spawn', function()
     
     Wait(1000)
     for k, v in pairs(STATUS:GetRegistered()) do
-        Wait(1000) -- We need this...
+        Wait(2000) -- We need this...
         Callbacks:ServerCallback('Status:Get', { name = v.name, type = v.type, max = v.max }, function(val)
             waiting = false
-            print("Loop " .. v.id .. " (" .. v.name .. "): " .. val, v.type)
+            print("Set " .. v.id .. " (" .. v.name .. "): " .. val, v.type)
 
             if v.type == STATUS.TYPES.FLOAT then
                 DecorSetFloat(PlayerPedId(), v.name, val)
