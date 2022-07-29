@@ -80,7 +80,8 @@ COMPONENTS.Player = {
                     document = {
                         sid = data.SID,
                         identifier = data.Identifier,
-                        priority = 0
+                        priority = 0,
+                        name = GetPlayerName(source)
                     }
                 }, function (success, result, insertedIds)
                     if not success then
@@ -114,7 +115,7 @@ function Player(source, data)
     _data.Permissions = {
         IsAdmin = function(self)
             for k, v in ipairs(_data:GetData('Roles')) do
-                if COMPONENTS.Config.Groups.Staff[tostring(v)] then
+                if v.isDev or v.isAdmin then
                     return true
                 end
             end
@@ -122,10 +123,12 @@ function Player(source, data)
         GetLevel = function(self)
             local highest = 0        
             for k, v in ipairs(_data:GetData('Roles')) do
-                if COMPONENTS.Config.Groups.Staff[tostring(v)] then
-                    if COMPONENTS.Config.Groups.Staff[tostring(v)].Level > highest then
-                        highest = COMPONENTS.Config.Groups.Staff[tostring(v)].Level
-                    end
+                if v.isDev then
+                    highest = 99
+                end
+
+                if v.isAdmin then
+                    highest = 1
                 end
             end
 
@@ -134,9 +137,15 @@ function Player(source, data)
     }
 
     for k, v in ipairs(_data:GetData('Roles')) do
-        if COMPONENTS.Config.Groups.Staff[tostring(v)] then
-            ExecuteCommand(('add_principal identifier.license:%s group.%s'):format(_data:GetData('Identifier'), COMPONENTS.Config.Groups.Staff[tostring(v)].Group))
+        local group = "user"
+
+        if v.isDev then
+            group = "developer"
+        elseif v.isAdmin then
+            group = "admin"
         end
+
+        ExecuteCommand(('add_principal identifier.%s group.%s'):format(_data:GetData('Identifier'), group))
     end
 
     return _data

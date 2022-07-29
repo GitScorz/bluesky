@@ -20,7 +20,6 @@ COMPONENTS.WebAPI = {
     Enabled = true,
     Request = function(self, method, endpoint, params, jsondata)
         COMPONENTS.Logger:Trace('WebAPI', 'Endpoint Called: ' .. method .. ' - ' .. endpoint)
-
         local rData = nil
 
         -- idfk, im too tired and fucking done with all this bullshit to try to think of a better way to do this retarded fucking bullshit.
@@ -60,7 +59,7 @@ COMPONENTS.WebAPI = {
         })
     
         while rData == nil do
-            Citizen.Wait(0)
+            Wait(0)
         end
         
         return rData
@@ -95,7 +94,6 @@ COMPONENTS.WebAPI = {
             COMPONENTS.Config.Groups = {
                 Staff = res.data.game.groups.staff,
                 Whitelist = res.data.game.groups.whitelist,
-                Test = res.data.game.groups.test,
                 Priority = res.data.game.groups.priority,
             }
 
@@ -107,7 +105,6 @@ COMPONENTS.WebAPI = {
 
             COMPONENTS.Logger:Trace('WebAPI', 'Loaded ^5' .. res.data.game.counts.staff .. '^7 Staff Groups')
             COMPONENTS.Logger:Trace('WebAPI', 'Loaded ^5' .. res.data.game.counts.whitelist .. '^7 Whitelist Groups')
-            COMPONENTS.Logger:Trace('WebAPI', 'Loaded ^5' .. res.data.game.counts.test .. '^7 Test Groups')
             COMPONENTS.Logger:Trace('WebAPI', 'Loaded ^5' .. res.data.game.counts.priority .. '^7 Groups With Priority Boosts')
 
             return true
@@ -168,10 +165,11 @@ COMPONENTS.WebAPI = {
 }
 
 COMPONENTS.WebAPI.GetMember = {
-    SID = function(self, sid)
-        if sid ~= nil then
-            local data = COMPONENTS.WebAPI:Request('GET', 'member/sid', {
-                sid = sid,
+    --- @param identifier string
+    Roles = function(self, identifier)
+        if identifier ~= nil then
+            local data = COMPONENTS.WebAPI:Request('GET', 'member/roles', {
+                identifier = identifier,
             }, {})
 
             if data.code == 401 then
@@ -183,9 +181,13 @@ COMPONENTS.WebAPI.GetMember = {
             return nil
         end
     end,
-    Identifier = function(self, identifier)
-        if identifier ~= nil then
-            local data = COMPONENTS.WebAPI:Request('GET', 'member/identifier', {
+
+    --- @param source string
+    --- @param identifier string
+    Status = function(self, source, identifier)
+        if source ~= nil and identifier ~= nil then
+            local data = COMPONENTS.WebAPI:Request('GET', 'member/status', {
+                source = source,
                 identifier = identifier,
             }, {})
 

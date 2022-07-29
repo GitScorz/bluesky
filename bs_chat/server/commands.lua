@@ -69,15 +69,13 @@ function CHAT.RegisterAdminCommand(this, command, callback, suggestion, argument
         local player = exports['bs_base']:FetchComponent('Fetch'):Source(source)
         if player ~= nil then
             local pData = player:GetData()
-            -- if player.Permissions:IsAdmin() then
+            if player.Permissions:IsAdmin() then
                 if((#args <= commands[command].args and #args == commands[command].args) or commands[command].args == -1)then
                     callback(source, args, rawCommand)
                 else
                     Chat.Send.Server:Single(source, 'Invalid Number Of Arguments')
                 end
-            -- else
-                --Do Something
-            -- end
+            end
         end
     end, false)
 end

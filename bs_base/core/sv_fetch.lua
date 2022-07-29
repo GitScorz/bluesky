@@ -37,12 +37,12 @@ COMPONENTS.Fetch = {
             -- A player currently logged in without having to change syntax
             -- THIS SHOULD BE CAREFULLY USED AND BE SURE TO BE CLEANED WHEN NO LONGER NEEDED!
             if (#results > 0) then
-                local uData = COMPONENTS.WebAPI.GetMember:SID(results[1].sid)
+                local uData = COMPONENTS.WebAPI.GetMember:Roles(results[1].identifier)
                 retVal = COMPONENTS.DataStore:CreateStore(-1, value, {
                     ID = results[1]._id,
                     SID = results[1].sid,
                     Identifier = results[1].identifier,
-                    Name = uData.name,
+                    Name = results[1].username,
                     Roles = uData.roles
                 })
             else
