@@ -6,6 +6,7 @@
   font-size: 3rem;
   text-shadow: 3px 3px #000;
   user-select: none;
+  z-index: 2;
 }
 
 .money {
