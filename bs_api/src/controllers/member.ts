@@ -13,7 +13,7 @@ class MemberController {
   }
 
   initializeRoutes() {
-		this.router.get(`${this.rootPath}/data`, this.getUserRoles);
+		this.router.get(`${this.rootPath}/roles`, this.getUserRoles);
 		this.router.get(`${this.rootPath}/status`, this.getBanStatus);
 	}
 
