@@ -10,7 +10,7 @@ export default function Interaction() {
 
   useEffect(() => {
     if (isEnvBrowser()) {
-      setVisible(true);
+      setVisible(false);
       setInteractionData(oldData => ({ ...oldData, action: "Parking", colorType: "default" }));
     }
   }, []);
@@ -38,7 +38,7 @@ export default function Interaction() {
   }
 
   return (
-    <Slide direction='right' timeout={{ enter: 500, exit: 500 }} in={visible}>
+    <Slide direction='right' timeout={{ enter: 600, exit: 500 }} in={visible}>
       <div className='action-container' style={{ backgroundColor: getColor(interactionData.colorType) }}>
         <div className='action-text'>{interactionData.action}</div>
       </div>
