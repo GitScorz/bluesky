@@ -105,7 +105,7 @@ local disableSubmixReset = {}
 ---@param moduleType string the volume & submix to use for the voice.
 function toggleVoice(plySource, enabled, moduleType)
 	if mutedPlayers[plySource] then return end
-	Logger.Trace('Voip', ("Updating %s to talking: %s with submix %s"):format(plySource, enabled, moduleType))
+	Logger:Trace('Voip', ("Updating %s to talking: %s with submix %s"):format(plySource, enabled, moduleType))
 	if enabled then
 		MumbleSetVolumeOverrideByServerId(plySource, enabled and volumes[moduleType])
 		if GetConvarInt('voice_enableSubmix', 1) == 1 and gameVersion == 'fivem' then
@@ -145,11 +145,11 @@ function playerTargets(...)
 		for id, _ in pairs(targets[i]) do
 			-- we don't want to log ourself, or listen to ourself
 			if addedPlayers[id] and id ~= playerServerId then
-				Logger.Trace('Voip', ("%s is already target don\'t re-add"):format(id))
+				Logger:Trace('Voip', ("%s is already target don\'t re-add"):format(id))
 				goto skip_loop
 			end
 			if not addedPlayers[id] then
-				-- Logger.Trace('Voip', ("Adding %s as a voice target"):format(id))
+				-- Logger:Trace('Voip', ("Adding %s as a voice target"):format(id))
 				addedPlayers[id] = true
 				MumbleAddVoiceTargetPlayerByServerId(voiceTarget, id)
 			end
@@ -162,7 +162,7 @@ end
 ---plays the mic click if the player has them enabled.
 ---@param clickType boolean whether to play the 'on' or 'off' click. 
 function playMicClicks(clickType)
-	if micClicks ~= 'true' then return Logger.Trace('Voip', "Not playing mic clicks because client has them disabled") end
+	if micClicks ~= 'true' then return Logger:Trace('Voip', "Not playing mic clicks because client has them disabled") end
 	sendUIMessage({
 		sound = (clickType and "audio_on" or "audio_off"),
 		volume = (clickType and volumes["radio"] or 0.05)

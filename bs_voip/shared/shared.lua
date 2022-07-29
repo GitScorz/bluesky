@@ -64,7 +64,7 @@ function type_check(...)
         local matchesType, varType = types(var)
         if not matchesType then
             table.remove(var, 1)
-            print('[Voip] ' .. ("Invalid type sent to argument #%s, expected %s, got %s"):format(i, table.concat(var, "|"), varType))
+            print('[VOIP] ' .. ("Invalid type sent to argument #%s, expected %s, got %s"):format(i, table.concat(var, "|"), varType))
         end
     end
 end

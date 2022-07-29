@@ -34,7 +34,7 @@ function addNearbyPlayers()
 		if addProximityCheck(ply) then
 			if isTarget then goto skip_loop end
 
-			-- Logger.Trace('Voip', ("Adding %s as a voice target"):format(serverId))
+			-- Logger:Trace('Voip', ("Adding %s as a voice target"):format(serverId))
 			MumbleAddVoiceTargetChannel(voiceTarget, serverId)
 		end
 
@@ -43,7 +43,7 @@ function addNearbyPlayers()
 end
 
 function setSpectatorMode(enabled)
-	Logger.Info('Voip', ("Setting spectator mode to %s"):format(enabled))
+	Logger:Info('Voip', ("Setting spectator mode to %s"):format(enabled))
 	isListenerEnabled = enabled
 	local players = GetActivePlayers()
 	if isListenerEnabled then
@@ -51,7 +51,7 @@ function setSpectatorMode(enabled)
 			local ply = players[i]
 			local serverId = GetPlayerServerId(ply)
 			if serverId == playerServerId then goto skip_loop end
-			-- Logger.Trace('Voip', ("Adding %s as a voice target"):format(serverId))
+			-- Logger:Trace('Voip', ("Adding %s as a voice target"):format(serverId))
 			MumbleAddVoiceChannelListen(serverId)
 			::skip_loop::
 		end
@@ -60,7 +60,7 @@ function setSpectatorMode(enabled)
 			local ply = players[i]
 			local serverId = GetPlayerServerId(ply)
 			if serverId == playerServerId then goto skip_loop end
-			Logger.Trace('Voip', ("Removing %s as a voice target"):format(serverId))
+			Logger:Trace('Voip', ("Removing %s as a voice target"):format(serverId))
 			MumbleRemoveVoiceChannelListen(serverId)
 			::skip_loop::
 		end
@@ -70,14 +70,14 @@ end
 RegisterNetEvent('onPlayerJoining', function(serverId)
 	if isListenerEnabled then
 		MumbleAddVoiceChannelListen(serverId)
-		Logger.Trace('Voip', ("Adding %s to listen table"):format(serverId))
+		Logger:Trace('Voip', ("Adding %s to listen table"):format(serverId))
 	end
 end)
 
 RegisterNetEvent('onPlayerDropped', function(serverId)
 	if isListenerEnabled then
 		MumbleRemoveVoiceChannelListen(serverId)
-		Logger.Trace('Voip', ("Removing %s from listen table"):format(serverId))
+		Logger:Trace('Voip', ("Removing %s from listen table"):format(serverId))
 	end
 end)
 
@@ -100,6 +100,13 @@ CreateThread(function()
 		if lastRadioStatus ~= radioPressed or lastTalkingStatus ~= curTalkingStatus then
 			lastRadioStatus = radioPressed
 			lastTalkingStatus = curTalkingStatus
+
+			if curTalkingStatus then
+				PlayFacialAnim(GetPlayerPed(-1), "mic_chatter", "mp_facial");
+			else
+				PlayFacialAnim(GetPlayerPed(-1), "mood_normal_1", "facials@gen_male@base");
+			end
+
 			UI.Voip:ToggleTalking(curTalkingStatus)
 			-- sendUIMessage({
 			-- 	usingRadio = lastRadioStatus,
@@ -123,7 +130,7 @@ end)
 
 exports("setVoiceState", function(_voiceState, channel)
 	if _voiceState ~= "proximity" and _voiceState ~= "channel" then
-		Logger.Error('Voip', ("Didn't get a proper voice state, expected 'proximity' or 'channel', got '%s'"):format(_voiceState))
+		Logger:Error('Voip', ("Didn't get a proper voice state, expected 'proximity' or 'channel', got '%s'"):format(_voiceState))
 	end
 	voiceState = _voiceState
 	if voiceState == "channel" then
@@ -148,7 +155,7 @@ AddEventHandler("onClientResourceStop", function(resource)
 			local isResource = string.match(proximityCheckRef, resource)
 			if isResource then
 				addProximityCheck = orig_addProximityCheck
-				Logger.Warn('Voip', ('Reset proximity check to default, the original resource [%s] which provided the function has restarted'):format(resource))
+				Logger:Warn('Voip', ('Reset proximity check to default, the original resource [%s] which provided the function has restarted'):format(resource))
 			end
 		end
 	end

@@ -40,7 +40,6 @@ CreateThread(function()
 	local _3dAudio = GetConvar('voice_use3dAudio', 'false')
 	local _2dAudio = GetConvar('voice_use2dAudio', 'false')
 	local sendingRangeOnly = GetConvar('voice_useSendingRangeOnly', 'false')
-	local gameVersion = GetConvar('gamename', 'fivem')
 
 	-- handle no convars being set (default drag n' drop)
 	if

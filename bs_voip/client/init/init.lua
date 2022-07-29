@@ -30,7 +30,7 @@ local function InitializeVoip()
 	end)
 
 	if not success then
-		Logger.Warn('Voip', 'Failed to load resource Kvp, likely was inappropriately modified by another server, resetting the Kvp.')
+		Logger:Warn('Voip', 'Failed to load resource Kvp, likely was inappropriately modified by another server, resetting the Kvp.')
 		SetResourceKvp('pma-voice_enableMicClicks', tostring(true))
 		micClicks = 'true'
 	end
