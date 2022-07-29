@@ -5,7 +5,6 @@ function RetrieveComponents()
     Callbacks = exports['bs_base']:FetchComponent('Callbacks')
     DataStore = exports['bs_base']:FetchComponent('DataStore')
     Logger = exports['bs_base']:FetchComponent('Logger')
-    Database = exports['bs_base']:FetchComponent('Database')
     Fetch = exports['bs_base']:FetchComponent('Fetch')
     Logger = exports['bs_base']:FetchComponent('Logger')
     Chat = exports['bs_base']:FetchComponent('Chat')
@@ -20,7 +19,6 @@ AddEventHandler('Core:Shared:Ready', function()
         'Middleware',
         'DataStore',
         'Logger',
-        'Database',
         'Fetch',
         'Logger',
         'Chat',
