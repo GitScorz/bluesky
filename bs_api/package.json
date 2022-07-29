@@ -9,7 +9,7 @@
     "build": "webpack --mode production",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "watch": "webpack --mode development --watch true"
+    "watch": "webpack --mode development --watch"
   },
   "license": "MIT",
   "private": false,
@@ -17,7 +17,6 @@
     "@citizenfx/client": "^2.0.5762-1",
     "@citizenfx/server": "^2.0.5762-1",
     "@types/node": "^18.6.2",
-    "axios": "^0.27.2",
     "body-parser": "^1.20.0",
     "express": "^4.18.1",
     "fivem-js": "^1.5.2"

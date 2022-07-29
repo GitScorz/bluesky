@@ -1,4 +1,4 @@
-declare enum STATUS_CODES {
+export enum STATUS_CODES {
   OK = 200,
   CREATED = 201,
   NO_CONTENT = 204,
@@ -14,7 +14,4 @@ declare enum STATUS_CODES {
   SERVICE_UNAVAILABLE = 503,
 } 
 
-declare module '*.json' {
-  const value: any;
-  export default value;
-}
+export type Whitelist = "whitelist" | "test";

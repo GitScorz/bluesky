@@ -1,14 +1,14 @@
 import express from 'express';
-import bodyParser from 'body-parser';
-import http from 'http';
+import { json, urlencoded } from 'body-parser';
+import { Server, createServer} from 'http';
 
 class Application {
   app: express.Application;
-  httpControllers: any[];
-  socketControllers: any[];
+  httpControllers = [];
+  socketControllers = [];
   trustedHttpSources = {};
   port: number;
-  server: http.Server;
+  server: Server;
 
   constructor(httpControllers: any[], socketControllers: any[], port: number) {
     this.app = express();
@@ -16,14 +16,14 @@ class Application {
     this.httpControllers = httpControllers;
 		this.port = port;
 		this.initializeMiddlewares();
-		this.server = http.createServer(this.app);
+		this.server = createServer(this.app);
   }
 
   initializeMiddlewares() {
     this.app
-      .use(bodyParser.json())
-      .use(bodyParser.urlencoded({ extended: true }))
-      .use(bodyParser.json());
+      .use(json())
+      .use(urlencoded({ extended: true }))
+      .use(express.json());
 
     this.httpControllers.forEach((controller) => {
       this.app.use('/', controller.router);

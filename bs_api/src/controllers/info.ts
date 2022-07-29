@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express';
+import { STATUS_CODES } from '../types/types';
 
 class InfoController {
   rootPath: string;

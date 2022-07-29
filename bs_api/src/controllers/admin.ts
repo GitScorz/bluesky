@@ -1,5 +1,7 @@
 import { Router, Request, Response } from 'express';
-
+import { STATUS_CODES } from '../types/types';
+import { GROUPS, PRIORITY, WHITELIST, WHITELIST_ENABLED } from '../config/config';
+import { b64enc } from '../utils/utils';
 
 class AdminController {
   rootPath: string;
@@ -15,51 +17,41 @@ class AdminController {
 		this.router.get(`${this.rootPath}/startup`, this.startup);
 	}
 
-  async startup(req: Request, res: Response) {
+  startup(req: Request, res: Response) {
 		setImmediate(() => {
       const logger = global.exports['bs_base'].FetchComponent('Logger');
       
       const apiToken = global.exports['bs_base'].FetchComponent('Convar').API_TOKEN.value;
-      const apiTokenEnc = this._b64enc(apiToken);
+      const apiTokenEnc = b64enc(apiToken);
       
       logger.Info(logger, 'API', 'Admin starting up...', { console: true });
 
       res.setHeader('Content-Type', 'application/json');
       res.setHeader('Authorization', `Basic ${apiTokenEnc}`);
       
-      res.status(STATUS_CODES.OK).send();
-
-      // res.status(200).send({
-      //   id: 1,
-      //   name: 'admin',
-      //   // access: 'test',
-      //   region: 'US',
-      //   game: {
-      //     id: 1,
-      //     name: 'bluesky',
-      //     short: 'bs',
-      //     groups: {
-      //       staff: {
-      //         license: "1bb367543c90827a499233ce85abbc4a9a29ecfc",
-      //         level: 100,
-      //       },
-      //       whitelist: [],
-      //       priority: [],
-      //     },
-      //     counts: {
-      //       staff: 1,
-      //       whitelist: 1,
-      //       priority: 0,
-      //       test: 0,
-      //     }
-      //   }
-      // });
+      res.status(STATUS_CODES.OK).send({
+        id: 1,
+        name: 'Blue Sky',
+        region: 'EU',
+        access: WHITELIST_ENABLED,
+        game: {
+          id: 1,
+          name: 'Blue Sky',
+          short: 'bs',
+          groups: {
+            staff: GROUPS,
+            whitelist: WHITELIST,
+            priority: PRIORITY,
+          },
+          counts: {
+            staff: Object.keys(GROUPS).length,
+            whitelist: WHITELIST.length,
+            priority: PRIORITY.length,
+          }
+        }
+      });
 		});
 	};
-
-  _b64enc(key: string) {
-    return Buffer.from(key).toString('base64');
-  }
 }
 
-module.exports = AdminController;
+export default AdminController;
