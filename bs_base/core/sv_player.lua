@@ -114,39 +114,40 @@ function Player(source, data)
 
     _data.Permissions = {
         IsAdmin = function(self)
-            for k, v in ipairs(_data:GetData('Roles')) do
-                if v.isDev or v.isAdmin then
-                    return true
-                end
+            local roles = _data:GetData('Roles')
+            
+            if (roles.isDev) then
+                return true
+            elseif (roles.isAdmin) then
+                return true
             end
+
+            return false
         end,
         GetLevel = function(self)
             local highest = 0        
-            for k, v in ipairs(_data:GetData('Roles')) do
-                if v.isDev then
-                    highest = 99
-                end
+            local roles = _data:GetData('Roles')
 
-                if v.isAdmin then
-                    highest = 1
-                end
+            if roles.isDev then
+                highest = 99
+            elseif roles.isAdmin then
+                highest = 1
             end
 
             return highest
         end
     }
 
-    for k, v in ipairs(_data:GetData('Roles')) do
-        local group = "user"
+    local roles = _data:GetData('Roles')
+    local group = "user"
 
-        if v.isDev then
-            group = "developer"
-        elseif v.isAdmin then
-            group = "admin"
-        end
-
-        ExecuteCommand(('add_principal identifier.%s group.%s'):format(_data:GetData('Identifier'), group))
+    if roles.isDev then
+        group = "developer"
+    elseif roles.isAdmin then
+        group = "admin"
     end
+
+    ExecuteCommand(('add_principal identifier.%s group.%s'):format(_data:GetData('Identifier'), group))
 
     return _data
 end
