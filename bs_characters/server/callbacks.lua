@@ -46,7 +46,7 @@ end)
 
 function RegisterCallbacks()
     Callbacks:RegisterServerCallback('Characters:GetServerData', function(source, data, cb)
-        local motd = GetConvar('motd', 'Welcome to Blue Sky Roleplay')
+        local motd = GetConvar('motd', 'Welcome to Blue Sky!')
         Database.Game:find({
             collection = 'changelogs',
             options = {
