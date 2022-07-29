@@ -1,12 +1,6 @@
-fx_version 'bodacious'
-games {'gta5'}
+fx_version 'cerulean'
+game 'gta5'
 
 server_only 'yes'
 
-dependencies {
-    'yarn'
-}
-
-server_scripts {
-    'server.js',
-}
+server_script 'dist/*.server.js'
