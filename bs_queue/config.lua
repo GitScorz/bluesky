@@ -27,6 +27,7 @@ Config.Strings = {
     Joining = 'Joining Server...',
     NoAccountData = 'Unable To Get Your Account Data, Please Try Again.',
     NoLicense = 'No License Identifier, Please Relaunch FiveM. Contact FiveM Support If This Continues',
+    NoSteamOpen = 'No Steam Open, Please Relaunch FiveM. Contact FiveM Support If This Continues',
     NotWhitelisted = 'Not Whitelisted - Apply Today At https://blueskyrp.com/',
     PermaBanned = 'Permanently Banned, Appeal At https://blueskyrp.com/\n\nReason: %s\nID: %s',
 	PrioAdd = 'Added %s (%s) To Queue %s/%s With Priority %s',

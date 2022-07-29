@@ -138,7 +138,7 @@ QUEUE.Session = {
 }
 
 QUEUE.Connect = function(self, source, playerName, setKickReason, deferrals)
-    local license = nil
+    local steamIdentifier = nil
 
     deferrals.defer()
     Citizen.Wait(1)
@@ -159,17 +159,18 @@ QUEUE.Connect = function(self, source, playerName, setKickReason, deferrals)
         end
 
         for _, id in ipairs(GetPlayerIdentifiers(source)) do
-            if string.sub(id, 1, string.len("license:")) == "license:" then
-                license = string.sub(id, string.len("license:") + 1)
+            if string.match(id, "steam:") then
+                steamIdentifier = id
+                break
             end
         end
         
-        if license == nil then
-            deferrals.done(Config.Strings.NoLicense)
+        if steamIdentifier == nil then
+            deferrals.done(Config.Strings.NoSteamOpen)
             CancelEvent()
         end
     
-        local ply = Player(license, source, deferrals)
+        local ply = Player(steamIdentifier, source, deferrals)
         if ply == nil then
             deferrals.done(Config.Strings.NoAccountData)
             CancelEvent()
@@ -219,16 +220,16 @@ QUEUE.Connect = function(self, source, playerName, setKickReason, deferrals)
         
         self.Queue:Add(ply)
 
-        local pos, plyr = self.Queue:Get(license)
+        local pos, plyr = self.Queue:Get(steamIdentifier)
 
         while plyr == nil do
             self.Queue:Add(ply)
-            pos, plyr = self.Queue:Get(license)
+            pos, plyr = self.Queue:Get(steamIdentifier)
             Citizen.Wait(100)
         end
 
         while plyr.State == States.QUEUED and GetPlayerEndpoint(source) do
-            pos, plyr = self.Queue:Get(license)
+            pos, plyr = self.Queue:Get(steamIdentifier)
 
             local msg = ''
             if plyr.Priority > 0 then
@@ -244,7 +245,7 @@ QUEUE.Connect = function(self, source, playerName, setKickReason, deferrals)
             Citizen.Wait(1000)
         end
         
-        pos, plyr = self.Queue:Get(license)
+        pos, plyr = self.Queue:Get(steamIdentifier)
         if (plyr.State == States.QUEUED) then
             plyr.State = States.DISCONNECTED
             plyr.Grace = (os.time() + (60 * 5))
@@ -255,7 +256,7 @@ QUEUE.Connect = function(self, source, playerName, setKickReason, deferrals)
     end)
 end
 
-AddEventHandler('playerConnecting', function(playerName, setKickReason, deferrals) 
+AddEventHandler('playerConnecting', function(playerName, setKickReason, deferrals)
     if queueEnabled then 
         QUEUE:Connect(source, playerName, setKickReason, deferrals)
     else
@@ -286,10 +287,10 @@ end)
 RegisterServerEvent('Core:Server:SessionStarted')
 AddEventHandler('Core:Server:SessionStarted', function()
     local src = source
-    for _, id in ipairs(GetPlayerIdentifiers(src)) do   
-        if string.sub(id, 1, string.len("license:")) == "license:" then
-            local license = string.sub(id, string.len("license:") + 1)
-            local pos, ply = QUEUE.Queue:Get(license)
+    for _, id in ipairs(GetPlayerIdentifiers(src)) do
+        if string.match(id, "steam:") then
+            local steamIdentifier = id
+            local pos, ply = QUEUE.Queue:Get(steamIdentifier)
 
             if ply ~= nil then
                 ply.Source = src

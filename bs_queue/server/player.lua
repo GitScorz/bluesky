@@ -5,8 +5,8 @@ States = {
     DISCONNECTED = 4
 }
 
-function Player(license, player, deferrals)
-    local member = exports['bs_base']:FetchComponent('WebAPI').GetMember:Identifier(license)
+function Player(steamHex, src, deferrals)
+    local member = exports['bs_base']:FetchComponent('WebAPI').GetMember:Status(src, steamHex)
     if member == nil or member == '' then return nil
     elseif member == -1 then return -1 end
 
@@ -16,7 +16,7 @@ function Player(license, player, deferrals)
     exports['bs_base']:FetchComponent('Database').Auth:find({
         collection = "users",
         query = {
-            sid = member.id
+            sid = member.sid
         },
         limit = 1
     }, function (success, results)
@@ -28,32 +28,32 @@ function Player(license, player, deferrals)
                 msg = '\n🌟 Base Priority +' .. results[1].priority .. ' 🌟' .. msg
             end
         end
-
+        
         if prio == nil then prio = 0 end
     end)
-
+    
     while prio == nil do
         Citizen.Wait(10)
     end
     
-    for k, v in ipairs(member.roles) do
-        if Config.Groups.Priority[tostring(v)] then
-            prio = prio + tonumber(Config.Groups.Priority[tostring(v)].Priority)
+    -- for k, v in ipairs(member.roles) do
+        -- if Config.Groups.Priority[tostring(v)] then
+        --     prio = prio + tonumber(Config.Groups.Priority[tostring(v)].Priority)
 
-            if Config.Groups.Priority[tostring(v)].Message ~= '' then
-                msg = '\n' .. Config.Groups.Priority[tostring(v)].Message .. msg
-            end
-        end
-    end
+        --     if Config.Groups.Priority[tostring(v)].Message ~= '' then
+        --         msg = '\n' .. Config.Groups.Priority[tostring(v)].Message .. msg
+        --     end
+        -- end
+    -- end
 
     local _data = {
-        Source = player,
+        Source = src,
         State = States.QUEUED,
         Roles = member.roles,
         Name = member.name,
-        SID = member.id,
+        SID = steamHex .. "@bluesky.com", -- fuck it.. do better later
         Banned = member.banned,
-        Identifier = license,
+        Identifier = steamHex,
         Priority = prio,
         Message = msg,
         TimeBoost = 0,
@@ -92,8 +92,8 @@ function Player(license, player, deferrals)
 
     _data.IsPrivileged = function(self)
         for k, v in ipairs(member.roles) do
-            if Config.Groups.Staff[v] then
-                return Config.Groups.Staff[v].Privileged
+            if v.isDev or v.isAdmin then
+                return true
             end
         end
 
