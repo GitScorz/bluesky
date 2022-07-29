@@ -11,13 +11,13 @@ class InfoController {
   }
 
   initializeRoutes() {
-    this.router.get(`${this.rootPath}/online`, this.onlineList);
-		this.router.get(`${this.rootPath}/players`, this.playerList);
-		this.router.get(`${this.rootPath}/characters`, this.charList);
-		this.router.post(`${this.rootPath}/duty`, this.dutyList);
+    this.router.get(`${this.rootPath}/online`, this.getOnlineList);
+		this.router.get(`${this.rootPath}/players`, this.getPlayerList);
+		this.router.get(`${this.rootPath}/characters`, this.getCharactersList);
+		this.router.post(`${this.rootPath}/duty`, this.getDutyList);
   }
 
-  onlineList(req: Request, res: Response) {
+  getOnlineList(req: Request, res: Response) {
     setImmediate(() => {
       const fetch = global.exports['bs_base'].FetchComponent('Fetch');
       const players = fetch.All(fetch);
@@ -40,7 +40,7 @@ class InfoController {
     });
   }
 
-  playerList(req: Request, res: Response) {
+  getPlayerList(req: Request, res: Response) {
     setImmediate(() => {
 			const fetch = global.exports['bs_base'].FetchComponent('Fetch');
 			let players = Array();
@@ -54,7 +54,7 @@ class InfoController {
 		});
   }
 
-  charList(req: Request, res: Response) {
+  getCharactersList(req: Request, res: Response) {
     setImmediate(() => {
 			const fetch = global.exports['bs_base'].FetchComponent('Fetch');
 			const config = global.exports['bs_base'].FetchComponent('Config');
@@ -81,7 +81,7 @@ class InfoController {
 		});
   }
 
-  dutyList(req: Request, res: Response) {
+  getDutyList(req: Request, res: Response) {
     const { job } = req.body;
 
 		if (job != null && job != '') {
