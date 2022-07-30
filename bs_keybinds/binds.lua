@@ -47,8 +47,6 @@ KEYBINDS = {
       ExecuteCommand(onKeyUpCommand)
     end, false)
 
-    print(controller, type(controller))
-
     RegisterKeyMapping(cmdStringDown, desc, defaultKey, controller)
   end,
 }
