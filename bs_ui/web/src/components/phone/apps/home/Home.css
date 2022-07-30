@@ -41,10 +41,42 @@
   cursor: pointer;
 }
 
+/* APPS */
 
-.phone-apps {
+.phone-apps-wrapper {
   position: absolute;
+  display: flex;
+  flex-direction: row;
   top: 5%;
   width: 100%;
   height: 90%;
+  margin-top: 20px;
+  margin-left: 10px;
+  gap: 18px;
+}
+
+/* ICONS */
+
+.phone-apps-icon {
+  position: relative;
+  font-size: 2.7rem;
+  color: white;
+  left: 8px;
+  top: 8px;
+}
+
+.phone-apps-details {
+  width: 20%;
+  height: 10%;
+  border-radius: 1.5vh;
+  background: linear-gradient(323deg, rgba(19,115,189,1) 0%, rgba(158,213,255,1) 100%);
+  cursor: pointer;
+}
+
+.phone-apps-contacts {
+  width: 20%;
+  height: 10%;
+  border-radius: 1.5vh;
+  background: linear-gradient(323deg, rgba(18,147,10,1) 0%, rgba(181,236,207,1) 100%);
+  cursor: pointer;
 }

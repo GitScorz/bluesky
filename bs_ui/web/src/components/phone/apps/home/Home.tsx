@@ -3,7 +3,7 @@ import './Home.css';
 import { Tooltip } from "@mui/material";
 import { useNuiEvent } from "../../../../hooks/useNuiEvent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignal, faSun, faUnlock, faWifi } from "@fortawesome/free-solid-svg-icons";
+import { faBookBookmark, faCircleInfo, faSignal, faSun, faUnlock, faWifi } from "@fortawesome/free-solid-svg-icons";
 
 export default function Home() {
   const [time, setTime] = useState("00:00");
@@ -37,14 +37,27 @@ export default function Home() {
           <FontAwesomeIcon icon={faSun} />
           <FontAwesomeIcon style={{ color: "#607c8a" }} icon={faUnlock} />
           <Tooltip title="Connect" placement="top" arrow>
-              <FontAwesomeIcon id="phone-signal" icon={connected ? faWifi : faSignal} />
+            <FontAwesomeIcon id="phone-signal" icon={connected ? faWifi : faSignal} />
           </Tooltip>
         </div>
       </div>
 
       { /* APPS */}
-      <div className="phone-apps">
-        
+      <div className="phone-apps-wrapper">
+        <Tooltip title="Details" placement="top" arrow>
+          <div className="phone-apps-details">
+            <div className="phone-apps-icon">
+              <FontAwesomeIcon icon={faCircleInfo} />
+            </div>
+          </div>
+        </Tooltip>
+        <Tooltip title="Contacts" placement="top" arrow>
+          <div className="phone-apps-contacts">
+            <div className="phone-apps-icon">
+              <FontAwesomeIcon icon={faBookBookmark} />
+            </div>
+          </div>
+        </Tooltip>
       </div>
     </>
   )
