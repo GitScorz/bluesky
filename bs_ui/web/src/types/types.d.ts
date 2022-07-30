@@ -37,6 +37,10 @@ namespace UI {
 
     interface PhoneData {
       serverId: number;
+      phoneNumber: string;
+      cash: number;
+      bank: number;
+      hasDriverLicense: boolean;
     }
   }
 }
