@@ -147,7 +147,7 @@ function Player(source, data)
         group = "admin"
     end
 
-    ExecuteCommand(('add_principal identifier.%s group.%s'):format(_data:GetData('Identifier'), group))
+    -- ExecuteCommand(('add_principal identifier.%s group.%s'):format(_data:GetData('Identifier'), group))
 
     return _data
 end
