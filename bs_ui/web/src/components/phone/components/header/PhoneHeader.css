@@ -1,0 +1,42 @@
+.phone-header {
+  position: absolute;
+  font-family: 'Roboto', sans-serif;;
+  width: 100%;
+  height: 4%;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  font-size: .9rem;
+}
+
+.phone-header-info,
+.phone-header-icons {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.phone-header-info {
+  width: 25%;
+  justify-content: space-between;
+  left: 10px;
+  text-shadow: 1px 1px 0px #000,
+    -1px -1px 0px #000,
+    0px -1px 0px #000,
+    1px -1px 0px #000,
+   -1px  0px 0px #000,
+    1px  0px 0px #000,
+   -1px  1px 0px #000,
+    0px  1px 0px #000,
+    1px  1px 0px #000;
+}
+
+.phone-header-icons {
+  gap: 6px;
+  right: 10px;
+  filter: drop-shadow(-0.5px 1px 0px #000);
+}
+
+#phone-signal {
+  cursor: pointer;
+}
