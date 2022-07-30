@@ -1,15 +1,18 @@
-local _phoneOpen = false
+local phoneOpen = false
 
 Phone = {
   Open = function(self)
     UI:SetFocus(true)
     UI:SendUIMessage('hud:phone:toggle', true)
-    _phoneOpen = true
+    phoneOpen = true
   end,
   Close = function(self)
     UI:SetFocus(false)
     UI:SendUIMessage('hud:phone:toggle', false)
-    _phoneOpen = false
+    phoneOpen = false
+  end,
+  IsPhoneOpen = function(self)
+    return phoneOpen
   end,
 }
 
