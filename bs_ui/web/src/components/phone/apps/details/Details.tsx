@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAddressCard, faCircleCheck, faMobileAndroid, faPiggyBank, faWallet, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 import { Tooltip } from '@mui/material';
 import { fetchNui } from '../../../../utils/fetchNui';
+import { PhoneStrings } from '../../config/config';
 
 export default function Details() {
   const [phoneData, setPhoneData] = useState<UI.Phone.PhoneData>({
@@ -30,28 +31,28 @@ export default function Details() {
       <div className="details-account">
         <div className="details-info">
           <div className="details-server-info">
-            <Tooltip title="Civilian ID" placement='top' arrow>
+            <Tooltip title={PhoneStrings.CIVILIAN_ID} placement='top' arrow>
               <FontAwesomeIcon icon={faAddressCard} />
             </Tooltip>
             <div id="details-server-text">{phoneData?.serverId}</div>
           </div>
 
           <div className="details-server-info">
-            <Tooltip title="Phone Number" placement='top' arrow>
+            <Tooltip title={PhoneStrings.PHONE_NUMBER} placement='top' arrow>
               <FontAwesomeIcon icon={faMobileAndroid} />
             </Tooltip>
             <div id="details-server-text">{phoneData?.phoneNumber}</div>
           </div>
 
           <div className="details-server-info">
-            <Tooltip title="Cash" placement='top' arrow>
+            <Tooltip title={PhoneStrings.WALLET} placement='top' arrow>
               <FontAwesomeIcon icon={faWallet} style={{ color: "#78c72e" }} />
             </Tooltip>
             <div id="details-server-text">{formatter.format(phoneData.cash)}</div>
           </div>
 
           <div className="details-server-info">
-            <Tooltip title="Bank" placement='top' arrow>
+            <Tooltip title={PhoneStrings.BANK} placement='top' arrow>
               <FontAwesomeIcon icon={faPiggyBank} style={{ color: "#60a9fc" }} />
             </Tooltip>
             <div id="details-server-text">{formatter.format(phoneData.bank)}</div>
