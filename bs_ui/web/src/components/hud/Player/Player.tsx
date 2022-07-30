@@ -13,8 +13,8 @@ const Player = forwardRef((props: UI.Status.HudProps, ref: any) => {
 
   const { voice, health, armor, hunger, thirst } = props;
 
-  const thickSize = 6.5;
-  const size = 53;
+  const thickSize = 6;
+  const size = 50;
   const iconSize: SizeProp = "lg";
 
   const foregroundRed = (value: number, defaultColor: string) => {
