@@ -83,7 +83,7 @@ AddEventHandler('chatMessage', function(source, n, message)
                     if commands[commandName].job ~= nil then
                         for k, v in pairs(commands[commandName].job) do
                             if cData.Job.job == v.name then
-                                if v.gradelevel <= cData.job.grade.level and cData.JobDuty then
+                                if v.gradelevel <= cData.Job.grade.level and cData.JobDuty then
                                     local command = commands[commandName]
                                 end
                             end
