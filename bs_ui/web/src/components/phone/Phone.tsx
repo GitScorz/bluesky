@@ -1,23 +1,17 @@
-import { Slide } from "@mui/material";
-import { useEffect, useState } from "react"
-import { isEnvBrowser } from "../../utils/misc";
-import AppsWrapper from "./apps/AppsWrapper";
-import './Phone.css'
+import { Route, Routes } from 'react-router-dom'
+import Home from './apps/home/Home'
+import PhoneWrapper from './PhoneWrapper'
 
 export default function Phone() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    if (isEnvBrowser()) {
-      setVisible(true);
-    }
-  }, []);
-
   return (
-    <Slide direction='up' timeout={{ enter: 500, exit: 500 }} in={visible}>
-      <div className="phone-container">
-        
-      </div>
-    </Slide>
+    <>
+      <PhoneWrapper>
+        <div className="phone-app-container">
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </div>
+      </PhoneWrapper>
+    </>
   )
 }
