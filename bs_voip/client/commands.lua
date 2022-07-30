@@ -1,6 +1,7 @@
 local wasProximityDisabledFromOverride = false
 disableProximityCycle = false
-RegisterCommand('setvoiceintent', function(source, args)
+
+RegisterCommand('setvoiceintent', function(source, args, raw)
 	if GetConvarInt('voice_allowSetIntent', 1) == 1 then
 		local intent = args[1]
 		if intent == 'speech' then
@@ -10,13 +11,33 @@ RegisterCommand('setvoiceintent', function(source, args)
 		end
 		LocalPlayer.state:set('voiceIntent', intent, true)
 	end
-end)
+end, false)
 
--- TODO: Better implementation of this?
-RegisterCommand('vol', function(_, args)
+RegisterCommand('vol', function(source, args, raw)
 	if not args[1] then return end
 	setVolume(tonumber(args[1]))
-end)
+end, false)
+
+RegisterCommand('+cycleproximity', function()
+	-- Proximity is either disabled, or manually overwritten.
+	if GetConvarInt('voice_enableProximityCycle', 1) ~= 1 or disableProximityCycle then return end
+	local newMode = mode + 1
+
+	-- If we're within the range of our voice modes, allow the increase, otherwise reset to the first state
+	if newMode <= #Cfg.voiceModes then
+		mode = newMode
+	else
+		mode = 1
+	end
+
+	setProximityState(Cfg.voiceModes[mode][1], false)
+	TriggerEvent('pma-voice:setTalkingMode', mode)
+end, false)
+
+function RegisterKeybinds()
+	Keybinds:Register("Voip", "Cycles the proximity state.", "+cycleproximity", "-cycleproximity", "keyboard", GetConvar('voice_defaultCycle', 'Z'))
+	Keybinds:Register("Voip", "Talk in radio.", "+radiotalk", "-radiotalk", "keyboard", GetConvar('voice_defaultRadio', 'CAPITAL'))
+end
 
 exports('setAllowProximityCycleState', function(state)
 	type_check({state, "boolean"})
@@ -51,21 +72,3 @@ exports("clearProximityOverride", function()
 		disableProximityCycle = false
 	end
 end)
-
-RegisterCommand('cycleproximity', function()
-	-- Proximity is either disabled, or manually overwritten.
-	if GetConvarInt('voice_enableProximityCycle', 1) ~= 1 or disableProximityCycle then return end
-	local newMode = mode + 1
-
-	-- If we're within the range of our voice modes, allow the increase, otherwise reset to the first state
-	if newMode <= #Cfg.voiceModes then
-		mode = newMode
-	else
-		mode = 1
-	end
-
-	setProximityState(Cfg.voiceModes[mode][1], false)
-	TriggerEvent('pma-voice:setTalkingMode', mode)
-end, false)
-
-RegisterKeyMapping('cycleproximity', 'Cycle Proximity', 'keyboard', GetConvar('voice_defaultCycle', 'Z'))
