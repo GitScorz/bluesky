@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useNuiEvent } from '../../../../hooks/useNuiEvent';
 import { faSignal, faSun, faUnlock, faWifi } from "@fortawesome/free-solid-svg-icons";
 import { Tooltip } from '@mui/material';
+import { PhoneStrings } from '../../config/config';
 
 export default function PhoneHeader() {
   const [time, setTime] = useState("00:00");
@@ -30,7 +31,7 @@ export default function PhoneHeader() {
       <div className="phone-header-icons">
         <FontAwesomeIcon icon={faSun} />
         <FontAwesomeIcon style={{ color: "#607c8a" }} icon={faUnlock} />
-        <Tooltip title="Connect" placement="top" arrow>
+        <Tooltip title={PhoneStrings.HEADER_CONNECT} placement="top" arrow>
           <FontAwesomeIcon id="phone-signal" icon={connected ? faWifi : faSignal} />
         </Tooltip>
       </div>

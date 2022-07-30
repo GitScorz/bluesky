@@ -1,6 +1,11 @@
 export enum PhoneStrings {
+  // Header
+  HEADER_CONNECT = 'Connect',
+  
+  // Navigation Bar
+  NAVIGATION_HOME = 'Home',
+
   // Apps
-  APP_HOME = 'Home',
-  APP_ABOUT = 'About',
-  APP_SETTINGS = 'Settings',
+  APP_DETAILS = 'Details',
+  APP_CONTACTS = 'Contacts',
 }
