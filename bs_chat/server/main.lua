@@ -102,8 +102,6 @@ AddEventHandler('chatMessage', function(source, n, message)
                     else
                         Chat.Send.Server:Single(source, 'Invalid Command Handler')
                     end
-                else
-                    Chat.Send.Server:Single(source, 'Invalid Command')
                 end
             end
         end
