@@ -28,4 +28,15 @@ namespace UI {
       colorType: "default" | "success" | "error";
     }
   }
+
+  namespace Phone {
+    interface DisplayTime {
+      hour: number;
+      minute: number;
+    }
+
+    interface PhoneData {
+      serverId: number;
+    }
+  }
 }

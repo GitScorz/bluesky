@@ -2,14 +2,14 @@ import React from 'react';
 import './index.css';
 import App from './components/App';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 const root = createRoot(document.getElementById('root')!);
 
 root.render(
-  <BrowserRouter>
+  <HashRouter>
     <React.StrictMode>
       <App />
     </React.StrictMode>
-  </BrowserRouter>
+  </HashRouter>
 );
