@@ -8,14 +8,14 @@ import { PhoneStrings } from '../../config/config';
 
 export default function Details() {
   const [phoneData, setPhoneData] = useState<UI.Phone.PhoneData>({
-    serverId: 0,
+    serverId: 1,
     phoneNumber: '123456789',
     cash: 0,
     bank: 0,
     hasDriverLicense: true,
   });
 
-  fetchNui('hud:phone:getPhoneData', function(data: UI.Phone.PhoneData) {
+  fetchNui('hud:phone:getPhoneData').then((data: UI.Phone.PhoneData) => {
     setPhoneData(data);
   });
 

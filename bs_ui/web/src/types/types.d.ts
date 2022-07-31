@@ -42,5 +42,10 @@ namespace UI {
       bank: number;
       hasDriverLicense: boolean;
     }
+
+    interface PhoneContact {
+      name: string;
+      phoneNumber: string;
+    }
   }
 }

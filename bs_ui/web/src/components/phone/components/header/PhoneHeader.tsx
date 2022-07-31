@@ -11,7 +11,7 @@ export default function PhoneHeader() {
   const [time, setTime] = useState("00:00");
   const [connected, setConnected] = useState(false);
   const [phoneData, setPhoneData] = useState<UI.Phone.PhoneData>({
-    serverId: 0,
+    serverId: 1,
     phoneNumber: '123456789',
     cash: 0,
     bank: 0,
@@ -22,7 +22,7 @@ export default function PhoneHeader() {
     setTime(`${time.hour}:${time.minute}`);
   });
 
-  fetchNui('hud:phone:getPhoneData', function(data: UI.Phone.PhoneData) {
+  fetchNui('hud:phone:getPhoneData').then((data: UI.Phone.PhoneData) => {
     setPhoneData(data);
   });
 

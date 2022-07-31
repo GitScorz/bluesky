@@ -1,0 +1,45 @@
+.contacts-wrapper {
+  font-family: 'Roboto', sans-serif;
+  width: 100%;
+  height: 100%;
+  background-color: #1e1f24;
+  border-radius: .5vh;
+  color: #fff;
+}
+
+.contacts-add-new {
+  position: absolute;
+  top: 40px;
+  right: 18px;
+  font-size: 1.3rem;
+}
+
+.contacts-search {
+  position: absolute;
+  width: 80%;
+  top: 40px;
+  left: 20px;
+  font-size: 1.3rem;
+}
+
+.contacts-list {
+  position: relative;
+  top: 15%;
+  width: 87%;
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contacts-not-found {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 15px;
+  left: 15px
+}

@@ -5,7 +5,7 @@
   overflow: hidden;
   bottom: 10px;
   right: 10px;
-  user-select: none;
+  user-select: text;
 }
 
 .phone-container {
@@ -18,10 +18,10 @@
 
 .phone-background {
   position: relative;
-  width: 86%;
+  width: 86.8%;
   height: 87.5%;
   border-radius: .5vh;
-  left: 42px;
+  left: 41px;
   top: 85px;
   z-index: 5;
 }

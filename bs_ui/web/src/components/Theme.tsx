@@ -11,8 +11,24 @@ const Theme = createTheme({
                     fontSize: '1rem',
                 }
             }
+        },
+        MuiInput: {
+            styleOverrides: {
+                underline: {
+                    color: '#fff',
+                    borderBottom: '1px solid #fff',
+                }
+            }
         }
-    }
+    },
+    palette: {
+        primary: {
+            main: '#fff',
+        },
+        text: {
+            secondary: 'white',
+        },
+    },
 });
 
 export default Theme;

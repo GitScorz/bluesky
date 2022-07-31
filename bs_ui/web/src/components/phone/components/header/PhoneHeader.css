@@ -7,6 +7,7 @@
   display: flex;
   justify-content: space-between;
   font-size: .9rem;
+  user-select: none;
 }
 
 .phone-header-info,
