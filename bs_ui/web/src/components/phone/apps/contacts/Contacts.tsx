@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InputAdornment, TextField, Tooltip } from '@mui/material';
 import { useState } from 'react';
 import { fetchNui } from '../../../../utils/fetchNui';
-import Modal from '../../components/dialog/Modal';
+import Modal from '../../components/modal/Modal';
 import { PhoneStrings } from '../../config/config';
 import ContactContainer from './components/ContactContainer';
 import './Contacts.css';
