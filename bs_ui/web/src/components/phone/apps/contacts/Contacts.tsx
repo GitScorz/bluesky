@@ -70,12 +70,15 @@ export default function Contacts() {
           {
             id: "contact-name",
             title: PhoneStrings.CONTACT_NAME,
-            icon: faUser,
+            icon: faUser
           },
           {
             id: "contact-number",
             title: PhoneStrings.PHONE_NUMBER,
             icon: faPhone,
+            expected: "number",
+            minLength: 10,
+            maxLength: 10,
           }
         ]} />
       )}

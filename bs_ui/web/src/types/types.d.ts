@@ -57,6 +57,10 @@ namespace UI {
       id: string;
       title: string;
       icon?: IconDefinition;
+      input?: string;
+      expected?: "number" | "boolean";
+      minLength?: number;
+      maxLength?: number;
     }
   }
 }
