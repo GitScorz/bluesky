@@ -1,23 +1,23 @@
-import { faFaceFrown, faMagnifyingGlass, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faFaceFrown, faMagnifyingGlass, faPhone, faUser, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InputAdornment, TextField, Tooltip } from '@mui/material';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { debugData } from '../../../../utils/debugData';
 import { fetchNui } from '../../../../utils/fetchNui';
+import Modal from '../../components/dialog/Modal';
 import { PhoneStrings } from '../../config/config';
 import ContactContainer from './components/ContactContainer';
 import './Contacts.css';
 
 export default function Contacts() {
+  const [isOpen, setIsOpen] = useState(false);
   const [contacts, setContacts] = useState<UI.Phone.PhoneContact[]>([
     {
-      name: "John Doe",
-      phoneNumber: "987654321",
+      name: "John Doesadasdadsda",
+      phoneNumber: "8887776666",
     },
     {
       name: "Jane Doe",
-      phoneNumber: "123456789",
+      phoneNumber: "2484567898",
     },
 ]);
 
@@ -35,7 +35,7 @@ export default function Contacts() {
     <div className="contacts-wrapper">
       <div className="contacts-add-new">
         <Tooltip title={PhoneStrings.ADD_CONTACT} placement="top" arrow>
-          <FontAwesomeIcon icon={faUserPlus} />
+          <FontAwesomeIcon icon={faUserPlus} onClick={() => setIsOpen(true)} />
         </Tooltip>
       </div>
       <div className="contacts-search">
@@ -65,6 +65,20 @@ export default function Contacts() {
           </div>
         )}
       </div>
+      {isOpen && (
+        <Modal setIsOpen={setIsOpen} params={[
+          {
+            id: "contact-name",
+            title: PhoneStrings.CONTACT_NAME,
+            icon: faUser,
+          },
+          {
+            id: "contact-number",
+            title: PhoneStrings.PHONE_NUMBER,
+            icon: faPhone,
+          }
+        ]} />
+      )}
     </div>
   )
 }

@@ -1,13 +1,14 @@
-import { faCircleUser, faComments, faPenToSquare, faPhone, faUserMinus } from '@fortawesome/free-solid-svg-icons';
+import { faCircleUser, faComments, faPenToSquare, faPhone, faUserMinus, faUserSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Tooltip } from '@mui/material';
 import { useState } from 'react';
 import { PhoneStrings } from '../../../config/config';
+import { FormatPhoneNumber } from '../../../utils/utils';
 import './ContactContainer.css';
 
 export default function ContactContainer(props: UI.Phone.PhoneContact) {
   const [hovered, setHovered] = useState(false);
-  const { name, phoneNumber } = props;
+  let { name, phoneNumber } = props;
 
   const handleContactDelete = (number: string) => {
     console.log(number);
@@ -24,6 +25,10 @@ export default function ContactContainer(props: UI.Phone.PhoneContact) {
 
   const handleContactEdit = (number: string) => {
     console.log(number);
+  }
+
+  if (name.length > 16) {
+    name = name.substring(0, 16) + '...';
   }
 
   return (
@@ -43,14 +48,14 @@ export default function ContactContainer(props: UI.Phone.PhoneContact) {
         </div>
         <div className='contact-info-text'>
           <div className="contact-text">{name}</div>
-          <div className="contact-text">{phoneNumber}</div>
+          <div className="contact-text">{FormatPhoneNumber(phoneNumber)}</div>
         </div>
       </div>
 
       {hovered && (
         <div className="contact-options">
           <Tooltip title={PhoneStrings.DELETE_CONTACT} placement="top" arrow>
-            <FontAwesomeIcon icon={faUserMinus} id="contact-options-icon" onClick={() => handleContactDelete(props.phoneNumber) } />
+            <FontAwesomeIcon icon={faUserSlash} id="contact-options-icon" onClick={() => handleContactDelete(props.phoneNumber) } />
           </Tooltip>
           <Tooltip title={PhoneStrings.CALL_CONTACT} placement="top" arrow>
             <FontAwesomeIcon icon={faPhone} id="contact-options-icon" onClick={() => handleContactCall(props.phoneNumber) } />

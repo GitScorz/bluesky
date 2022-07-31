@@ -23,4 +23,5 @@ export enum PhoneStrings {
   CALL_CONTACT = "Call",
   MESSAGE_CONTACT = "Message",
   EDIT_CONTACT = "Edit",
+  CONTACT_NAME = "Name",
 }

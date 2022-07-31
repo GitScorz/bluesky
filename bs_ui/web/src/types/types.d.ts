@@ -47,5 +47,16 @@ namespace UI {
       name: string;
       phoneNumber: string;
     }
+
+    interface ModalProps {
+      setIsOpen: (isOpen: boolean) => void;
+      params: ModalParams[];
+    }
+
+    interface ModalParams {
+      id: string;
+      title: string;
+      icon?: IconDefinition;
+    }
   }
 }

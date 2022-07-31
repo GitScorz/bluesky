@@ -15,11 +15,10 @@
 .contact-info {
   position: relative;
   display: flex;
-  width: 70%;
+  width: 100%;
   height: 100%;
-  justify-content: space-around;
-  align-items: center;
   left: 10px;
+  gap: 10px;
 }
 
 .contact-icon {
@@ -28,8 +27,7 @@
 }
 
 .contact-text {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 8px;
 }
 
 .contact-options {
