@@ -51,7 +51,7 @@ function Player(steamHex, src, deferrals)
         State = States.QUEUED,
         Roles = member.roles,
         Name = member.name,
-        SID = string.sub(steamHex, 6) .. "@blue.sky", -- fuck it.. do better later
+        SID = string.sub(steamHex, 7) .. "@blue.sky", -- fuck it.. do better later
         Banned = member.banned,
         Identifier = steamHex,
         Priority = prio,

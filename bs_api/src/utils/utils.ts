@@ -25,5 +25,5 @@ export function getGroups(identifier: string) {  // Get groups from identifier
 }
 
 export function getPlayerSID(identifier: string) {
-  return `${identifier.substring(6)}@bluesky.com`;
+  return `${identifier.substring(7)}@bluesky.com`;
 }
