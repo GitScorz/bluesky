@@ -10,6 +10,7 @@ import './Contacts.css';
 
 export default function Contacts() {
   const [isOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState('');
   const [contacts, setContacts] = useState<UI.Phone.PhoneContact[]>([
     {
       name: "John Doesadasdadsda",
@@ -19,16 +20,16 @@ export default function Contacts() {
       name: "Jane Doe",
       phoneNumber: "2484567898",
     },
-]);
+  ]);
 
-  fetchNui('hud:phone:getPhoneContacts').then((data: UI.Phone.PhoneContact[]) => {
-    console.log(data);
-    setContacts(data);
-  });
+  // fetchNui('hud:phone:getPhoneContacts').then((data: UI.Phone.PhoneContact[]) => {
+  //   console.log(data);
+  //   setContacts(data);
+  // });
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const search = event.target.value;
-    
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { value } = event.target;
+    setSearch(value);
   }
 
   return (
@@ -41,6 +42,7 @@ export default function Contacts() {
       <div className="contacts-search">
         <TextField
           label={PhoneStrings.SEARCH}
+          value={search}
           onChange={handleSearch}
           fullWidth
           InputProps={{
@@ -54,7 +56,13 @@ export default function Contacts() {
         />
       </div>
       <div className="contacts-list">
-        {contacts.map((contact: UI.Phone.PhoneContact) => (
+        {contacts.filter((contact) => {
+          if (search === '') {
+            return contact;
+          } else if (contact.name.toLowerCase().includes(search.toLowerCase())) {
+            return contact;
+          }
+        }).map((contact: UI.Phone.PhoneContact) => (
           <ContactContainer key={contact.phoneNumber} {...contact} />
         ))}
 
@@ -64,6 +72,7 @@ export default function Contacts() {
             <span>{PhoneStrings.NO_CONTACTS}</span>
           </div>
         )}
+        
       </div>
       {isOpen && (
         <Modal setIsOpen={setIsOpen} params={[

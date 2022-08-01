@@ -1,10 +1,5 @@
 local isHudVisible = true -- We don't have settings yet, so just assume true
 
-RegisterNUICallback('hud:setFocus', function(data, cb)
-  UI:SetFocus(data)
-  cb({})
-end)
-
 AddEventHandler('Characters:Client:Spawn', function()
   UI:SetFocus(false)
   UI.Hud:Show()

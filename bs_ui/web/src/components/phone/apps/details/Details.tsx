@@ -15,9 +15,9 @@ export default function Details() {
     hasDriverLicense: true,
   });
 
-  fetchNui('hud:phone:getPhoneData').then((data: UI.Phone.PhoneData) => {
-    setPhoneData(data);
-  });
+  // fetchNui('hud:phone:getPhoneData').then((data: UI.Phone.PhoneData) => {
+  //   setPhoneData(data);
+  // });
 
   // Format the cash and bank values
   const formatter = new Intl.NumberFormat('en-US', {

@@ -6,6 +6,9 @@ export function FormatPhoneNumber(phoneNumber: string) {
   return formattedNumber;
 }
 
-export function SendAlert(message: string, type: "default" | "success" | "error") {
-  fetchNui('hud:sendAlert', { message, type });
+export function SendAlert(message: string, type: "default" | "error") {
+  fetchNui('hud:sendAlert', { 
+    message: message, 
+    type: type 
+  });
 }

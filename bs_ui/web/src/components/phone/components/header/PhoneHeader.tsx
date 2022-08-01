@@ -22,9 +22,9 @@ export default function PhoneHeader() {
     setTime(`${time.hour}:${time.minute}`);
   });
 
-  fetchNui('hud:phone:getPhoneData').then((data: UI.Phone.PhoneData) => {
-    setPhoneData(data);
-  });
+  // fetchNui('hud:phone:getPhoneData').then((data: UI.Phone.PhoneData) => {
+  //   setPhoneData(data);
+  // });
 
   return (
     <div className="phone-header">
