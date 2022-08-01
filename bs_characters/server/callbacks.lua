@@ -250,16 +250,9 @@ function IsNumberInUse(number)
 end
 
 function GeneratePhoneNumber()
-    local phone = ''
+    local areaCode = math.random(50) > 25 and 415 or 628
+    local numBase2 = math.random(100,999)
+    local numBase3 = math.random(1000,9999)
 
-    for i=1, 10, 1 do
-        local d = math.random(0,9)
-        phone = phone .. d
-
-        if i == 3 or i == 6 then
-            phone = phone .. "-"
-        end
-    end
-
-    return phone
+    return string.format('%s%s%s', areaCode, numBase2, numBase3)
 end
