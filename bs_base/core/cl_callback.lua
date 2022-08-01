@@ -8,7 +8,7 @@ COMPONENTS.Callbacks = {
     --- @param event string The event name.
     --- @param data any The data to send.
     --- @param cb function The callback function.
-     --- @param extraId number The extra id of the callback.
+    --- @param extraId number The extra id of the callback.
     ServerCallback = function(self, event, data, cb, extraId)
         while _pToken == nil do Citizen.Wait(1) end
 
