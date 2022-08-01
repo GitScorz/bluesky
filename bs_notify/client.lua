@@ -50,3 +50,18 @@ RegisterNetEvent('Characters:Client:Logout')
 AddEventHandler('Characters:Client:Logout', function()
   NOTIFICATION:Clear()
 end)
+
+RegisterNetEvent('Notification:SendAlert')
+AddEventHandler('Notification:SendAlert', function(source, message, duration)
+  NOTIFICATION:SendAlert(message, duration)
+end)
+
+RegisterNetEvent('Notification:SendError')
+AddEventHandler('Notification:SendError', function(source, message, duration)
+  NOTIFICATION:SendError(message, duration)
+end)
+
+RegisterNetEvent('Notification:Clear')
+AddEventHandler('Notification:Clear', function(source)
+  NOTIFICATION:Clear()
+end)
