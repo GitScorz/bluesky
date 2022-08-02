@@ -1,18 +1,22 @@
 import { Slide } from "@mui/material";
 import { useEffect, useState } from "react"
 import { useNuiEvent } from "../../hooks/useNuiEvent";
+import { debugData } from "../../utils/debugData";
 import { fetchNui } from "../../utils/fetchNui";
 import { isEnvBrowser } from "../../utils/misc";
 import './Phone.css';
+
+debugData([
+  {
+    action: 'hud:phone:toggle',
+    data: false,
+  }
+])
 
 export default function PhoneWrapper({ children }: any) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (isEnvBrowser()) {
-      setVisible(true);
-    }
-
     const handleKeyEvent = (event: KeyboardEventInit) => {
       if (event.key === "Escape") {
         fetchNui('hud:phone:close');

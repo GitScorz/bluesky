@@ -1,5 +1,5 @@
 .phone-wrapper {
-  position: fixed;
+  position: absolute;
   width: 350px;
   height: 770px;
   overflow: hidden;

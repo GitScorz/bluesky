@@ -1,20 +1,23 @@
 .hud-player {
   position: absolute;
   display: flex;
-  left: .3%;
-  gap: .6vh;
-  bottom: .4vh;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 15%;
+  height: 6%;
+  bottom: 0;
 }
 
 .background {
   position: absolute;
   z-index: 1;
   background-color: #1a1a1a;
-  width: 70%;
-  height: 70%;
+  width: 72%;
+  height: 72%;
   border-radius: 50%;
-  top: 8px;
-  left: 8px;
+  top: 7px;
+  left: 7px;
 }
 
 .foreground {
