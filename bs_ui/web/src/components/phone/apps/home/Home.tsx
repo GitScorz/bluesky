@@ -12,20 +12,20 @@ export default function Home() {
       <div className="phone-apps-wrapper">
         <Tooltip title={PhoneStrings.APP_DETAILS} placement="top" arrow>
           <div className="phone-apps-details">
-            <div className="phone-apps-icon">
-              <Link to={"/details"}>
+            <Link to={"/details"}>
+              <div className="phone-apps-icon">
                 <FontAwesomeIcon icon={faCircleInfo} />
-              </Link>
-            </div>
+              </div>
+            </Link>
           </div>
         </Tooltip>
         <Tooltip title={PhoneStrings.APP_CONTACTS} placement="top" arrow>
           <div className="phone-apps-contacts">
-            <div className="phone-apps-icon">
-              <Link to={"/contacts"}>
+            <Link to={"/contacts"}>
+              <div className="phone-apps-icon">
                 <FontAwesomeIcon icon={faBookBookmark} />
-              </Link>
-            </div>
+              </div>
+            </Link>
           </div>
         </Tooltip>
       </div>
