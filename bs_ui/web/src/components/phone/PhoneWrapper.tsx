@@ -3,29 +3,31 @@ import { useEffect, useState } from "react"
 import { useNuiEvent } from "../../hooks/useNuiEvent";
 import { debugData } from "../../utils/debugData";
 import { fetchNui } from "../../utils/fetchNui";
-import { isEnvBrowser } from "../../utils/misc";
 import './Phone.css';
+import { useNavigate } from "react-router-dom";
 
 debugData([
   {
     action: 'hud:phone:toggle',
-    data: false,
+    data: true,
   }
 ])
 
 export default function PhoneWrapper({ children }: any) {
   const [visible, setVisible] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleKeyEvent = (event: KeyboardEventInit) => {
       if (event.key === "Escape") {
         fetchNui('hud:phone:close');
         setVisible(false);
+        navigate('/');
       }
     };
 
     window.addEventListener('keyup', handleKeyEvent);
-  }, []);
+  });
 
   useNuiEvent<boolean>('hud:phone:toggle', (visible) => {
     setVisible(visible); 
