@@ -115,7 +115,6 @@ export default function Modal({
         timer.current = window.setTimeout(() => {
           setIsOpen(false);
           if (callbackEvent && isValid) {
-            console.log(id)
             if (id) {
               fetchNui(callbackEvent, { id: id });
             } else {
@@ -157,9 +156,9 @@ export default function Modal({
 
         {!disabledButtons && (
           <div className="modal-buttons">
-            <Button style={{ backgroundColor: '#f44336'}} onClick={() => setIsOpen(false)}>Cancel</Button>
+            <Button style={{ backgroundColor: '#f1a368', color: "black" }} onClick={() => setIsOpen(false)}>Cancel</Button>
             <Link to={'/contacts'}>
-              <Button style={{ backgroundColor: '#408d3d'}} onClick={() => handleSubmit()}>Submit</Button>
+              <Button style={{ backgroundColor: '#95ef79', color: "black" }} onClick={() => handleSubmit()}>Submit</Button>
             </Link>
           </div>
         )}
@@ -167,7 +166,7 @@ export default function Modal({
         {disabledButtons && pParams.length === 0 && noText && (
           <div className="modal-success">
             {success && (
-              <FontAwesomeIcon icon={faCheckCircle} style={{ color: "#42f57b", fontSize: "5rem", padding: "4.6rem" }} /> 
+              <FontAwesomeIcon icon={faCheckCircle} style={{ color: "#95ef79", fontSize: "5rem", padding: "4.6rem" }} /> 
             )}
 
             {error && (
