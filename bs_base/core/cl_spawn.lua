@@ -4,10 +4,10 @@ COMPONENTS.Spawn = COMPONENTS.Spawn or {
 }
 
 COMPONENTS.Spawn.SpawnPoint = {
-    x = -1044.84,
-    y = -2749.85,
-    z = 21.36,
-    h = 0
+    x = -1276.91, 
+    y = 310.76, 
+    z = 65.51, 
+    h = 150.05
 }
 
 function COMPONENTS.Spawn.InitCamera(self)

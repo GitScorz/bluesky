@@ -1,5 +1,5 @@
 local _data = nil
-local creatorLocation = { x = -1313.93, y = 263.47, z = 62.77, h = 171.13 }
+local creatorLocation = { x = -1365.05, y = 231.4, z = 58.64, h = 152.68 }
 
 
 AddEventHandler('Proxy:Shared:RegisterReady', function()
