@@ -30,10 +30,11 @@ export default function PhoneWrapper({ children }: any) {
   return (
     <Slide direction='up' timeout={{ enter: 600, exit: 500 }} in={visible}>
       <div className="phone-wrapper">
-        <div className="phone-container" style={{ backgroundImage: "url(media/frames/android.png)" }}>
-          <div className="phone-background" style={{ background: "linear-gradient(15deg, rgba(113,149,177,1) 0%, rgba(189,221,226,1) 100%)" }}>
-            {children}
-          </div>
+        <div className="phone-container" style={{
+          backgroundImage: "url(media/frames/android.png"
+        }} />
+        <div className="phone-background" style={{ background: "linear-gradient(15deg, rgba(113,149,177,1) 0%, rgba(189,221,226,1) 100%)" }}>
+          {children}
         </div>
       </div>
     </Slide>

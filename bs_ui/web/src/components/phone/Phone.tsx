@@ -4,6 +4,7 @@ import Details from './apps/details/Details'
 import Home from './apps/home/Home'
 import PhoneHeader from './components/header/PhoneHeader'
 import NavigationBar from './components/navigationbar/NavigationBar'
+import Notification from './components/notification/Notification'
 import PhoneWrapper from './PhoneWrapper'
 
 export default function Phone() {
@@ -11,7 +12,7 @@ export default function Phone() {
     <>
       <PhoneWrapper>
         <PhoneHeader />
-        <NavigationBar />
+        <Notification />
         <div className="phone-app-container">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -19,6 +20,7 @@ export default function Phone() {
             <Route path="/contacts" element={<Contacts />} />
           </Routes>
         </div>
+        <NavigationBar />
       </PhoneWrapper>
     </>
   )
