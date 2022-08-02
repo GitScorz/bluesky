@@ -1,9 +1,7 @@
 import './Home.css';
 import { Tooltip } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookBookmark, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { PhoneStrings } from '../../config/config';
 import { APPS } from '../../config/apps';
 
 // Basically the phone app's home page.
