@@ -1,6 +1,6 @@
 local defaultSettings = {
   wallpaper = 'wallpaper',
-  ringtone = 'ringtone',
+  brand = 'android',
   notifications = true,
 }
 
@@ -14,6 +14,7 @@ function RetrieveComponents()
   Chat = exports['bs_base']:FetchComponent('Chat')
   Phone = exports['bs_base']:FetchComponent('Phone')
   Middleware = exports['bs_base']:FetchComponent('Middleware')
+  Wallet = exports['bs_base']:FetchComponent('Wallet')
 end
 
 AddEventHandler('Core:Shared:Ready', function()
@@ -26,6 +27,7 @@ AddEventHandler('Core:Shared:Ready', function()
     'Chat',
     'Phone',
     'Middleware',
+    'Wallet',
   }, function(error)
     if #error > 0 then return end -- Do something to handle if not all dependencies loaded
     RetrieveComponents()
@@ -39,13 +41,23 @@ RegisterServerEvent('Characters:Server:Spawn')
 AddEventHandler('Characters:Server:Spawn', function()
   local char = Fetch:Source(source):GetData('Character')
   if not char:GetData('PhoneSettings') then char:SetData('PhoneSettings', defaultSettings) end
+  local cash = 0
+
+  Wallet:Get(char, function(wallet)
+    if wallet then
+      cash = wallet.cash
+    end
+  end)
 
   local src = char:GetData('Source')
   TriggerClientEvent('Phone:Client:Settings', src, char:GetData('PhoneSettings'))
-  TriggerClientEvent('Phone:Client:SetData', src, 'myData', {
+  TriggerClientEvent('Phone:Client:SetData', src, {
     sid = src,
     cid = char:GetData('ID'),
-    number = char:GetData('Phone'),
+    phoneNumber = char:GetData('Phone'),
+    hasDriverLicense = true,
+    cash = cash,
+    bank = 0,
     name = {
       first = char:GetData('First'),
       last = char:GetData('Last')

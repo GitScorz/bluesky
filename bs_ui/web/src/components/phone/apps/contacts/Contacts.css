@@ -9,7 +9,7 @@
 
 .contacts-add-new {
   position: absolute;
-  top: 40px;
+  top: 35px;
   right: 18px;
   font-size: 1.3rem;
   cursor: pointer;
@@ -17,15 +17,15 @@
 
 .contacts-search {
   position: absolute;
-  width: 80%;
-  top: 40px;
+  width: 87%;
+  top: 48px;
   left: 20px;
   font-size: 1.3rem;
 }
 
 .contacts-list {
   position: relative;
-  top: 15%;
+  top: 16%;
   width: 87%;
   height: 75%;
   display: flex;

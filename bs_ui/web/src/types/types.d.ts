@@ -36,14 +36,28 @@ namespace UI {
     }
 
     interface PhoneData {
-      serverId: number;
+      sid: number;
+      cid: string;
       phoneNumber: string;
+      name: CharacterName;
+      aliases: CharacterAliases;
       cash: number;
       bank: number;
       hasDriverLicense: boolean;
     }
 
+    interface CharacterName {
+      first: string;
+      last: string;
+    }
+
+    interface CharacterAliases {
+      email: string;
+      twitter: string;
+    }
+
     interface PhoneContact {
+      _id: string;
       name: string;
       phoneNumber: string;
     }
@@ -51,16 +65,27 @@ namespace UI {
     interface ModalProps {
       setIsOpen: (isOpen: boolean) => void;
       params: ModalParams[];
+      text?: string;
+      callbackEvent?: string;
+      style?: React.CSSProperties;
+      id?: string;
     }
 
     interface ModalParams {
       id: string;
-      title: string;
-      icon?: IconDefinition;
+      label: string;
+      minLength: number;
+      expected?: "string" | "number" | "boolean" | "none";
       input?: string;
-      expected?: "number" | "boolean";
-      minLength?: number;
       maxLength?: number;
+      icon?: IconDefinition;
+    }
+
+    interface AppProps {
+      label: string;
+      rootPath: string;
+      style: React.CSSProperties;
+      icon: IconDefinition;
     }
   }
 }

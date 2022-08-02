@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CircularProgress } from '@mui/material'
 import { Box } from '@mui/system'
 import './Player.css'
-import { faHeart, faShieldHalved, faDroplet, faHeadset, faCommentDots, faDrumstickBite } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faShieldHalved, faDroplet, faHeadset, faDrumstickBite, faMicrophone } from '@fortawesome/free-solid-svg-icons';
 import { SizeProp } from '@fortawesome/fontawesome-svg-core';
 import { useNuiEvent } from '../../../hooks/useNuiEvent';
 import { forwardRef, useState } from 'react';
@@ -46,7 +46,7 @@ const Player = forwardRef((props: UI.Status.HudProps, ref: any) => {
       <Box sx={{ position: "relative", display: "flex" }}>
         <CircularProgress variant="determinate" value={voice} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundYellow("rgba(255,255,255,255)") }} />
         <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundYellow("rgba(255,255,255,0.3)")}` }} />
-        <FontAwesomeIcon className="hud-icon" icon={onRadio ? faHeadset : faCommentDots} size={iconSize} />
+        <FontAwesomeIcon className="hud-icon" icon={onRadio ? faHeadset : faMicrophone} size={iconSize} />
       </Box>
 
       <Box sx={{ position: "relative", display: "flex" }}>

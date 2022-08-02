@@ -1,4 +1,5 @@
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
+import { faBell, faCamera, faMagnifyingGlass, faRepeat } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Tooltip } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -9,10 +10,22 @@ export default function NavigationBar() {
   return (
     <div className="phone-navigation-bar">
       <div className="phone-navigation-info">
+      <Tooltip title={PhoneStrings.NAVIGATION_NOTIFICATION} placement="top" arrow>
+          <FontAwesomeIcon icon={faBell} />
+        </Tooltip>
+        <Tooltip title={PhoneStrings.NAVIGATION_CAMERA} placement="top" arrow>
+          <FontAwesomeIcon icon={faCamera} />
+        </Tooltip>
         <Tooltip title={PhoneStrings.NAVIGATION_HOME} placement="top" arrow>
           <Link to="/">
-            <FontAwesomeIcon icon={faCircle} />
+            <FontAwesomeIcon icon={faCircle} style={{ fontSize: "1.5rem" }} />
           </Link>
+        </Tooltip>
+        <Tooltip title={PhoneStrings.NAVIGATION_SWITCH} placement="top" arrow>
+          <FontAwesomeIcon icon={faRepeat} />
+        </Tooltip>
+        <Tooltip title={PhoneStrings.NAVIGATION_BROWSER} placement="top" arrow>
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
         </Tooltip>
       </div>
     </div>

@@ -1,7 +1,8 @@
 import { faFaceFrown, faMagnifyingGlass, faPhone, faUser, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InputAdornment, TextField, Tooltip } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNuiEvent } from '../../../../hooks/useNuiEvent';
 import { fetchNui } from '../../../../utils/fetchNui';
 import Modal from '../../components/modal/Modal';
 import { PhoneStrings } from '../../config/config';
@@ -11,26 +12,22 @@ import './Contacts.css';
 export default function Contacts() {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState('');
-  const [contacts, setContacts] = useState<UI.Phone.PhoneContact[]>([
-    {
-      name: "John Doesadasdadsda",
-      phoneNumber: "8887776666",
-    },
-    {
-      name: "Jane Doe",
-      phoneNumber: "2484567898",
-    },
-  ]);
+  const [contacts, setContacts] = useState<UI.Phone.PhoneContact[]>([]);
 
-  // fetchNui('hud:phone:getPhoneContacts').then((data: UI.Phone.PhoneContact[]) => {
-  //   console.log(data);
-  //   setContacts(data);
-  // });
+  useEffect(() => {
+    fetchNui('hud:phone:getContacts', {}).then(contacts => {
+      setContacts(contacts);
+    });
+  }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { value } = event.target;
     setSearch(value);
   }
+
+  useNuiEvent('hud:phone:updateContacts', (data: UI.Phone.PhoneContact[]) => {
+    setContacts(data);
+  });
 
   return (
     <div className="contacts-wrapper">
@@ -63,7 +60,7 @@ export default function Contacts() {
             return contact;
           }
         }).map((contact: UI.Phone.PhoneContact) => (
-          <ContactContainer key={contact.phoneNumber} {...contact} />
+          <ContactContainer key={contact._id} {...contact} />
         ))}
 
         {contacts.length <= 0 && (
@@ -75,21 +72,26 @@ export default function Contacts() {
         
       </div>
       {isOpen && (
-        <Modal setIsOpen={setIsOpen} params={[
-          {
-            id: "contact-name",
-            title: PhoneStrings.CONTACT_NAME,
-            icon: faUser
-          },
-          {
-            id: "contact-number",
-            title: PhoneStrings.PHONE_NUMBER,
-            icon: faPhone,
-            expected: "number",
-            minLength: 10,
-            maxLength: 10,
-          }
-        ]} />
+        <Modal 
+          setIsOpen={setIsOpen}
+          callbackEvent="hud:phone:addContact"
+          params={[
+            {
+              id: "contact-name",
+              label: PhoneStrings.CONTACT_NAME,
+              icon: faUser,
+              minLength: 1,
+            },
+            {
+              id: "contact-number",
+              label: PhoneStrings.PHONE_NUMBER,
+              icon: faPhone,
+              expected: "number",
+              minLength: 10,
+              maxLength: 10,
+            },
+          ]} 
+        />
       )}
     </div>
   )

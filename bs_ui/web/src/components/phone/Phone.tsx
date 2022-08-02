@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom'
-import { debugData } from '../../utils/debugData'
 import Contacts from './apps/contacts/Contacts'
 import Details from './apps/details/Details'
 import Home from './apps/home/Home'

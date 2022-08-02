@@ -5,14 +5,45 @@ import { useNuiEvent } from '../../../../hooks/useNuiEvent';
 import { faSignal, faSun, faUnlock, faWifi } from "@fortawesome/free-solid-svg-icons";
 import { Tooltip } from '@mui/material';
 import { PhoneStrings } from '../../config/config';
-import { fetchNui } from '../../../../utils/fetchNui';
+import { debugData } from '../../../../utils/debugData';
+
+debugData<UI.Phone.PhoneData>([
+  {
+    action: 'hud:phone:updatePhoneData',
+    data: {
+      sid: 1,
+      cid: "scorz@blue.sky",
+      aliases: {
+        email: "scorz@blues.sky",
+        twitter: "@Scorz_Dev"
+      },
+      name: {
+        first: "Scorz",
+        last: "Blue"
+      },
+      phoneNumber: '6284567891',
+      cash: 0,
+      bank: 0,
+      hasDriverLicense: true,
+    }
+  },
+]);
 
 export default function PhoneHeader() {
   const [time, setTime] = useState("00:00");
   const [connected, setConnected] = useState(false);
   const [phoneData, setPhoneData] = useState<UI.Phone.PhoneData>({
-    serverId: 1,
-    phoneNumber: '123456789',
+    sid: 1,
+    cid: "scorz@blue.sky",
+    aliases: {
+      email: "scorz@blues.sky",
+      twitter: "@Scorz_Dev"
+    },
+    name: {
+      first: "Scorz",
+      last: "Blue"
+    },
+    phoneNumber: '6284567891',
     cash: 0,
     bank: 0,
     hasDriverLicense: true,
@@ -22,15 +53,15 @@ export default function PhoneHeader() {
     setTime(`${time.hour}:${time.minute}`);
   });
 
-  // fetchNui('hud:phone:getPhoneData').then((data: UI.Phone.PhoneData) => {
-  //   setPhoneData(data);
-  // });
+  useNuiEvent('hud:phone:updatePhoneData', (data: UI.Phone.PhoneData) => {
+    setPhoneData(data);
+  })
 
   return (
     <div className="phone-header">
       <div className="phone-header-info">
         <div style={{ position: "relative", width: "50%", left: "10px" }}>{time}</div>
-        <div># {phoneData?.serverId}</div>
+        <div># {phoneData?.sid}</div>
       </div>
       <div className="phone-header-icons">
         <FontAwesomeIcon icon={faSun} />

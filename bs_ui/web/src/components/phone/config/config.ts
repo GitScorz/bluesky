@@ -3,7 +3,11 @@ export enum PhoneStrings {
   HEADER_CONNECT = "Connect",
   
   // Navigation Bar
+  NAVIGATION_NOTIFICATION = "Notification",
+  NAVIGATION_CAMERA = "Selfie!",
   NAVIGATION_HOME = "Home",
+  NAVIGATION_SWITCH = "Switch Orientation",
+  NAVIGATION_BROWSER = "Browse",
 
   // Apps
   APP_DETAILS = "Details",
@@ -24,4 +28,5 @@ export enum PhoneStrings {
   MESSAGE_CONTACT = "Message",
   EDIT_CONTACT = "Edit",
   CONTACT_NAME = "Name",
+  DELETE_CONTACT_CONFIRM = "Are you sure you want to delete this contact?",
 }
