@@ -79,7 +79,7 @@ export default function Details() {
 
           <div className="details-server-info">
             <Tooltip title={PhoneStrings.WALLET} placement='top' arrow>
-              <FontAwesomeIcon icon={faWallet} style={{ color: "#78c72e" }} />
+              <FontAwesomeIcon icon={faWallet} style={{ color: "#95ef79" }} />
             </Tooltip>
             <div id="details-server-text">{formatter.format(phoneData.cash)}</div>
           </div>
@@ -108,7 +108,7 @@ export default function Details() {
                 <FontAwesomeIcon 
                   icon={phoneData?.hasDriverLicense ? faCircleCheck : faXmarkCircle } 
                   style={{ 
-                    color: phoneData?.hasDriverLicense ? "#729b4b" : "#750b0b"
+                    color: phoneData?.hasDriverLicense ? "#95ef79" : "#750b0b"
                   }}
                 />
               </Tooltip>
