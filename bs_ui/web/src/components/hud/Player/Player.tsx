@@ -49,29 +49,37 @@ const Player = forwardRef((props: UI.Status.HudProps, ref: any) => {
         <FontAwesomeIcon className="hud-icon" icon={onRadio ? faHeadset : faMicrophone} size={iconSize} />
       </Box>
 
-      <Box sx={{ position: "relative", display: "flex" }}>
-        <CircularProgress variant="determinate" value={health} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(health, "rgba(59,160,122,255)") }} />
-        <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(health, "rgba(59,160,122,0.3)")}` }} />
-        <FontAwesomeIcon className="hud-icon" icon={faHeart} size={iconSize} />
-      </Box>
+      {health < 90 && (
+        <Box sx={{ position: "relative", display: "flex" }}>
+          <CircularProgress variant="determinate" value={health} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(health, "rgba(59,160,122,255)") }} />
+          <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(health, "rgba(59,160,122,0.3)")}` }} />
+          <FontAwesomeIcon className="hud-icon" icon={faHeart} size={iconSize} />
+        </Box>
+      )}
 
-      <Box sx={{ position: "relative", display: "flex" }}>
-        <CircularProgress variant="determinate" value={armor} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(armor, "rgba(27,101,181,255)") }} />
-        <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(armor, "rgba(27,101,181,0.3)")}` }} />
-        <FontAwesomeIcon className="hud-icon" icon={faShieldHalved} size={iconSize} />
-      </Box>
+      {armor > 10 && (
+        <Box sx={{ position: "relative", display: "flex" }}>
+          <CircularProgress variant="determinate" value={armor} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(armor, "rgba(27,101,181,255)") }} />
+          <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(armor, "rgba(27,101,181,0.3)")}` }} />
+          <FontAwesomeIcon className="hud-icon" icon={faShieldHalved} size={iconSize} />
+        </Box>
+      )}
 
-      <Box sx={{ position: "relative", display: "flex" }}>
-        <CircularProgress variant="determinate" value={hunger} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(hunger, "rgba(255,118,10,255)") }} />
-        <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(hunger, "rgba(255,118,10,0.3)")}` }} />
-        <FontAwesomeIcon className="hud-icon" icon={faDrumstickBite} size={iconSize} />
-      </Box>
-
-      <Box sx={{ position: "relative", display: "flex" }}>
-        <CircularProgress variant="determinate" value={thirst} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(thirst, "rgba(13,121,180,255)") }} />
-        <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(thirst, "rgba(13,121,180,0.3)")}` }} />
-        <FontAwesomeIcon className="hud-icon" icon={faDroplet} size={iconSize} />
-      </Box>
+      {hunger < 90 && (
+        <Box sx={{ position: "relative", display: "flex" }}>
+          <CircularProgress variant="determinate" value={hunger} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(hunger, "rgba(255,118,10,255)") }} />
+          <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(hunger, "rgba(255,118,10,0.3)")}` }} />
+          <FontAwesomeIcon className="hud-icon" icon={faDrumstickBite} size={iconSize} />
+        </Box>
+      )}
+      
+      {thirst < 90 && (
+        <Box sx={{ position: "relative", display: "flex" }}>
+          <CircularProgress variant="determinate" value={thirst} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(thirst, "rgba(13,121,180,255)") }} />
+          <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(thirst, "rgba(13,121,180,0.3)")}` }} />
+          <FontAwesomeIcon className="hud-icon" icon={faDroplet} size={iconSize} />
+        </Box>
+      )}
     </div>
   )
 });

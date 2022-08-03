@@ -15,6 +15,14 @@ namespace UI {
     }
   }
 
+  namespace Vehicle {
+    interface HudProps {
+      fuel: number;
+      speed: number;
+      seatbelt: boolean;
+    }
+  }
+
   namespace Balance {
     interface BalanceTypes {
       bank: number;
@@ -86,6 +94,16 @@ namespace UI {
       rootPath: string;
       style: React.CSSProperties;
       icon: IconDefinition;
+      component: React.ComponentType<any>;
+    }
+
+    interface NotificationProps {
+      title: string;
+      description: string;
+      color: string;
+      time: number;
+      icon?: "bell" | "twitter" | "group" | "task";
+      clickable?: boolean;
     }
   }
 }

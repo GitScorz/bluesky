@@ -16,25 +16,17 @@ function StartThreads()
         _paused = true
 
         UI.Hud:Hide()
-
-        -- if GLOBAL_VEH and GetIsVehicleEngineRunning(GLOBAL_VEH) then
-        --   DisplayRadar(true)
-          -- SendNUIMessage({
-          --   type = 'TOGGLE_VEHICLE'
-          -- })
-        -- end
+        UI.Vehicle:Hide()
       end
 
       if not _paused then
-        -- SendNUIMessage({
-        --   type = 'UPDATE_LOCATION',
-        --   data = { location = GetLocation() }
-        -- })
-        -- Citizen.Wait(200)
         if GLOBAL_VEH and GetIsVehicleEngineRunning(GLOBAL_VEH) then
           DisplayRadar(true)
+          UI.Vehicle:Show()
+          UI.Vehicle:Update()
         else
           DisplayRadar(false)
+          UI.Vehicle:Hide()
         end
 
         UI.Hud:Update({ id = 'health', value = (GetEntityHealth(GLOBAL_PED) - 100) })

@@ -6,7 +6,9 @@ import Player from './Player/Player';
 import Vehicle from './Vehicle/Vehicle';
 
 export default function Hud() {
-  const [visible, setVisible] = useState(false);
+  const [visibleHud, setHudVisible] = useState(false);
+  const [vehicleVisible, setVehicleVisible] = useState(false);
+  const [vehicleData, setVehicleData] = useState<UI.Vehicle.HudProps>();
 
   // Default values for the HUD
   const [status, setStatus] = useState<UI.Status.HudProps>({ 
@@ -19,25 +21,32 @@ export default function Hud() {
 
   useEffect(() => {
     if (isEnvBrowser()) {
-      setVisible(true);
+      setHudVisible(true);
+      setVehicleVisible(true);
 
       // Set the HUD to the browser values
       setStatus({
         voice: 70,
-        health: 50,
-        armor: 75,
-        hunger: 50,
-        thirst: 50,
+        health: 100,
+        armor: 0,
+        hunger: 100,
+        thirst: 100,
       });
+
+      setVehicleData({
+        speed: 10,
+        fuel: 50,
+        seatbelt: false,
+      })
     }
   }, []);
   
   useNuiEvent('hud:status:visible', (shouldShow: boolean) => {
-    setVisible(shouldShow);
+    setHudVisible(shouldShow);
   });
 
   useNuiEvent('hud:status:update', (data: UI.Status.Data) => {
-    if (!visible) return; // If the HUD is not visible, don't update it improve performance
+    if (!visibleHud) return; // If the HUD is not visible, don't update it improve performance
 
     switch (data.id) {
       case 'voice':
@@ -71,12 +80,24 @@ export default function Hud() {
     });
   });
 
+  useNuiEvent('hud:vehicle:update', (data: UI.Vehicle.HudProps) => {
+    if (!vehicleVisible) return;
+    setVehicleData(data);
+  });
+
+
   return (
-    <Fade timeout={{ enter: 200, exit: 200 }} in={visible}>
-      <div className="hud-container">
-        <Player {...status} />
-        <Vehicle />
-      </div>
-    </Fade>
+    <div>
+      <Fade timeout={{ enter: 200, exit: 200 }} in={visibleHud}>
+        <div className="hud-container">
+          <Player {...status} />
+        </div>
+      </Fade>
+      <Fade timeout={{ enter: 200, exit: 200 }} in={vehicleVisible}>
+        <div className="vehicle-container">
+          <Vehicle />
+        </div>
+      </Fade>
+    </div>
   );
 }

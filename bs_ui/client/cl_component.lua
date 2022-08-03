@@ -32,6 +32,19 @@ UI = {
     end,
   },
 
+  Vehicle = {
+    Show = function(self)
+      UI:SendUIMessage('hud:vehicle:visible', true)
+    end,
+    Hide = function(self)
+      UI:SendUIMessage('hud:vehicle:visible', false)
+    end,
+    --- @param data table The data you wish to send along with this action
+    Update = function(self, data)
+      UI:SendUIMessage('hud:vehicle:update', data)
+    end,
+  },
+
   Balance = {
     ShowBank = function(self)
       UI:SendUIMessage('hud:balance:setBankVisible', true)
