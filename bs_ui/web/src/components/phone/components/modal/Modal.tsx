@@ -97,7 +97,7 @@ export default function Modal({
     setDisabledButtons(true);
     setNoText(true);
 
-    const time = 3000;
+    const time = 2000;
 
     if (!loading) {
       setError(false);
