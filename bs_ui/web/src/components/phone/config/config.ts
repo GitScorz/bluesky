@@ -3,7 +3,7 @@ export enum PhoneStrings {
   HEADER_CONNECT = "Connect",
   
   // Navigation Bar
-  NAVIGATION_NOTIFICATION = "Notification",
+  NAVIGATION_NOTIFICATION = "Toggle Sounds",
   NAVIGATION_CAMERA = "Selfie!",
   NAVIGATION_HOME = "Home",
   NAVIGATION_SWITCH = "Switch Orientation",
