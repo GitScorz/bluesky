@@ -88,19 +88,20 @@ export default function ContactContainer(props: UI.Phone.PhoneContact) {
 
       {isDeleteOpen && (
         <Modal
-        setIsOpen={setIsDeleteOpen}
-        callbackEvent="hud:phone:deleteContact"
-        style={{
-          width: '115%',
-          height: '133%',
-          left: '0',
-          bottom: '-60px',
-          top: 'auto',
-        }}
-        text={PhoneStrings.DELETE_CONTACT_CONFIRM}
-        id={_id}
-        params={[]}
-      /> 
+          setIsOpen={setIsDeleteOpen}
+          callbackEvent="hud:phone:deleteContact"
+          style={{
+            position: 'fixed',
+            width: '16%',
+            height: '70%',
+            right: '15px',
+            bottom: '20px',
+            top: 'auto',
+          }}
+          text={PhoneStrings.DELETE_CONTACT_CONFIRM}
+          id={_id}
+          params={[]}
+        /> 
       )}
 
       {isEditOpen && (
@@ -108,10 +109,11 @@ export default function ContactContainer(props: UI.Phone.PhoneContact) {
           setIsOpen={setIsEditOpen}
           callbackEvent="hud:phone:editContact"
           style={{
-            width: '115%',
-            height: '133%',
-            left: '0',
-            bottom: '-60px',
+            position: 'fixed',
+            width: '16%',
+            height: '70%',
+            right: '15px',
+            bottom: '20px',
             top: 'auto',
           }}
           params={[

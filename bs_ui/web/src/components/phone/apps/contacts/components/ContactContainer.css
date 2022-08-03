@@ -5,11 +5,10 @@
   height: 13%;
   background-color: #20456a;
   font-size: 1rem;
-  margin: 10px;
-  left: 20px;
   border-top-left-radius: .4vh;
   border-top-right-radius: .4vh;
   border-bottom: #fff solid 1px;
+  margin-bottom: 10px;
 }
 
 .contact-info {
@@ -35,11 +34,8 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  width: 100%;
+  left: 20px;
+  width: 80%;
   height: 100%;
   font-size: 1.3rem;
-}
-
-#contact-options-icon {
-  cursor: pointer;
 }

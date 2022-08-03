@@ -27,10 +27,17 @@
   position: relative;
   top: 16%;
   width: 87%;
-  height: 75%;
+  height: 79%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  left: 20px;
+  font-size: 1rem;
+  overflow: auto;
+}
+
+.contacts-list::-webkit-scrollbar {
+  width: 0;
 }
 
 .contacts-not-found {
@@ -42,5 +49,4 @@
   width: 100%;
   height: 100%;
   gap: 15px;
-  left: 20px
 }

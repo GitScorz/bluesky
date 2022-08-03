@@ -3,11 +3,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InputAdornment, TextField, Tooltip } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNuiEvent } from '../../../../hooks/useNuiEvent';
+import { debugData } from '../../../../utils/debugData';
 import { fetchNui } from '../../../../utils/fetchNui';
 import Modal from '../../components/modal/Modal';
 import { PhoneStrings } from '../../config/config';
 import ContactContainer from './components/ContactContainer';
 import './Contacts.css';
+
+debugData<UI.Phone.PhoneContact[]>([
+  {
+    action: "hud:phone:updateContacts",
+    data: [
+      {
+        _id: "sdasd",
+        name: "John Doe",
+        phoneNumber: "123456789",
+      },
+    ]
+  }
+])
 
 export default function Contacts() {
   const [isOpen, setIsOpen] = useState(false);
