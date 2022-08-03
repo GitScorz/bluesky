@@ -164,7 +164,7 @@ export default function Modal({
         )}
 
         {disabledButtons && pParams.length === 0 && noText && (
-          <div className="modal-success">
+          <div className="modal-response">
             {success && (
               <FontAwesomeIcon icon={faCheckCircle} style={{ color: "#95ef79", fontSize: "5rem", padding: "4.6rem" }} /> 
             )}
