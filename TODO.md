@@ -3,5 +3,5 @@
 - [ ] Optimize client-side.
 - [ ] Add more features.
 - [ ] Documentation on scripts.
-- [ ] Re-do UI with React & Typescript.
+- [ ] Re-do UI with React & Typescript. (*On progress*)
 - [ ] Economy system.
