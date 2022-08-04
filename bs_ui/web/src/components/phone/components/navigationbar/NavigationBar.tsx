@@ -1,5 +1,6 @@
+import { faInternetExplorer } from '@fortawesome/free-brands-svg-icons';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
-import { faBell, faCamera, faMagnifyingGlass, faRepeat } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faCamera, faRepeat } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Tooltip } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -25,7 +26,7 @@ export default function NavigationBar() {
           <FontAwesomeIcon icon={faRepeat} />
         </Tooltip>
         <Tooltip title={PhoneStrings.NAVIGATION_BROWSER} placement="top" arrow>
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
+          <FontAwesomeIcon icon={faInternetExplorer} />
         </Tooltip>
       </div>
     </div>
