@@ -1,0 +1,92 @@
+.notification-wrapper {
+  position: absolute;
+  width: 90%;
+  height: 11%;
+  user-select: none;
+  z-index: 100;
+  top: 30px;
+  left: 15px;
+}
+
+.notification-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #313130dc;
+  border-radius: .6vh;
+  color: white;
+  margin-bottom: 10px;
+  transition: all .2s ease-in-out;
+}
+
+.notification-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 50%;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  top: 3px;
+}
+
+.notification-title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 60%;
+  height: 100%;
+  text-transform: uppercase;
+  gap: 7px;
+  left: 10px;
+}
+
+.notification-time {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  text-transform: lowercase;
+  font-size: .8rem;
+  width: 35%;
+  height: 100%;
+}
+
+.notification-icon {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 18%;
+  height: 82%;
+  border-radius: .7vh;
+}
+
+.notification-description {
+  position: relative;
+  font-family: Arial, Arial, Helvetica, sans-serif;
+  display: flex;
+  align-items: center;
+  width: 95%;
+  font-size: .8rem;
+  padding-left: 10px;
+  top: 5px;
+}
+
+@keyframes notification-open {
+  0% {
+    height: 0%;
+  }
+  100% {
+    height: 100%;
+  }
+}
+
+@keyframes notification-close {
+  0% {
+    height: 100%;
+  }
+  100% {
+    height: 0%;
+  }
+}

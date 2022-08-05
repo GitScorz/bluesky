@@ -39,3 +39,13 @@ RegisterNUICallback('hud:phone:deleteContact', function(data, cb)
   Phone.Contacts:Delete(data.id)
   cb('ok')
 end)
+
+RegisterNUICallback('hud:phone:isNotificationActive', function(data, cb)
+  cb(Phone.Notification:IsActive())
+end)
+
+RegisterNUICallback('hud:phone:shutdownNotification', function(data, cb)
+  if Phone.Notification:IsActive() then
+    cb(Phone.Notification:Close())
+  end
+end)

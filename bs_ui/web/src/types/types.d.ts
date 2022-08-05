@@ -98,12 +98,13 @@ namespace UI {
     }
 
     interface NotificationProps {
+      id: string;
       title: string;
       description: string;
-      color: string;
-      time: number;
-      icon?: "bell" | "twitter" | "group" | "task";
-      clickable?: boolean;
+      icon: NotificationIcon;
+      static?: boolean;
     }
+
+    type NotificationIcon = "bell" | "twitter" | "group" | "task" | "message" | "call";
   }
 }
