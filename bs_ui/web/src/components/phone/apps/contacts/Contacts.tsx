@@ -19,6 +19,11 @@ debugData<UI.Phone.PhoneContact[]>([
         name: "John Doe",
         phoneNumber: "123456789",
       },
+      {
+        _id: "sdasd",
+        name: "Other Guy",
+        phoneNumber: "123456789",
+      },
     ]
   }
 ])
@@ -33,6 +38,8 @@ export default function Contacts() {
       setContacts(contacts);
     });
   }, []);
+
+  const filteredContacts = search.length > 0 ? contacts.filter(contact => contact.name.toLowerCase().includes(search.toLowerCase())) : contacts;
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { value } = event.target;
@@ -67,17 +74,13 @@ export default function Contacts() {
         />
       </div>
       <div className="contacts-list">
-        {contacts.filter((contact) => {
-          if (search === '') {
-            return contact;
-          } else if (contact.name.toLowerCase().includes(search.toLowerCase())) {
-            return contact;
-          }
-        }).map((contact: UI.Phone.PhoneContact) => (
-          <ContactContainer key={contact._id} {...contact} />
-        ))}
+        {filteredContacts.map((contact: UI.Phone.PhoneContact) => {
+          return (
+            <ContactContainer key={contact._id} {...contact} />
+          )
+        })}
 
-        {contacts.length <= 0 && (
+        {filteredContacts.length <= 0 && (
           <div className="contacts-not-found">
             <FontAwesomeIcon icon={faFaceFrown} style={{ fontSize: "5rem" }} />
             <span>{PhoneStrings.NO_CONTACTS}</span>

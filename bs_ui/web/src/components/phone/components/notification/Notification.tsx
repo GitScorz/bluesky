@@ -10,20 +10,20 @@ import './Notification.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { fetchNui } from '../../../../utils/fetchNui';
 
-debugData<UI.Phone.NotificationProps[]>([
-  {
-    action: 'hud:phone:sendNotification',
-    data: [
-      {
-        id: "testasd2",
-        static: false,
-        title: '@JONH_DOE',
-        description: 'First',
-        icon: "bell"
-      },
-    ]
-  }
-])
+// debugData<UI.Phone.NotificationProps[]>([
+//   {
+//     action: 'hud:phone:sendNotification',
+//     data: [
+//       {
+//         id: "testasd2",
+//         static: false,
+//         title: '@JONH_DOE',
+//         description: 'First',
+//         icon: "bell"
+//       },
+//     ]
+//   }
+// ])
 
 export default function Notification() {
   const [animation, setAnimation] = useState(false);
