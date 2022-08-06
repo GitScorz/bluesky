@@ -21,15 +21,15 @@
   width: 25%;
   justify-content: space-between;
   left: 10px;
-  text-shadow: 1px 1px 0px #000,
-    -1px -1px 0px #000,
-    0px -1px 0px #000,
-    1px -1px 0px #000,
-   -1px  0px 0px #000,
-    1px  0px 0px #000,
-   -1px  1px 0px #000,
-    0px  1px 0px #000,
-    1px  1px 0px #000;
+  text-shadow: 0.8px 0.8px 0px #000,
+    -0.8px -0.8px 0px #000,
+    0px -0.8px 0px #000,
+    0.8px -0.8px 0px #000,
+   -0.8px  0px 0px #000,
+    0.8px  0px 0px #000,
+   -0.8px  0.8px 0px #000,
+    0px  0.8px 0px #000,
+    0.8px  0.8px 0px #000;
 }
 
 .phone-header-icons {
