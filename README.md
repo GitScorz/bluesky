@@ -14,7 +14,7 @@ The reason that i decided to rework in this project is because i think the frame
 * [Discord Bot API Key](https://discordapp.com/developers/applications/)
  
 ## Documentation
-I will try to provide a documentation as soon as possible.
+You can check the documentation [**right here**](https://gitscorz.github.io/bluesky-documentation/).
 
 ## Support
 Join [**discord**](https://discord.gg/TsmqYdXxsv) if you need help.
