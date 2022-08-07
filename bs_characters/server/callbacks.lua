@@ -110,10 +110,6 @@ function RegisterCallbacks()
             Job = AlzarIsAPrickCauseHeDoesStupidThings.DefaultJob,
             Armor = 100,
             HP = 200,
-            STATUS = {
-                PLAYER_HUNGER = 100,
-                PLAYER_THIRST = 100,
-            }
         }
         
         Database.Game:insertOne({ 
