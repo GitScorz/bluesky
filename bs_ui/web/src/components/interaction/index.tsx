@@ -2,7 +2,7 @@ import { Slide } from '@mui/material';
 import { useState } from 'react'
 import { useNuiEvent } from '../../hooks/useNuiEvent';
 import { debugData } from '../../utils/debugData';
-import './interaction.style.css';
+import './index.style.css';
 
 // debugData<UI.Interaction.Data>([
 //   {
