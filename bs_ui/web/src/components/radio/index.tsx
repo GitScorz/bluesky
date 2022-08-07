@@ -1,3 +1,4 @@
+import { Slide } from "@mui/material";
 import { useEffect, useState } from "react";
 import { isEnvBrowser } from "../../utils/misc";
 
@@ -11,8 +12,10 @@ export default function Radio() {
   }, []);
 
   return (
-    <div className='radio-container' style={{visibility: visible ? "visible" : "hidden"}}>
+    <Slide direction="up">
+      <div className='radio-container'>
 
-    </div>
+      </div>
+    </Slide>
   )
 }

@@ -1,9 +1,9 @@
 import './App.css';
-import Hud from './hud/Hud';
-import Balance from './balance/Balance';
-import Interaction from './interaction/Interaction';
-import Phone from './phone/Phone';
-import Radio from './radio/Radio';
+import Hud from './hud';
+import Balance from './balance';
+import Interaction from './interaction';
+import Phone from './phone';
+import Radio from './radio';
 import { isEnvBrowser } from '../utils/misc';
 import { ThemeProvider } from '@mui/material';
 import Theme from './Theme';
