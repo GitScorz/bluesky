@@ -64,30 +64,38 @@ export default function Details() {
       <div className="details-account">
         <div className="details-info">
           <div className="details-server-info">
-            <Tooltip title={PhoneStrings.CIVILIAN_ID} placement='top' arrow>
-              <FontAwesomeIcon icon={faAddressCard} />
-            </Tooltip>
+            <div id="details-server-icon">
+              <Tooltip title={PhoneStrings.CIVILIAN_ID} placement='top' arrow>
+                <FontAwesomeIcon icon={faAddressCard} />
+              </Tooltip>
+            </div>
             <div id="details-server-text">{phoneData.sid}</div>
           </div>
 
           <div className="details-server-info">
-            <Tooltip title={PhoneStrings.PHONE_NUMBER} placement='top' arrow>
-              <FontAwesomeIcon icon={faMobileAndroid} />
-            </Tooltip>
+            <div id="details-server-icon">
+              <Tooltip title={PhoneStrings.PHONE_NUMBER} placement='top' arrow>
+                <FontAwesomeIcon icon={faMobileAndroid} />
+              </Tooltip>
+            </div>
             <div id="details-server-text">{FormatPhoneNumber(phoneData.phoneNumber)}</div>
           </div>
 
           <div className="details-server-info">
-            <Tooltip title={PhoneStrings.WALLET} placement='top' arrow>
-              <FontAwesomeIcon icon={faWallet} style={{ color: "#95ef79" }} />
-            </Tooltip>
+            <div id="details-server-icon">
+              <Tooltip title={PhoneStrings.WALLET} placement='top' arrow>
+                <FontAwesomeIcon icon={faWallet} style={{ color: "#95ef79" }} />
+              </Tooltip>
+            </div>
             <div id="details-server-text">{formatter.format(phoneData.cash)}</div>
           </div>
 
           <div className="details-server-info">
-            <Tooltip title={PhoneStrings.BANK} placement='top' arrow>
-              <FontAwesomeIcon icon={faPiggyBank} style={{ color: "#60a9fc" }} />
-            </Tooltip>
+            <div id="details-server-icon">
+              <Tooltip title={PhoneStrings.BANK} placement='top' arrow>
+                <FontAwesomeIcon icon={faPiggyBank} style={{ color: "#60a9fc" }} />
+              </Tooltip>
+            </div>
             <div id="details-server-text">{formatter.format(phoneData.bank)}</div>
           </div>
         </div>

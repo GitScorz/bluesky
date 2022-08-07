@@ -1,6 +1,6 @@
 import { faInternetExplorer } from '@fortawesome/free-brands-svg-icons';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
-import { faBell, faCamera, faRepeat } from '@fortawesome/free-solid-svg-icons';
+import { faArrowsRotate, faBell, faCamera } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Tooltip } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -23,7 +23,7 @@ export default function NavigationBar() {
           </Link>
         </Tooltip>
         <Tooltip title={PhoneStrings.NAVIGATION_SWITCH} placement="top" arrow>
-          <FontAwesomeIcon icon={faRepeat} />
+          <FontAwesomeIcon icon={faArrowsRotate} />
         </Tooltip>
         <Tooltip title={PhoneStrings.NAVIGATION_BROWSER} placement="top" arrow>
           <FontAwesomeIcon icon={faInternetExplorer} />

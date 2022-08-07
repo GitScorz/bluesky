@@ -16,7 +16,7 @@ export default function Phone() {
           <Routes>
             <Route path="/" element={<Home />} />
             {APPS.map((app) => (
-              <Route path={app.rootPath} element={<app.component />} />
+              <Route key={app.rootPath} path={app.rootPath} element={<app.component />} />
             ))}
           </Routes>
         </div>

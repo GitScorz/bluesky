@@ -93,7 +93,7 @@ export default function ContactContainer(props: UI.Phone.PhoneContact) {
           style={{
             position: 'fixed',
             width: '16%',
-            height: '70%',
+            height: '62.5%',
             right: '15px',
             bottom: '20px',
             top: 'auto',
@@ -111,7 +111,7 @@ export default function ContactContainer(props: UI.Phone.PhoneContact) {
           style={{
             position: 'fixed',
             width: '16%',
-            height: '70%',
+            height: '62.5%',
             right: '15px',
             bottom: '20px',
             top: 'auto',

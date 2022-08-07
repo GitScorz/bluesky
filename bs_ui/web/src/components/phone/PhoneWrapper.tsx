@@ -8,7 +8,7 @@ import './Phone.css';
 debugData([
   {
     action: 'hud:phone:toggle',
-    data: true,
+    data: false,
   }
 ])
 
@@ -19,6 +19,7 @@ export default function PhoneWrapper({ children }: any) {
   useEffect(() => {
     const handleKeyEvent = (event: KeyboardEventInit) => {
       if (event.key === "Escape") {
+        setVisible(false);
         fetchNui('hud:phone:close');
       }
     };
