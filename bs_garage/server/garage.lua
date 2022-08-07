@@ -43,14 +43,13 @@ function RegisterChatCommands()
     })
 end
 
-RegisterNetEvent('Garage:CreateVehicle')
-AddEventHandler('Garage:CreateVehicle', function(source, data)
-    local player = exports['bs_base']:FetchComponent('Fetch'):Source(source)
-    local char = player:GetData('Character')
-    Garage.Vehicle:Create(data.plate, char:GetData('ID'), data.props, cb)
-end)
-
 function RegisterCallbacks()
+    Callbacks:RegisterServerCallback('Garage:CreateVehicle', function(source, data, cb)
+        local player = exports['bs_base']:FetchComponent('Fetch'):Source(source)
+        local char = player:GetData('Character')
+        Garage.Vehicle:Create(data.plate, char:GetData('ID'), data.props, cb)
+    end)
+
     Callbacks:RegisterServerCallback('Garage:StoreVehicle', function(source, data, cb)
         Garage.Vehicle:Store(data.plate, data.location, data.damage, cb)
     end)

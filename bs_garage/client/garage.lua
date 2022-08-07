@@ -123,7 +123,9 @@ AddEventHandler('Garage:SaveCar', function()
             plate = GetVehicleNumberPlateText(vehicle),
             props = Game.Vehicles:GetProperties(vehicle)
         }
-        TriggerServerEvent('Garage:CreateVehicle', data)
+        Callbacks:ServerCallback('Garage:CreateVehicle', data, function()
+
+        end)
     end
 end)
 
