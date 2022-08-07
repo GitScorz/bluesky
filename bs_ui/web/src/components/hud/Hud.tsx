@@ -1,14 +1,25 @@
 import { Fade } from "@mui/material";
 import { useEffect, useState } from 'react';
 import { useNuiEvent } from '../../hooks/useNuiEvent';
+import { debugData } from "../../utils/debugData";
 import { isEnvBrowser } from '../../utils/misc';
 import Player from './Player/Player';
 import Vehicle from './Vehicle/Vehicle';
 
+debugData([
+  {
+    action: 'hud:status:visible',
+    data: true, 
+  },
+  {
+    action: 'hud:vehicle:visible',
+    data: true,
+  }
+]);
+
 export default function Hud() {
   const [visibleHud, setHudVisible] = useState(false);
   const [vehicleVisible, setVehicleVisible] = useState(false);
-  const [vehicleData, setVehicleData] = useState<UI.Vehicle.HudProps>();
 
   // Default values for the HUD
   const [status, setStatus] = useState<UI.Status.HudProps>({ 
@@ -19,22 +30,27 @@ export default function Hud() {
     thirst: 0 
   });
 
+  const [vehicleData, setVehicleData] = useState<UI.Vehicle.HudProps>({
+    fuel: 0,
+    seatbelt: false,
+    speed: 0,
+  });
+
+  // End
+
   useEffect(() => {
     if (isEnvBrowser()) {
-      setHudVisible(true);
-      setVehicleVisible(true);
-
       // Set the HUD to the browser values
       setStatus({
         voice: 70,
-        health: 100,
-        armor: 0,
-        hunger: 100,
-        thirst: 100,
+        health: 40,
+        armor: 40,
+        hunger: 40,
+        thirst: 40,
       });
 
       setVehicleData({
-        speed: 10,
+        speed: 150,
         fuel: 50,
         seatbelt: false,
       })
@@ -43,6 +59,10 @@ export default function Hud() {
   
   useNuiEvent('hud:status:visible', (shouldShow: boolean) => {
     setHudVisible(shouldShow);
+  });
+
+  useNuiEvent('hud:vehicle:visible', (shouldShow: boolean) => {
+    setVehicleVisible(shouldShow);
   });
 
   useNuiEvent('hud:status:update', (data: UI.Status.Data) => {
@@ -70,6 +90,11 @@ export default function Hud() {
     }
   });
 
+  useNuiEvent('hud:vehicle:update', (data: UI.Vehicle.HudProps) => {
+    if (!vehicleVisible) return;
+    setVehicleData(data);
+  });
+
   useNuiEvent('hud:status:reset', function() {
     setStatus({ 
       voice: 0,
@@ -78,11 +103,6 @@ export default function Hud() {
       thirst: 0, 
       hunger: 0 
     });
-  });
-
-  useNuiEvent('hud:vehicle:update', (data: UI.Vehicle.HudProps) => {
-    if (!vehicleVisible) return;
-    setVehicleData(data);
   });
 
 
@@ -95,7 +115,7 @@ export default function Hud() {
       </Fade>
       <Fade timeout={{ enter: 200, exit: 200 }} in={vehicleVisible}>
         <div className="vehicle-container">
-          <Vehicle />
+          <Vehicle {...vehicleData} />
         </div>
       </Fade>
     </div>

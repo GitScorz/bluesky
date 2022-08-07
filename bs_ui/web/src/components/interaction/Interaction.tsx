@@ -4,15 +4,15 @@ import { useNuiEvent } from '../../hooks/useNuiEvent';
 import { debugData } from '../../utils/debugData';
 import './Interaction.css';
 
-debugData<UI.Interaction.Data>([
-  {
-    action: 'hud:action:showInteraction',
-    data: {
-      action: "[E] Unlocked",
-      colorType: "success",
-    },
-  }
-])
+// debugData<UI.Interaction.Data>([
+//   {
+//     action: 'hud:action:showInteraction',
+//     data: {
+//       action: "[E] Unlocked",
+//       colorType: "success",
+//     },
+//   }
+// ])
 
 export default function Interaction() {
   const [visible, setVisible] = useState(false);

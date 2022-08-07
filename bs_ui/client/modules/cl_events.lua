@@ -1,46 +1,44 @@
-GLOBAL_PED = nil
-GLOBAL_VEH = nil
+local isHudVisible = true -- We don't have settings yet, so just assume true
+
+AddEventHandler('Characters:Client:Spawn', function()
+  UI:SetFocus(false)
+  UI.Hud:Show()
+  ToggleRadar()
+  StartThreads()
+end)
+
+RegisterNetEvent('Characters:Client:Logout')
+AddEventHandler('Characters:Client:Logout', function()
+  UI:SetFocus(false)
+  UI.Hud:Hide()
+  UI.Action:Hide()
+end)
+
+RegisterNetEvent('UI:Client:ShowBank')
+AddEventHandler('UI:Client:ShowBank', function()
+  UI.Balance:ShowBank()
+end)
+
+RegisterNetEvent('UI:Client:ShowCash')
+AddEventHandler('UI:Client:ShowCash', function()
+  UI.Balance:ShowCash()
+end)
+
+RegisterNetEvent('UI:Client:ChangeHudState')
+AddEventHandler('UI:Client:ChangeHudState', function()
+  if isHudVisible then
+    UI.Hud:Hide()
+  else
+    UI.Hud:Show()
+  end
+  isHudVisible = not isHudVisible
+end)
+
+AddEventHandler('Status:Client:Update', function(status, value)
+  UI.Hud:Update({ id = status, value = value })
+end)
 
 RegisterNetEvent('UI:Client:UpdateCash')
 AddEventHandler('UI:Client:UpdateCash', function(cash)
   UI.Balance:UpdateCash(cash)
 end)
-
-function StartThreads()
-  CreateThread(function()
-    while true do
-      GLOBAL_PED = PlayerPedId()
-      GLOBAL_VEH = GetVehiclePedIsIn(GLOBAL_PED, false)
-
-      if IsPauseMenuActive() and not _paused then
-        _paused = true
-
-        UI.Hud:Hide()
-        UI.Vehicle:Hide()
-      end
-
-      if not _paused then
-        if GLOBAL_VEH and GetIsVehicleEngineRunning(GLOBAL_VEH) then
-          DisplayRadar(true)
-          UI.Vehicle:Show()
-          UI.Vehicle:Update()
-        else
-          DisplayRadar(false)
-          UI.Vehicle:Hide()
-        end
-
-        UI.Hud:Update({ id = 'health', value = (GetEntityHealth(GLOBAL_PED) - 100) })
-        Wait(1000)
-        UI.Hud:Update({ id = 'armor', value = GetPedArmour(GLOBAL_PED) })
-      else
-        if not IsPauseMenuActive() then
-          UI.Hud.Show()
-
-          _paused = false
-        end
-      end
-
-      Wait(500)
-    end
-  end)
-end

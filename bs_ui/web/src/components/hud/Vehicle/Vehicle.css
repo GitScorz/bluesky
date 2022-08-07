@@ -1,3 +1,59 @@
 .hud-vehicle {
   position: absolute;
+  bottom: 7%;
+  left: 18%;
+  width: 65px;
+  height: 65px;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  user-select: none;
+}
+
+.hud-vehicle-speedometer {
+  position: relative;
+  width: 65px;
+  height: 65px;
+}
+
+.speedometer-text {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: bold;
+  font-variant: small-caps;
+  text-align: center;
+  bottom: 90%;
+}
+
+#speed-text {
+  font-size: 1.2rem;
+}
+
+#metric-text {
+  font-size: 1rem;
+}
+
+.hud-vehicle-fuel {
+  position: relative;
+  left: 17%;
+  width: 40px;
+  height: 40px;
+  bottom: 40%;
+  left: 70%;
+}
+
+.fuel-icon {
+  position: relative;
+  width: 40px;
+  bottom: 85%;
+  left: 32%;
+}
+
+.hud-vehicle-seatbelt {
+  position: relative;
+  left: 120%;
+  bottom: 150%;
+  color: #ff0000;
+  font-size: 1.4rem;
 }
