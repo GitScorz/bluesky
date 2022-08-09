@@ -72,23 +72,6 @@ CREATOR = {
                 Citizen.Wait(1)
             end
         end)
-
-        Citizen.CreateThread(function()
-
-            RequestAnimDict("amb@world_human_hiker_standing@male@base")
-            while not HasAnimDictLoaded("amb@world_human_hiker_standing@male@base") do
-                Citizen.Wait(100)
-            end
-
-            local playerPed = PlayerPedId()
-            while FROZEN do
-                if not IsEntityPlayingAnim(playerPed, "amb@world_human_hiker_standing@male@base", "base") then
-                    TaskPlayAnim(playerPed, 'amb@world_human_hiker_standing@male@base', 'base', 8.0, -8, -1, 0, 0, 0, 0, 0)
-                end
-                Citizen.Wait(0)
-            end
-            ClearPedTasksImmediately(PlayerPedId())
-        end)
     end,
     End = function(self)
         local player = PlayerPedId()
