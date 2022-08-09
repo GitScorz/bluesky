@@ -19,11 +19,11 @@ end)
 KEYBINDS = {
   --- @param category string
   --- @param description string
-  --- @param onKeyUpCommand string
   --- @param onKeyDownCommand string
+  --- @param onKeyUpCommand string
   --- @param defaultKey any
   --- @param controller string
-  Register = function(self, category, description, onKeyUpCommand, onKeyDownCommand, defaultKey, controller)
+  Register = function(self, category, description, onKeyDownCommand, onKeyUpCommand, defaultKey, controller)
     if not controller then controller = "keyboard" end
     if not category then
       -- Logger:Warn("Keybinds", "No category provided for keymap, cancelling.")
