@@ -1,13 +1,21 @@
-import { faCheckCircle, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, CircularProgress, InputAdornment, TextField } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { fetchNui } from '../../../../utils/fetchNui';
-import { SendAlert } from '../../utils/utils';
-import './Modal.css';
+import {
+  faCheckCircle,
+  faXmarkCircle,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  Button,
+  CircularProgress,
+  InputAdornment,
+  TextField,
+} from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { fetchNui } from "../../../../utils/fetchNui";
+import { SendAlert } from "../../utils/utils";
+import "./Modal.css";
 
-export default function Modal({ 
+export default function Modal({
   setIsOpen,
   params,
   text,
@@ -31,13 +39,16 @@ export default function Modal({
     };
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, i: number) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    i: number
+  ) => {
     const { value, name } = e.target;
 
     const newState = [...state];
     newState[i] = {
       ...newState[i],
-      [name]: value
+      [name]: value,
     };
 
     setState(newState);
@@ -50,11 +61,10 @@ export default function Modal({
     state.forEach((item) => {
       if (item.expected === "none") {
         isValid = true;
-        return
+        return;
       }
 
-      if (!item.expected) 
-        item.expected = "string";
+      if (!item.expected) item.expected = "string";
 
       if (!item.input) {
         isValid = false;
@@ -62,29 +72,35 @@ export default function Modal({
       }
 
       switch (item.expected) {
-        case 'string':
+        case "string":
           if (item.input && item.input.length <= item.minLength) {
             msg = `${item.label} is required.`;
             isValid = false;
           }
 
           break;
-        case 'number':
+        case "number":
           if (isNaN(Number(item.input))) {
             msg = "The input is not a number.";
             isValid = false;
             return;
           }
 
-          if (item.input && item.minLength && item.maxLength && (item.input.length > item.maxLength || item.input.length < item.minLength)) {
+          if (
+            item.input &&
+            item.minLength &&
+            item.maxLength &&
+            (item.input.length > item.maxLength ||
+              item.input.length < item.minLength)
+          ) {
             msg = "The input length is not valid.";
             isValid = false;
             return;
           }
 
           break;
-        case 'boolean':
-          if (item.input !== 'true' && item.input !== 'false') {
+        case "boolean":
+          if (item.input !== "true" && item.input !== "false") {
             msg = "The input is not a boolean.";
             isValid = false;
           }
@@ -118,47 +134,57 @@ export default function Modal({
             if (id) {
               fetchNui(callbackEvent, { id: id });
             } else {
-            fetchNui(callbackEvent, { state: state });
+              fetchNui(callbackEvent, { state: state });
             }
           }
         }, 2000);
       }, time);
     }
-  }
+  };
 
   return (
     <div className="modal-wrapper" style={style}>
       <div className="modal-content">
-        {pParams.length > 0 && pParams.map((param: UI.Phone.ModalParams, i: number) => (
-          <div className="modal-params" key={param.id}>
-            <TextField
-              name="input"
-              label={param.label} 
-              onChange={(e) => handleChange(e, i)}
-              fullWidth
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <FontAwesomeIcon icon={param.icon} style={{ color: "white" }} />
-                  </InputAdornment>
-                ),
-              }}
-              variant="standard"
-            />
-          </div>
-        ))}
+        {pParams.length > 0 &&
+          pParams.map((param: UI.Phone.ModalParams, i: number) => (
+            <div className="modal-params" key={param.id}>
+              <TextField
+                name="input"
+                label={param.label}
+                onChange={(e) => handleChange(e, i)}
+                fullWidth
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FontAwesomeIcon
+                        icon={param.icon}
+                        style={{ color: "white" }}
+                      />
+                    </InputAdornment>
+                  ),
+                }}
+                variant="standard"
+              />
+            </div>
+          ))}
 
-        {text && !noText && (
-          <div className="modal-text">
-            {text}
-          </div>
-        )}
+        {text && !noText && <div className="modal-text">{text}</div>}
 
         {!disabledButtons && (
           <div className="modal-buttons">
-            <Button style={{ backgroundColor: '#f1a368', color: "black" }} onClick={() => setIsOpen(false)}>Cancel</Button>
-            <Link to={'/contacts'}>
-              <Button style={{ backgroundColor: '#95ef79', color: "black" }} onClick={() => handleSubmit()}>Submit</Button>
+            <Button
+              style={{ backgroundColor: "#f1a368", color: "black" }}
+              onClick={() => setIsOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Link to={"/contacts"}>
+              <Button
+                style={{ backgroundColor: "#95ef79", color: "black" }}
+                onClick={() => handleSubmit()}
+              >
+                Submit
+              </Button>
             </Link>
           </div>
         )}
@@ -166,11 +192,25 @@ export default function Modal({
         {disabledButtons && pParams.length === 0 && noText && (
           <div className="modal-response">
             {success && (
-              <FontAwesomeIcon icon={faCheckCircle} style={{ color: "#95ef79", fontSize: "5rem", padding: "4.6rem" }} /> 
+              <FontAwesomeIcon
+                icon={faCheckCircle}
+                style={{
+                  color: "#95ef79",
+                  fontSize: "5rem",
+                  padding: "4.6rem",
+                }}
+              />
             )}
 
             {error && (
-              <FontAwesomeIcon icon={faXmarkCircle} style={{ color: "#f44336", fontSize: "5rem", padding: "4.6rem" }} /> 
+              <FontAwesomeIcon
+                icon={faXmarkCircle}
+                style={{
+                  color: "#f44336",
+                  fontSize: "5rem",
+                  padding: "4.6rem",
+                }}
+              />
             )}
 
             {loading && (
@@ -178,7 +218,7 @@ export default function Modal({
                 size={68}
                 sx={{
                   color: "white",
-                  padding: "5rem"
+                  padding: "5rem",
                 }}
               />
             )}
@@ -186,5 +226,5 @@ export default function Modal({
         )}
       </div>
     </div>
-  )
+  );
 }

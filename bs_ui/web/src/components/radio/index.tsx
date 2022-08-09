@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { useNuiEvent } from "../../hooks/useNuiEvent";
 import { debugData } from "../../utils/debugData";
 import { fetchNui } from "../../utils/fetchNui";
-import './index.style.css';
+import "./index.style.css";
 
 debugData([
   {
-    action: 'hud:radio:toggle',
-    data: true
-  }
-])
+    action: "hud:radio:toggle",
+    data: true,
+  },
+]);
 
 export default function Radio() {
   const [visible, setVisible] = useState(false);
@@ -21,11 +21,11 @@ export default function Radio() {
     const handleKeyEvent = (event: KeyboardEventInit) => {
       if (event.key === "Escape") {
         setVisible(false);
-        fetchNui('hud:radio:close');
+        fetchNui("hud:radio:close");
       }
     };
 
-    window.addEventListener('keyup', handleKeyEvent);
+    window.addEventListener("keyup", handleKeyEvent);
   }, []);
 
   useNuiEvent("hud:radio:toggle", (toggle: boolean) => {
@@ -33,9 +33,9 @@ export default function Radio() {
   });
 
   const handlePower = () => {
-    fetchNui('hud:radio:setPower', !power);
+    fetchNui("hud:radio:setPower", !power);
     setPower(!power);
-  }
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -47,30 +47,34 @@ export default function Radio() {
     }
 
     setFrequency(event.target.value);
-  }
+  };
 
   return (
     <Slide direction="up" timeout={{ enter: 400, exit: 500 }} in={visible}>
       <div className="radio-container">
         <div className="radio-frame">
-          <Tooltip title={`Switch ${power ? "Off" : "On" }`} placement="left" arrow>
+          <Tooltip
+            title={`Switch ${power ? "Off" : "On"}`}
+            placement="left"
+            arrow
+          >
             <div className="radio-power" onClick={handlePower} />
           </Tooltip>
 
           <div className="radio-freq">
-            <input 
+            <input
               id="radio-freq-input"
               type="number"
               min={1}
               max={999}
               step=".1"
               disabled={!power}
-              placeholder={`${!power ? "" : "100.0+" }`}
+              placeholder={`${!power ? "" : "100.0+"}`}
               onChange={handleChange}
               value={!power ? "" : frequency}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  fetchNui('hud:radio:setFrequency', Number(e.target.value));
+                  fetchNui("hud:radio:setFrequency", Number(e.target.value));
                 }
               }}
             />
@@ -78,5 +82,5 @@ export default function Radio() {
         </div>
       </div>
     </Slide>
-  )
+  );
 }

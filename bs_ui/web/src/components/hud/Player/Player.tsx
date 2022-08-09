@@ -1,11 +1,18 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CircularProgress } from '@mui/material'
-import { Box } from '@mui/system'
-import './Player.css'
-import { faHeart, faShieldHalved, faDroplet, faHeadset, faMicrophone, faBurger } from '@fortawesome/free-solid-svg-icons';
-import { SizeProp } from '@fortawesome/fontawesome-svg-core';
-import { useNuiEvent } from '../../../hooks/useNuiEvent';
-import { forwardRef, useState } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CircularProgress } from "@mui/material";
+import { Box } from "@mui/system";
+import "./Player.css";
+import {
+  faHeart,
+  faShieldHalved,
+  faDroplet,
+  faHeadset,
+  faMicrophone,
+  faBurger,
+} from "@fortawesome/free-solid-svg-icons";
+import { SizeProp } from "@fortawesome/fontawesome-svg-core";
+import { useNuiEvent } from "../../../hooks/useNuiEvent";
+import { forwardRef, useState } from "react";
 
 const Player = forwardRef((props: UI.Status.HudProps, ref: any) => {
   const [isTalking, setIsTalking] = useState(false);
@@ -19,87 +26,184 @@ const Player = forwardRef((props: UI.Status.HudProps, ref: any) => {
   const iconSize: SizeProp = "lg";
 
   const foregroundRed = (value: number, defaultColor: string) => {
-    return (value > 30) ? defaultColor : 'rgba(255, 0, 0, 255)';
-  }
+    return value > 30 ? defaultColor : "rgba(255, 0, 0, 255)";
+  };
 
   const backgroundRed = (value: number, defaultColor: string) => {
-    return (value > 30) ? defaultColor : 'rgba(255, 0, 0, 0.3)';
-  }
+    return value > 30 ? defaultColor : "rgba(255, 0, 0, 0.3)";
+  };
 
   const foregroundYellow = (defaultColor: string) => {
     let color = defaultColor;
 
     if (isTalking && !isTalkingRadio) {
-      color = 'rgba(255, 255, 0, 255)';
+      color = "rgba(255, 255, 0, 255)";
     } else if (isTalking && isTalkingRadio) {
-      color = 'rgba(216, 66, 96, 255)';
+      color = "rgba(216, 66, 96, 255)";
     }
-    
+
     return color;
-  }
+  };
 
   const backgroundYellow = (defaultColor: string) => {
     let color = defaultColor;
 
     if (isTalking && !isTalkingRadio) {
-      color = 'rgba(255, 255, 0, 0.3)';
+      color = "rgba(255, 255, 0, 0.3)";
     } else if (isTalking && isTalkingRadio) {
-      color = 'rgba(216, 66, 96, 0.3)';
+      color = "rgba(216, 66, 96, 0.3)";
     }
-    
+
     return color;
-  }
+  };
 
-  useNuiEvent("hud:voip:updateTalkingStatus", (state: UI.Status.TalkingStatus) => {
-    setIsTalking(state.talking);
-    setIsTalkingRadio(state.usingRadio);
-  });
+  useNuiEvent(
+    "hud:voip:updateTalkingStatus",
+    (state: UI.Status.TalkingStatus) => {
+      setIsTalking(state.talking);
+      setIsTalkingRadio(state.usingRadio);
+    }
+  );
 
-  useNuiEvent('hud:voip:toggleRadio', (state: boolean) => {
+  useNuiEvent("hud:voip:toggleRadio", (state: boolean) => {
     setOnRadio(state);
   });
 
   return (
     <div ref={ref} className="hud-player">
       <Box sx={{ position: "relative", display: "flex" }}>
-        <CircularProgress variant="determinate" value={voice} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundYellow("rgba(255,255,255,255)") }} />
-        <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundYellow("rgba(255,255,255,0.3)")}` }} />
-        <FontAwesomeIcon className="hud-icon" icon={onRadio ? faHeadset : faMicrophone} size={iconSize} />
+        <CircularProgress
+          variant="determinate"
+          value={voice}
+          thickness={thickSize}
+          size={size}
+          className="foreground"
+          sx={{ color: foregroundYellow("rgba(255,255,255,255)") }}
+        />
+        <div
+          className="background"
+          style={{
+            boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundYellow(
+              "rgba(255,255,255,0.3)"
+            )}`,
+          }}
+        />
+        <FontAwesomeIcon
+          className="hud-icon"
+          icon={onRadio ? faHeadset : faMicrophone}
+          size={iconSize}
+        />
       </Box>
 
       {health < 90 && (
         <Box sx={{ position: "relative", display: "flex" }}>
-          <CircularProgress variant="determinate" value={health} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(health, "rgba(59,160,122,255)") }} />
-          <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(health, "rgba(59,160,122,0.3)")}` }} />
-          <FontAwesomeIcon className="hud-icon" icon={faHeart} size={iconSize} />
+          <CircularProgress
+            variant="determinate"
+            value={health}
+            thickness={thickSize}
+            size={size}
+            className="foreground"
+            sx={{ color: foregroundRed(health, "rgba(59,160,122,255)") }}
+          />
+          <div
+            className="background"
+            style={{
+              boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(
+                health,
+                "rgba(59,160,122,0.3)"
+              )}`,
+            }}
+          />
+          <FontAwesomeIcon
+            className="hud-icon"
+            icon={faHeart}
+            size={iconSize}
+          />
         </Box>
       )}
 
       {armor > 10 && (
         <Box sx={{ position: "relative", display: "flex" }}>
-          <CircularProgress variant="determinate" value={armor} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(armor, "rgba(27,101,181,255)") }} />
-          <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(armor, "rgba(27,101,181,0.3)")}` }} />
-          <FontAwesomeIcon className="hud-icon" icon={faShieldHalved} size={iconSize} />
+          <CircularProgress
+            variant="determinate"
+            value={armor}
+            thickness={thickSize}
+            size={size}
+            className="foreground"
+            sx={{ color: foregroundRed(armor, "rgba(27,101,181,255)") }}
+          />
+          <div
+            className="background"
+            style={{
+              boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(
+                armor,
+                "rgba(27,101,181,0.3)"
+              )}`,
+            }}
+          />
+          <FontAwesomeIcon
+            className="hud-icon"
+            icon={faShieldHalved}
+            size={iconSize}
+          />
         </Box>
       )}
 
       {hunger < 90 && (
         <Box sx={{ position: "relative", display: "flex" }}>
-          <CircularProgress variant="determinate" value={hunger} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(hunger, "rgba(255,118,10,255)") }} />
-          <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(hunger, "rgba(255,118,10,0.3)")}` }} />
-          <FontAwesomeIcon className="hud-icon" icon={faBurger} size={iconSize} />
+          <CircularProgress
+            variant="determinate"
+            value={hunger}
+            thickness={thickSize}
+            size={size}
+            className="foreground"
+            sx={{ color: foregroundRed(hunger, "rgba(255,118,10,255)") }}
+          />
+          <div
+            className="background"
+            style={{
+              boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(
+                hunger,
+                "rgba(255,118,10,0.3)"
+              )}`,
+            }}
+          />
+          <FontAwesomeIcon
+            className="hud-icon"
+            icon={faBurger}
+            size={iconSize}
+          />
         </Box>
       )}
-      
+
       {thirst < 90 && (
         <Box sx={{ position: "relative", display: "flex" }}>
-          <CircularProgress variant="determinate" value={thirst} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(thirst, "rgba(13,121,180,255)") }} />
-          <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(thirst, "rgba(13,121,180,0.3)")}` }} />
-          <FontAwesomeIcon className="hud-icon" icon={faDroplet} size={iconSize} />
+          <CircularProgress
+            variant="determinate"
+            value={thirst}
+            thickness={thickSize}
+            size={size}
+            className="foreground"
+            sx={{ color: foregroundRed(thirst, "rgba(13,121,180,255)") }}
+          />
+          <div
+            className="background"
+            style={{
+              boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(
+                thirst,
+                "rgba(13,121,180,0.3)"
+              )}`,
+            }}
+          />
+          <FontAwesomeIcon
+            className="hud-icon"
+            icon={faDroplet}
+            size={iconSize}
+          />
         </Box>
       )}
     </div>
-  )
+  );
 });
 
 export default Player;

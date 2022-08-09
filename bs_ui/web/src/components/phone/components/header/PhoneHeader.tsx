@@ -1,31 +1,36 @@
-import './PhoneHeader.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useState } from 'react'
-import { useNuiEvent } from '../../../../hooks/useNuiEvent';
-import { faSignal, faSun, faUnlock, faWifi } from "@fortawesome/free-solid-svg-icons";
-import { Tooltip } from '@mui/material';
-import { PhoneStrings } from '../../config/config';
-import { debugData } from '../../../../utils/debugData';
+import "./PhoneHeader.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import { useNuiEvent } from "../../../../hooks/useNuiEvent";
+import {
+  faSignal,
+  faSun,
+  faUnlock,
+  faWifi,
+} from "@fortawesome/free-solid-svg-icons";
+import { Tooltip } from "@mui/material";
+import { PhoneStrings } from "../../config/config";
+import { debugData } from "../../../../utils/debugData";
 
 debugData<UI.Phone.PhoneData>([
   {
-    action: 'hud:phone:updatePhoneData',
+    action: "hud:phone:updatePhoneData",
     data: {
       sid: 1,
       cid: "scorz@blue.sky",
       aliases: {
         email: "scorz@blues.sky",
-        twitter: "@Scorz_Dev"
+        twitter: "@Scorz_Dev",
       },
       name: {
         first: "Scorz",
-        last: "Blue"
+        last: "Blue",
       },
-      phoneNumber: '6284567891',
+      phoneNumber: "6284567891",
       cash: 0,
       bank: 0,
       hasDriverLicense: true,
-    }
+    },
   },
 ]);
 
@@ -37,39 +42,44 @@ export default function PhoneHeader() {
     cid: "scorz@blue.sky",
     aliases: {
       email: "scorz@blues.sky",
-      twitter: "@Scorz_Dev"
+      twitter: "@Scorz_Dev",
     },
     name: {
       first: "Scorz",
-      last: "Blue"
+      last: "Blue",
     },
-    phoneNumber: '6284567891',
+    phoneNumber: "6284567891",
     cash: 0,
     bank: 0,
     hasDriverLicense: true,
   });
 
-  useNuiEvent('hud:phone:updateTime', (time: UI.Phone.DisplayTime) => {
+  useNuiEvent("hud:phone:updateTime", (time: UI.Phone.DisplayTime) => {
     setTime(`${time.hour}:${time.minute}`);
   });
 
-  useNuiEvent('hud:phone:updatePhoneData', (data: UI.Phone.PhoneData) => {
+  useNuiEvent("hud:phone:updatePhoneData", (data: UI.Phone.PhoneData) => {
     setPhoneData(data);
-  })
+  });
 
   return (
     <div className="phone-header">
       <div className="phone-header-info">
-        <div style={{ position: "relative", width: "50%", left: "10px" }}>{time}</div>
+        <div style={{ position: "relative", width: "50%", left: "10px" }}>
+          {time}
+        </div>
         <div># {phoneData?.sid}</div>
       </div>
       <div className="phone-header-icons">
         <FontAwesomeIcon icon={faSun} />
         <FontAwesomeIcon style={{ color: "#607c8a" }} icon={faUnlock} />
         <Tooltip title={PhoneStrings.HEADER_CONNECT} placement="top" arrow>
-          <FontAwesomeIcon id="phone-signal" icon={connected ? faWifi : faSignal} />
+          <FontAwesomeIcon
+            id="phone-signal"
+            icon={connected ? faWifi : faSignal}
+          />
         </Tooltip>
       </div>
     </div>
-  )
+  );
 }

@@ -1,14 +1,20 @@
-import { faFaceFrown, faMagnifyingGlass, faPhone, faUser, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { InputAdornment, TextField, Tooltip } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useNuiEvent } from '../../../../hooks/useNuiEvent';
-import { debugData } from '../../../../utils/debugData';
-import { fetchNui } from '../../../../utils/fetchNui';
-import Modal from '../../components/modal/Modal';
-import { PhoneStrings } from '../../config/config';
-import ContactContainer from './components/ContactContainer';
-import './Contacts.css';
+import {
+  faFaceFrown,
+  faMagnifyingGlass,
+  faPhone,
+  faUser,
+  faUserPlus,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { InputAdornment, TextField, Tooltip } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useNuiEvent } from "../../../../hooks/useNuiEvent";
+import { debugData } from "../../../../utils/debugData";
+import { fetchNui } from "../../../../utils/fetchNui";
+import Modal from "../../components/modal/Modal";
+import { PhoneStrings } from "../../config/config";
+import ContactContainer from "./components/ContactContainer";
+import "./Contacts.css";
 
 debugData<UI.Phone.PhoneContact[]>([
   {
@@ -24,29 +30,36 @@ debugData<UI.Phone.PhoneContact[]>([
         name: "Other Guy",
         phoneNumber: "123456789",
       },
-    ]
-  }
-])
+    ],
+  },
+]);
 
 export default function Contacts() {
   const [isOpen, setIsOpen] = useState(false);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [contacts, setContacts] = useState<UI.Phone.PhoneContact[]>([]);
 
   useEffect(() => {
-    fetchNui('hud:phone:getContacts', {}).then(contacts => {
+    fetchNui("hud:phone:getContacts", {}).then((contacts) => {
       setContacts(contacts);
     });
   }, []);
 
-  const filteredContacts = search.length > 0 ? contacts.filter(contact => contact.name.toLowerCase().includes(search.toLowerCase())) : contacts;
+  const filteredContacts =
+    search.length > 0
+      ? contacts.filter((contact) =>
+          contact.name.toLowerCase().includes(search.toLowerCase())
+        )
+      : contacts;
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleSearch = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { value } = event.target;
     setSearch(value);
-  }
+  };
 
-  useNuiEvent('hud:phone:updateContacts', (data: UI.Phone.PhoneContact[]) => {
+  useNuiEvent("hud:phone:updateContacts", (data: UI.Phone.PhoneContact[]) => {
     setContacts(data);
   });
 
@@ -66,7 +79,10 @@ export default function Contacts() {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#38b58f59" }} />
+                <FontAwesomeIcon
+                  icon={faMagnifyingGlass}
+                  style={{ color: "#38b58f59" }}
+                />
               </InputAdornment>
             ),
           }}
@@ -75,9 +91,7 @@ export default function Contacts() {
       </div>
       <div className="contacts-list">
         {filteredContacts.map((contact: UI.Phone.PhoneContact) => {
-          return (
-            <ContactContainer key={contact._id} {...contact} />
-          )
+          return <ContactContainer key={contact._id} {...contact} />;
         })}
 
         {filteredContacts.length <= 0 && (
@@ -86,10 +100,9 @@ export default function Contacts() {
             <span>{PhoneStrings.NO_CONTACTS}</span>
           </div>
         )}
-        
       </div>
       {isOpen && (
-        <Modal 
+        <Modal
           setIsOpen={setIsOpen}
           callbackEvent="hud:phone:addContact"
           params={[
@@ -107,9 +120,9 @@ export default function Contacts() {
               minLength: 10,
               maxLength: 10,
             },
-          ]} 
+          ]}
         />
       )}
     </div>
-  )
+  );
 }

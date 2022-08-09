@@ -1,18 +1,18 @@
-import { faGasPump, faUserSlash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CircularProgressbar } from 'react-circular-progressbar';
-import './Vehicle.css';
+import { faGasPump, faUserSlash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "./Vehicle.css";
 
 export default function Vehicle(props: UI.Vehicle.HudProps) {
   const { fuel, seatbelt, speed } = props;
 
   const calcFuelColor = (value: number) => {
     if (value < 30) {
-      return '#ff0000';
+      return "#ff0000";
     }
 
     return "#fff";
-  }
+  };
 
   return (
     <div className="hud-vehicle">
@@ -63,14 +63,13 @@ export default function Vehicle(props: UI.Vehicle.HudProps) {
         <div className="fuel-icon">
           <FontAwesomeIcon icon={faGasPump} />
         </div>
-
       </div>
 
       {!seatbelt && (
         <div className="hud-vehicle-seatbelt">
           <FontAwesomeIcon icon={faUserSlash} />
-        </div> 
+        </div>
       )}
     </div>
-  )
+  );
 }
