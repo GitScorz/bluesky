@@ -25,12 +25,12 @@ export default function Balance() {
     }, 5000);
   };
 
-  useEffect(() => {
-    if (isEnvBrowser()) {
-      // setVisibleTimeCash();
-      // setVisibleTimeBank();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (isEnvBrowser()) {
+  //     setVisibleTimeCash();
+  //     setVisibleTimeBank();
+  //   }
+  // }, []);
 
   useNuiEvent("hud:balance:updateCash", (data: UI.Balance.BalanceTypes) => {
     setCash(data.cash);
