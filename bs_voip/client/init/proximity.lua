@@ -1,5 +1,3 @@
--- used when muted
-local disableUpdates = false
 local isListenerEnabled = false
 local plyCoords = GetEntityCoords(PlayerPedId())
 
@@ -12,16 +10,7 @@ function orig_addProximityCheck(ply)
 end
 local addProximityCheck = orig_addProximityCheck
 
-exports("overrideProximityCheck", function(fn)
-	addProximityCheck = fn
-end)
-
-exports("resetProximityCheck", function()
-	addProximityCheck = orig_addProximityCheck
-end)
-
 function addNearbyPlayers()
-	if disableUpdates then return end
 	-- update here so we don't have to update every call of addProximityCheck
 	plyCoords = GetEntityCoords(PlayerPedId())
 
@@ -86,10 +75,6 @@ local lastTalkingStatus = false
 local lastRadioStatus = false
 local voiceState = "proximity"
 CreateThread(function()
-	TriggerEvent('chat:addSuggestion', '/muteply', 'Mutes the player with the specified id', {
-		{ name = "player id", help = "the player to toggle mute" },
-		{ name = "duration", help = "(opt) the duration the mute in seconds (default: 900)" }
-	})
 	while true do
 		-- wait for mumble to reconnect
 		while not MumbleIsConnected() do
@@ -107,11 +92,7 @@ CreateThread(function()
 				PlayFacialAnim(GetPlayerPed(-1), "mood_normal_1", "facials@gen_male@base");
 			end
 
-			UI.Voip:ToggleTalking(curTalkingStatus)
-			-- sendUIMessage({
-			-- 	usingRadio = lastRadioStatus,
-			-- 	talking = lastTalkingStatus
-			-- })
+			UI.Voip:UpdateTalking({ usingRadio = lastRadioStatus, talking = curTalkingStatus })
 		end
 
 		if voiceState == "proximity" then
@@ -128,25 +109,44 @@ CreateThread(function()
 	end
 end)
 
-exports("setVoiceState", function(_voiceState, channel)
-	if _voiceState ~= "proximity" and _voiceState ~= "channel" then
-		Logger:Error('Voip', ("Didn't get a proper voice state, expected 'proximity' or 'channel', got '%s'"):format(_voiceState))
-	end
-	voiceState = _voiceState
-	if voiceState == "channel" then
-		type_check({channel, "number"})
-		-- 65535 is the highest a client id can go, so we add that to the base channel so we don't manage to get onto a players channel
-		channel = channel + 65535
-		MumbleSetVoiceChannel(channel)
-		while MumbleGetVoiceChannelFromServerId(playerServerId) ~= channel do
-			Wait(250)
-		end
-		MumbleAddVoiceTargetChannel(voiceTarget, channel)
-	elseif voiceState == "proximity" then
-		handleInitialState()
-	end
-end)
+VOIP.Voice = {
+	--- Sets the specified voice property
+	SetVoiceProperty =function (self, type, value)
+		setVoiceProperty(type, value)
+	end,
 
+	--- Set voice state
+	--- @param _voiceState "proximity" | "channel"
+	--- @param channel? number
+	SetVoiceState = function(self, _voiceState, channel)
+		if _voiceState ~= "proximity" and _voiceState ~= "channel" then
+			Logger:Error('Voip', ("Didn't get a proper voice state, expected 'proximity' or 'channel', got '%s'"):format(_voiceState))
+		end
+
+		voiceState = _voiceState
+
+		if voiceState == "channel" then
+			type_check({channel, "number"})
+			-- 65535 is the highest a client id can go, so we add that to the base channel so we don't manage to get onto a players channel
+			channel = channel + 65535
+			MumbleSetVoiceChannel(channel)
+			while MumbleGetVoiceChannelFromServerId(playerServerId) ~= channel do
+				Wait(250)
+			end
+			MumbleAddVoiceTargetChannel(voiceTarget, channel)
+		elseif voiceState == "proximity" then
+			handleInitialState()
+		end
+	end,
+
+	OverrideProximityCheck = function(self, fn)
+		addProximityCheck = fn
+	end,
+
+	ResetProximityCheck = function(self)
+		addProximityCheck = orig_addProximityCheck
+	end,
+}
 
 AddEventHandler("onClientResourceStop", function(resource)
 	if type(addProximityCheck) == "table" then

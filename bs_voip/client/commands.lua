@@ -30,13 +30,13 @@ RegisterCommand('+cycleproximity', function()
 		mode = 1
 	end
 
+	UI.Hud:Update({ id = "voice", value = mode - 1})
 	setProximityState(Cfg.voiceModes[mode][1], false)
 	TriggerEvent('pma-voice:setTalkingMode', mode)
 end, false)
 
 function RegisterKeybinds()
-	Keybinds:Register("Voip", "Cycles the proximity state.", "+cycleproximity", "-cycleproximity", "keyboard", GetConvar('voice_defaultCycle', 'Z'))
-	Keybinds:Register("Voip", "Talk in radio.", "+radiotalk", "-radiotalk", "keyboard", GetConvar('voice_defaultRadio', 'CAPITAL'))
+	Keybinds:Register("Voip", "Cycles the proximity state.", "+cycleproximity", "-cycleproximity", "keyboard", 'Z')
 end
 
 exports('setAllowProximityCycleState', function(state)
@@ -52,8 +52,6 @@ function setProximityState(proximityRange, isCustom)
 		distance = proximityRange,
 		mode = isCustom and "Custom" or voiceModeData[2],
 	}, true)
-
-	UI.Hud:Update({ id = "voice", value = mode - 1 })
 end
 
 exports("overrideProximityRange", function(range, disableCycle)

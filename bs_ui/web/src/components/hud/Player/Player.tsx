@@ -2,13 +2,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CircularProgress } from '@mui/material'
 import { Box } from '@mui/system'
 import './Player.css'
-import { faHeart, faShieldHalved, faDroplet, faHeadset, faDrumstickBite, faMicrophone } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faShieldHalved, faDroplet, faHeadset, faMicrophone, faBurger } from '@fortawesome/free-solid-svg-icons';
 import { SizeProp } from '@fortawesome/fontawesome-svg-core';
 import { useNuiEvent } from '../../../hooks/useNuiEvent';
 import { forwardRef, useState } from 'react';
 
 const Player = forwardRef((props: UI.Status.HudProps, ref: any) => {
   const [isTalking, setIsTalking] = useState(false);
+  const [isTalkingRadio, setIsTalkingRadio] = useState(false);
   const [onRadio, setOnRadio] = useState(false);
 
   const { voice, health, armor, hunger, thirst } = props;
@@ -26,15 +27,32 @@ const Player = forwardRef((props: UI.Status.HudProps, ref: any) => {
   }
 
   const foregroundYellow = (defaultColor: string) => {
-    return !isTalking ? defaultColor : 'rgba(255, 255, 0, 255)';
+    let color = defaultColor;
+
+    if (isTalking && !isTalkingRadio) {
+      color = 'rgba(255, 255, 0, 255)';
+    } else if (isTalking && isTalkingRadio) {
+      color = 'rgba(216, 66, 96, 255)';
+    }
+    
+    return color;
   }
 
   const backgroundYellow = (defaultColor: string) => {
-    return !isTalking ? defaultColor : 'rgba(255, 255, 0, 0.3)';
+    let color = defaultColor;
+
+    if (isTalking && !isTalkingRadio) {
+      color = 'rgba(255, 255, 0, 0.3)';
+    } else if (isTalking && isTalkingRadio) {
+      color = 'rgba(216, 66, 96, 0.3)';
+    }
+    
+    return color;
   }
 
-  useNuiEvent("hud:voip:toggleTalking", (state: boolean) => {
-    setIsTalking(state);
+  useNuiEvent("hud:voip:updateTalkingStatus", (state: UI.Status.TalkingStatus) => {
+    setIsTalking(state.talking);
+    setIsTalkingRadio(state.usingRadio);
   });
 
   useNuiEvent('hud:voip:toggleRadio', (state: boolean) => {
@@ -69,7 +87,7 @@ const Player = forwardRef((props: UI.Status.HudProps, ref: any) => {
         <Box sx={{ position: "relative", display: "flex" }}>
           <CircularProgress variant="determinate" value={hunger} thickness={thickSize} size={size} className="foreground" sx={{ color: foregroundRed(hunger, "rgba(255,118,10,255)") }} />
           <div className="background" style={{ boxShadow: `0vh 0vh 0vh 0.75vh ${backgroundRed(hunger, "rgba(255,118,10,0.3)")}` }} />
-          <FontAwesomeIcon className="hud-icon" icon={faDrumstickBite} size={iconSize} />
+          <FontAwesomeIcon className="hud-icon" icon={faBurger} size={iconSize} />
         </Box>
       )}
       

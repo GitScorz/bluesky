@@ -11,39 +11,10 @@ function canJoinChannel(source, radioChannel)
 	return true
 end
 
---- adds a check to the channel, function is expected to return a boolean of true or false
----@param channel number the channel to add a check to
----@param cb function the function to execute the check on
-function addChannelCheck(channel, cb)
-	local channelType = type(channel)
-	local cbType = type(cb)
-	if channelType ~= "number" then
-		error(("'channel' expected 'number' got '%s'"):format(channelType))
-	end
-	if cbType ~= 'table' or not cb.__cfx_functionReference then
-		error(("'cb' expected 'function' got '%s'"):format(cbType))
-	end
-	radioChecks[channel] = cb
-	Logger:Info('Voip', ("%s added a check to channel %s"):format(GetInvokingResource(), channel))
-end
-exports('addChannelCheck', addChannelCheck)
-
 local function radioNameGetter_orig(source)
 	return GetPlayerName(source)
 end
 local radioNameGetter = radioNameGetter_orig
-
---- adds a check to the channel, function is expected to return a boolean of true or false
----@param cb function the function to execute the check on
-function overrideRadioNameGetter(channel, cb)
-	local cbType = type(cb)
-	if cbType == 'table' and not cb.__cfx_functionReference then
-		error(("'cb' expected 'function' got '%s'"):format(cbType))
-	end
-	radioNameGetter = cb
-	Logger:Info('Voip', ("%s added a check to channel %s"):format(GetInvokingResource(), channel))
-end
-exports('overrideRadioNameGetter', overrideRadioNameGetter)
 
 --- adds a player to the specified radion channel
 ---@param source number the player to add to the channel
@@ -87,7 +58,6 @@ end
 ---@param source number the player to set the channel of
 ---@param _radioChannel number the radio channel to set them to (or 0 to remove them from radios)
 function setPlayerRadio(source, _radioChannel)
-	if GetConvarInt('voice_enableRadios', 1) ~= 1 then return end
 	voiceData[source] = voiceData[source] or defaultTable(source)
 	local isResource = GetInvokingResource()
 	local plyVoice = voiceData[source]
@@ -115,7 +85,6 @@ function setPlayerRadio(source, _radioChannel)
 		addPlayerToRadio(source, radioChannel)
 	end
 end
-exports('setPlayerRadio', setPlayerRadio)
 
 RegisterNetEvent('pma-voice:setPlayerRadio', function(radioChannel)
 	setPlayerRadio(source, radioChannel)
@@ -124,7 +93,6 @@ end)
 --- syncs the player talking across all radio members
 ---@param talking boolean sets if the palyer is talking.
 function setTalkingOnRadio(talking)
-	if GetConvarInt('voice_enableRadios', 1) ~= 1 then return end
 	voiceData[source] = voiceData[source] or defaultTable(source)
 	local plyVoice = voiceData[source]
 	local radioTbl = radioData[plyVoice.radio]
@@ -161,5 +129,40 @@ AddEventHandler("onResourceStop", function(resource)
 			end
 		end
 	end
-
 end)
+
+VOIP.Radio = {
+	--- Adds a check to the channel, function is expected to return a boolean of true or false
+	--- @param channel number the channel to add a check to
+	--- @param cb function the function to execute the check on
+	AddChannelCheck = function(self, channel, cb)
+		local channelType = type(channel)
+		local cbType = type(cb)
+		if channelType ~= "number" then
+			error(("'channel' expected 'number' got '%s'"):format(channelType))
+		end
+		if cbType ~= 'table' or not cb.__cfx_functionReference then
+			error(("'cb' expected 'function' got '%s'"):format(cbType))
+		end
+		radioChecks[channel] = cb
+		Logger:Info('Voip', ("%s added a check to channel %s"):format(GetInvokingResource(), channel))
+	end,
+
+	--- Adds a check to the channel, function is expected to return a boolean of true or false
+	--- @param cb function the function to execute the check on
+	OverrideRadioNameGetter = function(self, channel, cb)
+		local cbType = type(cb)
+		if cbType == 'table' and not cb.__cfx_functionReference then
+			error(("'cb' expected 'function' got '%s'"):format(cbType))
+		end
+		radioNameGetter = cb
+		Logger:Info('Voip', ("%s added a check to channel %s"):format(GetInvokingResource(), channel))
+	end,
+
+	--- Sets the players current radio channel
+	--- @param source number the player to set the channel of
+	--- @param _radioChannel number the radio channel to set them to (or 0 to remove them from radios)
+	SetPlayerRadio = function(self, source, _radioChannel)
+		setPlayerRadio(source, _radioChannel)
+	end,
+}

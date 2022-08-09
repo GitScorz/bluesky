@@ -104,30 +104,11 @@ if GetConvarInt('voice_externalDisallowJoin', 0) == 1 then
 	end)
 end
 
--- only meant for internal use so no documentation
-function isValidPlayer(source)
-	return voiceData[source]
-end
-exports('isValidPlayer', isValidPlayer)
-
-function getPlayersInRadioChannel(channel)
-	local returnChannel = radioData[channel]
-	if returnChannel then
-		return returnChannel
-	end
-	-- channel doesnt exist
-	return {}
-end
-exports('getPlayersInRadioChannel', getPlayersInRadioChannel)
-exports('GetPlayersInRadioChannel', getPlayersInRadioChannel)
-
 AddEventHandler('Voip:Shared:DependencyUpdate', RetrieveComponents)
 function RetrieveComponents()
 	Callbacks = exports['bs_base']:FetchComponent('Callbacks')
 	Middleware = exports['bs_base']:FetchComponent('Middleware')
-	Database = exports['bs_base']:FetchComponent('Database')
 	VoipStuff = exports['bs_base']:FetchComponent('Voip')
-	Fetch = exports['bs_base']:FetchComponent('Fetch')
 	Logger = exports['bs_base']:FetchComponent('Logger')
 end
 
@@ -135,9 +116,7 @@ AddEventHandler('Core:Shared:Ready', function()
 	exports['bs_base']:RequestDependencies('Voip', {
 		'Callbacks',
 		'Middleware',
-		'Database',
 		'Voip',
-		'Fetch',
 		'Logger'
 	}, function(error)  
 		if #error > 0 then return end
@@ -148,46 +127,32 @@ end)
 
 function RegisterMiddleware()
 	Middleware:Add('Characters:Logout', function(source)
-		VoipStuff.Remove:removeFromAllChannels(source)
+		VoipStuff:RemoveFromAllChannels(source)
 	end)
 end
 
 VOIP = {
-	Add = {
-		addPlayerToRadio = function(self, channel, playreid)
-			if channel < 1000 then
-				addPlayerToRadio(channel, playerid)
-			else
-				Notification:SendError('Channel number must be below 1000', 3500)
-			end
-		end,
-		addPlayerToCall = function(self, channel, playerid)
-			addPlayerToCall(playerid, channel)
-		end,
-	},
-	Remove = {
-		removePlayerFromRadio = function(self, channel, playerid)
-			removePlayerFromRadio(channel, playerid)
-		end,
-		removePlayerFromCall = function(self, channel, playerid)
-			removePlayerFromCall(playerid, channel)
-		end,
-		removeFromAllChannels = function(self, playerServerId)
-			if voiceData[playerServerId] then
-				local plyData = voiceData[playerServerId]
-		
-				if plyData.radio ~= 0 then
-					removePlayerFromRadio(plyData.radio, playerServerId)
-				end
-		
-				if plyData.call ~= 0 then
-					removePlayerFromCall(playerServerId, plyData.call)
-				end
-		
-				voiceData[playerServerId] = nil
-			end
+	-- Only meant for internal use so no documentation
+	IsValidPlayer = function(self, source)
+		return voiceData[source]
+	end,
+
+	--- Returns all players in a radio channel
+	--- @param channel number The channel to get the players from
+	GetPlayersInRadioChannel = function(self, channel)
+		local returnChannel = radioData[channel]
+		if returnChannel then
+			return returnChannel
 		end
-	},
+		
+		-- channel doesnt exist
+		return {}
+	end,
+
+	RemoveFromAllChannels = function(self, source)
+		setPlayerCall(source, 0)
+		setPlayerRadio(source, 0)
+	end,
 }
 
 AddEventHandler('Proxy:Shared:RegisterReady', function()

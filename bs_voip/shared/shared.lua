@@ -2,13 +2,12 @@ Cfg = {}
 
 voiceTarget = 1
 
-gameVersion = GetGameName()
-
 -- these are just here to satisfy linting
 if not IsDuplicityVersion() then
 	LocalPlayer = LocalPlayer
 	playerServerId = GetPlayerServerId(PlayerId())
 end
+
 Player = Player
 Entity = Entity
 
@@ -25,25 +24,6 @@ else
 		{7.0, "Normal"}, -- Normal speech distance in gta distance units
 		{15.0, "Shouting"} -- Shout speech distance in gta distance units
 	}
-end
-
-function tPrint(tbl, indent)
-	indent = indent or 0
-	for k, v in pairs(tbl) do
-		local tblType = type(v)
-		local formatting = string.rep("  ", indent) .. k .. ": "
-
-		if tblType == "table" then
-			print(formatting)
-			tPrint(v, indent + 1)
-		elseif tblType == 'boolean' then
-			print(formatting .. tostring(v))
-		elseif tblType == "function" then
-			print(formatting .. tostring(v))
-		else
-			print(formatting .. v)
-		end
-	end
 end
 
 local function types(args)

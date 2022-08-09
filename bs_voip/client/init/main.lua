@@ -1,12 +1,10 @@
-local mutedPlayers = {}
-
 local _character = {}
 local currentJob = nil
 local _isloggedIn = false
 
--- we can't use GetConvarInt because its not a integer, and theres no way to get a float... so use a hacky way it is!
-local volumes = {
-	-- people are setting this to 1 instead of 1.0 and expecting it to work.
+-- We can't use GetConvarInt because its not a integer, and theres no way to get a float... so use a hacky way it is!
+volumes = {
+	-- People are setting this to 1 instead of 1.0 and expecting it to work.
 	['radio'] = GetConvarInt('voice_defaultRadioVolume', 30) / 100,
 	['call'] = GetConvarInt('voice_defaultCallVolume', 60) / 100,
 }
@@ -14,6 +12,13 @@ local volumes = {
 radioEnabled, radioPressed, mode = true, false, GetConvarInt('voice_defaultVoiceMode', 2)
 radioData = {}
 callData = {}
+
+RegisterNetEvent('Characters:Client:Spawn')
+AddEventHandler('Characters:Client:Spawn', function()
+	_character = exports['bs_base']:FetchComponent('Player').LocalPlayer:GetData('Character')
+	currentJob = _character:GetData('Job').job
+	_isloggedIn = true
+end)
 
 --- function setVolume
 --- Toggles the players volume
@@ -40,20 +45,6 @@ function setVolume(volume, volumeType)
 	end
 end
 
-exports('setRadioVolume', function(vol)
-	setVolume(vol, 'radio')
-end)
-exports('getRadioVolume', function()
-	return volumes['radio']
-end)
-exports("setCallVolume", function(vol)
-	setVolume(vol, 'call')
-end)
-exports('getCallVolume', function()
-	return volumes['call']
-end)
-
-
 -- default submix incase people want to fiddle with it.
 -- freq_low = 389.0
 -- freq_hi = 3248.0
@@ -75,18 +66,6 @@ SetAudioSubmixEffectParamFloat(callEffectId, 1, `freq_low`, 300.0)
 SetAudioSubmixEffectParamFloat(callEffectId, 1, `freq_hi`, 6000.0)
 AddAudioSubmixOutput(callEffectId, 1)
 
---- export setEffectSubmix
---- Sets a user defined audio submix for radio and phonecall effects
----@param type string either "call" or "radio"
----@param effectId number submix id returned from CREATE_AUDIO_SUBMIX
-exports("setEffectSubmix", function(type, effectId)
-	if type == "call" then
-		callEffectId = effectId
-	elseif type == "radio" then
-	  	radioEffectId = effectId
-	end
-end)
-
 local submixFunctions = {
 	['radio'] = function(plySource)
 		MumbleSetSubmixForServerId(plySource, radioEffectId)
@@ -104,11 +83,10 @@ local disableSubmixReset = {}
 ---@param enabled boolean if the players voice is getting activated or deactivated
 ---@param moduleType string the volume & submix to use for the voice.
 function toggleVoice(plySource, enabled, moduleType)
-	if mutedPlayers[plySource] then return end
 	Logger:Trace('Voip', ("Updating %s to talking: %s with submix %s"):format(plySource, enabled, moduleType))
 	if enabled then
 		MumbleSetVolumeOverrideByServerId(plySource, enabled and volumes[moduleType])
-		if GetConvarInt('voice_enableSubmix', 1) == 1 and gameVersion == 'fivem' then
+		if GetConvarInt('voice_enableSubmix', 1) == 1 then
 			if moduleType then
 				disableSubmixReset[plySource] = true
 				submixFunctions[moduleType](plySource)
@@ -117,7 +95,7 @@ function toggleVoice(plySource, enabled, moduleType)
 			end
 		end
 	else
-		if GetConvarInt('voice_enableSubmix', 1) == 1 and gameVersion == 'fivem' then
+		if GetConvarInt('voice_enableSubmix', 1) == 1 then
 			-- garbage collect it
 			disableSubmixReset[plySource] = nil
 			SetTimeout(250, function()
@@ -169,24 +147,6 @@ function playMicClicks(clickType)
 	})
 end
 
---- getter for mutedPlayers
-exports('getMutedPlayers', function()
-	return mutedPlayers
-end)
-
---- toggles the targeted player muted
----@param source number the player to mute
-function toggleMutePlayer(source)
-	if mutedPlayers[source] then
-		mutedPlayers[source] = nil
-		MumbleSetVolumeOverrideByServerId(source, -1.0)
-	else
-		mutedPlayers[source] = true
-		MumbleSetVolumeOverrideByServerId(source, 0.0)
-	end
-end
-exports('toggleMutePlayer', toggleMutePlayer)
-
 --- function setVoiceProperty
 --- sets the specified voice property
 ---@param type string what voice property you want to change (only takes 'radioEnabled' and 'micClicks')
@@ -201,11 +161,6 @@ function setVoiceProperty(type, value)
 		SetResourceKvp('pma-voice_enableMicClicks', val)
 	end
 end
-exports('setVoiceProperty', setVoiceProperty)
--- compatibility
-exports('SetMumbleProperty', setVoiceProperty)
-exports('SetTokoProperty', setVoiceProperty)
-
 
 -- cache their external servers so if it changes in runtime we can reconnect the client.
 local externalAddress = ''
@@ -222,31 +177,16 @@ CreateThread(function()
 	end
 end)
 
-local VOIP = {
-	Add = {
-		addPlayerToRadio = function(self, channel)
-			if channel < 1000 then
-				setRadioChannel(channel)
-			else
-				Notification:SendError('Channel number must be below 1000', 3500)
-			end
-			-- TODO PERMISSION CHANNELS
-		end,
-		addPlayerToCall = function(self, channel)
-			setCallChannel(channel)
-		end,
-	},
-	Remove = {
-		removePlayerFromRadio = function(self)
-			setRadioChannel(0)
-		end,
-		removePlayerFromCall = function(self)
-			setCallChannel(0)
-		end,
-	},
-	RestrictedChannels = function(self)
-		-- TODO
-		return {}
+VOIP = {
+	--- Sets a user defined audio submix for radio and phonecall effects
+	---@param type string either "call" or "radio"
+	---@param effectId number submix id returned from CREATE_AUDIO_SUBMIX
+	SetEffectSubmix = function(self, type, effectId)
+		if type == "call" then
+			callEffectId = effectId
+		elseif type == "radio" then
+			radioEffectId = effectId
+		end
 	end,
 }
 
@@ -275,10 +215,3 @@ end)
 
 -- 	currentJob = _character:GetData('Job').job
 -- end)
-
-RegisterNetEvent('Characters:Client:Spawn')
-AddEventHandler('Characters:Client:Spawn', function()
-	_character = exports['bs_base']:FetchComponent('Player').LocalPlayer:GetData('Character')
-	currentJob = _character:GetData('Job').job
-	_isloggedIn = true
-end)

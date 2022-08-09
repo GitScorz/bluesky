@@ -35,9 +35,7 @@ AddEventHandler('Proxy:Shared:RegisterReady', function()
     exports['bs_base']:RegisterComponent('Radio', RADIO)
 end)
 
-RADIO = {
-
-}
+RADIO = {}
 
 RegisterNetEvent('Characters:Client:Logout')
 AddEventHandler('Characters:Client:Logout', function()

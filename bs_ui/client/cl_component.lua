@@ -66,9 +66,9 @@ UI = {
   },
   
   Voip = {
-    --- @param enabled boolean Whether or not to enable the voip listener
-    ToggleTalking = function(self, enabled)
-      UI:SendUIMessage('hud:voip:toggleTalking', enabled)
+    --- @param data any
+    UpdateTalking = function(self, data)
+      UI:SendUIMessage('hud:voip:updateTalkingStatus', data)
     end,
 
     --- @param enabled boolean Whether or not to enable the voip listener

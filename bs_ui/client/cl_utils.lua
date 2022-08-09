@@ -4,6 +4,8 @@ function RetrieveComponents()
   Callbacks = exports['bs_base']:FetchComponent('Callbacks')
   Phone = exports['bs_base']:FetchComponent('Phone')
   Notification = exports['bs_base']:FetchComponent('Notification')
+  Voip = exports['bs_base']:FetchComponent('Voip')
+  Radio = exports['bs_base']:FetchComponent('Radio')
 end
 
 AddEventHandler('Core:Shared:Ready', function()
@@ -11,7 +13,9 @@ AddEventHandler('Core:Shared:Ready', function()
     'Logger',
     'Callbacks',
     'Phone',
-    'Notification'
+    'Notification',
+    'Voip',
+    'Radio'
   }, function(error)  
     if #error > 0 then return; end
     RetrieveComponents()

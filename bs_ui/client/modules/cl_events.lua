@@ -12,6 +12,7 @@ AddEventHandler('Characters:Client:Logout', function()
   UI:SetFocus(false)
   UI.Hud:Hide()
   UI.Action:Hide()
+  UI.Voip:ToggleRadio(false)
 end)
 
 RegisterNetEvent('UI:Client:ShowBank')

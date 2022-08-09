@@ -13,7 +13,7 @@ debugData([
   },
   {
     action: 'hud:vehicle:visible',
-    data: true,
+    data: false,
   }
 ]);
 

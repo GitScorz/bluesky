@@ -67,7 +67,6 @@ function setPlayerCall(source, _callChannel)
         addPlayerToCall(source, callChannel)
     end
 end
-exports('setPlayerCall', setPlayerCall)
 
 RegisterNetEvent('pma-voice:setPlayerCall', function(callChannel)
     setPlayerCall(source, callChannel)
@@ -92,3 +91,12 @@ function setTalkingOnCall(talking)
     end
 end
 RegisterNetEvent('pma-voice:setTalkingOnCall', setTalkingOnCall)
+
+VOIP.Call = {
+    --- Set the players call channel
+    --- @param source number the player to set the call off
+    --- @param _callChannel number the channel to set the player to (or 0 to remove them from any call channel)
+    SetPlayerCall = function(self, source, _callChannel)
+        setPlayerCall(source, _callChannel)
+    end,
+}

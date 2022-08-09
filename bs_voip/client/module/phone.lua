@@ -71,18 +71,25 @@ function setCallChannel(channel)
 	createCallThread()
 end
 
-exports('setCallChannel', setCallChannel)
-exports('SetCallChannel', setCallChannel)
+VOIP.Call = {
+	--- @param _call number The channel to set the player to, or 0 to remove them.
+	SetCallChannel = function(self, _call)
+		setCallChannel(_call)
+	end,
 
-exports('addPlayerToCall', function(_call)
-	local call = tonumber(_call)
-	if call then
-		setCallChannel(call)
-	end
-end)
-exports('removePlayerFromCall', function()
-	setCallChannel(0)
-end)
+	Remove = function(self)
+		setCallChannel(0)
+	end,
+
+	--- @param volume number The volume to set the call to.
+	SetVolume = function(self, volume)
+		setVolume(volume, 'call')
+	end,
+
+	GetCallVolume = function(self)
+		return volumes['call']
+	end,
+}
 
 RegisterNetEvent('pma-voice:clSetPlayerCall', function(_callChannel)
 	if GetConvarInt('voice_enableCalls', 1) ~= 1 then return end

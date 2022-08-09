@@ -9,17 +9,13 @@ local disableRadioAnim = false
 function syncRadioData(radioTable, localPlyRadioName)
 	radioData = radioTable
 	Logger:Info('Voip', 'Syncing radio table.')
-	if GetConvarInt('voice_debugMode', 0) >= 4 then
-		print('-------- RADIO TABLE --------')
-		tPrint(radioData)
-		print('-----------------------------')
-	end
+
 	for tgt, enabled in pairs(radioTable) do
 		if tgt ~= playerServerId then
 			toggleVoice(tgt, enabled, 'radio')
 		end
 	end
-	UI.Voip:ToggleRadio(radioEnabled)
+	
 	-- sendUIMessage({
 	-- 	radioChannel = radioChannel,
 	-- 	radioEnabled = radioEnabled
@@ -49,6 +45,7 @@ function addPlayerToRadio(plySource, plyRadioName)
 	if GetConvarInt("voice_syncPlayerNames", 0) == 1 then
 		radioNames[plySource] = plyRadioName
 	end
+	
 	if radioPressed then
 		Logger:Info('Voip', ('%s joined radio %s while we were talking, adding them to targets'):format(plySource, radioChannel))
 		playerTargets(radioData, MumbleIsPlayerTalking(PlayerId()) and callData or {})
@@ -69,8 +66,6 @@ function removePlayerFromRadio(plySource)
 				toggleVoice(tgt, false, 'radio')
 			end
 		end
-		
-		UI.Voip:ToggleRadio(radioEnabled)
 
 		-- sendUIMessage({
 		-- 	radioChannel = 0,
@@ -99,47 +94,35 @@ RegisterNetEvent('pma-voice:removePlayerFromRadio', removePlayerFromRadio)
 --- sets the local players current radio channel and updates the server
 ---@param channel number the channel to set the player to, or 0 to remove them.
 function setRadioChannel(channel)
-	if GetConvarInt('voice_enableRadios', 1) ~= 1 then return end
 	type_check({channel, "number"})
 	TriggerServerEvent('pma-voice:setPlayerRadio', channel)
 	radioChannel = channel
 end
 
---- exports setRadioChannel
---- sets the local players current radio channel and updates the server
----@param channel number the channel to set the player to, or 0 to remove them.
-exports('setRadioChannel', setRadioChannel)
--- mumble-voip compatability
-exports('SetRadioChannel', setRadioChannel)
 
---- exports removePlayerFromRadio
---- sets the local players current radio channel and updates the server
-exports('removePlayerFromRadio', function()
-	setRadioChannel(0)
-end)
+VOIP.Radio = {
+	--- Sets the local players current radio channel and updates the server
+	--- @param _channel number the channel to set the player to, or 0 to remove them.
+	SetRadioChannel = function(self, _channel)
+		setRadioChannel(_channel)
+	end,
 
---- exports addPlayerToRadio
---- sets the local players current radio channel and updates the server
----@param _radio number the channel to set the player to, or 0 to remove them.
-exports('addPlayerToRadio', function(_radio)
-	local radio = tonumber(_radio)
-	if radio then
-		setRadioChannel(radio)
-	end
-end)
+	--- Sets the local players current radio channel and updates the server
+	Remove = function(self)
+		setRadioChannel(0)
+	end,
 
---- exports toggleRadioAnim
---- toggles whether the client should play radio anim or not, if the animation should be played or notvaliddance
-exports('toggleRadioAnim', function()
-	disableRadioAnim = not disableRadioAnim
-	TriggerEvent('pma-voice:toggleRadioAnim', disableRadioAnim)
-end)
+	--- Toggles whether the client should play radio anim or not, if the animation should be played or notvaliddance
+	ToggleRadioAnim = function(self)
+		disableRadioAnim = not disableRadioAnim
+		TriggerEvent('pma-voice:toggleRadioAnim', disableRadioAnim)
+	end,
 
--- exports disableRadioAnim
---- returns whether the client is undercover or not
-exports('getRadioAnimState', function()
-	return disableRadioAnim
-end)
+	--- Returns whether the client is undercover or not
+	GetRadioAnimState = function(self)
+		return disableRadioAnim
+	end,
+}
 
 --- check if the player is dead
 --- seperating this so if people use different methods they can customize
@@ -155,23 +138,26 @@ function isDead()
 end
 
 RegisterCommand('+radiotalk', function()
-	if GetConvarInt('voice_enableRadios', 1) ~= 1 then return end
 	if isDead() then return end
 
 	if not radioPressed and radioEnabled then
 		if radioChannel > 0 then
 			Logger:Info('Voip', "Start broadcasting, update targets and notify server.")
+			
 			playerTargets(radioData, MumbleIsPlayerTalking(PlayerId()) and callData or {})
 			TriggerServerEvent('pma-voice:setTalkingOnRadio', true)
 			radioPressed = true
-			playMicClicks(true)
-			if GetConvarInt('voice_enableRadioAnim', 0) == 1 and not (GetConvarInt('voice_disableVehicleRadioAnim', 0) == 1 and IsPedInAnyVehicle(PlayerPedId(), false)) and not disableRadioAnim then
+			-- playMicClicks(true)
+
+			if not disableRadioAnim then
 				RequestAnimDict('random@arrests')
 				while not HasAnimDictLoaded('random@arrests') do
 					Wait(10)
 				end
+
 				TaskPlayAnim(PlayerPedId(), "random@arrests", "generic_radio_enter", 8.0, 2.0, -1, 50, 2.0, 0, 0, 0)
 			end
+
 			CreateThread(function()
 				TriggerEvent("pma-voice:radioActive", true)
 				while radioPressed do
@@ -186,24 +172,25 @@ RegisterCommand('+radiotalk', function()
 end, false)
 
 RegisterCommand('-radiotalk', function()
-	if radioChannel > 0 or radioEnabled and radioPressed then
+	if (radioChannel > 0 or radioEnabled) and radioPressed then
 		radioPressed = false
 		MumbleClearVoiceTargetPlayers(voiceTarget)
 		playerTargets(MumbleIsPlayerTalking(PlayerId()) and callData or {})
 		TriggerEvent("pma-voice:radioActive", false)
-		playMicClicks(false)
-		if GetConvarInt('voice_enableRadioAnim', 0) == 1 then
-			StopAnimTask(PlayerPedId(), "random@arrests", "generic_radio_enter", -4.0)
-		end
+		-- playMicClicks(false)
+		StopAnimTask(PlayerPedId(), "random@arrests", "generic_radio_enter", -4.0)
 		TriggerServerEvent('pma-voice:setTalkingOnRadio', false)
 	end
 end, false)
+
+function RegisterRadioKeybinds()
+	Keybinds:Register("Voip", "Talk over the radio.", "+radiotalk", "-radiotalk", "keyboard", 'CAPITAL')
+end
 
 --- event syncRadio
 --- syncs the players radio, only happens if the radio was set server side.
 ---@param _radioChannel number the radio channel to set the player to.
 function syncRadio(_radioChannel)
-	if GetConvarInt('voice_enableRadios', 1) ~= 1 then return end
 	Logger:Info('Voip', ('radio set serverside update to radio %s'):format(_radioChannel))
 	radioChannel = _radioChannel
 end

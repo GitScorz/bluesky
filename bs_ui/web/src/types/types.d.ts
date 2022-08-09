@@ -13,6 +13,11 @@ namespace UI {
       id: string;
       value: number;
     }
+
+    interface TalkingStatus {
+      talking: boolean;
+      usingRadio: boolean;
+    }
   }
 
   namespace Vehicle {

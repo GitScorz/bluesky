@@ -49,3 +49,19 @@ RegisterNUICallback('hud:phone:shutdownNotification', function(data, cb)
     cb(Phone.Notification:Close())
   end
 end)
+
+--## RADIO ##--
+RegisterNUICallback('hud:radio:setPower', function(power, cb)
+  Voip.Voice:SetVoiceProperty('radioEnabled', power)
+  cb('ok')
+end)
+
+RegisterNUICallback('hud:radio:setFrequency', function(frequency, cb)
+  Voip.Radio:SetRadioChannel(frequency)
+  cb('ok')
+end)
+
+RegisterNUICallback('hud:radio:close', function(frequency, cb)
+  Radio:Close()
+  cb('ok')
+end)

@@ -7,12 +7,11 @@ dependencies {
 
 lua54 'yes'
 
-
 client_scripts {
 	'client/utils/*',
-	'client/init/proximity.lua',
 	'client/init/init.lua',
 	'client/init/main.lua',
+	'client/init/proximity.lua',
 	'client/module/*.lua',
   'client/*.lua',
 }
@@ -35,13 +34,6 @@ files {
 
 ui_page 'ui/index.html'
 
-provides {
-	'mumble-voip',
-  'tokovoip',
-  'toko-voip',
-  'tokovoip_script'
-}
-
 convar_category 'PMA-Voice' {
   "PMA-Voice Configuration Options",
   {
@@ -62,7 +54,6 @@ convar_category 'PMA-Voice' {
     { "Allow players to set audio intent", "$voice_allowSetIntent", "CV_INT", "1" },
     { "External mumble server address", "$voice_externalAddress", "CV_STRING", "" },
     { "External mumble server port", "$voice_externalPort", "CV_INT", "0" },
-    { "Voice debug mode", "$voice_debugMode", "CV_INT", "0" },
     { "Disable players being allowed to join", "$voice_externalDisallowJoin", "CV_INT", "0" },
     { "Hide server endpoints in logs", "$voice_hideEndpoints", "CV_INT", "1" },
   }

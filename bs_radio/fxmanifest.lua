@@ -1,20 +1,15 @@
+fx_version 'cerulean'
+game 'gta5'
+
 description 'Blue Sky Radio'
-name 'Blue Sky bs_radio'
-author 'Blue SkyRP [Chris Rogers + Alzar]'
-url 'https://www.blueskyrp.com'
+name 'Blue Sky: bs_ui'
+author 'Scorz'
 version 'v1.0.0'
 
+server_scripts {
+    'server/sv_*.lua',
+}
+
 client_scripts {
-    'client/main.lua'
+    'client/cl_*.lua',
 }
-
-ui_page "ui/html/index.html"
-
-files {
-    "ui/html/main.js",
-    "ui/html/index.html",
-    "ui/html/*.png",
-}
-
-fx_version 'bodacious'
-games { 'gta5' }

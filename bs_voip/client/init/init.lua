@@ -1,14 +1,16 @@
 local firstInitialize = true
+VOIP = {}
 
 function RetrieveComponents()
 	Notification = exports['bs_base']:FetchComponent('Notification')
-	VoipStuff = exports['bs_base']:FetchComponent('Voip')
 	Utils = exports['bs_base']:FetchComponent('Utils')
 	Convar = exports['bs_base']:FetchComponent('Convar')
 	Logger = exports['bs_base']:FetchComponent('Logger')
 	UI = exports['bs_base']:FetchComponent('UI')
 	Keybinds = exports['bs_base']:FetchComponent('Keybinds')
+	UISounds = exports['bs_base']:FetchComponent('UISounds')
 	RegisterKeybinds()
+	RegisterRadioKeybinds()
 end
 AddEventHandler('Voip:Shared:DependencyUpdate', RetrieveComponents)
 
@@ -36,8 +38,6 @@ local function InitializeVoip()
 		micClicks = 'true'
 	end
 
-	UI.Hud:Update({ id = "voice", value = mode - 1})
-
 	-- Reinitialize channels if they're set.
 	if LocalPlayer.state.radioChannel ~= 0 then
 		setRadioChannel(LocalPlayer.state.radioChannel)
@@ -53,27 +53,24 @@ end
 AddEventHandler('Core:Shared:Ready', function()
 	exports['bs_base']:RequestDependencies('Voip', {
 		'Notification',
-		'Voip',
 		'Utils',
 		'Convar',
 		'Logger',
 		'UI',
 		'Keybinds',
+		'UISounds',
 	}, function(error)  
 		if #error > 0 then return; end
 		RetrieveComponents()
-
 		InitializeVoip()
-		firstInitialize = false
 	end)
 end)
 
 AddEventHandler('onClientResourceStart', function(resource)
-	if resource ~= GetCurrentResourceName() then
-		return
-	end
+	if resource ~= GetCurrentResourceName() then return; end
 
-	if not firstInitialize then
+	if firstInitialize then
 		InitializeVoip()
+		firstInitialize = false
 	end
 end)
