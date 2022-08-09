@@ -7,7 +7,7 @@ local Sounds = {
 RegisterNUICallback('FrontEndSound', function(data, cb)
     cb('ok')
     if Sounds[data.sound] ~= nil then
-        UISounds:Play(Sounds[data.sound].id, Sounds[data.sound].sound, Sounds[data.sound].library)
+        UISounds.Play:FrontEnd(Sounds[data.sound].id, Sounds[data.sound].sound, Sounds[data.sound].library)
     end
 end)
 
