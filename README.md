@@ -12,6 +12,7 @@ The reason that i decided to rework in this project is because i think the frame
 * [Yarn](https://yarnpkg.com/getting-started/install) (Preferred but not required)
 * [MongoDB](https://www.mongodb.com/)
 * [Discord Bot API Key](https://discordapp.com/developers/applications/)
+* [Cfx Server Data](https://github.com/citizenfx/cfx-server-data)
  
 ## Documentation
 You can check the documentation [**right here**](https://gitscorz.github.io/bluesky-documentation/).
