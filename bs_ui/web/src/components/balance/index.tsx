@@ -2,7 +2,7 @@ import { Fade } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNuiEvent } from "../../hooks/useNuiEvent";
 import { isEnvBrowser } from "../../utils/misc";
-import "./index.style.css";
+import "./balance.css";
 
 export default function Balance() {
   const [cashVisible, setCashVisible] = useState(false);

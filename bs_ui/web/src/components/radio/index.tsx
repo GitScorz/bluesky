@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNuiEvent } from "../../hooks/useNuiEvent";
 import { debugData } from "../../utils/debugData";
 import { fetchNui } from "../../utils/fetchNui";
-import "./index.style.css";
+import "./radio.css";
 
 debugData([
   {
