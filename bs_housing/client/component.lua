@@ -16,7 +16,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'Utils',
         'Notification',
         'Housing',
-    }, function(error)  
+    }, function(error)
         if #error > 0 then return; end
         RetrieveComponents()
     end)
