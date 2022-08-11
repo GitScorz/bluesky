@@ -7,10 +7,10 @@ function RegisterChatCommands()
         end
     end, {
         help = 'Freeze Weather or Time',
-        params = {{
-                name = 'Type',
-                help = 'Weather or Time'
-            }
+        params = { {
+            name = 'Type',
+            help = 'Weather or Time'
+        }
         }
     }, 1)
 
@@ -24,10 +24,10 @@ function RegisterChatCommands()
         Chat.Send.Server:Single(source, 'Invalid Argument')
     end, {
         help = 'Set Weather',
-        params = {{
-                name = 'Type',
-                help = 'EXTRASUNNY, CLEAR, NEUTRAL, SMOG, FOGGY, OVERCAST, CLOUDS, CLEARING, RAIN, THUNDER, SNOW, BLIZZARD, SNOWLIGHT, XMAS, HALLOWEEN'
-            }
+        params = { {
+            name = 'Type',
+            help = 'EXTRASUNNY, CLEAR, NEUTRAL, SMOG, FOGGY, OVERCAST, CLOUDS, CLEARING, RAIN, THUNDER, SNOW, BLIZZARD, SNOWLIGHT, XMAS, HALLOWEEN'
+        }
         }
     }, 1)
 
@@ -41,10 +41,10 @@ function RegisterChatCommands()
         Chat.Send.Server:Single(source, 'Invalid Argument')
     end, {
         help = 'Set Time',
-        params = {{
-                name = 'Type',
-                help = 'MORNING, NOON, EVENING, NIGHT'
-            }
+        params = { {
+            name = 'Type',
+            help = 'MORNING, NOON, EVENING, NIGHT'
+        }
         }
     }, 1)
 
@@ -56,10 +56,10 @@ function RegisterChatCommands()
         end
     end, {
         help = 'Set Time To An Exact Hour & Minute',
-        params = {{
-                name = 'Hour',
-                help = 'Number Between 0 - 23'
-            },
+        params = { {
+            name = 'Hour',
+            help = 'Number Between 0 - 23'
+        },
             {
                 name = 'Minute',
                 help = 'Number Between 0 - 59'

@@ -21,7 +21,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'Callbacks',
         'Logger',
         'Sync',
-    }, function(error)  
+    }, function(error)
         if #error > 0 then return; end
         RetrieveComponents()
     end)
@@ -56,7 +56,7 @@ SYNC = {
         if not _running then return end
         Logger:Trace('Sync', 'Stopping Sync')
         _running = false
-        Citizen.CreateThread(function() 
+        Citizen.CreateThread(function()
             while not _running do
                 SetRainFxIntensity(0.0)
                 SetWeatherTypePersist('EXTRASUNNY')
@@ -84,8 +84,8 @@ AddEventHandler('Sync:Client:Time', function(base, offset)
     _timeOffset = offset
 
     if _running then
-        hour = math.floor(((_timeState+_timeOffset)/60)%24)
-        minute = math.floor((_timeState+_timeOffset)%60)
+        hour = math.floor(((_timeState + _timeOffset) / 60) % 24)
+        minute = math.floor((_timeState + _timeOffset) % 60)
         NetworkOverrideClockTime(hour, minute, 0)
     end
 end)
@@ -98,7 +98,7 @@ end)
 RegisterNetEvent('Sync:Client:Blackout')
 AddEventHandler('Sync:Client:Blackout', function(blackout)
     _blackoutState = blackout
-    
+
     if _running then
         SetBlackout(_blackoutState)
     end
@@ -112,21 +112,21 @@ function StartSyncThreads()
         local minute = 0
         while _running do
             local newBaseTime = _timeState
-            if GetGameTimer() - 500  > _timer then
+            if GetGameTimer() - 500 > _timer then
                 newBaseTime = newBaseTime + 0.25
                 _timer = GetGameTimer()
             end
             if _freezeState then
-                _timeOffset = _timeOffset + _timeState - newBaseTime			
+                _timeOffset = _timeOffset + _timeState - newBaseTime
             end
             _timeState = newBaseTime
-            hour = math.floor(((_timeState+_timeOffset)/60)%24)
-            minute = math.floor((_timeState+_timeOffset)%60)
+            hour = math.floor(((_timeState + _timeOffset) / 60) % 24)
+            minute = math.floor((_timeState + _timeOffset) % 60)
             NetworkOverrideClockTime(hour, minute, 0)
             Citizen.Wait(2000)
         end
     end)
-    
+
     Citizen.CreateThread(function()
         while _running do
             if _weatherState ~= _current then

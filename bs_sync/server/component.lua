@@ -1,18 +1,18 @@
 AvailableWeatherTypes = {
-    'EXTRASUNNY', 
-    'CLEAR', 
-    'NEUTRAL', 
-    'SMOG', 
-    'FOGGY', 
-    'OVERCAST', 
-    'CLOUDS', 
-    'CLEARING', 
-    'RAIN', 
-    'THUNDER', 
-    'SNOW', 
-    'BLIZZARD', 
-    'SNOWLIGHT', 
-    'XMAS', 
+    'EXTRASUNNY',
+    'CLEAR',
+    'NEUTRAL',
+    'SMOG',
+    'FOGGY',
+    'OVERCAST',
+    'CLOUDS',
+    'CLEARING',
+    'RAIN',
+    'THUNDER',
+    'SNOW',
+    'BLIZZARD',
+    'SNOWLIGHT',
+    'XMAS',
     'HALLOWEEN',
 }
 
@@ -47,7 +47,6 @@ AddEventHandler('Core:Shared:Ready', function()
         'Utils',
         'Chat',
         'Status',
-        'Inventory',
     }, function(error)
         if #error > 0 then return end -- Do something to handle if not all dependencies loaded
         RetrieveComponents()
@@ -64,7 +63,7 @@ end
 local started = false
 function StartThreads()
     if started then return end
-    Logger:Trace("Sync", "Started Time and Weather Sync Threads", {console = true})
+    Logger:Trace("Sync", "Started Time and Weather Sync Threads", { console = true })
     started = true
 
     Citizen.CreateThread(function()
@@ -73,21 +72,21 @@ function StartThreads()
             TriggerClientEvent('Sync:Client:Time', -1, _time, _timeOffset)
         end
     end)
-    
+
     Citizen.CreateThread(function()
         while true do
             Citizen.Wait(8000)
             TriggerClientEvent('Sync:Client:Weather', -1, _weather)
         end
     end)
-    
+
     Citizen.CreateThread(function()
         while Sync == nil do
             Citizen.Wait(10)
         end
-    
+
         Sync:NextWeatherStage()
-    
+
         while true do
             Citizen.Wait(1800000)
             if _isDynamic then
@@ -164,8 +163,8 @@ SYNC = {
             else
                 ShiftToMinute(0)
             end
-            local newtime = math.floor(((_time+_timeOffset)/60)%24) .. ":"
-            local minute = math.floor((_time+_timeOffset)%60)
+            local newtime = math.floor(((_time + _timeOffset) / 60) % 24) .. ":"
+            local minute = math.floor((_time + _timeOffset) % 60)
             if minute < 10 then
                 newtime = newtime .. "0" .. minute
             else
@@ -177,15 +176,15 @@ SYNC = {
         end,
     },
     NextWeatherStage = function(self)
-        if _weather == "CLEAR" or _weather == "CLOUDS" or _weather == "EXTRASUNNY"  then
-            local newWeather = math.random(1,2)
+        if _weather == "CLEAR" or _weather == "CLOUDS" or _weather == "EXTRASUNNY" then
+            local newWeather = math.random(1, 2)
             if newWeather == 1 then
                 _weather = "CLEARING"
             else
                 _weather = "OVERCAST"
             end
         elseif _weather == "CLEARING" or _weather == "OVERCAST" then
-            local newWeather = math.random(1,6)
+            local newWeather = math.random(1, 6)
             if newWeather == 1 then
                 if _weather == "CLEARING" then _weather = "FOGGY" else _weather = "RAIN" end
             elseif newWeather == 2 then
@@ -215,19 +214,19 @@ AddEventHandler('Proxy:Shared:RegisterReady', function(component)
 end)
 
 function ShiftToMinute(minute)
-    _timeOffset = _timeOffset - ( ( (_time+_timeOffset) % 60 ) - minute )
+    _timeOffset = _timeOffset - (((_time + _timeOffset) % 60) - minute)
 end
 
 function ShiftToHour(hour)
-    _timeOffset = _timeOffset - ( ( ((_time+_timeOffset)/60) % 24 ) - hour ) * 60
+    _timeOffset = _timeOffset - ((((_time + _timeOffset) / 60) % 24) - hour) * 60
 end
 
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1000)
-        local newBaseTime = os.time(os.date("!*t"))/2 + 360
+        local newBaseTime = os.time(os.date("!*t")) / 2 + 360
         if _freezeState then
-            _timeOffset = _timeOffset + _time - newBaseTime			
+            _timeOffset = _timeOffset + _time - newBaseTime
         end
         _time = newBaseTime
     end
