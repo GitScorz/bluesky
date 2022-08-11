@@ -1,4 +1,4 @@
-interface InventoryState {
+export interface InventoryState {
   player: PlayerState;
   secondary: PlayerState;
   equipment: EquipmentState;
@@ -9,7 +9,7 @@ interface InventoryState {
   splitItem: null;
 }
 
-interface PlayerState {
+export interface PlayerState {
   size: number;
   invType: number;
   name: string;
@@ -17,17 +17,23 @@ interface PlayerState {
   owner: number;
 }
 
-interface EquipmentState {
+export interface EquipmentState {
   inventory: any[];
 }
 
-enum ACTIONS {
+export enum ACTIONS {
   SET_PLAYER = 'SET_PLAYER',
   SET_SECONDARY = 'SET_SECONDARY',
   SET_EQUIPMENT = 'SET_EQUIPMENT',
 }
 
-enum INVENTORY_EVENTS {
-  INVENTORY_OPEN = 'inventory:open',
-  INVENTORY_CLOSE = 'inventory:close',
+export enum INVENTORY_EVENTS {
+  OPEN = 'inventory:open',
+  CLOSE = 'inventory:close',
+}
+
+export interface ServerPromiseResp<T = undefined> {
+  errorMsg?: string;
+  status?: 'ok' | 'error';
+  data: T;
 }

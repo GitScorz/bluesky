@@ -1,29 +1,25 @@
-import { useState } from 'react';
-import { debugData } from '../utils/debugData';
-import { useNuiEvent } from '../hooks/useNuiEvent';
-import Fade from '@mui/material/Fade';
 import './App.css';
 import Inventory from './inventory';
-
-debugData([
-  {
-    action: 'openInventory',
-    data: true,
-  },
-]);
+import { useInventoryService } from './hooks/useInventoryService';
+import { isEnvBrowser } from '../utils/misc';
 
 export default function App() {
-  const [visible, setVisible] = useState(false);
-
-  useNuiEvent('openInventory', (toggle: boolean) => {
-    setVisible(toggle);
-  });
+  // Register every service you want here.
+  useInventoryService();
 
   return (
-    <Fade in={visible}>
-      <div>
-        <Inventory />
-      </div>
-    </Fade>
+    <>
+      <div
+        className="ui-wrapper"
+        style={{
+          position: 'absolute',
+          visibility: isEnvBrowser() ? 'visible' : 'hidden',
+          backgroundColor: 'rgb(144, 180, 212)',
+          width: '100%',
+          height: '100%',
+        }}
+      />
+      <Inventory />
+    </>
   );
 }

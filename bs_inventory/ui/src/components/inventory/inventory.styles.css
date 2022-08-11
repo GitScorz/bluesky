@@ -1,0 +1,132 @@
+:root {
+  --background: #1e1f24f3;
+  --foreground: #3e4148de;
+  --white-text: rgb(220, 220, 220);
+  --blue: #1e90ff;
+}
+
+.inventory-wrapper {
+  display: block;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  font-family: "Roboto", sans-serif;
+  color: #fff;
+  user-select: none;
+  z-index: 999;
+}
+
+.inventory-container-wrapper {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding: 10% 5%;
+  justify-content: space-between;
+  width: 90%;
+  height: 100%;
+}
+
+.inventory-container {
+  position: relative;
+  width: 700px;
+  height: 700px;
+  background-color: var(--background);
+  border-radius: .2rem;
+}
+
+.inventory-container-header {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 6%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.inventory-options {
+  position: relative;
+  display: flex;
+  width: 12%;
+  height: 70%;
+}
+
+.inventory-options-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  top: 25%;
+  width: 100%;
+  height: 30%;
+  background-color: var(--background);
+  border-radius: .2rem;
+}
+
+.option {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10vw;
+  height: 25vh;
+  margin: .5rem;
+}
+
+#move-amount {
+  border: none;
+  padding: 0.40rem 0;
+  font-size: 1.5vh;
+  height: 25vh;
+  border-radius: .2rem;
+  text-align: center;
+  background-color: var(--foreground);
+  text-transform: none;
+  color: var(--white-text);
+}
+
+#move-amount:hover {
+  filter: brightness(0.95);
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  display: none;
+}
+
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: rgba(220, 220, 220, 0.85);
+}
+
+button {
+  background-color: var(--foreground);
+  border: none;
+  color: var(--white-text);
+  font-size: 1.4vh;
+  text-transform: uppercase;
+  border-radius: .2rem;
+}
+
+button:hover {
+  filter: brightness(0.85);
+}
+
+button:active {
+  filter: brightness(0.75);
+}
+
+h1 {
+  font-size: 1.7em;
+  font-weight: bold;
+}
+
+::-webkit-scrollbar {
+	width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}

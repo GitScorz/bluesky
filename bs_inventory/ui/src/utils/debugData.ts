@@ -12,7 +12,7 @@ interface DebugEvent<T = any> {
  * @param events - The event you want to cover
  * @param timer - How long until it should trigger (ms)
  */
-export const debugData = <P>(events: DebugEvent<P>[], timer = 1000): void => {
+export const InjectDebugData = <P>(events: DebugEvent<P>[], timer = 1000): void => {
   if (process.env.NODE_ENV === "development" && isEnvBrowser()) {
     for (const event of events) {
       setTimeout(() => {
