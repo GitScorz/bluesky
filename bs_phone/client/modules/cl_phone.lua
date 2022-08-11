@@ -3,5 +3,5 @@ RegisterCommand("+phoneopen", function(src, cmd, raw)
 end, false)
 
 function RegisterKeybinds()
-  Keybinds:Register("Phone", "Open phone.", "+phoneopen", "-phoneopen", "keyboard", GetConvar('phone_defaultOpen', 'P'))
+  Keybinds:Register("Phone", "Open phone.", "+phoneopen", "-phoneopen", "keyboard", 'P')
 end
