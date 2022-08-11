@@ -9,6 +9,7 @@ import {
   faHeadset,
   faMicrophone,
   faBurger,
+  faSkull,
 } from "@fortawesome/free-solid-svg-icons";
 import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 import { useNuiEvent } from "../../../hooks/useNuiEvent";
@@ -116,7 +117,7 @@ const Player = forwardRef((props: UI.Status.HudProps, ref: any) => {
           />
           <FontAwesomeIcon
             className="hud-icon"
-            icon={faHeart}
+            icon={health !== 0 ? faHeart : faSkull}
             size={iconSize}
           />
         </Box>
