@@ -18,7 +18,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'Interiors',
         'Motels',
         'Inventory',
-    }, function(error)  
+    }, function(error)
         if #error > 0 then return; end
         RetrieveComponents()
     end)
@@ -54,9 +54,10 @@ MOTELS = {
     Spawn = function(self, coords)
         local motel = Interiors.Create.Shell:Motel(coords)
         _objects = motel[1]
-        Motels.Data.MotelExit = vector3(motel[2].exit.x + coords.x, motel[2].exit.y + coords.y, motel[2].exit.z + coords.z)
+        Motels.Data.MotelExit = vector3(motel[2].exit.x + coords.x, motel[2].exit.y + coords.y,
+            motel[2].exit.z + coords.z)
     end,
-    
+
     Clear = function(self)
         Interiors:Delete(_objects)
     end,
@@ -66,25 +67,30 @@ MOTELS = {
         Register = function(self, location)
             local player = PlayerPedId()
             Markers.MarkerGroups:Add('motel', location.Coords, Config.DrawDistance)
-            Markers.Markers:Add('motel', 'motel', location.Coords, 2, vector3(0.5, 0.5, 0.5), { r = 255, b = 255, g = 0 }, function()
-                return true
-            end, '[E] Enter Motel', function()
+            Markers.Markers:Add('motel', 'motel', location.Coords, 2, vector3(0.5, 0.5, 0.5), { r = 255, b = 255, g = 0 }
+                , function()
+                    return true
+                end, '[E] Enter Motel', function()
                 Callbacks:ServerCallback('Motel:SpawnMotel', {
                     motel = location
                 }, function(exitLocation)
                     Motels:Spawn(exitLocation.motelCoords)
-                    local markerCoords = vector3(exitLocation.motelCoords.x, exitLocation.motelCoords.y, exitLocation.motelCoords.z)
+                    local markerCoords = vector3(exitLocation.motelCoords.x, exitLocation.motelCoords.y,
+                        exitLocation.motelCoords.z)
                     Markers.MarkerGroups:Add('motel', markerCoords, Config.DrawDistance)
-                    Markers.Markers:Add('motel', 'motel_exit', Motels.Data.MotelExit, 2, vector3(0.5, 0.5, 0.5), { r = 255, b = 255, g = 0 }, function()
-                        return true
-                    end, '[E] Leave Motel', function()
+                    Markers.Markers:Add('motel', 'motel_exit', Motels.Data.MotelExit, 2, vector3(0.5, 0.5, 0.5),
+                        { r = 255, b = 255, g = 0 }, function()
+                            return true
+                        end, '[E] Leave Motel', function()
                         SetEntityCoords(player, location.Coords)
                         Motels:Clear()
                     end)
-                    local stashCoords = vector3(Motels.Data.MotelExit.x, Motels.Data.MotelExit.y + 4.5, Motels.Data.MotelExit.z)
-                    Markers.Markers:Add('motel', 'motel_stash', stashCoords, 2, vector3(0.5, 0.5, 0.5), { r = 255, b = 255, g = 0 }, function()
-                        return true
-                    end, '[E] Stash', function()
+                    local stashCoords = vector3(Motels.Data.MotelExit.x, Motels.Data.MotelExit.y + 4.5,
+                        Motels.Data.MotelExit.z)
+                    Markers.Markers:Add('motel', 'motel_stash', stashCoords, 2, vector3(0.5, 0.5, 0.5),
+                        { r = 255, b = 255, g = 0 }, function()
+                            return true
+                        end, '[E] Stash', function()
                         TriggerServerEvent('Motels:server:loadInventory')
                         --Callbacks:ServerCallback('Inventory:GetSecondInventory', {
                         --    invType = 2
