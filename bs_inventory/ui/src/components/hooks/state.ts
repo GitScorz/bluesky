@@ -5,4 +5,8 @@ export const inventoryState = {
     key: 'inventoryState.visibility',	
     default: false,
   }),
+  notificationVisibility: atom<boolean>({
+    key: 'inventoryState.notificationVisibility',
+    default: false,
+  }),
 }

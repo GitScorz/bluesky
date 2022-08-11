@@ -30,4 +30,5 @@ export enum ACTIONS {
 export enum INVENTORY_EVENTS {
   OPEN = 'inventory:open',
   CLOSE = 'inventory:close',
+  SHOW_NOTIFICATION = 'inventory:showNotification',
 }

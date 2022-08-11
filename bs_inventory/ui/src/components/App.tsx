@@ -1,7 +1,8 @@
-import './App.css';
 import Inventory from './inventory';
-import { useInventoryService } from './hooks/useInventoryService';
+import Notification from './notification';
+import './App.css';
 import { isEnvBrowser } from '../utils/misc';
+import { useInventoryService } from './hooks/useInventoryService';
 
 export default function App() {
   // Register every service you want here.
@@ -20,6 +21,7 @@ export default function App() {
         }}
       />
       <Inventory />
+      <Notification />
     </>
   );
 }
