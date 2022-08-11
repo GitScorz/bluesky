@@ -31,9 +31,3 @@ export enum INVENTORY_EVENTS {
   OPEN = 'inventory:open',
   CLOSE = 'inventory:close',
 }
-
-export interface ServerPromiseResp<T = undefined> {
-  errorMsg?: string;
-  status?: 'ok' | 'error';
-  data: T;
-}
