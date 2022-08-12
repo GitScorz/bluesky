@@ -1,7 +1,7 @@
 import { useSetRecoilState } from "recoil";
 import { useNuiEvent } from "../../hooks/useNuiEvent";
 import { InjectDebugData } from "../../utils/debugData";
-import { INVENTORY_EVENTS } from "../types/types";
+import { INVENTORY_EVENTS } from "../../types/types";
 import { inventoryState } from "./state";
 
 export const useInventoryService = () => {

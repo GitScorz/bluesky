@@ -3,11 +3,19 @@ import { inventoryState } from '../hooks/state';
 import './inventory.styles.css';
 import Fade from '@mui/material/Fade';
 import { fetchNui } from '../../utils/fetchNui';
-import { INVENTORY_EVENTS } from '../types/types';
+import { INVENTORY_EVENTS } from '../../types/types';
 import { useEffect } from 'react';
+import Header from './components/header';
 
 export default function Inventory() {
   const [visibility, setVisibility] = useRecoilState(inventoryState.visibility);
+  const [playerInventory, setPlayerInventory] = useRecoilState(
+    inventoryState.playerInventory,
+  );
+
+  const [secondInventory, setSecondInventory] = useRecoilState(
+    inventoryState.secondInventory,
+  );
 
   useEffect(() => {
     const handleKeyEvent = (event: KeyboardEventInit) => {
@@ -17,46 +25,58 @@ export default function Inventory() {
     };
 
     window.addEventListener('keyup', handleKeyEvent);
-  }, []);
+  });
 
   const handleClose = () => {
     setVisibility(false);
     fetchNui(INVENTORY_EVENTS.CLOSE);
+
+    const clearData = {
+      label: '',
+      weight: 0,
+      maxWeight: 0,
+      items: [],
+    };
+
+    setPlayerInventory({
+      ...clearData,
+    });
+
+    setSecondInventory({
+      id: '',
+      ...clearData,
+    });
   };
 
   return (
     <Fade in={visibility}>
       <div className="inventory-wrapper">
-        <div className="inventory-container-wrapper">
-          <div className="inventory-container" id="main">
-            <div className="inventory-container-header">
-              <h1>Player</h1>
-              <div className="inventory-header-weight">100/250</div>
-            </div>
+        <div className="inventory-container">
+          <div id="mainInv" className="inventory-box">
+            <Header
+              invName={'Player'}
+              weight={playerInventory.weight}
+              maxWeight={playerInventory.maxWeight}
+            />
           </div>
-          <div className="inventory-options">
-            <div className="inventory-options-container">
-              <input
-                className="option"
-                type="number"
-                id="move-amount"
-                max="9999"
-                min="0"
-                placeholder="Amount"
-              />
-              <button className="option" id="use-btn">
-                Use
-              </button>
-              <button className="option" id="close-btn" onClick={handleClose}>
-                Close
-              </button>
-            </div>
+          <div className="inventory-actions">
+            <input
+              className="option"
+              type="number"
+              id="move-amount"
+              max="9999"
+              min="0"
+              placeholder="Amount"
+            />
+            <button id="use-btn">Use</button>
+            <button onClick={handleClose}>Close</button>
           </div>
-          <div className="inventory-container" id="secondary">
-            <div className="inventory-container-header">
-              <h1>Ground</h1>
-              <div className="inventory-header-weight">50/1000</div>
-            </div>
+          <div id="secondaryInv" className="inventory-box">
+            <Header
+              invName={secondInventory.label}
+              weight={secondInventory.weight}
+              maxWeight={secondInventory.maxWeight}
+            />
           </div>
         </div>
       </div>

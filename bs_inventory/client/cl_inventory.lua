@@ -102,3 +102,18 @@ end, false)
 function RegisterKeybinds()
   Keybinds:Register("Inventory", "Open inventory.", "+openinventory", "-openinventory", "keyboard", 'K')
 end
+
+RegisterNUICallback('inventory:close', function(data, cb)
+  Inventory:Close()
+  cb('ok')
+end)
+
+RegisterNUICallback('inventory:getPlayerInventory', function(data, cb)
+  -- Inventory:Close()
+  cb('ok')
+end)
+
+RegisterNUICallback('inventory:getSecondInventory', function(data, cb)
+  -- Inventory:Close()
+  cb('ok')
+end)

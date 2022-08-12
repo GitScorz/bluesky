@@ -1,0 +1,21 @@
+.weightBar {
+  background-color: #181b20a9;
+  position: absolute;
+  width: 100%;
+  margin-top: 5%;
+  height: .7vh;
+  overflow: hidden;
+  display: block;
+}
+
+.weightFill {
+  background: var(--weight-bar);
+  display: inline-block;
+  height: 100%;
+  line-height: 2.2vh;
+  margin-right: 1%;
+  max-width: 100%;
+  position: absolute;
+  text-align: right;
+  transition: width 1s, background-color 1s;
+}
