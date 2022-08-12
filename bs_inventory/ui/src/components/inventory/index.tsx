@@ -1,11 +1,12 @@
 import { useRecoilState } from 'recoil';
 import { inventoryState } from '../hooks/state';
 import './inventory.styles.css';
-import Fade from '@mui/material/Fade';
+import { Fade } from '@mui/material';
 import { fetchNui } from '../../utils/fetchNui';
 import { INVENTORY_EVENTS } from '../../types/types';
 import { useEffect } from 'react';
 import Header from './components/header';
+import Slots from './components/slots';
 
 export default function Inventory() {
   const [visibility, setVisibility] = useRecoilState(inventoryState.visibility);
@@ -58,6 +59,7 @@ export default function Inventory() {
               weight={playerInventory.weight}
               maxWeight={playerInventory.maxWeight}
             />
+            <Slots invItems={playerInventory.items} />
           </div>
           <div className="inventory-actions">
             <input
@@ -77,6 +79,7 @@ export default function Inventory() {
               weight={secondInventory.weight}
               maxWeight={secondInventory.maxWeight}
             />
+            <Slots invItems={secondInventory.items} />
           </div>
         </div>
       </div>

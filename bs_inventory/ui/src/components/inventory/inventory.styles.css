@@ -13,7 +13,7 @@
   font-family: "Roboto", sans-serif;
   color: #fff;
   user-select: none;
-  z-index: 999;
+  z-index: 998;
 }
 
 .inventory-container {
@@ -22,9 +22,9 @@
   align-items: flex-start;
   padding: 10% 5%;
   justify-content: space-between;
-  width: 90%;
-  height: 70%;
-  gap: 5%;
+  width: 90vw;
+  height: 70vh;
+  gap: 2%;
 }
 
 .inventory-box {
@@ -46,7 +46,7 @@
   align-items: center;
   width: 30%;
   height: 30%;
-  top: 30%;
+  top: 35%;
   background: var(--background);
   border-radius: 3px;
   padding: 1rem;
@@ -103,4 +103,9 @@ input[type='number']::-webkit-inner-spin-button {
 h1 {
   font-size: 2em;
   font-weight: bold;
+}
+
+.react-slidedown.my-dropdown-slidedown {
+  transition-duration: 1.2s;
+  transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
 }

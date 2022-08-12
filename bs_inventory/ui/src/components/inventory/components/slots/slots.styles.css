@@ -1,0 +1,140 @@
+.slots-wrapper {
+  position: absolute;
+  top: 8%;
+  min-width: 0 !important;
+  width: 93%;
+  height: 89%;
+  font-size: .9rem;
+  overflow: visible;
+}
+
+.slots-container {
+  position: relative;
+  margin-top: 1rem;
+  width: 100%;
+  height: 96%;
+  display: grid;
+  grid-template: repeat(5, 1fr) / repeat(5, 1fr);
+  grid-gap: 3px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.slot {
+  position: relative;
+  height: 12.5vh;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset -1px 0px 1px rgba(255, 255, 255, 0.04), inset 0px 0px 6px rgba(255, 255, 255, 0.03);
+}
+
+.slot img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4.5vw;
+  height: 3.5vw;
+}
+
+.slot:hover {
+  background-color: rgba(55, 55, 55, 0.15);
+}
+
+#item-name {
+  position: absolute;
+  top: 0;
+  margin: .7vh;
+  color: var(--white-text);
+}
+
+#item-quantity {
+  position: absolute;
+  bottom: 0;
+  margin: .7vh;
+  color: var(--white-text);
+}
+
+#item-weight {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: .7vh;
+  color: var(--white-text);
+}
+
+.slots-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.slots-container::-webkit-scrollbar-track {
+  background: #181b20a9;
+}
+
+.slots-container::-webkit-scrollbar-thumb {
+  background-color: #ffffff25;
+}
+
+.item-info {
+  position: absolute;
+  background: rgba(35, 36, 46, 0.8);
+  color: #fff;
+  width: 200%;
+  max-height: 100%;
+  min-height: 20px;
+  font-size: 1.35vh;
+  left: 41%;
+  top: 78%;
+  padding: 10%;
+  pointer-events: none;
+  text-decoration: none;
+  z-index: 999;
+  border-radius: 3px;
+}
+
+#item-quality {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, var(--weight-bar), #1b1844 100%);
+  background-size: 1000% 1000%;
+  background-color: var(--weight-bar);
+  background-position: 0% 0%;
+  pointer-events: none;
+  height: 0.5vh;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.8em;
+}
+
+hr {
+  opacity: 0.2;
+}
+
+.item-description {
+  margin-top: 5px;
+  font-weight: 0;
+  font-size: 1em;
+}
+
+#draggedItem {
+  position: absolute;
+  width: 6.9vw;
+  height: 12.5vh;
+  z-index: 80;
+  transition: opacity 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#draggedItem > img {
+  max-width: 10.8vh;
+  max-height: 10.8vh;
+}
+
+img {
+  user-select: none;
+}

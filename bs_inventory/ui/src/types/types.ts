@@ -1,7 +1,5 @@
 export interface ISlot {
-  slot: number;
-  invName: string;
-  hotkeys: boolean;
+  invItems: Item[];
 }
 
 export interface InventoryState {
@@ -18,9 +16,17 @@ export interface SecondInventoryState extends InventoryState {
 export interface Item {
   label: string;
   id: string;
+  description?: string;
   slot: number;
+  weight: number;
+  quantity: number;
   creationDate: number;
   data: any;
+}
+
+export interface PropSlot {
+  index: number;
+  item?: Item;
 }
 
 export enum INVENTORY_EVENTS {
