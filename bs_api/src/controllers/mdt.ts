@@ -42,7 +42,7 @@ class MDTController {
 	panic(req: Request, res: Response) {
 		setImmediate(() => {
 			emit('Sounds:Server:Play:Distance', +req.body.source, 15, 'panic', 100);
-			res.status(200).send();
+			res.status(STATUS_CODES.OK).send();
 		});
 	}
 }
