@@ -10,9 +10,9 @@ NOTIFICATION = {
   --- @param duration number The duration of the notification in milliseconds
   SendAlert = function(self, message, duration)
     SendNUIMessage({
-      runProgress = true, 
+      runProgress = true,
       colorsent = 1,
-      textsent = message, 
+      textsent = message,
       fadesent = duration
     })
   end,
@@ -21,9 +21,9 @@ NOTIFICATION = {
   --- @param duration number The duration of the notification in milliseconds
   SendError = function(self, message, duration)
     SendNUIMessage({
-      runProgress = true, 
-      colorsent = 2, 
-      textsent = message, 
+      runProgress = true,
+      colorsent = 2,
+      textsent = message,
       fadesent = duration
     })
   end,
@@ -34,9 +34,9 @@ NOTIFICATION = {
   --- @param color string The color of the notification
   Custom = function(self, message, duration, color)
     -- SendNUIMessage({
-    --   runProgress = true, 
-    --   colorsent = 3, 
-    --   textsent = message, 
+    --   runProgress = true,
+    --   colorsent = 3,
+    --   textsent = message,
     --   fadesent = duration
     -- })
   end,
@@ -52,16 +52,16 @@ AddEventHandler('Characters:Client:Logout', function()
 end)
 
 RegisterNetEvent('Notification:SendAlert')
-AddEventHandler('Notification:SendAlert', function(source, message, duration)
+AddEventHandler('Notification:SendAlert', function(message, duration)
   NOTIFICATION:SendAlert(message, duration)
 end)
 
 RegisterNetEvent('Notification:SendError')
-AddEventHandler('Notification:SendError', function(source, message, duration)
+AddEventHandler('Notification:SendError', function(message, duration)
   NOTIFICATION:SendError(message, duration)
 end)
 
 RegisterNetEvent('Notification:Clear')
-AddEventHandler('Notification:Clear', function(source)
+AddEventHandler('Notification:Clear', function()
   NOTIFICATION:Clear()
 end)
