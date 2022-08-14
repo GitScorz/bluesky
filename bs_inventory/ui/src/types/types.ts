@@ -1,27 +1,28 @@
 export interface ISlot {
   invItems: Item[];
+  slots: number;
 }
 
 export interface InventoryState {
-  label: string;
+  owner: string;
+  name: string;
   weight: number;
   maxWeight: number;
-  items: Item[];
-}
-
-export interface SecondInventoryState extends InventoryState {
-  id: string;
+  size: number;
+  invType: number;
+  inventory: Item[];
 }
 
 export interface Item {
-  label: string;
   id: string;
+  owner: string;
+  label: string;
   description?: string;
   slot: number;
   weight: number;
   quantity: number;
-  creationDate: number;
-  data: any;
+  // creationDate: number;
+  metaData: object;
 }
 
 export interface PropSlot {
@@ -33,8 +34,10 @@ export enum INVENTORY_EVENTS {
   OPEN = 'inventory:open',
   CLOSE = 'inventory:close',
   SHOW_NOTIFICATION = 'inventory:showNotification',
-  GET_PLAYER_INVENTORY = 'inventory:getPlayerInventory',
-  GET_SECOND_INVENTORY = 'inventory:getSecondInventory',
+  UPDATE_PLAYER_INVENTORY = 'inventory:updatePlayerInventory',
+  UPDATE_SECONDARY_INVENTORY = 'inventory:updateSecondaryInventory',
+  SEND_CLIENT_NOTIFY = 'inventory:sendClientNotify',
+  USE_ITEM = 'inventory:useItem',
 }
 
 export interface ServerPromiseResp<T = undefined> {

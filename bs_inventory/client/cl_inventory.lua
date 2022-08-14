@@ -1,5 +1,5 @@
 local _open = false
-local _disabled = false
+local _isLoggedIn = false
 local hotBarOpen = false
 local trunkOpen = false
 
@@ -23,13 +23,20 @@ AddEventHandler('Core:Shared:Ready', function()
     'Keybinds',
     -- 'Weapons',
   }, function(error)
-    if #error > 0 then return; end
+    if #error > 0 then return end
     RetrieveComponents()
   end)
 end)
 
+local function loadAnimDict(dict)
+  while (not HasAnimDictLoaded(dict)) do
+    RequestAnimDict(dict)
+    Wait(5)
+  end
+end
+
 INVENTORY = {
-  _required = { 'SendUIMessage', 'SetFocus', 'Open', 'Close' },
+  _required = { 'SendUIMessage', 'SetFocus', 'Open', 'Close', 'Animation', 'Player', 'Secondary' },
 
   --- @param action string The action you wish to target
   --- @param data any The data you wish to send along with this action
@@ -58,45 +65,197 @@ INVENTORY = {
       end)
     end
 
-    -- Callbacks:ServerCallback('Inventory:GetPlayerInventory', {}, function(inventory)
-    --   Inventory.Set.Player:Inventory(inventory)
-    --   Inventory.Set.Player.Data.Open = true
-    -- end)
+    Callbacks:ServerCallback('Inventory:FetchPlayerInventory', {}, function(inventory)
+      Inventory.Player:Update(inventory)
+    end)
 
-    INVENTORY:SetFocus(true)
-    INVENTORY:SendUIMessage('inventory:open', true)
-    INVENTORY:Animation()
+    Inventory:SetFocus(true)
+    Inventory:SendUIMessage('inventory:open', true)
+    Inventory:Animation()
   end,
 
-  Close = function(self)
+  Close = function(self, force)
     _open = false
-    INVENTORY:SetFocus(false)
-    INVENTORY:Animation()
-  end,
+    Inventory:SetFocus(false)
 
-  LoadAnimDict = function(self, dict)
-    while (not HasAnimDictLoaded(dict)) do
-      RequestAnimDict(dict)
-      Wait(5)
+    if trunkOpen and trunkOpen > 0 then
+      SetVehicleDoorShut(trunkOpen, 5, false)
+      trunkOpen = false
+    end
+
+    if not force then
+      Inventory:Animation()
     end
   end,
 
   Animation = function(self)
     local ped = PlayerPedId()
 
-    INVENTORY:LoadAnimDict('pickup_object')
+    loadAnimDict('pickup_object')
     TaskPlayAnim(ped, 'pickup_object', 'putdown_low', 5.0, 1.5, 1.0, 48, 0.0, 0, 0, 0)
     Wait(1000)
     ClearPedSecondaryTask(ped)
   end,
+
+  Player = {
+    HasItem = function(self, item)
+      Callbacks:ServerCallback('Inventory:Server:HasItem', {
+        item = item
+      }, function(hasItem)
+        return hasItem
+      end)
+    end,
+
+    Update = function(self, data)
+      Inventory:SendUIMessage('inventory:updatePlayerInventory', data)
+    end,
+
+    Refresh = function(self)
+      Callbacks:ServerCallback('Inventory:FetchPlayerInventory', {}, function(inventory)
+        Inventory.Player:UpdatePlayer(inventory)
+      end)
+    end,
+  },
+
+  Secondary = {
+    Update = function(self, data)
+      Inventory:SendUIMessage('inventory:updateSecondaryInventory', data)
+    end,
+
+    Refresh = function(self)
+      Callbacks:ServerCallback('Inventory:GetSecondaryInventory', {}, function(inventory)
+        Inventory.Secondary:Update(inventory)
+      end)
+    end,
+  },
 }
 
 AddEventHandler('Proxy:Shared:RegisterReady', function()
   exports['bs_base']:RegisterComponent('Inventory', INVENTORY)
 end)
 
+local function getVehicleNearby()
+  local player = PlayerPedId()
+  local startPos = GetOffsetFromEntityInWorldCoords(player, 0, 0.5, 0)
+  local endPos = GetOffsetFromEntityInWorldCoords(player, 0, 5.0, 0)
+
+  local rayHandle = StartShapeTestRay(startPos['x'], startPos['y'], startPos['z'], endPos['x'], endPos['y'], endPos['z']
+    , 10, player, 0)
+
+  local a, b, c, d, veh = GetShapeTestResult(rayHandle)
+
+  if veh ~= 2 then
+    local plyCoords = GetEntityCoords(player)
+    local offCoords = GetOffsetFromEntityInWorldCoords(veh, 0.0, -2.5, 1.0)
+    local dist = #(vector3(offCoords.x, offCoords.y, offCoords.z) - plyCoords)
+
+    if dist < 2.5 then
+      return veh
+    end
+  else
+    return nil
+  end
+end
+
+local function checkTrunkDistance(vehicle)
+  CreateThread(function()
+    while trunkOpen do
+      local sleep = 500
+      local pos = GetEntityCoords(PlayerPedId())
+
+      local dist = #(vector3(pos.x, pos.y, pos.z) - GetOffsetFromEntityInWorldCoords(vehicle, 0.0, -2.5, 1.0))
+      if dist > 1 and trunkOpen then
+        sleep = 1
+        trunkOpen = false
+      end
+
+      Wait(sleep)
+    end
+  end)
+end
+
 RegisterCommand('+openinventory', function()
-  INVENTORY:Open()
+  Callbacks:ServerCallback('Inventory:CheckIfNearDropZone', {}, function(dropzone)
+    local playerPed = PlayerPedId()
+    local plate
+    local requestSecondary = false
+    local isPedInVehicle = IsPedInAnyVehicle(playerPed)
+
+    if isPedInVehicle then
+      local vehicle = GetVehiclePedIsIn(playerPed)
+      if vehicle ~= nil and vehicle > 0 then
+        plate = GetVehicleNumberPlateText(vehicle)
+
+        -- do fake plate check
+
+        -- do player owned check
+
+        SecondInventory = {
+          invType = 5,
+          owner = plate
+        }
+
+        requestSecondary = true
+      end
+    end
+
+    -- do trunk check here aswell maybe?
+    local vehicle = getVehicleNearby()
+    if vehicle and IsEntityAVehicle(vehicle) and not requestSecondary then
+      local plate = GetVehicleNumberPlateText(vehicle)
+
+      -- Check here for false plates
+
+      if GetVehicleDoorLockStatus(vehicle) == 1 then
+        trunkOpen = vehicle
+        -- check here for player owned vehs
+
+        SecondInventory = {
+          invType = 4,
+          owner = plate
+        }
+
+        requestSecondary = true
+
+        SetVehicleDoorOpen(vehicle, 5, true, false)
+        checkTrunkDistance(vehicle)
+      else
+        Notification:SendError('Vehicle locked.')
+      end
+    end
+
+    -- Trash Container Checks here?
+    local container, entity = ScanContainer()
+
+    if container and not isPedInVehicle and not requestSecondary then
+      if entity > 0 then
+        containerid = DecorGetInt(entity, 'TrashContainer-Inventory')
+        SecondInventory = {
+          invType = 16,
+          owner = containerid
+        }
+
+        requestSecondary = true
+      end
+    end
+
+    if dropzone ~= nil and not isPedInVehicle and not requestSecondary then
+      SecondInventory = {
+        invType = 10,
+        owner = dropzone
+      }
+
+      requestSecondary = true
+    elseif dropzone == nil and not isPedInVehicle and not requestSecondary then
+      TriggerServerEvent('Inventory:Server:CreateNewDropzone')
+    end
+
+    if requestSecondary then
+      TriggerServerEvent('Inventory:Server:RequestSecondaryInventory', SecondInventory)
+    end
+
+    Inventory:Open()
+  end)
 end, false)
 
 function RegisterKeybinds()
@@ -108,12 +267,68 @@ RegisterNUICallback('inventory:close', function(data, cb)
   cb('ok')
 end)
 
-RegisterNUICallback('inventory:getPlayerInventory', function(data, cb)
-  -- Inventory:Close()
+RegisterNetEvent('Inventory:CloseUI')
+AddEventHandler('Inventory:CloseUI', function()
+  Inventory:Close(true)
+end)
+
+RegisterNetEvent('Inventory:Client:RefreshPlayer')
+AddEventHandler('Inventory:Client:RefreshPlayer', function()
+  Inventory.Player:Refresh()
+end)
+
+RegisterNetEvent('Inventory:Client:RefreshSecondary')
+AddEventHandler('Inventory:Client:RefreshSecondary', function()
+  Inventory.Secondary:Refresh()
+end)
+
+RegisterNetEvent('Characters:Client:Spawn')
+AddEventHandler('Characters:Client:Spawn', function()
+  Callbacks:ServerCallback('Inventory:Server:ReceiveAllDrops', {}, function(drops)
+    DROP_ZONES = drops
+    _isLoggedIn = true
+    startDropsTick()
+  end)
+end)
+
+RegisterNetEvent('Characters:Client:Logout')
+AddEventHandler('Characters:Client:Logout', function()
+  _isLoggedIn = false
+  DROP_ZONES = {}
+end)
+
+RegisterNetEvent('Inventory:Client:LoadSecondary')
+AddEventHandler('Inventory:Client:LoadSecondary', function(data)
+  Inventory.Secondary:Update(data)
+end)
+
+RegisterNetEvent('Inventory:Client:AddItem')
+AddEventHandler('Inventory:Client:AddItem', function(itemId)
+  Inventory:SendUIMessage('inventory:addItem', itemId)
+end)
+
+RegisterNUICallback('inventory:sendClientNotify', function(data, cb)
+  if data then
+    if data.alert == "info" then
+      Notification:SendAlert(data.message, data.time)
+    elseif data.alert == "error" then
+      Notification:SendError(data.message, data.time)
+    end
+  end
+
   cb('ok')
 end)
 
-RegisterNUICallback('inventory:getSecondInventory', function(data, cb)
-  -- Inventory:Close()
+RegisterNUICallback('inventory:useItem', function(data, cb)
+  Callbacks:ServerCallback('Inventory:UseItem', {
+    slot = data.slot,
+    owner = data.owner,
+    invType = data.invType
+  }, function(success)
+    Callbacks:ServerCallback('Inventory:FetchPlayerInventory', {}, function(inventory)
+      Inventory:UpdatePlayer(inventory)
+    end)
+  end)
+
   cb('ok')
 end)

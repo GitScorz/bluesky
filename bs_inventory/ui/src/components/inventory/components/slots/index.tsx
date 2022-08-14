@@ -4,35 +4,26 @@ import { inventoryState } from '../../../hooks/state';
 import Slot from './slot';
 import './slots.styles.css';
 
-export default function Slots({ invItems }: ISlot) {
-  // {playerInventory.items.map((item, index) => (
-  //   <div key={index} className="inventory-item">
-  //     <img src={item.img} alt={item.label} />
-  //     <div className="inventory-item-label">{item.label}</div>
-  //   </div>
-  // ))}
-
+export default function Slots({ invItems, slots }: ISlot) {
   return (
     <div className="slots-wrapper">
       <div className="slots-container">
-        {[...Array(50).keys()].map((value) => {
-          let identifier = null;
+        {[...Array(slots).keys()].map((value) => {
+          let id = null;
 
-          for (let i = 0; i < 50; i++) {
+          for (let i = 0; i < slots; i++) {
             if (invItems[i]) {
               if (invItems[i].slot === value) {
-                identifier = i;
+                id = i;
                 break;
               }
             }
           }
 
-          if (identifier === null) {
+          if (id === null) {
             return <Slot key={value} index={value} />;
           } else {
-            return (
-              <Slot key={value} index={value} item={invItems[identifier]} />
-            );
+            return <Slot key={value} index={value} item={invItems[id]} />;
           }
         })}
       </div>

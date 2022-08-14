@@ -1,7 +1,7 @@
 import { atom, selector } from 'recoil';
 import { fetchNui } from '../../utils/fetchNui';
 import { buildRespObj } from '../../utils/misc';
-import { InventoryState, INVENTORY_EVENTS, SecondInventoryState, ServerPromiseResp } from '../../types/types';
+import { InventoryState, INVENTORY_EVENTS, ServerPromiseResp } from '../../types/types';
 import { InventoryData, SecondInventoryData } from '../../utils/constants';
 
 export const inventoryState = {
@@ -17,37 +17,11 @@ export const inventoryState = {
 
   playerInventory: atom<InventoryState>({
     key: 'inventoryState.playerInventory',
-    default: selector({
-      key: 'playerInventoryDefault',
-      get: async ({ get }) => {
-        const resp = await fetchNui<ServerPromiseResp<InventoryState>>(
-          INVENTORY_EVENTS.GET_PLAYER_INVENTORY,
-          {},
-          buildRespObj(InventoryData)
-        );
-
-        const data = resp.data;
-
-        return data;
-      }
-    }),
+    default: InventoryData,
   }),
 
-  secondInventory: atom<SecondInventoryState>({
+  secondInventory: atom<InventoryState>({
     key: 'inventoryState.secondInventory',
-    default: selector({
-      key: 'secondInventoryDefault',
-      get: async ({ get }) => {
-        const resp = await fetchNui<ServerPromiseResp<SecondInventoryState>>(
-          INVENTORY_EVENTS.GET_SECOND_INVENTORY,
-          {},
-          buildRespObj(SecondInventoryData)
-        );
-
-        const data = resp.data;
-
-        return data;
-      }
-    }),
+    default: SecondInventoryData,
   }),
 }

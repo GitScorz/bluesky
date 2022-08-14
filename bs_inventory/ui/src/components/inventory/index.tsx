@@ -10,6 +10,7 @@ import Slots from './components/slots';
 
 export default function Inventory() {
   const [visibility, setVisibility] = useRecoilState(inventoryState.visibility);
+
   const [playerInventory, setPlayerInventory] = useRecoilState(
     inventoryState.playerInventory,
   );
@@ -31,22 +32,6 @@ export default function Inventory() {
   const handleClose = () => {
     setVisibility(false);
     fetchNui(INVENTORY_EVENTS.CLOSE);
-
-    const clearData = {
-      label: '',
-      weight: 0,
-      maxWeight: 0,
-      items: [],
-    };
-
-    setPlayerInventory({
-      ...clearData,
-    });
-
-    setSecondInventory({
-      id: '',
-      ...clearData,
-    });
   };
 
   return (
@@ -55,11 +40,14 @@ export default function Inventory() {
         <div className="inventory-container">
           <div id="mainInv" className="inventory-box">
             <Header
-              invName={'Player'}
+              invName={playerInventory.name}
               weight={playerInventory.weight}
               maxWeight={playerInventory.maxWeight}
             />
-            <Slots invItems={playerInventory.items} />
+            <Slots
+              invItems={playerInventory.inventory}
+              slots={playerInventory.size}
+            />
           </div>
           <div className="inventory-actions">
             <input
@@ -75,11 +63,14 @@ export default function Inventory() {
           </div>
           <div id="secondaryInv" className="inventory-box">
             <Header
-              invName={secondInventory.label}
+              invName={secondInventory.name}
               weight={secondInventory.weight}
               maxWeight={secondInventory.maxWeight}
             />
-            <Slots invItems={secondInventory.items} />
+            <Slots
+              invItems={secondInventory.inventory}
+              slots={secondInventory.size}
+            />
           </div>
         </div>
       </div>
