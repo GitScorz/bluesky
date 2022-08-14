@@ -74,7 +74,8 @@ export default function Radio() {
               value={!power ? "" : frequency}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  fetchNui("hud:radio:setFrequency", Number(e.target.value));
+                  const target = e.target as HTMLInputElement;
+                  fetchNui("hud:radio:setFrequency", Number(target.value));
                 }
               }}
             />
