@@ -5,23 +5,27 @@ function REGISTER_CALLBACKS()
 
     Inventory:Get(char:GetData('ID'), 1, function(inventory)
       cb({
+        owner = char:GetData('ID'),
         size = (LOADED_ENTITIES[1].slots or 10),
         name = "Player",
         inventory = inventory.inventory,
         invType = 1,
-        owner = char:GetData('ID')
+        maxWeight = Config.MaxWeight,
+        weight = CalculateWeight(inventory.inventory),
       })
     end)
   end)
 
   Callbacks:RegisterServerCallback('Inventory:FetchSecondaryInventory', function(source, data, cb)
     local src = source
-    local reqInt = loadedInventorys[src]
+    local reqInt = LOADED_INVENTORIES[src]
     if reqInt then
       Inventory:Get(reqInt.owner, reqInt.invType, function(inventory)
         cb({
           size = LOADED_ENTITIES[reqInt.invType].slots,
           name = LOADED_ENTITIES[reqInt.invType].name,
+          maxWeight = LOADED_ENTITIES[reqInt.invType].maxWeight,
+          weight = CalculateWeight(inventory.inventory),
           inventory = inventory.inventory,
           invType = reqInt.invType,
           owner = reqInt.owner

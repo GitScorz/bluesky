@@ -13,7 +13,6 @@ function RetrieveComponents()
   EntityTypes = exports['bs_base']:FetchComponent('EntityTypes')
   Chat = exports['bs_base']:FetchComponent('Chat')
   Wallet = exports['bs_base']:FetchComponent('Wallet')
-  Execute = exports['bs_base']:FetchComponent('Execute')
 end
 
 AddEventHandler('Core:Shared:Ready', function()
@@ -28,7 +27,6 @@ AddEventHandler('Core:Shared:Ready', function()
     'EntityTypes',
     'Default',
     'Wallet',
-    'Execute',
   }, function(error)
     if #error > 0 then return; end
     RetrieveComponents()
@@ -50,9 +48,9 @@ AddEventHandler('Core:Shared:Ready', function()
           local player = exports['bs_base']:FetchComponent('Fetch'):Source(src)
           local char = player:GetData('Character')
 
-          Inventory:AddItem(char:GetData('ID'), itemId, tonumber(amount), {}, 1)
+          Inventory:AddItem(char:GetData('ID'), itemId, tonumber(amount), {}, 1, src)
         else
-          TriggerClientEvent('Notification:SendAlert', src, 'Item does not exist')
+          TriggerClientEvent('Notification:SendError', src, 'Item does not exist.')
         end
       end
     end, {
@@ -176,6 +174,8 @@ INVENTORY = {
           local requestedInventory = {
             size = LOADED_ENTITIES[tonumber(invType)].slots or 10,
             name = LOADED_ENTITIES[tonumber(invType)].name or "Unknown",
+            maxWeight = LOADED_ENTITIES[tonumber(invType)].maxWeight or 250,
+            weight = CalculateWeight(inventory.inventory),
             inventory = inventory.inventory,
             invType = invType,
             owner = owner
@@ -189,13 +189,22 @@ INVENTORY = {
 
   --# ADDERS #--
 
-  AddItem = function(self, owner, itemId, amount, metaData, invType)
-    if Inventory:IsValidItem(itemId) then
+  AddItem = function(self, owner, itemId, amount, metaData, invType, src)
+    if not Inventory:IsValidItem(itemId) then
+      Logger:Warn('Inventory', 'Tried to give an unregistered item: ' + itemId, { console = true })
+      return
+    end
+
+    Inventory:Get(owner, 1, function(inventory)
+      if CalculateWeight(inventory.inventory) > Config.MaxWeight then
+        TriggerClientEvent('Notification:SendError', owner, 'You\'re full.')
+        return
+      end
+
       TriggerClientEvent('Inventory:Client:AddItem', itemId)
       local itemData = SHARED_ITEMS[itemId]
 
       if itemData.isStackable then
-
         Inventory:GetMatchingSlot(owner, itemId, invType, function(mSlot)
           if mSlot == nil then
             Inventory:GetOpenSlot(owner, invType, function(oSlot)
@@ -209,15 +218,13 @@ INVENTORY = {
                 if gammaSlot ~= nil and gammaSlot > 0 and gammaSlot <= LOADED_ENTITIES[invType].slots then
                   Inventory:AddSlot(owner, itemId, amount, metaData, gammaSlot, invType)
                 else
-                  TriggerClientEvent('Notification:SendAlert', src, 'You\'re full!')
+                  TriggerClientEvent('Notification:SendError', src, 'You\'re full!')
                 end
               end)
             end
           end
         end)
-
       else
-
         Inventory:GetFreeSlotNumbers(owner, invType, function(slots)
           if Utils:GetTableLength(slots) >= amount then
             local totalGiven = 0
@@ -231,11 +238,8 @@ INVENTORY = {
             end
           end
         end)
-
       end
-    else
-      Logger:Warn('Inventory', 'Tried to give an unregistered item: ' + itemId, { console = true })
-    end
+    end)
   end,
 
   AddSlot = function(self, owner, itemId, amount, metaData, slot, invType, cb)
@@ -786,3 +790,17 @@ AddEventHandler('Inventory:Server:OpenShop', function(shopId)
     Inventory:OpenSecondary(source, 11, shopId)
   end
 end)
+
+function CalculateWeight(items)
+  local weight = 0
+
+  for _, item in pairs(items) do
+    if item.quantity > 1 then
+      weight = weight + item.quantity * item.weight
+    else
+      weight = weight + item.weight
+    end
+  end
+
+  return weight
+end
