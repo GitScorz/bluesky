@@ -4,38 +4,17 @@ import './slots.styles.css';
 
 export default function Slot({ index, item }: PropSlot) {
   const [hovered, setHovered] = useState(false);
-  const [dragging, setDragging] = useState(false);
-
-  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!item) return;
-    setDragging(true);
-  };
-
-  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!item) return;
-    setDragging(false);
-
-    const slot = e.dataTransfer;
-    console.log(slot);
-  };
 
   return (
     <div
       id={index.toString()}
       className="slot"
-      draggable={true}
       onMouseEnter={() => {
         setHovered(true);
       }}
       onMouseLeave={() => {
         setHovered(false);
       }}
-      onDragOver={handleDragOver}
-      onDrop={handleDrop}
     >
       {item && (
         <div>
@@ -47,7 +26,7 @@ export default function Slot({ index, item }: PropSlot) {
         </div>
       )}
 
-      {item && !dragging && hovered && (
+      {item && hovered && (
         <div className="item-info">
           <h2>{item?.label}</h2>
           {item?.description && (
@@ -58,8 +37,6 @@ export default function Slot({ index, item }: PropSlot) {
           {item?.quantity} | <strong>Quality</strong>: Good
         </div>
       )}
-
-      {item && dragging && <div id="dragged-item" className="slot"></div>}
     </div>
   );
 }

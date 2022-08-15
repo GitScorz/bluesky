@@ -18,6 +18,7 @@ export const InventoryData: InventoryState = {
       quantity: 2,
       owner: "player",
       metaData: {},
+      invType: 1,
       // creationDate: 1,
     },
     {
@@ -29,6 +30,7 @@ export const InventoryData: InventoryState = {
       slot: 2,
       owner: "player",
       metaData: {},
+      invType: 1,
       // creationDate: 1,
     },
   ],
@@ -50,6 +52,7 @@ export const SecondInventoryData: InventoryState = {
       slot: 3,
       weight: 5,
       quantity: 1,
+      invType: 10,
       // creationDate: 1,
       metaData: {},
     },

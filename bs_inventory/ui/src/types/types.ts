@@ -21,8 +21,16 @@ export interface Item {
   slot: number;
   weight: number;
   quantity: number;
+  invType: number;
   // creationDate: number;
   metaData: object;
+}
+
+export interface ItemNotification {
+  id: string;
+  label: string;
+  text: string;
+  quantity: number;
 }
 
 export interface PropSlot {

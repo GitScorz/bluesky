@@ -1,0 +1,50 @@
+.notify-wrapper {
+  position: absolute;
+  bottom: 17%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  font-family: 'Roboto', sans-serif;
+}
+
+.notify-body {
+	display: flex;
+	height: 8.5vh;
+	width: 5vw;
+	position: relative;
+	margin-right: 0.5vw;
+	align-items: center;
+	flex-direction: column-reverse;
+	justify-content: space-evenly;
+	border-bottom: 2px solid var(--weight-bar);
+	background: var(--background);
+}
+
+.notify-header {
+  top: 5%;
+  left: 5%;
+  width: 100%;
+  color: var(--white-text);
+  font-size: 1.2vh;
+  margin-left: 2px;
+  position: absolute;
+  text-transform: none;
+}
+
+.item-name {
+  text-align: center;
+  width: 4.8vw;
+  font-size: 1.3vh;
+  position: absolute;
+  bottom: 5px;
+  color: var(--white-text);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.notify-body > .item-image {
+	width: 60%;
+}

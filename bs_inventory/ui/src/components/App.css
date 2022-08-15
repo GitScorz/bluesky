@@ -1,3 +1,10 @@
+:root {
+  --background: #1e1f24f3;
+  --foreground: #3e4148de;
+  --white-text: rgb(220, 220, 220);
+  --weight-bar: #64b1ff;
+}
+
 body {
   margin: 0;
   padding: 0;

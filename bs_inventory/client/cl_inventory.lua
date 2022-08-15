@@ -97,6 +97,17 @@ INVENTORY = {
     ClearPedSecondaryTask(ped)
   end,
 
+  ShowNotification = function(self, id, label, text, quantity)
+    local data = {
+      id = id,
+      label = label,
+      text = text,
+      quantity = quantity
+    }
+
+    Inventory:SendUIMessage('inventory:showNotification', data)
+  end,
+
   Player = {
     HasItem = function(self, item)
       Callbacks:ServerCallback('Inventory:Server:HasItem', {
@@ -272,6 +283,11 @@ AddEventHandler('Inventory:CloseUI', function()
   Inventory:Close(true)
 end)
 
+RegisterNetEvent('Inventory:SendNotification')
+AddEventHandler('Inventory:SendNotification', function(id, label, text, quantity)
+  Inventory:ShowNotification(id, label, text, quantity)
+end)
+
 RegisterNetEvent('Inventory:Client:RefreshPlayer')
 AddEventHandler('Inventory:Client:RefreshPlayer', function()
   Inventory.Player:Refresh()
@@ -331,4 +347,9 @@ RegisterNUICallback('inventory:useItem', function(data, cb)
   end)
 
   cb('ok')
+end)
+
+RegisterNetEvent('Inventory:UsedItem')
+AddEventHandler('Inventory:UsedItem', function(item)
+  Inventory:ShowNotification(item.id, SHARED_ITEMS[item.id].label, 'Used', 1)
 end)

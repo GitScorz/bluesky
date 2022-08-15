@@ -1,6 +1,4 @@
-import { useRecoilState } from 'recoil';
 import { ISlot } from '../../../../types/types';
-import { inventoryState } from '../../../hooks/state';
 import Slot from './slot';
 import './slots.styles.css';
 

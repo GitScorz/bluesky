@@ -1,11 +1,11 @@
 -- If this reach more than 1000 lines it doesn't matter.
 
 --- @class ITEM
---- @param label string
---- @param description string
---- @param weight number
---- @param price number
---- @param isStackable boolean
+--- @field label string
+--- @field description string
+--- @field weight number
+--- @field price number
+--- @field isStackable boolean
 
 --- @type ITEM[]
 SHARED_ITEMS = {}

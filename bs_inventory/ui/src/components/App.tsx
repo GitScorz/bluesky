@@ -3,6 +3,7 @@ import Notification from './notification';
 import './App.css';
 import { isEnvBrowser } from '../utils/misc';
 import { useInventoryService } from './hooks/useInventoryService';
+// import HoverSlot from './inventory/components/slots/hoverslot';
 
 export default function App() {
   // Register every service you want here.
@@ -21,6 +22,7 @@ export default function App() {
         }}
       />
       <Inventory />
+      {/* <HoverSlot /> */}
       <Notification />
     </>
   );

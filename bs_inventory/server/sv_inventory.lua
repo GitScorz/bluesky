@@ -209,6 +209,8 @@ INVENTORY = {
           if mSlot == nil then
             Inventory:GetOpenSlot(owner, invType, function(oSlot)
               Inventory:AddSlot(owner, itemId, amount, metaData, oSlot, invType)
+              TriggerClientEvent('Inventory:SendNotification', src, itemId, SHARED_ITEMS[itemId].label, "Received",
+                amount)
             end)
           else
             if (mSlot.quantity + amount) <= LOADED_ENTITIES[mSlot.invType].slots then
@@ -217,6 +219,8 @@ INVENTORY = {
               Inventory:GetOpenSlot(owner, invType, function(gammaSlot)
                 if gammaSlot ~= nil and gammaSlot > 0 and gammaSlot <= LOADED_ENTITIES[invType].slots then
                   Inventory:AddSlot(owner, itemId, amount, metaData, gammaSlot, invType)
+                  TriggerClientEvent('Inventory:SendNotification', src, itemId, SHARED_ITEMS[itemId].label, "Received",
+                    amount)
                 else
                   TriggerClientEvent('Notification:SendError', src, 'You\'re full!')
                 end
@@ -532,7 +536,6 @@ INVENTORY = {
       end
 
       if Inventory:IsValidItem(results[1].id) then
-        results[1].details = SHARED_ITEMS[results[1].id]
         cb(results[1])
       end
     end)
