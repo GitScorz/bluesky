@@ -13,13 +13,9 @@ export default function Inventory() {
   const [moveAmount, setMoveAmount] = useState('');
   const [visibility, setVisibility] = useRecoilState(inventoryState.visibility);
 
-  const [playerInventory, setPlayerInventory] = useRecoilState(
-    inventoryState.playerInventory,
-  );
+  const [playerInventory] = useRecoilState(inventoryState.playerInventory);
 
-  const [secondInventory, setSecondInventory] = useRecoilState(
-    inventoryState.secondInventory,
-  );
+  const [secondInventory] = useRecoilState(inventoryState.secondInventory);
 
   useEffect(() => {
     const handleKeyEvent = (event: KeyboardEventInit) => {

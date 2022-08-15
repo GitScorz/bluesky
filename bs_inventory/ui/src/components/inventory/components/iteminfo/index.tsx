@@ -4,9 +4,7 @@ import { inventoryState } from '../../../hooks/state';
 import './info.styles.css';
 
 export default function ItemInfo() {
-  const [hoveredItem, setHoveredItem] = useRecoilState(
-    inventoryState.hoverItem,
-  );
+  const [hoveredItem] = useRecoilState(inventoryState.hoverItem);
 
   return (
     <Fade in={hoveredItem.id !== ''} timeout={{ enter: 200, exit: 200 }}>
