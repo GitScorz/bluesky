@@ -18,7 +18,7 @@ export const useInventoryService = () => {
 InjectDebugData<any>([
   {
     action: INVENTORY_EVENTS.OPEN,
-    data: false,
+    data: true,
   },
   {
     action: INVENTORY_EVENTS.UPDATE_PLAYER_INVENTORY,

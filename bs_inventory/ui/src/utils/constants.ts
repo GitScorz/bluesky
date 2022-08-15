@@ -1,4 +1,4 @@
-import { InventoryState } from "../types/types";
+import { InventoryState, Item } from "../types/types";
 
 // This is for browser testing.
 export const InventoryData: InventoryState = {
@@ -57,4 +57,17 @@ export const SecondInventoryData: InventoryState = {
       metaData: {},
     },
   ]
+}
+
+export const DefaultHoveredItem: Item = {
+  label: "",
+  id: "",
+  owner: "",
+  description: "",
+  slot: 0,
+  weight: 0,
+  quantity: 0,
+  invType: 0,
+  // creationDate: 1,
+  metaData: {},
 }

@@ -1,0 +1,31 @@
+.item-info {
+  position: absolute;
+  background: var(--background); /* rgba(35, 36, 46, 0.8); */
+  color: #fff;
+  width: 13%;
+  max-height: 100%;
+  min-height: 20px;
+  font-size: 1.35vh;
+  left: 42.5%;
+  top: 78%;
+  padding: 1%;
+  pointer-events: none;
+  text-decoration: none;
+  z-index: 999;
+  border-radius: 3px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.8em;
+}
+
+hr {
+  opacity: 0.2;
+}
+
+.item-description {
+  margin-top: 5px;
+  font-weight: 0;
+  font-size: 1em;
+}

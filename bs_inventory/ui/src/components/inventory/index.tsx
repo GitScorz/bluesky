@@ -4,11 +4,13 @@ import './inventory.styles.css';
 import { Fade } from '@mui/material';
 import { fetchNui } from '../../utils/fetchNui';
 import { INVENTORY_EVENTS } from '../../types/types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Header from './components/header';
 import Slots from './components/slots';
+import ItemInfo from './components/iteminfo';
 
 export default function Inventory() {
+  const [moveAmount, setMoveAmount] = useState('');
   const [visibility, setVisibility] = useRecoilState(inventoryState.visibility);
 
   const [playerInventory, setPlayerInventory] = useRecoilState(
@@ -34,9 +36,22 @@ export default function Inventory() {
     fetchNui(INVENTORY_EVENTS.CLOSE);
   };
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    const amt = event.target.value;
+
+    if (Number(amt) > 9999) {
+      setMoveAmount('9999');
+      return;
+    }
+
+    setMoveAmount(event.target.value);
+  };
+
   return (
     <Fade in={visibility}>
       <div className="inventory-wrapper">
+        <ItemInfo />
         <div className="inventory-container">
           <div id="mainInv" className="inventory-box">
             <Header
@@ -56,6 +71,8 @@ export default function Inventory() {
               id="move-amount"
               max="9999"
               min="0"
+              value={moveAmount}
+              onChange={handleChange}
               placeholder="Amount"
             />
             <button id="use-btn">Use</button>
