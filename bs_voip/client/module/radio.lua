@@ -15,7 +15,7 @@ function syncRadioData(radioTable, localPlyRadioName)
 			toggleVoice(tgt, enabled, 'radio')
 		end
 	end
-	
+
 	-- sendUIMessage({
 	-- 	radioChannel = radioChannel,
 	-- 	radioEnabled = radioEnabled
@@ -24,6 +24,7 @@ function syncRadioData(radioTable, localPlyRadioName)
 		radioNames[playerServerId] = localPlyRadioName
 	end
 end
+
 RegisterNetEvent('pma-voice:syncRadioData', syncRadioData)
 
 --- event setTalkingOnRadio
@@ -35,6 +36,7 @@ function setTalkingOnRadio(plySource, enabled)
 	radioData[plySource] = enabled
 	playMicClicks(enabled)
 end
+
 RegisterNetEvent('pma-voice:setTalkingOnRadio', setTalkingOnRadio)
 
 --- event addPlayerToRadio
@@ -45,14 +47,16 @@ function addPlayerToRadio(plySource, plyRadioName)
 	if GetConvarInt("voice_syncPlayerNames", 0) == 1 then
 		radioNames[plySource] = plyRadioName
 	end
-	
+
 	if radioPressed then
-		Logger:Info('Voip', ('%s joined radio %s while we were talking, adding them to targets'):format(plySource, radioChannel))
+		Logger:Info('Voip',
+			('%s joined radio %s while we were talking, adding them to targets'):format(plySource, radioChannel))
 		playerTargets(radioData, MumbleIsPlayerTalking(PlayerId()) and callData or {})
 	else
 		Logger:Info('Voip', ('%s joined radio %s'):format(plySource, radioChannel))
 	end
 end
+
 RegisterNetEvent('pma-voice:addPlayerToRadio', addPlayerToRadio)
 
 --- event removePlayerFromRadio
@@ -88,17 +92,17 @@ function removePlayerFromRadio(plySource)
 		end
 	end
 end
+
 RegisterNetEvent('pma-voice:removePlayerFromRadio', removePlayerFromRadio)
 
 --- function setRadioChannel
 --- sets the local players current radio channel and updates the server
 ---@param channel number the channel to set the player to, or 0 to remove them.
 function setRadioChannel(channel)
-	type_check({channel, "number"})
+	type_check({ channel, "number" })
 	TriggerServerEvent('pma-voice:setPlayerRadio', channel)
 	radioChannel = channel
 end
-
 
 VOIP.Radio = {
 	--- Sets the local players current radio channel and updates the server
@@ -137,13 +141,21 @@ function isDead()
 	end
 end
 
+AddEventHandler('Characters:Client:Spawn', function()
+	VOIP.Radio:SetRadioChannel(0)
+end)
+
+AddEventHandler('Characters:Client:Logout', function()
+	VOIP.Radio:SetRadioChannel(0)
+end)
+
 RegisterCommand('+radiotalk', function()
 	if isDead() then return end
 
 	if not radioPressed and radioEnabled then
 		if radioChannel > 0 then
 			Logger:Info('Voip', "Start broadcasting, update targets and notify server.")
-			
+
 			playerTargets(radioData, MumbleIsPlayerTalking(PlayerId()) and callData or {})
 			TriggerServerEvent('pma-voice:setTalkingOnRadio', true)
 			radioPressed = true
@@ -194,4 +206,5 @@ function syncRadio(_radioChannel)
 	Logger:Info('Voip', ('radio set serverside update to radio %s'):format(_radioChannel))
 	radioChannel = _radioChannel
 end
+
 RegisterNetEvent('pma-voice:clSetPlayerRadio', syncRadio)
