@@ -353,3 +353,8 @@ RegisterNetEvent('Inventory:UsedItem')
 AddEventHandler('Inventory:UsedItem', function(item)
   Inventory:ShowNotification(item.id, SHARED_ITEMS[item.id].label, 'Used', 1)
 end)
+
+RegisterNetEvent('Inventory:AddItem')
+AddEventHandler('Inventory:AddItem', function(itemId, quantity)
+  Inventory:ShowNotification(itemId, SHARED_ITEMS[itemId].label, 'Received', quantity)
+end)

@@ -201,7 +201,7 @@ INVENTORY = {
         return
       end
 
-      TriggerClientEvent('Inventory:Client:AddItem', itemId)
+      TriggerClientEvent('Inventory:AddItem', src, itemId, amount)
       local itemData = SHARED_ITEMS[itemId]
 
       if itemData.isStackable then
@@ -209,8 +209,6 @@ INVENTORY = {
           if mSlot == nil then
             Inventory:GetOpenSlot(owner, invType, function(oSlot)
               Inventory:AddSlot(owner, itemId, amount, metaData, oSlot, invType)
-              TriggerClientEvent('Inventory:SendNotification', src, itemId, SHARED_ITEMS[itemId].label, "Received",
-                amount)
             end)
           else
             if (mSlot.quantity + amount) <= LOADED_ENTITIES[mSlot.invType].slots then
@@ -219,8 +217,6 @@ INVENTORY = {
               Inventory:GetOpenSlot(owner, invType, function(gammaSlot)
                 if gammaSlot ~= nil and gammaSlot > 0 and gammaSlot <= LOADED_ENTITIES[invType].slots then
                   Inventory:AddSlot(owner, itemId, amount, metaData, gammaSlot, invType)
-                  TriggerClientEvent('Inventory:SendNotification', src, itemId, SHARED_ITEMS[itemId].label, "Received",
-                    amount)
                 else
                   TriggerClientEvent('Notification:SendError', src, 'You\'re full!')
                 end
@@ -506,15 +502,17 @@ INVENTORY = {
     }, function(success, results)
       if not success then return end
 
-      for i = 1, #results, 1 do
-        local data = results[i]
-        if i ~= data.slot then
-          cb(i)
-          return
-        end
+      if #results == 0 then
+        cb(#results)
+        return
       end
 
-      cb(#results)
+      for k, v in pairs(results) do
+        if v.slot + 1 == #results then
+          cb(v.slot + 1)
+          break
+        end
+      end
     end)
   end,
 
