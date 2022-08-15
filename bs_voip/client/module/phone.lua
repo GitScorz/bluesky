@@ -96,11 +96,3 @@ RegisterNetEvent('pma-voice:clSetPlayerCall', function(_callChannel)
 	callChannel = _callChannel
 	createCallThread()
 end)
-
-AddEventHandler('Characters:Client:Spawn', function()
-	VOIP.Call:SetCallChannel(0)
-end)
-
-AddEventHandler('Characters:Client:Logout', function()
-	VOIP.Call:SetCallChannel(0)
-end)

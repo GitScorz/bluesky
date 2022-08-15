@@ -141,14 +141,6 @@ function isDead()
 	end
 end
 
-AddEventHandler('Characters:Client:Spawn', function()
-	VOIP.Radio:SetRadioChannel(0)
-end)
-
-AddEventHandler('Characters:Client:Logout', function()
-	VOIP.Radio:SetRadioChannel(0)
-end)
-
 RegisterCommand('+radiotalk', function()
 	if isDead() then return end
 

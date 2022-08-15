@@ -12,6 +12,7 @@ function RetrieveComponents()
 	RegisterKeybinds()
 	RegisterRadioKeybinds()
 end
+
 AddEventHandler('Voip:Shared:DependencyUpdate', RetrieveComponents)
 
 --- Initialize the plugin
@@ -33,7 +34,8 @@ local function InitializeVoip()
 	end)
 
 	if not success then
-		Logger:Warn('Voip', 'Failed to load resource Kvp, likely was inappropriately modified by another server, resetting the Kvp.')
+		Logger:Warn('Voip',
+			'Failed to load resource Kvp, likely was inappropriately modified by another server, resetting the Kvp.')
 		SetResourceKvp('pma-voice_enableMicClicks', tostring(true))
 		micClicks = 'true'
 	end
@@ -59,7 +61,7 @@ AddEventHandler('Core:Shared:Ready', function()
 		'UI',
 		'Keybinds',
 		'UISounds',
-	}, function(error)  
+	}, function(error)
 		if #error > 0 then return; end
 		RetrieveComponents()
 		InitializeVoip()
@@ -73,4 +75,15 @@ AddEventHandler('onClientResourceStart', function(resource)
 		InitializeVoip()
 		firstInitialize = false
 	end
+end)
+
+AddEventHandler('Characters:Client:Spawn', function()
+	VOIP.Radio:SetRadioChannel(0)
+	VOIP.Call:SetCallChannel(0)
+end)
+
+RegisterNetEvent('Characters:Client:Logout')
+AddEventHandler('Characters:Client:Logout', function()
+	VOIP.Radio:SetRadioChannel(0)
+	VOIP.Call:SetCallChannel(0)
 end)
