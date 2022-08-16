@@ -11,21 +11,22 @@ function REGISTER_CALLBACKS()
         inventory = inventory.inventory,
         invType = 1,
         maxWeight = Config.MaxWeight,
-        weight = CalculateWeight(inventory.inventory),
+        weight = CalculateInventoryWeight(inventory.inventory),
       })
     end)
   end)
 
-  Callbacks:RegisterServerCallback('Inventory:FetchSecondaryInventory', function(source, data, cb)
+  Callbacks:RegisterServerCallback('Inventory:FetchSecondInventory', function(source, data, cb)
     local src = source
     local reqInt = LOADED_INVENTORIES[src]
+
     if reqInt then
       Inventory:Get(reqInt.owner, reqInt.invType, function(inventory)
         cb({
           size = LOADED_ENTITIES[reqInt.invType].slots,
           name = LOADED_ENTITIES[reqInt.invType].name,
           maxWeight = LOADED_ENTITIES[reqInt.invType].maxWeight,
-          weight = CalculateWeight(inventory.inventory),
+          weight = CalculateInventoryWeight(inventory.inventory),
           inventory = inventory.inventory,
           invType = reqInt.invType,
           owner = reqInt.owner
@@ -89,6 +90,8 @@ function REGISTER_CALLBACKS()
 
     local itemId = data.id
     local charId = char:GetData('ID')
+
+    print(json.encode(data))
 
     if Inventory:IsValidItem(itemId) then
       local item = SHARED_ITEMS[itemId]
@@ -301,9 +304,9 @@ function REGISTER_CALLBACKS()
                   if slotTo == nil then
                     Inventory:RemoveSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(success)
                       if success then
-                        if slotFrom.invType == 1 and slotFrom.details.type == 2 then
-                          Inventory:RemoveWeapon(_src, slotFrom._id)
-                        end
+                        -- if slotFrom.invType == 1 and slotFrom.details.type == 2 then
+                        --   Inventory:RemoveWeapon(_src, slotFrom._id)
+                        -- end
                         Inventory:AddSlot(data.ownerTo, itemId, data.quantityTo, slotFrom.metaData, data.slotTo,
                           data.invTypeTo, function(success)
                           if success then
@@ -323,9 +326,9 @@ function REGISTER_CALLBACKS()
                       local item = SHARED_ITEMS[itemId]
                       Inventory:RemoveSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(success)
                         if success then
-                          if slotFrom.invType == 1 and slotFrom.details.type == 2 then
-                            Inventory:RemoveWeapon(_src, slotFrom._id)
-                          end
+                          -- if slotFrom.invType == 1 and slotFrom.details.type == 2 then
+                          --   Inventory:RemoveWeapon(_src, slotFrom._id)
+                          -- end
                           Inventory:AddToSlot(data.ownerTo, data.slotTo, data.quantityTo, data.invTypeTo,
                             function(success)
                               if success then
@@ -346,9 +349,9 @@ function REGISTER_CALLBACKS()
                       Inventory:SwapSlots(data.ownerFrom, data.ownerTo, data.slotFrom, data.slotTo, data.invTypeFrom,
                         data.invTypeTo, function(meh)
                         if meh then
-                          if slotFrom.invType == 1 and slotFrom.details.type == 2 then
-                            Inventory:RemoveWeapon(_src, slotFrom._id)
-                          end
+                          -- if slotFrom.invType == 1 and slotFrom.details.type == 2 then
+                          --   Inventory:RemoveWeapon(_src, slotFrom._id)
+                          -- end
                           cb(true)
                           if data.invTypeTo == 10 or (data.invTypeTo == 1 and data.ownerTo ~= charId) then
                             REFRESH_ALL_CLIENTS(data.ownerTo, data.invTypeTo, _src)

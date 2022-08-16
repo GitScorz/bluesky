@@ -52,8 +52,8 @@ export default function Slot({
             quantityFrom: item.item.quantity,
             quantityTo:
               moveAmount !== '' ? Number(moveAmount) : item.item.quantity,
-            invTypeFrom: hoveredSlot.invType,
-            invTypeTo: item.item.invType,
+            invTypeTo: hoveredSlot.invType,
+            invTypeFrom: item.item.invType,
           });
         }
       },

@@ -66,13 +66,7 @@ INVENTORY = {
       end)
     end
 
-    Callbacks:ServerCallback('Inventory:FetchPlayerInventory', {}, function(inventory)
-      Inventory.Player:Update(inventory)
-    end)
-
-    Callbacks:ServerCallback('Inventory:FetchSecondInventory', {}, function(inventory)
-      Inventory.Secondary:Update(inventory)
-    end)
+    Inventory.Player:Refresh()
 
     Inventory:SetFocus(true)
     Inventory:SendUIMessage('inventory:open', true)
@@ -142,7 +136,7 @@ INVENTORY = {
     end,
 
     Refresh = function(self)
-      Callbacks:ServerCallback('Inventory:GetSecondaryInventory', {}, function(inventory)
+      Callbacks:ServerCallback('Inventory:FetchSecondInventory', {}, function(inventory)
         Inventory.Secondary:Update(inventory)
       end)
     end,
@@ -363,6 +357,7 @@ RegisterNUICallback('inventory:moveItem', function(data, cb)
     if success then
       print("ladies and gentlemen, we have got em")
       Inventory.Player:Refresh()
+      Inventory.Secondary:Refresh()
     end
   end)
 end)

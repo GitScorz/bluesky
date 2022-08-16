@@ -190,7 +190,7 @@ INVENTORY = {
             size = LOADED_ENTITIES[tonumber(invType)].slots or 10,
             name = LOADED_ENTITIES[tonumber(invType)].name or "Unknown",
             maxWeight = LOADED_ENTITIES[tonumber(invType)].maxWeight or 250,
-            weight = CalculateWeight(inventory.inventory),
+            weight = CalculateInventoryWeight(inventory.inventory),
             inventory = inventory.inventory,
             invType = invType,
             owner = owner
@@ -211,7 +211,7 @@ INVENTORY = {
     end
 
     Inventory:Get(owner, 1, function(inventory)
-      if CalculateWeight(inventory.inventory) > Config.MaxWeight then
+      if CalculateInventoryWeight(inventory.inventory) > Config.MaxWeight then
         TriggerClientEvent('Notification:SendError', owner, 'You\'re full.')
         return
       end
@@ -779,12 +779,14 @@ end)
 
 RegisterServerEvent('Inventory:Server:RequestSecondaryInventory')
 AddEventHandler('Inventory:Server:RequestSecondaryInventory', function(inv)
-  Inventory:OpenSecondary(source, inv.invType, inv.owner)
+  local src = source
+  Inventory:OpenSecondary(src, inv.invType, inv.owner)
 end)
 
 RegisterServerEvent('Inventory:Server:CreateNewDropzone')
 AddEventHandler('Inventory:Server:CreateNewDropzone', function()
-  local player = GetPlayerPed(source)
+  local src = source
+  local player = GetPlayerPed(src)
   local pCoords = GetEntityCoords(player)
 
   local dropzoneCoords = {
@@ -795,19 +797,20 @@ AddEventHandler('Inventory:Server:CreateNewDropzone', function()
 
   Inventory:CreateDropzone(dropzoneCoords, function(id)
     if id ~= nil and id > 0 then
-      Inventory:OpenSecondary(source, 10, id)
+      Inventory:OpenSecondary(src, 10, id)
     end
   end)
 end)
 
 RegisterServerEvent('Inventory:Server:OpenShop')
 AddEventHandler('Inventory:Server:OpenShop', function(shopId)
+  local src = source
   if shopId and shopId > 0 then
-    Inventory:OpenSecondary(source, 11, shopId)
+    Inventory:OpenSecondary(src, 11, shopId)
   end
 end)
 
-function CalculateWeight(items)
+function CalculateInventoryWeight(items)
   local weight = 0
 
   for _, item in pairs(items) do
