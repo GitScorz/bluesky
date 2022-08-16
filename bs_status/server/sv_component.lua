@@ -10,7 +10,7 @@ function RetrieveComponents()
     Utils = exports['bs_base']:FetchComponent('Utils')
     Chat = exports['bs_base']:FetchComponent('Chat')
     Status = exports['bs_base']:FetchComponent('Status')
-    Inventory = exports['bs_base']:FetchComponent('Inventory')
+    -- Inventory = exports['bs_base']:FetchComponent('Inventory')
     RegisterChatCommands()
     registerUsables()
 end
@@ -22,7 +22,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'Utils',
         'Chat',
         'Status',
-        'Inventory',
+        -- 'Inventory',
     }, function(error)
         if #error > 0 then return end -- Do something to handle if not all dependencies loaded
         RetrieveComponents()
