@@ -27,3 +27,12 @@
   line-height: 16px;
   color: #FFFFFF;
 }
+
+.self-cash {
+  position: absolute;
+  width: 100%;
+  margin-top: 4.5%;
+  height: .7vh;
+  display: block;
+  font-size: 1.3vh;
+}

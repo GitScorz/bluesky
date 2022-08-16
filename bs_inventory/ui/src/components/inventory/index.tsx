@@ -4,17 +4,17 @@ import './inventory.styles.css';
 import { Fade } from '@mui/material';
 import { fetchNui } from '../../utils/fetchNui';
 import { INVENTORY_EVENTS } from '../../types/types';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Header from './components/header';
-import Slots from './components/slots';
+import Slots from './components/grid';
 import ItemInfo from './components/iteminfo';
 
 export default function Inventory() {
-  const [moveAmount, setMoveAmount] = useState('');
   const [visibility, setVisibility] = useRecoilState(inventoryState.visibility);
 
-  const [playerInventory] = useRecoilState(inventoryState.playerInventory);
+  const [moveAmount, setMoveAmount] = useRecoilState(inventoryState.moveAmount);
 
+  const [playerInventory] = useRecoilState(inventoryState.playerInventory);
   const [secondInventory] = useRecoilState(inventoryState.secondInventory);
 
   useEffect(() => {
@@ -34,14 +34,28 @@ export default function Inventory() {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    const amt = event.target.value;
+    const amount = event.target.value;
 
-    if (Number(amt) > 9999) {
+    if (Number(amount) > 9999) {
       setMoveAmount('9999');
       return;
     }
 
-    setMoveAmount(event.target.value);
+    setMoveAmount(amount);
+  };
+
+  const playerSlots = {
+    invItems: playerInventory.inventory,
+    size: playerInventory.size,
+    invType: playerInventory.invType,
+    owner: playerInventory.owner,
+  };
+
+  const secondarySlots = {
+    invItems: secondInventory.inventory,
+    size: secondInventory.size,
+    invType: secondInventory.invType,
+    owner: secondInventory.owner,
   };
 
   return (
@@ -54,11 +68,9 @@ export default function Inventory() {
               invName={playerInventory.name}
               weight={playerInventory.weight}
               maxWeight={playerInventory.maxWeight}
+              invType={playerInventory.invType}
             />
-            <Slots
-              invItems={playerInventory.inventory}
-              slots={playerInventory.size}
-            />
+            <Slots {...playerSlots} />
           </div>
           <div className="inventory-actions">
             <input
@@ -79,11 +91,9 @@ export default function Inventory() {
               invName={secondInventory.name}
               weight={secondInventory.weight}
               maxWeight={secondInventory.maxWeight}
+              invType={secondInventory.invType}
             />
-            <Slots
-              invItems={secondInventory.inventory}
-              slots={secondInventory.size}
-            />
+            <Slots {...secondarySlots} />
           </div>
         </div>
       </div>

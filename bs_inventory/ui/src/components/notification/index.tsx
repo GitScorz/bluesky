@@ -37,7 +37,7 @@ export default function Notification() {
           </div>
           <div className="item-name">{itemData.label}</div>
           <img
-            src={`images/items/${itemData.id}.png`}
+            src={`images/${itemData.id}.png`}
             alt={itemData.label}
             className="item-image"
           />

@@ -8,9 +8,9 @@ export default function WeightBar({
   maxWeight: number;
 }) {
   return (
-    <div className="weightBar">
+    <div className="weight-bar">
       <div
-        className="weightFill"
+        className="weight-fill"
         style={{
           width: `${(weight / maxWeight) * 100}%`,
         }}

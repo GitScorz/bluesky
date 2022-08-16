@@ -2,6 +2,7 @@ local _open = false
 local _isLoggedIn = false
 local hotBarOpen = false
 local trunkOpen = false
+local SECOND_INVENTORY = {}
 
 AddEventHandler('Inventory:Shared:DependencyUpdate', RetrieveComponents)
 function RetrieveComponents()
@@ -78,6 +79,9 @@ INVENTORY = {
     _open = false
     Inventory:SetFocus(false)
 
+    TriggerServerEvent('Inventory:Server:CloseSecondary')
+    SECOND_INVENTORY = {}
+
     if trunkOpen and trunkOpen > 0 then
       SetVehicleDoorShut(trunkOpen, 5, false)
       trunkOpen = false
@@ -123,7 +127,7 @@ INVENTORY = {
 
     Refresh = function(self)
       Callbacks:ServerCallback('Inventory:FetchPlayerInventory', {}, function(inventory)
-        Inventory.Player:UpdatePlayer(inventory)
+        Inventory.Player:Update(inventory)
       end)
     end,
   },
@@ -201,7 +205,7 @@ RegisterCommand('+openinventory', function()
 
         -- do player owned check
 
-        SecondInventory = {
+        SECOND_INVENTORY = {
           invType = 5,
           owner = plate
         }
@@ -221,7 +225,7 @@ RegisterCommand('+openinventory', function()
         trunkOpen = vehicle
         -- check here for player owned vehs
 
-        SecondInventory = {
+        SECOND_INVENTORY = {
           invType = 4,
           owner = plate
         }
@@ -241,7 +245,7 @@ RegisterCommand('+openinventory', function()
     if container and not isPedInVehicle and not requestSecondary then
       if entity > 0 then
         containerid = DecorGetInt(entity, 'TrashContainer-Inventory')
-        SecondInventory = {
+        SECOND_INVENTORY = {
           invType = 16,
           owner = containerid
         }
@@ -251,7 +255,7 @@ RegisterCommand('+openinventory', function()
     end
 
     if dropzone ~= nil and not isPedInVehicle and not requestSecondary then
-      SecondInventory = {
+      SECOND_INVENTORY = {
         invType = 10,
         owner = dropzone
       }
@@ -262,7 +266,7 @@ RegisterCommand('+openinventory', function()
     end
 
     if requestSecondary then
-      TriggerServerEvent('Inventory:Server:RequestSecondaryInventory', SecondInventory)
+      TriggerServerEvent('Inventory:Server:RequestSecondaryInventory', SECOND_INVENTORY)
     end
 
     Inventory:Open()
@@ -274,8 +278,8 @@ function RegisterKeybinds()
 end
 
 RegisterNUICallback('inventory:close', function(data, cb)
-  Inventory:Close()
   cb('ok')
+  Inventory:Close()
 end)
 
 RegisterNetEvent('Inventory:CloseUI')
@@ -324,6 +328,7 @@ AddEventHandler('Inventory:Client:AddItem', function(itemId)
 end)
 
 RegisterNUICallback('inventory:sendClientNotify', function(data, cb)
+  cb('ok')
   if data then
     if data.alert == "info" then
       Notification:SendAlert(data.message, data.time)
@@ -331,22 +336,41 @@ RegisterNUICallback('inventory:sendClientNotify', function(data, cb)
       Notification:SendError(data.message, data.time)
     end
   end
-
-  cb('ok')
 end)
 
 RegisterNUICallback('inventory:useItem', function(data, cb)
+  cb('ok')
+
   Callbacks:ServerCallback('Inventory:UseItem', {
     slot = data.slot,
     owner = data.owner,
     invType = data.invType
   }, function(success)
     Callbacks:ServerCallback('Inventory:FetchPlayerInventory', {}, function(inventory)
-      Inventory:UpdatePlayer(inventory)
+      Inventory.Player:Update(inventory)
     end)
   end)
+end)
 
+RegisterNUICallback('inventory:moveItem', function(data, cb)
   cb('ok')
+
+  Callbacks:ServerCallback('Inventory:MoveItem', data, function(success)
+    if success then
+      print("ladies and gentlemen, we have got em")
+      Inventory.Player:Refresh()
+    end
+  end)
+end)
+
+RegisterNUICallback('inventory:nextSlotInSecondary', function(data, cb)
+  cb('ok')
+
+  Callbacks:ServerCallback('Inventory:Server:NextSlotInSecondary', data, function(success)
+    if success then
+      Inventory.Player:Refresh()
+    end
+  end)
 end)
 
 RegisterNetEvent('Inventory:UsedItem')

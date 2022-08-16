@@ -38,9 +38,9 @@ export const InventoryData: InventoryState = {
 
 export const SecondInventoryData: InventoryState = {
   owner: "ground",
-  name: "Ground",
+  name: "Shop",
   size: 35,
-  invType: 10,
+  invType: 11,
   weight: 100,
   maxWeight: 1000,
   inventory: [
@@ -52,7 +52,7 @@ export const SecondInventoryData: InventoryState = {
       slot: 3,
       weight: 5,
       quantity: 1,
-      invType: 10,
+      invType: 11,
       // creationDate: 1,
       metaData: {},
     },

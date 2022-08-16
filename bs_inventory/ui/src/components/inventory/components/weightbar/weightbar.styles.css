@@ -1,4 +1,4 @@
-.weightBar {
+.weight-bar {
   background-color: #181b20a9;
   position: absolute;
   width: 100%;
@@ -7,7 +7,7 @@
   display: block;
 }
 
-.weightFill {
+.weight-fill {
   background: var(--weight-bar);
   display: inline-block;
   height: 100%;

@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { InventoryState, Item } from '../../types/types';
+import { InventoryState, Item, SlotHovered } from '../../types/types';
 import { InventoryData, SecondInventoryData } from '../../utils/constants';
 
 export const inventoryState = {
@@ -18,7 +18,7 @@ export const inventoryState = {
     default: SecondInventoryData,
   }),
 
-  hoverItem: atom<Item>({
+  hoverItem: atom<Item | undefined>({
     key: 'inventoryState.hoverItem',
     default: {
       owner: '',
@@ -31,5 +31,19 @@ export const inventoryState = {
       weight: 0,
       metaData: {},
     },
+  }),
+
+  hoveredSlot: atom<SlotHovered>({
+    key: 'inventoryState.hoveredOrigin',
+    default: {
+      slot: 0,
+      invType: 0,
+      owner: '',
+    },
+  }),
+
+  moveAmount: atom<string>({
+    key: 'inventoryState.moveAmount',
+    default: '',
   }),
 }

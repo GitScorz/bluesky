@@ -143,7 +143,22 @@ AddEventHandler('Core:Shared:Ready', function()
   end)
 end)
 
-local function processRefreshForClients(owner, invType, source)
+RegisterServerEvent('Inventory:Server:CloseSecondary')
+AddEventHandler('Inventory:Server:CloseSecondary', function()
+  local src = source
+  if LOADED_INVENTORIES[src] then
+
+    if LOADED_INVENTORIES[src].invType == 10 then
+      Inventory:ManageDropzone(LOADED_INVENTORIES[src].owner, function()
+
+      end)
+    end
+
+    LOADED_INVENTORIES[src] = nil
+  end
+end)
+
+function REFRESH_ALL_CLIENTS(owner, invType, source)
   for k, v in pairs(LOADED_INVENTORIES) do
     if v.owner == owner and v.invType == invType and v.source ~= source then
       if invType ~= 1 then

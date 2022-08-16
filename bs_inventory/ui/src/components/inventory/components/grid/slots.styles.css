@@ -29,7 +29,7 @@
 }
 
 .slot img {
-  position: absolute;
+  position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -86,23 +86,4 @@
   background-position: 0% 0%;
   pointer-events: none;
   height: 0.5vh;
-}
-
-#draggedItem {
-  position: absolute;
-  width: 6.9vw;
-  height: 12.5vh;
-  z-index: 80;
-  transition: opacity 0.2s ease;
-  opacity: 0;
-  pointer-events: none;
-}
-
-#draggedItem > img {
-  max-width: 10.8vh;
-  max-height: 10.8vh;
-}
-
-img {
-  user-select: none;
 }

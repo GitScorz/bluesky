@@ -69,420 +69,324 @@ function REGISTER_CALLBACKS()
     }, function(success, results)
       if not success then return end
 
-      local toSend = {}
+      local drops = {}
       for _, drop in pairs(results) do
-        toSend[drop.randomIdent] = {
+        dropData[drop.randomIdent] = {
           x = drop.x,
           y = drop.y,
           z = drop.z
         }
       end
 
-      cb(toSend)
+      cb(drops)
     end)
   end)
 
-  -- Callbacks:RegisterServerCallback('Inventory:MoveItem', function(source, data, cb)
-  --   local _src = source
-  --   local player = exports['bs_base']:FetchComponent('Fetch'):Source(source)
-  --   local char = player:GetData('Character')
-  --   if itemsDatabase[data.name] then
-  --     local item = itemsDatabase[data.name]
+  Callbacks:RegisterServerCallback('Inventory:MoveItem', function(source, data, cb)
+    local _src = source
+    local player = exports['bs_base']:FetchComponent('Fetch'):Source(_src)
+    local char = player:GetData('Character')
 
-  --     if data.invTypeFrom == 11 then
-  --       if data.countTo > 0 and data.countTo <= item.max then
-  --         Wallet:Get(char, function(wallet)
-  --           if wallet.Cash >= (item.price * tonumber(data.countTo)) then
-  --             local toRemoveFromPlayer = (item.price * tonumber(data.countTo))
-  --             Inventory:GetSlot(data.ownerTo, data.slotTo, data.invTypeTo, function(slotTo)
-  --               if slotTo == nil then
-  --                 Inventory:AddSlot(data.ownerTo, data.name, data.countTo, {}, data.slotTo, data.invTypeTo,
-  --                   function(success)
-  --                     if success then
-  --                       wallet:Modify(-(toRemoveFromPlayer))
-  --                       cb({ success = true })
+    local itemId = data.id
+    local charId = char:GetData('ID')
 
-  --                     end
-  --                   end)
-  --               else
-  --                 if slotTo ~= nil and data.name ~= slotTo.Name then
-  --                   return;
-  --                 end
-  --                 if slotTo.Name == data.name then
-  --                   if (slotTo.Count + data.countTo) <= item.max then
-  --                     Inventory:AddToSlot(data.ownerTo, data.slotTo, data.countTo, data.invTypeTo, function(success)
-  --                       if success then
-  --                         wallet:Modify(-(toRemoveFromPlayer))
-  --                         cb({ success = true })
-  --                       end
-  --                     end)
-  --                   else
-  --                     Inventory:GetOpenSlot(data.ownerTo, data.invTypeTo, function(i)
-  --                       if i ~= nil and i > 0 and i <= LOADED_ENTITIES[data.invTypeTo].slots then
-  --                         Inventory:AddSlot(data.ownerTo, data.name, data.countTo, {}, i, data.invTypeTo,
-  --                           function(success)
-  --                             if success then
-  --                               wallet:Modify(-(toRemoveFromPlayer))
-  --                               cb({ success = true })
-  --                             end
-  --                           end)
-  --                       end
-  --                     end)
-  --                   end
-  --                 else
-  --                   Inventory:GetOpenSlot(data.ownerTo, data.invTypeTo, function(i)
-  --                     if i ~= nil and i > 0 and i <= LOADED_ENTITIES[data.invTypeTo].slots then
-  --                       Inventory:AddSlot(data.ownerTo, data.name, data.countTo, {}, i, data.invTypeTo,
-  --                         function(success)
-  --                           if success then
-  --                             wallet:Modify(-(toRemoveFromPlayer))
-  --                             cb({ success = true })
-  --                           end
-  --                         end)
-  --                     end
-  --                   end)
-  --                 end
-  --               end
-  --             end)
-  --           end
-  --         end)
+    if Inventory:IsValidItem(itemId) then
+      local item = SHARED_ITEMS[itemId]
 
-  --       end
-  --     elseif data.invTypeFrom == 12 then
+      --### SHOP ###--
+      if data.invTypeFrom == 11 and data.invTypeTo ~= 11 then
+        if data.quantityTo > 0 then
+          Wallet:Get(charId, function(wallet)
+            if wallet.money >= data.quantityTo * item.price then
+              Inventory.AddItem(charId, itemId, data.quantityTo, {}, data.invTypeTo, _src)
+            else
+              TriggerClientEvent('Notification:SendError', _src, 'Insufficient funds.')
+              cb(false)
+            end
+          end)
+        end
+      elseif data.invTypeFrom == 12 then
 
-  --     else
-  --       if data.invTypeTo ~= 11 and data.invTypeTo ~= 12 then
-  --         if data.ownerFrom == data.ownerTo and data.slotFrom == data.slotTo and data.invTypeFrom == data.invTypeTo then
-  --           cb(true)
-  --         elseif data.ownerFrom == data.ownerTo and data.invTypeFrom == data.invTypeTo then
-  --           -- moving to same inventory as original
+      else
+        if data.invTypeTo ~= 11 and data.invTypeTo ~= 12 then
+          if data.ownerFrom == data.ownerTo and data.slotFrom == data.slotTo and data.invTypeFrom == data.invTypeTo then
+            cb(true)
+          elseif data.ownerFrom == data.ownerTo and data.invTypeFrom == data.invTypeTo then
+            -- moving to same inventory as original
 
-  --           -- Are we splitting the fooker?
-  --           if (data.countFrom ~= data.countTo) and (data.slotFrom ~= data.slotTo) then
+            -- Are we splitting the fooker?
+            if (data.quantityFrom ~= data.quantityTo) and (data.slotFrom ~= data.slotTo) then
 
-  --             Inventory:GetSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(slotFrom)
-  --               Inventory:GetSlot(data.ownerTo, data.slotTo, data.invTypeTo, function(slotTo)
-  --                 if slotTo ~= nil and data.name ~= slotTo.Name then
-  --                   return;
-  --                 end
+              Inventory:GetSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(slotFrom)
+                Inventory:GetSlot(data.ownerTo, data.slotTo, data.invTypeTo, function(slotTo)
+                  if slotTo ~= nil and itemId ~= slotTo.id then
+                    return;
+                  end
 
-  --                 if data.countFrom >= slotFrom.Count then
-  --                   Inventory:RemoveAmount(data.ownerFrom, data.slotFrom, data.countTo, data.invTypeFrom,
-  --                     function(success)
-  --                       if success then
-  --                         if slotTo == nil then
-  --                           Inventory:AddSlot(data.ownerTo, data.name, data.countTo, slotFrom.MetaData, data.slotTo,
-  --                             data.invTypeTo, function(success)
-  --                             if success then
-  --                               cb({ success = true })
-  --                               if data.invTypeTo == 10 or (data.invTypeTo == 1 and data.ownerTo ~= char:GetData('ID')) then
-  --                                 processRefreshForClients(data.ownerTo, data.invTypeTo, _src)
-  --                               elseif data.invTypeFrom == 10 or
-  --                                   data.invTypeFrom == 1 and data.ownerFrom ~= char:GetData('ID') then
-  --                                 processRefreshForClients(data.ownerFrom, data.invTypeFrom, _src)
-  --                               end
-  --                             end
-  --                           end)
-  --                         else
-  --                           if slotTo.Name == data.name then
-  --                             if (slotTo.Count + data.countTo) <= item.max then
-  --                               Inventory:AddToSlot(data.ownerTo, data.slotTo, data.countTo, data.invTypeTo,
-  --                                 function(success)
-  --                                   if success then
-  --                                     cb({ success = true })
-  --                                     if data.invTypeTo == 10 or
-  --                                         (data.invTypeTo == 1 and data.ownerTo ~= char:GetData('ID')) then
-  --                                       processRefreshForClients(data.ownerTo, data.invTypeTo, _src)
-  --                                     elseif data.invTypeFrom == 10 or
-  --                                         data.invTypeFrom == 1 and data.ownerFrom ~= char:GetData('ID') then
-  --                                       processRefreshForClients(data.ownerFrom, data.invTypeFrom, _src)
-  --                                     end
-  --                                   end
-  --                                 end)
-  --                             else
-  --                               Inventory:SwapSlots(data.ownerFrom, data.ownerTo, data.slotFrom, data.slotTo,
-  --                                 data.invTypeFrom, data.invTypeTo, function(meh)
-  --                                 if meh then
-  --                                   cb({ success = true })
-  --                                   if data.invTypeTo == 10 or
-  --                                       (data.invTypeTo == 1 and data.ownerTo ~= char:GetData('ID')) then
-  --                                     processRefreshForClients(data.ownerTo, data.invTypeTo, _src)
-  --                                   elseif data.invTypeFrom == 10 or
-  --                                       data.invTypeFrom == 1 and data.ownerFrom ~= char:GetData('ID') then
-  --                                     processRefreshForClients(data.ownerFrom, data.invTypeFrom, _src)
-  --                                   end
-  --                                 end
-  --                               end)
-  --                             end
-  --                           else
-  --                             Inventory:SwapSlots(data.ownerFrom, data.ownerTo, data.slotFrom, data.slotTo,
-  --                               data.invTypeFrom, data.invTypeTo, function(meh)
-  --                               if meh then
-  --                                 cb({ success = true })
-  --                                 if data.invTypeTo == 10 or
-  --                                     (data.invTypeTo == 1 and data.ownerTo ~= char:GetData('ID')
-  --                                     ) then
-  --                                   processRefreshForClients(data.ownerTo, data.invTypeTo, _src)
-  --                                 elseif data.invTypeFrom == 10 or
-  --                                     data.invTypeFrom == 1 and data.ownerFrom ~= char:GetData('ID') then
-  --                                   processRefreshForClients(data.ownerFrom, data.invTypeFrom, _src)
-  --                                 end
-  --                               end
-  --                             end)
-  --                           end
-  --                         end
-  --                       end
-  --                     end)
-  --                 end
-  --               end)
-  --             end)
-  --           end
+                  if data.quantityFrom >= slotFrom.quantity then
+                    Inventory:RemoveAmount(data.ownerFrom, data.slotFrom, data.quantityTo, data.invTypeFrom,
+                      function(success)
+                        if success then
+                          if slotTo == nil then
+                            Inventory:AddSlot(data.ownerTo, itemId, data.quantityTo, slotFrom.metaData, data.slotTo,
+                              data.invTypeTo, function(success)
+                              if success then
+                                cb(true)
+                                if data.invTypeTo == 10 or (data.invTypeTo == 1 and data.ownerTo ~= charId) then
+                                  REFRESH_ALL_CLIENTS(data.ownerTo, data.invTypeTo, _src)
+                                elseif data.invTypeFrom == 10 or
+                                    data.invTypeFrom == 1 and data.ownerFrom ~= charId then
+                                  REFRESH_ALL_CLIENTS(data.ownerFrom, data.invTypeFrom, _src)
+                                end
+                              end
+                            end)
+                          else
+                            if slotTo.id == itemId then
+                              Inventory:AddToSlot(data.ownerTo, data.slotTo, data.quantityTo, data.invTypeTo,
+                                function(success)
+                                  if success then
+                                    cb(true)
+                                    if data.invTypeTo == 10 or
+                                        (data.invTypeTo == 1 and data.ownerTo ~= charId) then
+                                      REFRESH_ALL_CLIENTS(data.ownerTo, data.invTypeTo, _src)
+                                    elseif data.invTypeFrom == 10 or
+                                        data.invTypeFrom == 1 and data.ownerFrom ~= charId then
+                                      REFRESH_ALL_CLIENTS(data.ownerFrom, data.invTypeFrom, _src)
+                                    end
+                                  end
+                                end)
+                            else
+                              Inventory:SwapSlots(data.ownerFrom, data.ownerTo, data.slotFrom, data.slotTo,
+                                data.invTypeFrom, data.invTypeTo, function(meh)
+                                if meh then
+                                  cb(true)
+                                  if data.invTypeTo == 10 or
+                                      (data.invTypeTo == 1 and data.ownerTo ~= charId
+                                      ) then
+                                    REFRESH_ALL_CLIENTS(data.ownerTo, data.invTypeTo, _src)
+                                  elseif data.invTypeFrom == 10 or
+                                      data.invTypeFrom == 1 and data.ownerFrom ~= charId then
+                                    REFRESH_ALL_CLIENTS(data.ownerFrom, data.invTypeFrom, _src)
+                                  end
+                                end
+                              end)
+                            end
+                          end
+                        end
+                      end)
+                  end
+                end)
+              end)
+            end
 
-  --           -- were moving the entire fucking stack ere boys :)
-  --           if data.countFrom == data.countTo then
-  --             Inventory:GetSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(slotFrom)
-  --               Inventory:GetSlot(data.ownerTo, data.slotTo, data.invTypeTo, function(slotTo)
-  --                 if slotTo == nil then
-  --                   Inventory:RemoveSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(success)
-  --                     if success then
-  --                       Inventory:AddSlot(data.ownerTo, data.name, data.countTo, slotFrom.MetaData, data.slotTo,
-  --                         data.invTypeTo, function(success)
-  --                         if success then
-  --                           cb({ success = true })
-  --                           if data.invTypeTo == 10 or (data.invTypeTo == 1 and data.ownerTo ~= char:GetData('ID')) then
-  --                             processRefreshForClients(data.ownerTo, data.invTypeTo, _src)
-  --                           elseif data.invTypeFrom == 10 or
-  --                               data.invTypeFrom == 1 and data.ownerFrom ~= char:GetData('ID') then
-  --                             processRefreshForClients(data.ownerFrom, data.invTypeFrom, _src)
-  --                           end
-  --                         end
-  --                       end)
-  --                     end
-  --                   end)
-  --                 else
-  --                   if slotTo.Name == data.name then
-  --                     local item = itemsDatabase[data.name]
-  --                     if (slotTo.Count + data.countTo) <= item.max then
-  --                       Inventory:RemoveSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(success)
-  --                         if success then
-  --                           Inventory:AddToSlot(data.ownerTo, data.slotTo, data.countTo, data.invTypeTo,
-  --                             function(success)
-  --                               if success then
-  --                                 cb({ success = true })
-  --                                 if data.invTypeTo == 10 or
-  --                                     (data.invTypeTo == 1 and data.ownerTo ~= char:GetData('ID')
-  --                                     ) then
-  --                                   processRefreshForClients(data.ownerTo, data.invTypeTo, _src)
-  --                                 elseif data.invTypeFrom == 10 or
-  --                                     data.invTypeFrom == 1 and data.ownerFrom ~= char:GetData('ID') then
-  --                                   processRefreshForClients(data.ownerFrom, data.invTypeFrom, _src)
-  --                                 end
-  --                               end
-  --                             end)
-  --                         end
-  --                       end)
-  --                     else
-  --                       Inventory:SwapSlots(data.ownerFrom, data.ownerTo, data.slotFrom, data.slotTo, data.invTypeFrom,
-  --                         data.invTypeTo, function(meh)
-  --                         if meh then
-  --                           cb({ success = true })
-  --                           if data.invTypeTo == 10 or (data.invTypeTo == 1 and data.ownerTo ~= char:GetData('ID')) then
-  --                             processRefreshForClients(data.ownerTo, data.invTypeTo, _src)
-  --                           elseif data.invTypeFrom == 10 or
-  --                               data.invTypeFrom == 1 and data.ownerFrom ~= char:GetData('ID') then
-  --                             processRefreshForClients(data.ownerFrom, data.invTypeFrom, _src)
-  --                           end
-  --                         end
-  --                       end)
-  --                     end
-  --                   else
-  --                     Inventory:SwapSlots(data.ownerFrom, data.ownerTo, data.slotFrom, data.slotTo, data.invTypeFrom,
-  --                       data.invTypeTo, function(meh)
-  --                       if meh then
-  --                         cb({ success = true })
-  --                         if data.invTypeTo == 10 or (data.invTypeTo == 1 and data.ownerTo ~= char:GetData('ID')) then
-  --                           processRefreshForClients(data.ownerTo, data.invTypeTo, _src)
-  --                         elseif data.invTypeFrom == 10 or data.invTypeFrom == 1 and data.ownerFrom ~= char:GetData('ID') then
-  --                           processRefreshForClients(data.ownerFrom, data.invTypeFrom, _src)
-  --                         end
-  --                       end
-  --                     end)
-  --                   end
-  --                 end
-  --               end)
-  --             end)
-  --           end
-  --         else
-  --           -- moving to another inventory
-  --           if data.countTo ~= data.countFrom then
-  --             -- Splitting?
-  --             Inventory:GetSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(slotFrom)
-  --               Inventory:RemoveAmount(data.ownerFrom, data.slotFrom, data.countTo, data.invTypeFrom,
-  --                 function(success)
-  --                   if success then
-  --                     Inventory:GetSlot(data.ownerTo, data.slotTo, data.invTypeTo, function(slotTo)
-  --                       if slotTo == nil then
-  --                         Inventory:AddSlot(data.ownerTo, data.name, data.countTo, slotFrom.MetaData, data.slotTo,
-  --                           data.invTypeTo, function(success)
-  --                           if success then
-  --                             cb({ success = true })
-  --                             if data.invTypeTo == 10 or (data.invTypeTo == 1 and data.ownerTo ~= char:GetData('ID')) then
-  --                               processRefreshForClients(data.ownerTo, data.invTypeTo, _src)
-  --                             elseif data.invTypeFrom == 10 or
-  --                                 data.invTypeFrom == 1 and data.ownerFrom ~= char:GetData('ID') then
-  --                               processRefreshForClients(data.ownerFrom, data.invTypeFrom, _src)
-  --                             end
-  --                           end
-  --                         end)
-  --                       else
-  --                         if slotTo.Name == data.name then
-  --                           if (slotTo.Count + data.countTo) <= item.max then
-  --                             Inventory:AddToSlot(data.ownerTo, data.slotTo, data.countTo, data.invTypeTo,
-  --                               function(success)
-  --                                 if success then
-  --                                   cb({ success = true })
-  --                                   if data.invTypeTo == 10 or
-  --                                       (data.invTypeTo == 1 and data.ownerTo ~= char:GetData('ID')) then
-  --                                     processRefreshForClients(data.ownerTo, data.invTypeTo, _src)
-  --                                   elseif data.invTypeFrom == 10 or
-  --                                       data.invTypeFrom == 1 and data.ownerFrom ~= char:GetData('ID') then
-  --                                     processRefreshForClients(data.ownerFrom, data.invTypeFrom, _src)
-  --                                   end
-  --                                 end
-  --                               end)
-  --                           else
-  --                             Inventory:SwapSlots(data.ownerFrom, data.ownerTo, data.slotFrom, data.slotTo,
-  --                               data.invTypeFrom, data.invTypeTo, function(meh)
-  --                               if meh then
-  --                                 cb({ success = true })
-  --                                 if data.invTypeTo == 10 or
-  --                                     (data.invTypeTo == 1 and data.ownerTo ~= char:GetData('ID')
-  --                                     ) then
-  --                                   processRefreshForClients(data.ownerTo, data.invTypeTo, _src)
-  --                                 elseif data.invTypeFrom == 10 or
-  --                                     data.invTypeFrom == 1 and data.ownerFrom ~= char:GetData('ID') then
-  --                                   processRefreshForClients(data.ownerFrom, data.invTypeFrom, _src)
-  --                                 end
-  --                               end
-  --                             end)
-  --                           end
-  --                         else
-  --                           Inventory:SwapSlots(data.ownerFrom, data.ownerTo, data.slotFrom, data.slotTo,
-  --                             data.invTypeFrom, data.invTypeTo, function(meh)
-  --                             if meh then
-  --                               cb({ success = true })
-  --                               if data.invTypeTo == 10 or (data.invTypeTo == 1 and data.ownerTo ~= char:GetData('ID')) then
-  --                                 processRefreshForClients(data.ownerTo, data.invTypeTo, _src)
-  --                               elseif data.invTypeFrom == 10 or
-  --                                   data.invTypeFrom == 1 and data.ownerFrom ~= char:GetData('ID') then
-  --                                 processRefreshForClients(data.ownerFrom, data.invTypeFrom, _src)
-  --                               end
-  --                             end
-  --                           end)
-  --                         end
-  --                       end
-  --                     end)
-  --                   end
-  --                 end)
-  --             end)
-  --           else
-  --             -- Full stack
-  --             Inventory:GetSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(slotFrom)
-  --               Inventory:GetSlot(data.ownerTo, data.slotTo, data.invTypeTo, function(slotTo)
-  --                 if slotTo == nil then
-  --                   Inventory:RemoveSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(success)
-  --                     if success then
-  --                       if slotFrom.invType == 1 and slotFrom.details.type == 2 then
-  --                         Inventory:RemoveWeapon(_src, slotFrom._id)
-  --                       end
-  --                       Inventory:AddSlot(data.ownerTo, data.name, data.countTo, slotFrom.MetaData, data.slotTo,
-  --                         data.invTypeTo, function(success)
-  --                         if success then
-  --                           cb({ success = true })
-  --                           if data.invTypeTo == 10 or (data.invTypeTo == 1 and data.ownerTo ~= char:GetData('ID')) then
-  --                             processRefreshForClients(data.ownerTo, data.invTypeTo, _src)
-  --                           elseif data.invTypeFrom == 10 or
-  --                               data.invTypeFrom == 1 and data.ownerFrom ~= char:GetData('ID') then
-  --                             processRefreshForClients(data.ownerFrom, data.invTypeFrom, _src)
-  --                           end
-  --                         end
-  --                       end)
-  --                     end
-  --                   end)
-  --                 else
-  --                   if slotTo.Name == data.name then
-  --                     local item = itemsDatabase[data.name]
-  --                     if (slotTo.Count + data.countTo) <= item.max then
-  --                       Inventory:RemoveSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(success)
-  --                         if success then
-  --                           if slotFrom.invType == 1 and slotFrom.details.type == 2 then
-  --                             Inventory:RemoveWeapon(_src, slotFrom._id)
-  --                           end
-  --                           Inventory:AddToSlot(data.ownerTo, data.slotTo, data.countTo, data.invTypeTo,
-  --                             function(success)
-  --                               if success then
-  --                                 cb({ success = true })
-  --                                 if data.invTypeTo == 10 or
-  --                                     (data.invTypeTo == 1 and data.ownerTo ~= char:GetData('ID')
-  --                                     ) then
-  --                                   processRefreshForClients(data.ownerTo, data.invTypeTo, _src)
-  --                                 elseif data.invTypeFrom == 10 or
-  --                                     data.invTypeFrom == 1 and data.ownerFrom ~= char:GetData('ID') then
-  --                                   processRefreshForClients(data.ownerFrom, data.invTypeFrom, _src)
-  --                                 end
-  --                               end
-  --                             end)
-  --                         end
-  --                       end)
-  --                     else
-  --                       Inventory:SwapSlots(data.ownerFrom, data.ownerTo, data.slotFrom, data.slotTo, data.invTypeFrom,
-  --                         data.invTypeTo, function(meh)
-  --                         if meh then
-  --                           if slotFrom.invType == 1 and slotFrom.details.type == 2 then
-  --                             Inventory:RemoveWeapon(_src, slotFrom._id)
-  --                           end
-  --                           cb({ success = true })
-  --                           if data.invTypeTo == 10 or (data.invTypeTo == 1 and data.ownerTo ~= char:GetData('ID')) then
-  --                             processRefreshForClients(data.ownerTo, data.invTypeTo, _src)
-  --                           elseif data.invTypeFrom == 10 or
-  --                               data.invTypeFrom == 1 and data.ownerFrom ~= char:GetData('ID') then
-  --                             processRefreshForClients(data.ownerFrom, data.invTypeFrom, _src)
-  --                           end
-  --                         end
-  --                       end)
-  --                     end
-  --                   else
-  --                     Inventory:SwapSlots(data.ownerFrom, data.ownerTo, data.slotFrom, data.slotTo, data.invTypeFrom,
-  --                       data.invTypeTo, function(meh)
-  --                       if meh then
-  --                         if slotFrom.invType == 1 and slotFrom.details.type == 2 then
-  --                           Inventory:RemoveWeapon(_src, slotFrom._id)
-  --                         end
-  --                         cb({ success = true })
-  --                         if data.invTypeTo == 10 or (data.invTypeTo == 1 and data.ownerTo ~= char:GetData('ID')) then
-  --                           processRefreshForClients(data.ownerTo, data.invTypeTo, _src)
-  --                         elseif data.invTypeFrom == 10 or data.invTypeFrom == 1 and data.ownerFrom ~= char:GetData('ID') then
-  --                           processRefreshForClients(data.ownerFrom, data.invTypeFrom, _src)
-  --                         end
-  --                       end
-  --                     end)
-  --                   end
-  --                 end
-  --               end)
-  --             end)
-  --           end
-  --         end
-  --       else
-  --         -- Error putting item into incompatible storage (e.g shop, etc..)
-  --       end
+            -- were moving the entire fucking stack ere boys :)
+            if data.quantityFrom == data.quantityTo then
+              Inventory:GetSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(slotFrom)
+                Inventory:GetSlot(data.ownerTo, data.slotTo, data.invTypeTo, function(slotTo)
+                  if slotTo == nil then
+                    Inventory:RemoveSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(success)
+                      if success then
+                        Inventory:AddSlot(data.ownerTo, itemId, data.quantityTo, slotFrom.metaData, data.slotTo,
+                          data.invTypeTo, function(success)
+                          if success then
+                            cb(true)
+                            if data.invTypeTo == 10 or (data.invTypeTo == 1 and data.ownerTo ~= charId) then
+                              REFRESH_ALL_CLIENTS(data.ownerTo, data.invTypeTo, _src)
+                            elseif data.invTypeFrom == 10 or
+                                data.invTypeFrom == 1 and data.ownerFrom ~= charId then
+                              REFRESH_ALL_CLIENTS(data.ownerFrom, data.invTypeFrom, _src)
+                            end
+                          end
+                        end)
+                      end
+                    end)
+                  else
+                    if slotTo.id == itemId then
+                      local item = SHARED_ITEMS[itemId]
+                      Inventory:RemoveSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(success)
+                        if success then
+                          Inventory:AddToSlot(data.ownerTo, data.slotTo, data.quantityTo, data.invTypeTo,
+                            function(success)
+                              if success then
+                                cb(true)
+                                if data.invTypeTo == 10 or
+                                    (data.invTypeTo == 1 and data.ownerTo ~= charId
+                                    ) then
+                                  REFRESH_ALL_CLIENTS(data.ownerTo, data.invTypeTo, _src)
+                                elseif data.invTypeFrom == 10 or
+                                    data.invTypeFrom == 1 and data.ownerFrom ~= charId then
+                                  REFRESH_ALL_CLIENTS(data.ownerFrom, data.invTypeFrom, _src)
+                                end
+                              end
+                            end)
+                        end
+                      end)
+                    else
+                      Inventory:SwapSlots(data.ownerFrom, data.ownerTo, data.slotFrom, data.slotTo, data.invTypeFrom,
+                        data.invTypeTo, function(meh)
+                        if meh then
+                          cb(true)
+                          if data.invTypeTo == 10 or (data.invTypeTo == 1 and data.ownerTo ~= charId) then
+                            REFRESH_ALL_CLIENTS(data.ownerTo, data.invTypeTo, _src)
+                          elseif data.invTypeFrom == 10 or data.invTypeFrom == 1 and data.ownerFrom ~= charId then
+                            REFRESH_ALL_CLIENTS(data.ownerFrom, data.invTypeFrom, _src)
+                          end
+                        end
+                      end)
+                    end
+                  end
+                end)
+              end)
+            end
+          else
+            -- moving to another inventory
+            if data.quantityTo ~= data.quantityFrom then
+              -- Splitting?
+              Inventory:GetSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(slotFrom)
+                Inventory:RemoveAmount(data.ownerFrom, data.slotFrom, data.quantityTo, data.invTypeFrom,
+                  function(success)
+                    if success then
+                      Inventory:GetSlot(data.ownerTo, data.slotTo, data.invTypeTo, function(slotTo)
+                        if slotTo == nil then
+                          Inventory:AddSlot(data.ownerTo, itemId, data.quantityTo, slotFrom.metaData, data.slotTo,
+                            data.invTypeTo, function(success)
+                            if success then
+                              cb(true)
+                              if data.invTypeTo == 10 or (data.invTypeTo == 1 and data.ownerTo ~= charId) then
+                                REFRESH_ALL_CLIENTS(data.ownerTo, data.invTypeTo, _src)
+                              elseif data.invTypeFrom == 10 or
+                                  data.invTypeFrom == 1 and data.ownerFrom ~= charId then
+                                REFRESH_ALL_CLIENTS(data.ownerFrom, data.invTypeFrom, _src)
+                              end
+                            end
+                          end)
+                        else
+                          if slotTo.id == itemId then
+                            Inventory:AddToSlot(data.ownerTo, data.slotTo, data.quantityTo, data.invTypeTo,
+                              function(success)
+                                if success then
+                                  cb(true)
+                                  if data.invTypeTo == 10 or
+                                      (data.invTypeTo == 1 and data.ownerTo ~= charId) then
+                                    REFRESH_ALL_CLIENTS(data.ownerTo, data.invTypeTo, _src)
+                                  elseif data.invTypeFrom == 10 or
+                                      data.invTypeFrom == 1 and data.ownerFrom ~= charId then
+                                    REFRESH_ALL_CLIENTS(data.ownerFrom, data.invTypeFrom, _src)
+                                  end
+                                end
+                              end)
+                          else
+                            Inventory:SwapSlots(data.ownerFrom, data.ownerTo, data.slotFrom, data.slotTo,
+                              data.invTypeFrom, data.invTypeTo, function(meh)
+                              if meh then
+                                cb(true)
+                                if data.invTypeTo == 10 or (data.invTypeTo == 1 and data.ownerTo ~= charId) then
+                                  REFRESH_ALL_CLIENTS(data.ownerTo, data.invTypeTo, _src)
+                                elseif data.invTypeFrom == 10 or
+                                    data.invTypeFrom == 1 and data.ownerFrom ~= charId then
+                                  REFRESH_ALL_CLIENTS(data.ownerFrom, data.invTypeFrom, _src)
+                                end
+                              end
+                            end)
+                          end
+                        end
+                      end)
+                    end
+                  end)
+              end)
+            else
+              -- Full stack
+              Inventory:GetSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(slotFrom)
+                Inventory:GetSlot(data.ownerTo, data.slotTo, data.invTypeTo, function(slotTo)
+                  if slotTo == nil then
+                    Inventory:RemoveSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(success)
+                      if success then
+                        if slotFrom.invType == 1 and slotFrom.details.type == 2 then
+                          Inventory:RemoveWeapon(_src, slotFrom._id)
+                        end
+                        Inventory:AddSlot(data.ownerTo, itemId, data.quantityTo, slotFrom.metaData, data.slotTo,
+                          data.invTypeTo, function(success)
+                          if success then
+                            cb(true)
+                            if data.invTypeTo == 10 or (data.invTypeTo == 1 and data.ownerTo ~= charId) then
+                              REFRESH_ALL_CLIENTS(data.ownerTo, data.invTypeTo, _src)
+                            elseif data.invTypeFrom == 10 or
+                                data.invTypeFrom == 1 and data.ownerFrom ~= charId then
+                              REFRESH_ALL_CLIENTS(data.ownerFrom, data.invTypeFrom, _src)
+                            end
+                          end
+                        end)
+                      end
+                    end)
+                  else
+                    if slotTo.id == itemId then
+                      local item = SHARED_ITEMS[itemId]
+                      Inventory:RemoveSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(success)
+                        if success then
+                          if slotFrom.invType == 1 and slotFrom.details.type == 2 then
+                            Inventory:RemoveWeapon(_src, slotFrom._id)
+                          end
+                          Inventory:AddToSlot(data.ownerTo, data.slotTo, data.quantityTo, data.invTypeTo,
+                            function(success)
+                              if success then
+                                cb(true)
+                                if data.invTypeTo == 10 or
+                                    (data.invTypeTo == 1 and data.ownerTo ~= charId
+                                    ) then
+                                  REFRESH_ALL_CLIENTS(data.ownerTo, data.invTypeTo, _src)
+                                elseif data.invTypeFrom == 10 or
+                                    data.invTypeFrom == 1 and data.ownerFrom ~= charId then
+                                  REFRESH_ALL_CLIENTS(data.ownerFrom, data.invTypeFrom, _src)
+                                end
+                              end
+                            end)
+                        end
+                      end)
+                    else
+                      Inventory:SwapSlots(data.ownerFrom, data.ownerTo, data.slotFrom, data.slotTo, data.invTypeFrom,
+                        data.invTypeTo, function(meh)
+                        if meh then
+                          if slotFrom.invType == 1 and slotFrom.details.type == 2 then
+                            Inventory:RemoveWeapon(_src, slotFrom._id)
+                          end
+                          cb(true)
+                          if data.invTypeTo == 10 or (data.invTypeTo == 1 and data.ownerTo ~= charId) then
+                            REFRESH_ALL_CLIENTS(data.ownerTo, data.invTypeTo, _src)
+                          elseif data.invTypeFrom == 10 or data.invTypeFrom == 1 and data.ownerFrom ~= charId then
+                            REFRESH_ALL_CLIENTS(data.ownerFrom, data.invTypeFrom, _src)
+                          end
+                        end
+                      end)
+                    end
+                  end
+                end)
+              end)
+            end
+          end
+        else
+          -- Error putting item into incompatible storage (e.g shop, etc..)
+        end
 
-  --     end
-  --   else
-  --     -- is there a pwnzer thing for this or ?
-  --     cb({ reason = "Item does not exist" })
-  --   end
-  -- end)
+      end
+    else
+      -- we need to ban this guy...
+      TriggerClientEvent('Notification:SendAlert', _src, 'Please stop it.')
+    end
+  end)
 
+  Callbacks:RegisterServerCallback('Inventory:Server:NextSlotInSecondary', function(source, data, cb)
+    Inventory:GetOpenSlot(data.ownerTo, data.invTypeTo, function(i)
+      if i ~= nil and i > 0 and i <= LOADED_ENTITIES[data.invTypeTo].slots then
+        Inventory:GetSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(slotFrom)
+          if slotFrom ~= nil then
+            Inventory:UpdateSlot(slotFrom._id, data.ownerTo, i, data.invTypeTo, function(success)
+              cb(success)
+            end)
+          end
+        end)
+      end
+    end)
+  end)
 end
 
 function REGISTER_ITEM_CALLBACKS()
