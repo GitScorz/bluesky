@@ -35,39 +35,3 @@ export const InventoryData: InventoryState = {
     },
   ],
 }
-
-export const SecondInventoryData: InventoryState = {
-  owner: "ground",
-  name: "Shop",
-  size: 35,
-  invType: 11,
-  weight: 100,
-  maxWeight: 1000,
-  inventory: [
-    {
-      label: "Bread",
-      id: "bread",
-      owner: "ground",
-      description: "A loaf of motherfucking bread dfsd yufgdsy fgsdyu gsdyu fgsuid fghsdiu ghfsug ufdy ghdf ghuyghyu",
-      slot: 3,
-      weight: 5,
-      quantity: 1,
-      invType: 11,
-      // creationDate: 1,
-      metaData: {},
-    },
-  ]
-}
-
-export const DefaultHoveredItem: Item = {
-  label: "",
-  id: "",
-  owner: "",
-  description: "",
-  slot: 0,
-  weight: 0,
-  quantity: 0,
-  invType: 0,
-  // creationDate: 1,
-  metaData: {},
-}
