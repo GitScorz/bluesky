@@ -6,7 +6,7 @@ function RetrieveComponents()
     Utils = exports['bs_base']:FetchComponent('Utils')
     Chat = exports['bs_base']:FetchComponent('Chat')
     Tasks = exports['bs_base']:FetchComponent('Tasks')
-    Inventory = exports['bs_base']:FetchComponent('Inventory')
+    -- Inventory = exports['bs_base']:FetchComponent('Inventory')
     Default = exports['bs_base']:FetchComponent('Default')
 end
 
@@ -18,7 +18,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'Database',
         'Default',
         'Utils',
-        'Inventory',
+        -- 'Inventory',
         'Tasks',
     }, function(error)
         if #error > 0 then
@@ -67,7 +67,10 @@ function RegisterTasks()
                     --New Due for Period based on RemainingAmount
                     v.RemainingPeriods = v.RemainingPeriods - 1
                     v.RemainingAmount = v.RemainingAmount * v.Interest
-                    v.Due = math.ceil(v.RemainingAmount / (((math.pow(1 + e, v.RemainingPeriods)) - 1) / (v.Interest * (math.pow((1 + v.Interest), v.RemainingPeriods)))))
+                    v.Due = math.ceil(v.RemainingAmount /
+                        (
+                        ((math.pow(1 + e, v.RemainingPeriods)) - 1) /
+                            (v.Interest * (math.pow((1 + v.Interest), v.RemainingPeriods)))))
                     Database.Game:updateOne({
                         collection = 'loans',
                         query = {
@@ -96,9 +99,9 @@ function RegisterTasks()
 end
 
 function RegisterItemUse()
-    Inventory.Items:RegisterUse('card', 'Bank', function(source, item)
-        TriggerClientEvent('Bank:OpenATMUI', source, item.MetaData)
-    end)
+    -- Inventory.Items:RegisterUse('card', 'Bank', function(source, item)
+    --     TriggerClientEvent('Bank:OpenATMUI', source, item.MetaData)
+    -- end)
 end
 
 function RegisterChatCommands()
@@ -338,10 +341,10 @@ function RegisterCallbacks()
 
                 end)
             end)
-            Inventory:AddItem(char:GetData('ID'), 'card', 1, {
-                AccountNumber = data.AccountNumber,
-                CardNumber = cardNumber
-            }, 1)
+            -- Inventory:AddItem(char:GetData('ID'), 'card', 1, {
+            --     AccountNumber = data.AccountNumber,
+            --     CardNumber = cardNumber
+            -- }, 1)
             cb(true)
         end)
     end)
@@ -380,7 +383,10 @@ function RegisterCallbacks()
             LoanEntity = data.entity,
             RemainingAmount = data.amount,
             Interest = data.interest,
-            Due = math.ceil(data.amount / (((math.pow(1 + data.interest, data.periods)) - 1) / (data.interest * (math.pow((1 + data.interest), data.periods))))),
+            Due = math.ceil(data.amount /
+                (
+                ((math.pow(1 + data.interest, data.periods)) - 1) /
+                    (data.interest * (math.pow((1 + data.interest), data.periods))))),
             Penalty = 0,
             LoanType = data.type,
             RemainingPeriods = data.periods,
