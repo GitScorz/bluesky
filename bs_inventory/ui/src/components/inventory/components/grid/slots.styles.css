@@ -87,3 +87,23 @@
   pointer-events: none;
   height: 0.5vh;
 }
+
+.drag {
+  position: fixed;
+  width: 6.55vw;
+  height: 6.55vw;
+  font-size: .9rem;
+  background: var(--foreground);
+  box-shadow: inset -1px 0px 1px rgba(255, 255, 255, 0.04), inset 0px 0px 6px rgba(255, 255, 255, 0.03);
+  pointer-events: none;
+  z-index: 999;
+}
+
+.drag img {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4.5vw;
+  height: 3.5vw;
+}

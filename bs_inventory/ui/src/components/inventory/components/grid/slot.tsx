@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil';
 import {
-  DroppedItem,
+  DragSource,
   INVENTORY_EVENTS,
   PropSlot,
 } from '../../../../types/types';
@@ -41,7 +41,7 @@ export default function Slot({
   const [, drop] = useDrop(
     () => ({
       accept: 'SLOT',
-      drop: (item: DroppedItem) => {
+      drop: (item: DragSource) => {
         if (item.slot !== hoveredSlot.slot) {
           fetchNui(INVENTORY_EVENTS.MOVE_ITEM, {
             ownerFrom: item.item.owner,
@@ -56,8 +56,6 @@ export default function Slot({
             invTypeTo: item.item.invType,
           });
         }
-
-        console.log(item, hoveredSlot, moveAmount);
       },
     }),
     [item, hoveredSlot, moveAmount],

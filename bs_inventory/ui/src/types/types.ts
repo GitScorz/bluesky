@@ -49,7 +49,7 @@ export interface SlotHovered {
   owner: string;
 }
 
-export interface DroppedItem {
+export interface DragSource {
   item: Item;
   slot: number;
   draggable: boolean;

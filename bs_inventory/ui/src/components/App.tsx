@@ -1,9 +1,9 @@
 import Inventory from './inventory';
 import Notification from './notification';
-import './App.css';
+import DragPreview from './inventory/components/grid/dragpreview';
 import { isEnvBrowser } from '../utils/misc';
 import { useInventoryService } from './hooks/useInventoryService';
-// import HoverSlot from './inventory/components/slots/hoverslot';
+import './App.css';
 
 export default function App() {
   // Register every service you want here.
@@ -21,8 +21,8 @@ export default function App() {
           height: '100%',
         }}
       />
+      <DragPreview />
       <Inventory />
-      {/* <HoverSlot /> */}
       <Notification />
     </>
   );

@@ -1,0 +1,83 @@
+import { Fade } from '@mui/material';
+import { RefObject, useRef } from 'react';
+import { DragLayerMonitor, useDragLayer, XYCoord } from 'react-dnd';
+import { DragSource } from '../../../../types/types';
+import './slots.styles.css';
+
+interface DragLayerProps {
+  data: DragSource;
+  currentOffset: XYCoord | null;
+  isDragging: boolean;
+}
+
+const subtract = (a: XYCoord, b: XYCoord): XYCoord => {
+  return {
+    x: a.x - b.x,
+    y: a.y - b.y,
+  };
+};
+
+const calculateParentOffset = (monitor: DragLayerMonitor): XYCoord => {
+  const client = monitor.getInitialClientOffset();
+  const source = monitor.getInitialSourceClientOffset();
+  if (
+    client === null ||
+    source === null ||
+    client.x === undefined ||
+    client.y === undefined
+  ) {
+    return { x: 0, y: 0 };
+  }
+  return subtract(client, source);
+};
+
+export const calculatePointerPosition = (
+  monitor: DragLayerMonitor,
+  childRef: RefObject<Element>,
+): XYCoord | null => {
+  const offset = monitor.getClientOffset();
+  if (offset === null) {
+    return null;
+  }
+
+  if (!childRef.current || !childRef.current.getBoundingClientRect) {
+    return subtract(offset, calculateParentOffset(monitor));
+  }
+
+  const bb = childRef.current.getBoundingClientRect();
+  const middle = { x: bb.width / 2, y: bb.height / 2 };
+  return subtract(offset, middle);
+};
+
+export default function DragPreview() {
+  const element = useRef<HTMLDivElement>(null);
+
+  const { data, isDragging, currentOffset } = useDragLayer<DragLayerProps>(
+    (monitor) => ({
+      data: monitor.getItem(),
+      currentOffset: calculatePointerPosition(monitor, element),
+      isDragging: monitor.isDragging(),
+    }),
+  );
+
+  return (
+    <>
+      {isDragging && currentOffset && data.item && (
+        <div
+          ref={element}
+          className="drag"
+          style={{
+            transform: `translate(${currentOffset.x}px, ${currentOffset.y}px)`,
+            backgroundImage: `url(${`images/${data.item.id}.png`})`,
+          }}
+        >
+          <img src={`images/${data.item.id}.png`} alt={data.item.label}></img>
+          <div id="item-name">{data.item.label}</div>
+          <div id="item-quantity">{data.item.quantity}x</div>
+          <div id="item-weight">{data.item.weight}</div>
+          <div id="item-quality"></div>
+        </div>
+      )}
+    </>
+  );
+}
