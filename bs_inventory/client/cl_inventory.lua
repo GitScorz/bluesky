@@ -70,6 +70,10 @@ INVENTORY = {
       Inventory.Player:Update(inventory)
     end)
 
+    Callbacks:ServerCallback('Inventory:FetchSecondInventory', {}, function(inventory)
+      Inventory.Secondary:Update(inventory)
+    end)
+
     Inventory:SetFocus(true)
     Inventory:SendUIMessage('inventory:open', true)
     Inventory:Animation()
