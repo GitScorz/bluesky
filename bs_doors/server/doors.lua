@@ -11,7 +11,7 @@ function RetrieveComponents()
     Doors = exports['bs_base']:FetchComponent('Doors')
     Chat = exports['bs_base']:FetchComponent('Chat')
     Jobs = exports['bs_base']:FetchComponent('Jobs')
-    Inventory = exports['bs_base']:FetchComponent('Inventory')
+    -- Inventory = exports['bs_base']:FetchComponent('Inventory')
 end
 
 AddEventHandler('Core:Shared:Ready', function()
@@ -22,18 +22,18 @@ AddEventHandler('Core:Shared:Ready', function()
         'Utils',
         'Doors',
         'Chat',
-        'Inventory',
+        -- 'Inventory',
         'Jobs'
     }, function(error)
         if #error > 0 then return end -- Do something to handle if not all dependencies loaded
         RetrieveComponents()
         RegisterCallbacks()
         RegisterChatCommands()
-        RegisterItems()
+        -- RegisterItems()
         Doors:SetDefaultLocks(function(done)
             Doors:Fetch(function(d)
                 if Utils:GetTableLength(d) > 0 then
-                    for k,v in pairs(d) do
+                    for k, v in pairs(d) do
                         v.id = tonumber(v.id)
                         doors[v.id] = v
                     end
@@ -62,11 +62,11 @@ function RegisterChatCommands()
     }, -1, { { name = "police", gradelevel = 1 } })
 end
 
-function RegisterItems()
-    Inventory.Items:RegisterUse('lockpick', 'Doors', function(source, item)
-        TriggerClientEvent('Doors:client:usedLockpick', source, item)
-    end)
-end
+-- function RegisterItems()
+--     Inventory.Items:RegisterUse('lockpick', 'Doors', function(source, item)
+--         TriggerClientEvent('Doors:client:usedLockpick', source, item)
+--     end)
+-- end
 
 function RegisterCallbacks()
     Callbacks:RegisterServerCallback('Doors:Add', function(source, data, cb)
@@ -169,7 +169,7 @@ DOORS = {
     SetDefaultLocks = function(self, cb)
         Doors:Fetch(function(d)
             if Utils:GetTableLength(d) > 0 then
-                for k,v in pairs(d) do
+                for k, v in pairs(d) do
                     Database.Game:updateOne({
                         collection = 'doors',
                         query = { id = v.id },
@@ -225,7 +225,7 @@ DOORS = {
                     end)
                 else
                     TriggerClientEvent('Doors:client:updateDoor', -1, door, not doors[Doors:GetMultiID(door)].Lock)
-                end                
+                end
             end)
         end
     end,
@@ -233,13 +233,13 @@ DOORS = {
         Database.Game:updateOne({
             collection = 'doors',
             query = { id = door },
-            update = { ['$set'] = { [setting] = value }}
+            update = { ['$set'] = { [setting] = value } }
         }, function(success, result)
             if doors[door].Multi > 0 then
                 Database.Game:updateOne({
                     collection = 'doors',
                     query = { id = doors[door].Multi },
-                    update = { ['$set'] = { [setting] = value }}
+                    update = { ['$set'] = { [setting] = value } }
                 }, function(s, r)
                     local multiIndex = Doors:GetMultiID(door)
                     doors[multiIndex][setting] = value
@@ -254,7 +254,7 @@ DOORS = {
     Fetch = function(self, cb)
         Database.Game:find({
             collection = 'doors',
-            query = { }
+            query = {}
         }, function(success, d)
             cb(d)
         end)
@@ -278,13 +278,13 @@ DOORS = {
         if doors[door] then
             local multi = doors[door].Multi
             if multi > 0 then
-                for k,v in pairs(doors) do
+                for k, v in pairs(doors) do
                     if v.id == multi then
                         return k
                     end
                 end
             end
-            
+
             return 0
         end
     end
