@@ -23,10 +23,10 @@ InjectDebugData<any>([
   },
   {
     action: INVENTORY_EVENTS.UPDATE_PLAYER_INVENTORY,
-    data: isEnvBrowser() ? InventoryData : {},
+    data: InventoryData,
   },
   {
     action: INVENTORY_EVENTS.UPDATE_SECONDARY_INVENTORY,
-    data: isEnvBrowser() ? SecondInventoryData : {},
+    data: SecondInventoryData,
   },
 ]);
