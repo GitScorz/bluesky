@@ -22,7 +22,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'UI',
     }, function(error)
         if #error > 0 then
-            return ;
+            return;
         end
         RetrieveComponents()
     end)
@@ -110,7 +110,8 @@ MARKERS = {
         --- @param hint string
         --- @param interfuckingactiondistance number
         --- @param action string
-        Add = function(self, groupName, markerId, markerCoords, markerType, markerScale, markerColor, shouldMarkerShow, hint, interfuckingactiondistance, action)
+        Add = function(self, groupName, markerId, markerCoords, markerType, markerScale, markerColor, shouldMarkerShow,
+                       hint, interfuckingactiondistance, action)
             if markerGroups[groupName] == nil then
                 Logger:Error('Markers', 'Invalid Group for Marker: ' .. tostring(groupName))
                 return
@@ -150,7 +151,8 @@ MARKERS = {
                 return
             end
             withinDistanceGroups[groupName] = nil
-            markerGroups[groupName].markers[markerId] = Marker(groupName, markerId, markerCoords, markerType, markerScale, markerColor, shouldMarkerShow, hint, interfuckingactiondistance, action)
+            markerGroups[groupName].markers[markerId] = Marker(groupName, markerId, markerCoords, markerType, markerScale
+                , markerColor, shouldMarkerShow, hint, interfuckingactiondistance, action)
         end,
 
         --- @param groupName string
@@ -192,7 +194,8 @@ MARKERS = {
                 Logger:Error('Markers', 'Invalid Marker shouldMarkerShow for Item Marker: ' .. tostring(markerId))
                 return
             end
-            markerGroups[groupName].markers[markerId] = ItemMarker(groupName, markerId, itemName, markerCoords, hint, distance, shouldMarkerShow, action)
+            markerGroups[groupName].markers[markerId] = ItemMarker(groupName, markerId, itemName, markerCoords, hint,
+                distance, shouldMarkerShow, action)
         end,
 
         --- @param groupName string
@@ -220,7 +223,8 @@ MARKERS = {
         --- @param hint string
         --- @param interfuckingactiondistance number
         --- @param action string
-        Update = function(self, groupName, markerId, markerCoords, markerType, markerScale, markerColor, shouldMarkerShow, hint, interfuckingactiondistance, action)
+        Update = function(self, groupName, markerId, markerCoords, markerType, markerScale, markerColor, shouldMarkerShow
+                          , hint, interfuckingactiondistance, action)
             if markerGroups[groupName] == nil then
                 Logger:Error('Markers', 'Invalid Group for Marker: ' .. tostring(groupName))
                 return
@@ -255,7 +259,8 @@ MARKERS = {
                 Logger:Error('Markers', 'Invalid Group Coords for Marker Group: ' .. tostring(groupName))
                 return
             end
-            markerGroups[groupName].markers[markerId] = Marker(groupName, markerId, markerCoords, markerType, markerScale, markerColor, shouldMarkerShow, hint, interfuckingactiondistance, action)
+            markerGroups[groupName].markers[markerId] = Marker(groupName, markerId, markerCoords, markerType, markerScale
+                , markerColor, shouldMarkerShow, hint, interfuckingactiondistance, action)
         end
     }
 }
@@ -345,18 +350,18 @@ Citizen.CreateThread(function()
     end
 end)
 
-RegisterNetEvent('Markers:ItemAction')
-AddEventHandler('Markers:ItemAction', function(item)
-    local playerPed = PlayerPedId()
-    local playerCoords = GetEntityCoords(playerPed)
-    for groupName, group in pairs(withinDistanceGroups) do
-        for markerId, marker in pairs(group.markers) do
-            if marker.show and not marker.draw and marker.itemName == item.Name then
-                local distance = #(playerCoords - marker.coords)
-                if distance < marker.distance then
-                    marker.action(item)
-                end
-            end
-        end
-    end
-end)
+-- RegisterNetEvent('Markers:ItemAction')
+-- AddEventHandler('Markers:ItemAction', function(item)
+--     local playerPed = PlayerPedId()
+--     local playerCoords = GetEntityCoords(playerPed)
+--     for groupName, group in pairs(withinDistanceGroups) do
+--         for markerId, marker in pairs(group.markers) do
+--             if marker.show and not marker.draw and marker.itemName == item.Name then
+--                 local distance = #(playerCoords - marker.coords)
+--                 if distance < marker.distance then
+--                     marker.action(item)
+--                 end
+--             end
+--         end
+--     end
+-- end)
