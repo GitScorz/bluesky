@@ -376,7 +376,6 @@ function REGISTER_CALLBACKS()
   end)
 
   Callbacks:RegisterServerCallback('Inventory:Server:NextSlotInSecondary', function(source, data, cb)
-    print(json.encode(data))
     Inventory:GetOpenSlot(data.ownerTo, data.invTypeTo, function(i)
       if i ~= nil and i > 0 and i <= LOADED_ENTITIES[data.invTypeTo].slots then
         Inventory:GetSlot(data.ownerFrom, data.slotFrom, data.invTypeFrom, function(slotFrom)

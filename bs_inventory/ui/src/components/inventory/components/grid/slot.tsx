@@ -94,8 +94,8 @@ export default function Slot({
   );
 
   const onMouseLeave = useCallback(() => {
-    setHoveredItem(item);
-  }, [item, setHoveredItem]);
+    setHoveredItem(undefined);
+  }, [setHoveredItem]);
 
   const handleClick = useCallback(
     (event: MouseEvent<HTMLDivElement>) => {
