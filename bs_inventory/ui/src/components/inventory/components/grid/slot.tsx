@@ -118,7 +118,7 @@ export default function Slot({
         fetchNui(INVENTORY_EVENTS.MOVE_NEXT, data);
       }
     },
-    [item, hoveredSlot],
+    [item, secondaryInventory, playerInventory],
   );
 
   useEffect(() => {
