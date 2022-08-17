@@ -1,10 +1,14 @@
 html {
     overflow: hidden;
-    text-shadow:
-        -1.0px -1.0px 0 #000,
-        1.0px -1.0px 0 #000,
-        -1.0px 1.0px 0 #000,
-        1.0px 1.0px 0 #000;
+    text-shadow: 1px 1px 0 #000,
+    -1px -1px 0px #000,
+    0px -1px 0px #000,
+    1px -1px 0px #000,
+   -1px  0px 0px #000,
+    1px  0px 0px #000,
+   -1px  1px 0px #000,
+    0px  1px 0px #000,
+    1px  1px 0px #000;
 }
 
 body {
@@ -20,7 +24,6 @@ body {
     display: none;
     z-index: 5;
     color: #fff;
-    font-family: Arial;
     width: 18.5%;
     position: fixed;
     bottom: 12.65%;
@@ -41,12 +44,15 @@ body {
 }
 
 .progress-labels div {
-    font-size: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    font-variant: small-caps;
     line-height: 40px;
     position: relative;
     color: #cecece;
     z-index: 10;
-    font-family: Kanit, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .progress-bar-container {
@@ -59,6 +65,7 @@ body {
     position: relative;
     display: block;
     white-space: nowrap;
+    border-radius: 5px;
 }
 
 .progress-bar {

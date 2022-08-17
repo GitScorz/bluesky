@@ -59,9 +59,9 @@ PROGRESS = {
     Cancel = function(self)
         isDoingAction = false
         wasCancelled = true
-        
+
         Finish()
-    
+
         SendNUIMessage({
             action = 'cancel'
         })
@@ -69,9 +69,9 @@ PROGRESS = {
     Fail = function(self)
         isDoingAction = false
         wasCancelled = true
-        
+
         Finish()
-    
+
         SendNUIMessage({
             action = 'fail'
         })
@@ -88,7 +88,7 @@ AddEventHandler('Core:Shared:Ready', function()
     exports['bs_base']:RequestDependencies('Progress', {
         'Progress',
         'Notification',
-    }, function(error)  
+    }, function(error)
         if #error > 0 then return; end
         RetrieveComponents()
     end)
@@ -117,11 +117,11 @@ function Process(action, start, tick, finish)
                 cancellable = action.canCancel
             })
 
-            Citizen.CreateThread(function ()
+            Citizen.CreateThread(function()
                 if start ~= nil then
                     start()
                 end
-                
+
                 if tick ~= nil then
                     Citizen.CreateThread(function()
                         while isDoingAction do
@@ -146,16 +146,16 @@ function Process(action, start, tick, finish)
                         Progress:Cancel()
                     end
                 end
-                
+
                 if finish ~= nil then
                     finish(wasCancelled)
                 end
             end)
         else
-            Notification:SendError('Already Doing An Action', 5000)
+            Notification:SendError('You\'re already doing something..')
         end
     else
-        Notification:SendError('Already Doing An Action', 5000)
+        Notification:SendError('You\'re already doing something..')
     end
 end
 
@@ -173,9 +173,10 @@ function ActionStart(player, action)
                                 action.animation.flags = 1
                             end
 
-                            if ( DoesEntityExist(player) and not IsEntityDead(player)) then
+                            if (DoesEntityExist(player) and not IsEntityDead(player)) then
                                 loadAnimDict(action.animation.animDict)
-                                TaskPlayAnim(player, action.animation.animDict, action.animation.anim, 3.0, 1.0, -1, action.animation.flags, 0, 0, 0, 0)     
+                                TaskPlayAnim(player, action.animation.animDict, action.animation.anim, 3.0, 1.0, -1,
+                                    action.animation.flags, 0, 0, 0, 0)
                             end
                         else
                             TaskStartScenarioInPlace(player, 'PROP_HUMAN_BUM_BIN', 0, true)
@@ -192,7 +193,8 @@ function ActionStart(player, action)
                     end
 
                     local pCoords = GetOffsetFromEntityInWorldCoords(player, 0.0, 0.0, 0.0)
-                    local modelSpawn = CreateObject(GetHashKey(action.prop.model), pCoords.x, pCoords.y, pCoords.z, true, true, true)
+                    local modelSpawn = CreateObject(GetHashKey(action.prop.model), pCoords.x, pCoords.y, pCoords.z, true
+                        , true, true)
 
                     local netid = ObjToNet(modelSpawn)
                     SetNetworkIdExistsOnAllMachines(netid, true)
@@ -210,11 +212,13 @@ function ActionStart(player, action)
                         action.prop.rotation = { x = 0.0, y = 0.0, z = 0.0 }
                     end
 
-                    AttachEntityToEntity(modelSpawn, player, GetPedBoneIndex(player, action.prop.bone), action.prop.coords.x, action.prop.coords.y, action.prop.coords.z, action.prop.rotation.x, action.prop.rotation.y, action.prop.rotation.z, 1, 1, 0, 1, 0, 1)
+                    AttachEntityToEntity(modelSpawn, player, GetPedBoneIndex(player, action.prop.bone),
+                        action.prop.coords.x, action.prop.coords.y, action.prop.coords.z, action.prop.rotation.x,
+                        action.prop.rotation.y, action.prop.rotation.z, 1, 1, 0, 1, 0, 1)
                     prop_net = netid
 
                     isProp = true
-                    
+
                     if not isPropTwo and action.propTwo ~= nil and action.propTwo.model ~= nil then
                         RequestModel(action.propTwo.model)
 
@@ -223,7 +227,8 @@ function ActionStart(player, action)
                         end
 
                         local pCoords = GetEntityCoords(player)
-                        local modelSpawn = CreateObject(GetHashKey(action.propTwo.model), pCoords.x, pCoords.y, pCoords.z, true, true, true)
+                        local modelSpawn = CreateObject(GetHashKey(action.propTwo.model), pCoords.x, pCoords.y, pCoords.z
+                            , true, true, true)
 
                         local netid = ObjToNet(modelSpawn)
                         SetNetworkIdExistsOnAllMachines(netid, true)
@@ -241,7 +246,10 @@ function ActionStart(player, action)
                             action.propTwo.rotation = { x = 0.0, y = 0.0, z = 0.0 }
                         end
 
-                        AttachEntityToEntity(modelSpawn, player, GetPedBoneIndex(player, action.propTwo.bone), action.propTwo.coords.x, action.propTwo.coords.y, action.propTwo.coords.z, action.propTwo.rotation.x, action.propTwo.rotation.y, action.propTwo.rotation.z, 1, 1, 0, 1, 0, 1)
+                        AttachEntityToEntity(modelSpawn, player, GetPedBoneIndex(player, action.propTwo.bone),
+                            action.propTwo.coords.x, action.propTwo.coords.y, action.propTwo.coords.z,
+                            action.propTwo.rotation.x, action.propTwo.rotation.y, action.propTwo.rotation.z, 1, 1, 0, 1,
+                            0, 1)
                         propTwo_net = netid
 
                         isPropTwo = true
@@ -266,7 +274,8 @@ end
 
 function ActionCleanup()
     if progress_action.animation ~= nil then
-        if progress_action.animation.task ~= nil or (progress_action.animation.animDict ~= nil and progress_action.animation.anim ~= nil) then
+        if progress_action.animation.task ~= nil or
+            (progress_action.animation.animDict ~= nil and progress_action.animation.anim ~= nil) then
             ClearPedSecondaryTask(PlayerPedId())
             StopAnimTask(PlayerPedId(), progress_action.animDict, progress_action.anim, 1.0)
         else
@@ -280,14 +289,14 @@ function ActionCleanup()
     DeleteEntity(NetToObj(propTwo_net))
     prop_net = nil
     propTwo_net = nil
-    runProgThread = false 
+    runProgThread = false
 end
 
 function loadAnimDict(dict)
-	while (not HasAnimDictLoaded(dict)) do
-		RequestAnimDict(dict)
-		Citizen.Wait(5)
-	end
+    while (not HasAnimDictLoaded(dict)) do
+        RequestAnimDict(dict)
+        Citizen.Wait(5)
+    end
 end
 
 function DisableActions(ped, disables)
