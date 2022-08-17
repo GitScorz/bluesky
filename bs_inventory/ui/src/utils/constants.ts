@@ -1,4 +1,4 @@
-import { InventoryState, Item } from "../types/types";
+import { InventoryState } from "../types/types";
 
 // This is for browser testing.
 export const InventoryData: InventoryState = {
@@ -10,9 +10,9 @@ export const InventoryData: InventoryState = {
   invType: 1,
   inventory: [
     {
-      label: "Bread",
-      id: "bread",
-      description: "A loaf of bread",
+      label: "Heart Stopper",
+      id: "heartstopper",
+      description: "A heart stopper.",
       slot: 1,
       weight: 1,
       quantity: 2,

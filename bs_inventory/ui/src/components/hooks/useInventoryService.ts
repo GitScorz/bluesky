@@ -4,7 +4,6 @@ import { InjectDebugData } from "../../utils/debugData";
 import { INVENTORY_EVENTS } from "../../types/types";
 import { inventoryState } from "./state";
 import { InventoryData, SecondInventoryData } from "../../utils/constants";
-import { isEnvBrowser } from "../../utils/misc";
 
 export const useInventoryService = () => {
   const setVisibility = useSetRecoilState(inventoryState.visibility);

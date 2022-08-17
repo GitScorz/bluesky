@@ -1,4 +1,3 @@
-import { Fade } from '@mui/material';
 import { RefObject, useRef } from 'react';
 import { DragLayerMonitor, useDragLayer, XYCoord } from 'react-dnd';
 import { DragSource } from '../../../../types/types';
@@ -68,7 +67,6 @@ export default function DragPreview() {
           className="drag"
           style={{
             transform: `translate(${currentOffset.x}px, ${currentOffset.y}px)`,
-            backgroundImage: `url(${`images/${data.item.id}.png`})`,
           }}
         >
           <img src={`images/${data.item.id}.png`} alt={data.item.label}></img>

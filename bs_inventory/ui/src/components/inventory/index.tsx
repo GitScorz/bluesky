@@ -3,11 +3,12 @@ import { inventoryState } from '../hooks/state';
 import './inventory.styles.css';
 import { Fade } from '@mui/material';
 import { fetchNui } from '../../utils/fetchNui';
-import { INVENTORY_EVENTS } from '../../types/types';
+import { DragSource, INVENTORY_EVENTS } from '../../types/types';
 import { useEffect } from 'react';
 import Header from './components/header';
 import Slots from './components/grid';
 import ItemInfo from './components/iteminfo';
+import { useDrop } from 'react-dnd';
 
 export default function Inventory() {
   const [visibility, setVisibility] = useRecoilState(inventoryState.visibility);
@@ -58,6 +59,20 @@ export default function Inventory() {
     owner: secondInventory.owner,
   };
 
+  const [, use] = useDrop(
+    () => ({
+      accept: 'SLOT',
+      drop: (item: DragSource) => {
+        fetchNui(INVENTORY_EVENTS.USE_ITEM, {
+          owner: item.item.owner,
+          slot: item.slot,
+          invType: item.item.invType,
+        });
+      },
+    }),
+    [],
+  );
+
   return (
     <Fade in={visibility}>
       <div className="inventory-wrapper">
@@ -83,7 +98,9 @@ export default function Inventory() {
               onChange={handleChange}
               placeholder="Amount"
             />
-            <button id="use-btn">Use</button>
+            <button id="use-btn" ref={use}>
+              Use
+            </button>
             <button onClick={handleClose}>Close</button>
           </div>
           <div id="secondaryInv" className="inventory-box">

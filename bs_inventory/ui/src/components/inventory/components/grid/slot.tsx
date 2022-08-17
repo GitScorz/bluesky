@@ -6,7 +6,7 @@ import {
 } from '../../../../types/types';
 import { inventoryState } from '../../../hooks/state';
 import { useDrag, useDrop } from 'react-dnd';
-import { MouseEvent, useCallback, useMemo } from 'react';
+import { MouseEvent, useCallback, useEffect, useMemo } from 'react';
 import { fetchNui } from '../../../../utils/fetchNui';
 import './slots.styles.css';
 
@@ -17,10 +17,16 @@ export default function Slot({
   owner,
   item,
 }: PropSlot) {
-  const [, setHoveredItem] = useRecoilState(inventoryState.hoverItem);
+  const [playerInventory] = useRecoilState(inventoryState.playerInventory);
+  const [secondaryInventory] = useRecoilState(inventoryState.secondInventory);
+  const [hoveredItem, setHoveredItem] = useRecoilState(
+    inventoryState.hoverItem,
+  );
+
   const [hoveredSlot, setHoveredSlot] = useRecoilState(
     inventoryState.hoveredSlot,
   );
+
   const [moveAmount] = useRecoilState(inventoryState.moveAmount);
 
   const [{ isDragging, canDrag }, drag] = useDrag(
@@ -85,20 +91,44 @@ export default function Slot({
   const handleClick = useCallback(
     (event: MouseEvent<HTMLDivElement>) => {
       if (event.shiftKey) {
-        console.log(item);
-        fetchNui(INVENTORY_EVENTS.MOVE_NEXT, {
-          // ownerFrom: ownerFrom,
-          // ownerTo: ownerTo,
-          // slotFrom: slotFrom,
-          // name: name,
-          // invTypeFrom: invTypeFrom,
-          // invTypeTo: invTypeTo,
-          // Count: count
-        });
+        let data = {};
+
+        if (item) {
+          if (item.invType === 1) {
+            data = {
+              ownerFrom: item.owner,
+              ownerTo: secondaryInventory.owner,
+              slotFrom: item.slot,
+              id: item.id,
+              invTypeFrom: item.invType,
+              invTypeTo: secondaryInventory.invType,
+            };
+          } else {
+            data = {
+              ownerFrom: secondaryInventory.owner,
+              ownerTo: playerInventory.owner,
+              slotFrom: item.slot,
+              id: item.id,
+              invTypeFrom: secondaryInventory.invType,
+              invTypeTo: 1,
+            };
+          }
+        }
+
+        fetchNui(INVENTORY_EVENTS.MOVE_NEXT, data);
       }
     },
-    [item],
+    [item, hoveredSlot],
   );
+
+  useEffect(() => {
+    document.body.onmousedown = (e) => {
+      if (e.button === 1) {
+        fetchNui(INVENTORY_EVENTS.USE_ITEM, hoveredSlot);
+        return false;
+      }
+    };
+  }, [hoveredSlot]);
 
   return useMemo(
     () => (

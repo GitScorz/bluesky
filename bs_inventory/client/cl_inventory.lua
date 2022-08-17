@@ -1,5 +1,5 @@
+_isLoggedIn = false
 local _open = false
-local _isLoggedIn = false
 local hotBarOpen = false
 local trunkOpen = false
 local SECOND_INVENTORY = {}
@@ -75,6 +75,7 @@ INVENTORY = {
 
   Close = function(self, force)
     _open = false
+    Inventory:SendUIMessage('inventory:open', false)
     Inventory:SetFocus(false)
 
     TriggerServerEvent('Inventory:Server:CloseSecondary')
@@ -343,11 +344,7 @@ RegisterNUICallback('inventory:useItem', function(data, cb)
     slot = data.slot,
     owner = data.owner,
     invType = data.invType
-  }, function(success)
-    Callbacks:ServerCallback('Inventory:FetchPlayerInventory', {}, function(inventory)
-      Inventory.Player:Update(inventory)
-    end)
-  end)
+  }, function(success) end)
 end)
 
 RegisterNUICallback('inventory:moveItem', function(data, cb)
@@ -355,11 +352,14 @@ RegisterNUICallback('inventory:moveItem', function(data, cb)
 
   Callbacks:ServerCallback('Inventory:MoveItem', data, function(success)
     if success then
-      print("ladies and gentlemen, we have got em")
       Inventory.Player:Refresh()
-      Inventory.Secondary:Refresh()
+
+      if data.invTypeTo ~= 1 or data.invTypeFrom ~= 1 then
+        Inventory.Secondary:Refresh()
+      end
     end
   end)
+
 end)
 
 RegisterNUICallback('inventory:nextSlotInSecondary', function(data, cb)
@@ -368,6 +368,7 @@ RegisterNUICallback('inventory:nextSlotInSecondary', function(data, cb)
   Callbacks:ServerCallback('Inventory:Server:NextSlotInSecondary', data, function(success)
     if success then
       Inventory.Player:Refresh()
+      Inventory.Secondary:Refresh()
     end
   end)
 end)

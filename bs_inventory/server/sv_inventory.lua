@@ -511,23 +511,21 @@ INVENTORY = {
       },
       options = {
         sort = {
-          slot = 1
+          Slot = 1
         }
       },
     }, function(success, results)
       if not success then return end
 
-      if #results == 0 then
-        cb(#results)
-        return
-      end
-
-      for k, v in pairs(results) do
-        if v.slot + 1 == #results then
-          cb(v.slot + 1)
-          break
+      for i = 1, #results, 1 do
+        local item = results[i]
+        if i ~= item.slot then
+          cb(i)
+          return
         end
       end
+
+      cb(#results + 1)
     end)
   end,
 

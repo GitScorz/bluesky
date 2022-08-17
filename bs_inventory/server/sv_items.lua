@@ -7,6 +7,8 @@ INVENTORY.Items = {
   end,
 
   Use = function(self, source, item, cb)
+    if item.id == nil then cb(false) return end
+
     TriggerClientEvent('Inventory:UsedItem', source, item)
 
     if ITEM_CALLBACKS[item.id] ~= nil then

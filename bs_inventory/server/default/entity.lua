@@ -7,7 +7,7 @@ function DEFAULT_ENTITY_DATA()
   Default:Add('entitytypes', 1592332156, {
     {
       id = 1,
-      slots = 50,
+      slots = 40,
       name = 'Player',
       maxWeight = Config.MaxWeight,
     },
@@ -15,31 +15,31 @@ function DEFAULT_ENTITY_DATA()
       id = 2,
       slots = 30,
       name = 'Stash',
-      maxWeight = 300,
+      maxWeight = 1000,
     },
     {
       id = 3,
-      slots = 6,
+      slots = 65,
       name = 'Trunk',
-      maxWeight = 200, -- Make a system that allows get trunk weight by vehicle
+      maxWeight = 650, -- Make a system that allows get trunk weight by vehicle
     },
     {
       id = 4,
-      slots = 10,
+      slots = 65,
       name = 'Player Trunk',
-      maxWeight = 200, -- Make a system that allows get trunk weight by vehicle
+      maxWeight = 650, -- Make a system that allows get trunk weight by vehicle
     },
     {
       id = 5,
       slots = 5,
       name = 'Glovebox',
-      maxWeight = 30,
+      maxWeight = 50,
     },
     {
       id = 6,
       slots = 8,
       name = 'Player Glovebox',
-      maxWeight = 30,
+      maxWeight = 50,
     },
     {
       id = 7,
@@ -61,15 +61,15 @@ function DEFAULT_ENTITY_DATA()
     },
     {
       id = 10,
-      slots = 35,
+      slots = 30,
       name = 'Ground',
       maxWeight = 1000,
     },
     {
       id = 11,
-      slots = 30,
+      slots = 50,
       name = 'Shop',
-      maxWeight = 400,
+      maxWeight = 10000,
     },
     {
       id = 12,
