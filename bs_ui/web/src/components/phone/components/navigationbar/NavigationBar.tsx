@@ -3,16 +3,21 @@ import { faCircle } from "@fortawesome/free-regular-svg-icons";
 import {
   faArrowsRotate,
   faBell,
+  faBellSlash,
   faCamera,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tooltip } from "@mui/material";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import { PHONE_STRINGS } from "../../config/config";
+import { phoneState } from "../../hooks/state";
 import "./NavigationBar.css";
 
 export default function NavigationBar() {
+  const [sounds, setSounds] = useRecoilState(phoneState.sounds);
+
   return useMemo(
     () => (
       <div className="phone-navigation-bar">
@@ -22,7 +27,10 @@ export default function NavigationBar() {
             placement="top"
             arrow
           >
-            <FontAwesomeIcon icon={faBell} />
+            <FontAwesomeIcon
+              icon={sounds ? faBell : faBellSlash}
+              onClick={() => setSounds(!sounds)}
+            />
           </Tooltip>
           <Tooltip
             title={PHONE_STRINGS.NAVIGATION_CAMERA}
@@ -53,6 +61,6 @@ export default function NavigationBar() {
         </div>
       </div>
     ),
-    []
+    [sounds, setSounds]
   );
 }

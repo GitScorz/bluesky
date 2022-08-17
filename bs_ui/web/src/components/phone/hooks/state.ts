@@ -8,6 +8,11 @@ export const phoneState = {
     default: false,
   }),
 
+  sounds: atom<boolean>({
+    key: 'phoneState.sounds',
+    default: true,
+  }),
+
   phoneTime: atom<DisplayTime>({
     key: 'phoneState.phoneTime',
     default: {
