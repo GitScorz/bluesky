@@ -5,33 +5,16 @@ import {
 } from "@fortawesome/fontawesome-svg-core";
 import { useState } from "react";
 import { useNuiEvent } from "../../../../hooks/useNuiEvent";
-import { debugData } from "../../../../utils/debugData";
 import "./Notification.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fetchNui } from "../../../../utils/fetchNui";
-
-// debugData<UI.Phone.NotificationProps[]>([
-//   {
-//     action: 'hud:phone:sendNotification',
-//     data: [
-//       {
-//         id: "testasd2",
-//         static: false,
-//         title: '@JONH_DOE',
-//         description: 'First',
-//         icon: "bell"
-//       },
-//     ]
-//   }
-// ])
+import { NotificationIcon, NotificationProps } from "../../../../types/phone";
 
 export default function Notification() {
   const [animation, setAnimation] = useState(false);
-  const [notifications, setNotifications] = useState<
-    UI.Phone.NotificationProps[]
-  >([]);
+  const [notifications, setNotifications] = useState<NotificationProps[]>([]);
 
-  const getIcon = (icon: UI.Phone.NotificationIcon) => {
+  const getIcon = (icon: NotificationIcon) => {
     let iconName: IconLookup;
     let color = "#5babaa";
 
@@ -81,25 +64,22 @@ export default function Notification() {
     return text;
   };
 
-  useNuiEvent(
-    "hud:phone:sendNotification",
-    (data: UI.Phone.NotificationProps[]) => {
-      setAnimation(true);
+  useNuiEvent("hud:phone:sendNotification", (data: NotificationProps[]) => {
+    setAnimation(true);
 
-      data.forEach((notification) => {
-        setTimeout(() => {
-          if (notification.static) {
-            setNotifications([...notifications, notification]);
-          } else {
-            setNotifications([...notifications, notification]);
-            setTimeout(() => {
-              shutdownNotification(notification.id);
-            }, 4000);
-          }
-        }, 500);
-      });
-    }
-  );
+    data.forEach((notification) => {
+      setTimeout(() => {
+        if (notification.static) {
+          setNotifications([...notifications, notification]);
+        } else {
+          setNotifications([...notifications, notification]);
+          setTimeout(() => {
+            shutdownNotification(notification.id);
+          }, 4000);
+        }
+      }, 500);
+    });
+  });
 
   const shutdownNotification = (id: string) => {
     setAnimation(false);

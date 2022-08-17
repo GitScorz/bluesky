@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { APPS } from "../../config/apps";
 
-// Basically the phone app's home page.
 export default function Home() {
   return (
     <>

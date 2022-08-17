@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { ModalParams, ModalProps } from "../../../../types/phone";
 import { fetchNui } from "../../../../utils/fetchNui";
 import { SendAlert } from "../../utils/utils";
 import "./Modal.css";
@@ -22,7 +23,7 @@ export default function Modal({
   callbackEvent,
   style,
   id,
-}: UI.Phone.ModalProps) {
+}: ModalProps) {
   const [pParams, setpParams] = useState(params);
   const [disabledButtons, setDisabledButtons] = useState(false);
   const [noText, setNoText] = useState(false);
@@ -146,7 +147,7 @@ export default function Modal({
     <div className="modal-wrapper" style={style}>
       <div className="modal-content">
         {pParams.length > 0 &&
-          pParams.map((param: UI.Phone.ModalParams, i: number) => (
+          pParams.map((param: ModalParams, i: number) => (
             <div className="modal-params" key={param.id}>
               <TextField
                 name="input"
@@ -156,10 +157,12 @@ export default function Modal({
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <FontAwesomeIcon
-                        icon={param.icon}
-                        style={{ color: "white" }}
-                      />
+                      {param.icon && (
+                        <FontAwesomeIcon
+                          icon={param.icon}
+                          style={{ color: "white" }}
+                        />
+                      )}
                     </InputAdornment>
                   ),
                 }}

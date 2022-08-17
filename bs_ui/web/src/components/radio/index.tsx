@@ -8,7 +8,7 @@ import "./radio.css";
 debugData([
   {
     action: "hud:radio:toggle",
-    data: true,
+    data: false,
   },
 ]);
 

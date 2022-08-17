@@ -1,4 +1,4 @@
-export enum PhoneStrings {
+export enum PHONE_STRINGS {
   // Header
   HEADER_CONNECT = "Connect",
   
@@ -18,6 +18,8 @@ export enum PhoneStrings {
   PHONE_NUMBER = "Phone Number",
   WALLET = "Wallet",
   BANK = "Bank",
+  GOT_LICENSE = "I got it",
+  NO_LICENSE = "I don't need it",
 
   // Contacts App
   ADD_CONTACT = "Add Contact",

@@ -4,9 +4,12 @@ import PhoneHeader from "./components/header/PhoneHeader";
 import NavigationBar from "./components/navigationbar/NavigationBar";
 import Notification from "./components/notification/Notification";
 import { APPS } from "./config/apps";
+import { usePhoneService } from "./hooks/usePhoneService";
 import PhoneWrapper from "./PhoneWrapper";
 
 export default function Phone() {
+  usePhoneService();
+
   return (
     <>
       <PhoneWrapper>

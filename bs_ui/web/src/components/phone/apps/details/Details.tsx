@@ -1,5 +1,4 @@
 import "./Details.css";
-import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAddressCard,
@@ -10,54 +9,13 @@ import {
   faXmarkCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { Tooltip } from "@mui/material";
-import { PhoneStrings } from "../../config/config";
+import { PHONE_STRINGS } from "../../config/config";
 import { FormatPhoneNumber } from "../../utils/utils";
-import { debugData } from "../../../../utils/debugData";
-import { useNuiEvent } from "../../../../hooks/useNuiEvent";
-
-debugData<UI.Phone.PhoneData>([
-  {
-    action: "hud:phone:updatePhoneData",
-    data: {
-      sid: 1,
-      cid: "scorz@blue.sky",
-      aliases: {
-        email: "scorz@blues.sky",
-        twitter: "@Scorz_Dev",
-      },
-      name: {
-        first: "Scorz",
-        last: "Blue",
-      },
-      phoneNumber: "6284567891",
-      cash: 0,
-      bank: 0,
-      hasDriverLicense: true,
-    },
-  },
-]);
+import { useRecoilState } from "recoil";
+import { phoneState } from "../../hooks/state";
 
 export default function Details() {
-  const [phoneData, setPhoneData] = useState<UI.Phone.PhoneData>({
-    sid: 1,
-    cid: "scorz@blue.sky",
-    aliases: {
-      email: "scorz@blues.sky",
-      twitter: "@Scorz_Dev",
-    },
-    name: {
-      first: "Scorz",
-      last: "Blue",
-    },
-    phoneNumber: "6284567891",
-    cash: 0,
-    bank: 0,
-    hasDriverLicense: true,
-  });
-
-  useNuiEvent("hud:phone:updatePhoneData", (data: UI.Phone.PhoneData) => {
-    setPhoneData(data);
-  });
+  const [phoneData] = useRecoilState(phoneState.phoneData);
 
   // Format the cash and bank values
   const formatter = new Intl.NumberFormat("en-US", {
@@ -72,7 +30,7 @@ export default function Details() {
         <div className="details-info">
           <div className="details-server-info">
             <div id="details-server-icon">
-              <Tooltip title={PhoneStrings.CIVILIAN_ID} placement="top" arrow>
+              <Tooltip title={PHONE_STRINGS.CIVILIAN_ID} placement="top" arrow>
                 <FontAwesomeIcon icon={faAddressCard} />
               </Tooltip>
             </div>
@@ -81,7 +39,7 @@ export default function Details() {
 
           <div className="details-server-info">
             <div id="details-server-icon">
-              <Tooltip title={PhoneStrings.PHONE_NUMBER} placement="top" arrow>
+              <Tooltip title={PHONE_STRINGS.PHONE_NUMBER} placement="top" arrow>
                 <FontAwesomeIcon icon={faMobileAndroid} />
               </Tooltip>
             </div>
@@ -92,7 +50,7 @@ export default function Details() {
 
           <div className="details-server-info">
             <div id="details-server-icon">
-              <Tooltip title={PhoneStrings.WALLET} placement="top" arrow>
+              <Tooltip title={PHONE_STRINGS.WALLET} placement="top" arrow>
                 <FontAwesomeIcon icon={faWallet} style={{ color: "#95ef79" }} />
               </Tooltip>
             </div>
@@ -103,7 +61,7 @@ export default function Details() {
 
           <div className="details-server-info">
             <div id="details-server-icon">
-              <Tooltip title={PhoneStrings.BANK} placement="top" arrow>
+              <Tooltip title={PHONE_STRINGS.BANK} placement="top" arrow>
                 <FontAwesomeIcon
                   icon={faPiggyBank}
                   style={{ color: "#60a9fc" }}
@@ -123,17 +81,19 @@ export default function Details() {
               <div id="details-licenses-name">Driving License</div>
               <Tooltip
                 title={
-                  phoneData?.hasDriverLicense ? "I got it" : "I don't need it"
+                  phoneData.hasDriverLicense
+                    ? PHONE_STRINGS.GOT_LICENSE
+                    : PHONE_STRINGS.NO_LICENSE
                 }
                 placement="top"
                 arrow
               >
                 <FontAwesomeIcon
                   icon={
-                    phoneData?.hasDriverLicense ? faCircleCheck : faXmarkCircle
+                    phoneData.hasDriverLicense ? faCircleCheck : faXmarkCircle
                   }
                   style={{
-                    color: phoneData?.hasDriverLicense ? "#95ef79" : "#750b0b",
+                    color: phoneData.hasDriverLicense ? "#95ef79" : "#750b0b",
                   }}
                 />
               </Tooltip>

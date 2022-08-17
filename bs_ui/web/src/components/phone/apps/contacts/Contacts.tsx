@@ -9,35 +9,35 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { InputAdornment, TextField, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNuiEvent } from "../../../../hooks/useNuiEvent";
-import { debugData } from "../../../../utils/debugData";
+import { PhoneContact } from "../../../../types/phone";
 import { fetchNui } from "../../../../utils/fetchNui";
 import Modal from "../../components/modal/Modal";
-import { PhoneStrings } from "../../config/config";
+import { PHONE_STRINGS } from "../../config/config";
 import ContactContainer from "./components/ContactContainer";
 import "./Contacts.css";
 
-debugData<UI.Phone.PhoneContact[]>([
-  {
-    action: "hud:phone:updateContacts",
-    data: [
-      {
-        _id: "sdasd",
-        name: "John Doe",
-        phoneNumber: "123456789",
-      },
-      {
-        _id: "sdasd",
-        name: "Other Guy",
-        phoneNumber: "123456789",
-      },
-    ],
-  },
-]);
+// debugData<PhoneContact[]>([
+//   {
+//     action: "hud:phone:updateContacts",
+//     data: [
+//       {
+//         _id: "sdasd",
+//         name: "John Doe",
+//         phoneNumber: "123456789",
+//       },
+//       {
+//         _id: "sdasd",
+//         name: "Other Guy",
+//         phoneNumber: "123456789",
+//       },
+//     ],
+//   },
+// ]);
 
 export default function Contacts() {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
-  const [contacts, setContacts] = useState<UI.Phone.PhoneContact[]>([]);
+  const [contacts, setContacts] = useState<PhoneContact[]>([]);
 
   useEffect(() => {
     fetchNui("hud:phone:getContacts", {}).then((contacts) => {
@@ -59,20 +59,20 @@ export default function Contacts() {
     setSearch(value);
   };
 
-  useNuiEvent("hud:phone:updateContacts", (data: UI.Phone.PhoneContact[]) => {
+  useNuiEvent("hud:phone:updateContacts", (data: PhoneContact[]) => {
     setContacts(data);
   });
 
   return (
     <div className="contacts-wrapper">
       <div className="contacts-add-new">
-        <Tooltip title={PhoneStrings.ADD_CONTACT} placement="top" arrow>
+        <Tooltip title={PHONE_STRINGS.ADD_CONTACT} placement="top" arrow>
           <FontAwesomeIcon icon={faUserPlus} onClick={() => setIsOpen(true)} />
         </Tooltip>
       </div>
       <div className="contacts-search">
         <TextField
-          label={PhoneStrings.SEARCH}
+          label={PHONE_STRINGS.SEARCH}
           value={search}
           onChange={handleSearch}
           fullWidth
@@ -90,14 +90,14 @@ export default function Contacts() {
         />
       </div>
       <div className="contacts-list">
-        {filteredContacts.map((contact: UI.Phone.PhoneContact) => {
+        {filteredContacts.map((contact: PhoneContact) => {
           return <ContactContainer key={contact._id} {...contact} />;
         })}
 
         {filteredContacts.length <= 0 && (
           <div className="contacts-not-found">
             <FontAwesomeIcon icon={faFaceFrown} style={{ fontSize: "5rem" }} />
-            <span>{PhoneStrings.NO_CONTACTS}</span>
+            <span>{PHONE_STRINGS.NO_CONTACTS}</span>
           </div>
         )}
       </div>
@@ -108,13 +108,13 @@ export default function Contacts() {
           params={[
             {
               id: "contact-name",
-              label: PhoneStrings.CONTACT_NAME,
+              label: PHONE_STRINGS.CONTACT_NAME,
               icon: faUser,
               minLength: 1,
             },
             {
               id: "contact-number",
-              label: PhoneStrings.PHONE_NUMBER,
+              label: PHONE_STRINGS.PHONE_NUMBER,
               icon: faPhone,
               expected: "number",
               minLength: 10,

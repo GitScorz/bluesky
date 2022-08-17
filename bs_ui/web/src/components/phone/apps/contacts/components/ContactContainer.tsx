@@ -9,13 +9,13 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tooltip } from "@mui/material";
 import { useState } from "react";
-import { fetchNui } from "../../../../../utils/fetchNui";
+import { PhoneContact } from "../../../../../types/phone";
 import Modal from "../../../components/modal/Modal";
-import { PhoneStrings } from "../../../config/config";
+import { PHONE_STRINGS } from "../../../config/config";
 import { FormatPhoneNumber } from "../../../utils/utils";
 import "./ContactContainer.css";
 
-export default function ContactContainer(props: UI.Phone.PhoneContact) {
+export default function ContactContainer(props: PhoneContact) {
   const [hovered, setHovered] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -26,6 +26,7 @@ export default function ContactContainer(props: UI.Phone.PhoneContact) {
     setIsDeleteOpen(true);
     setHovered(false);
   };
+
   const handleContactCall = () => {
     // TODO: notification bar
     // fetchNui('hud:phone:contactCall', { number: number });
@@ -73,28 +74,32 @@ export default function ContactContainer(props: UI.Phone.PhoneContact) {
 
         {hovered && (
           <div className="contact-options">
-            <Tooltip title={PhoneStrings.DELETE_CONTACT} placement="top" arrow>
+            <Tooltip title={PHONE_STRINGS.DELETE_CONTACT} placement="top" arrow>
               <FontAwesomeIcon
                 icon={faUserSlash}
                 id="contact-options-icon"
                 onClick={() => handleContactDelete()}
               />
             </Tooltip>
-            <Tooltip title={PhoneStrings.CALL_CONTACT} placement="top" arrow>
+            <Tooltip title={PHONE_STRINGS.CALL_CONTACT} placement="top" arrow>
               <FontAwesomeIcon
                 icon={faPhone}
                 id="contact-options-icon"
                 onClick={() => handleContactCall()}
               />
             </Tooltip>
-            <Tooltip title={PhoneStrings.MESSAGE_CONTACT} placement="top" arrow>
+            <Tooltip
+              title={PHONE_STRINGS.MESSAGE_CONTACT}
+              placement="top"
+              arrow
+            >
               <FontAwesomeIcon
                 icon={faComments}
                 id="contact-options-icon"
                 onClick={() => handleContactMessage()}
               />
             </Tooltip>
-            <Tooltip title={PhoneStrings.EDIT_CONTACT} placement="top" arrow>
+            <Tooltip title={PHONE_STRINGS.EDIT_CONTACT} placement="top" arrow>
               <FontAwesomeIcon
                 icon={faPenToSquare}
                 id="contact-options-icon"
@@ -124,7 +129,7 @@ export default function ContactContainer(props: UI.Phone.PhoneContact) {
             bottom: "20px",
             top: "auto",
           }}
-          text={PhoneStrings.DELETE_CONTACT_CONFIRM}
+          text={PHONE_STRINGS.DELETE_CONTACT_CONFIRM}
           id={_id}
           params={[]}
         />
@@ -145,7 +150,7 @@ export default function ContactContainer(props: UI.Phone.PhoneContact) {
           params={[
             {
               id: _id,
-              label: PhoneStrings.CONTACT_NAME,
+              label: PHONE_STRINGS.CONTACT_NAME,
               icon: faUser,
               minLength: 1,
             },
