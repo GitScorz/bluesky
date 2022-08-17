@@ -46,7 +46,10 @@ export default function Slot({
     () => ({
       accept: 'SLOT',
       drop: (item: DragSource) => {
-        if (item.slot !== hoveredSlot.slot) {
+        if (
+          item.slot !== hoveredSlot.slot ||
+          item.item.owner !== hoveredSlot.owner
+        ) {
           let auxAmount = parseInt(moveAmount);
 
           if (!isNaN(auxAmount)) {
