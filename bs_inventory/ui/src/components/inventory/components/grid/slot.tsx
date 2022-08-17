@@ -19,9 +19,7 @@ export default function Slot({
 }: PropSlot) {
   const [playerInventory] = useRecoilState(inventoryState.playerInventory);
   const [secondaryInventory] = useRecoilState(inventoryState.secondInventory);
-  const [hoveredItem, setHoveredItem] = useRecoilState(
-    inventoryState.hoverItem,
-  );
+  const [, setHoveredItem] = useRecoilState(inventoryState.hoverItem);
 
   const [hoveredSlot, setHoveredSlot] = useRecoilState(
     inventoryState.hoveredSlot,
@@ -49,6 +47,18 @@ export default function Slot({
       accept: 'SLOT',
       drop: (item: DragSource) => {
         if (item.slot !== hoveredSlot.slot) {
+          let auxAmount = parseInt(moveAmount);
+
+          if (!isNaN(auxAmount)) {
+            if (auxAmount < 0) return;
+
+            if (auxAmount > item.item.quantity) {
+              auxAmount = item.item.quantity;
+            }
+          } else {
+            auxAmount = item.item.quantity;
+          }
+
           fetchNui(INVENTORY_EVENTS.MOVE_ITEM, {
             ownerFrom: item.item.owner,
             ownerTo: hoveredSlot.owner,
@@ -56,8 +66,7 @@ export default function Slot({
             slotTo: hoveredSlot.slot,
             id: item.item.id,
             quantityFrom: item.item.quantity,
-            quantityTo:
-              moveAmount !== '' ? Number(moveAmount) : item.item.quantity,
+            quantityTo: auxAmount,
             invTypeTo: hoveredSlot.invType,
             invTypeFrom: item.item.invType,
           });
