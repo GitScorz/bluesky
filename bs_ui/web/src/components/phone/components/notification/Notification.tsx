@@ -14,8 +14,6 @@ export default function Notification() {
   const setActive = useSetRecoilState(notificationState.active);
   const [animation, setAnimation] = useRecoilState(notificationState.animation);
 
-  console.log("notify");
-
   const [notifications, setNotifications] = useRecoilState(
     notificationState.notifications
   );

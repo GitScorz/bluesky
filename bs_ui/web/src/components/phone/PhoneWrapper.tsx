@@ -12,8 +12,6 @@ export default function PhoneWrapper({ children }: PropsWithChildren) {
   const phoneData = useRecoilValue(phoneState.phoneData);
   const notifications = useRecoilValue(notificationState.notifications);
 
-  console.log(isNotificationActive);
-
   useEffect(() => {
     const handleKeyEvent = (event: KeyboardEventInit) => {
       if (event.key === "Escape") {
@@ -31,7 +29,7 @@ export default function PhoneWrapper({ children }: PropsWithChildren) {
         <Slide
           direction="up"
           timeout={{ enter: 600, exit: 400 }}
-          in={isNotificationActive || visibility}
+          in={visibility}
         >
           <div
             className="phone-wrapper"

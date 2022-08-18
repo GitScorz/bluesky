@@ -6,13 +6,13 @@
   max-width: 50%;
   gap: 7px;
   left: 7px;
-  bottom: 5px;
+  bottom: 3px;
 }
 
 .circle {
   position: relative;
-  width: 55px;
-  height: 55px;
+  width: 50px;
+  height: 50px;
 }
 
 .circle-icon {
@@ -21,8 +21,8 @@
   border-radius: 50%;
   top: 6px;
   left: 6px;
-  width: 79%;
-  height: 79%;
+  width: 76%;
+  height: 76%;
 }
 
 .hud-icon {

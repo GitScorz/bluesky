@@ -19,7 +19,7 @@ export const statusState = {
   }),
 
   talkingStatus: atom<TalkingStatus>({
-    key: "hud.onRadio",
+    key: "hud.talkingStatus",
     default: {
       talking: false,
       usingRadio: false,

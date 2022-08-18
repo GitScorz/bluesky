@@ -16,7 +16,7 @@ Phone.Notification = {
 
     notificationActive = true
     UI:SendUIMessage('phone:toggle', true)
-    UI:SendUIMessage('phone:sendNotification', { data })
+    UI:SendUIMessage('phone:sendNotification', data)
   end,
 
   Close = function(self)
