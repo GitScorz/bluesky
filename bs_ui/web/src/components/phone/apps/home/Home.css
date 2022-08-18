@@ -1,11 +1,11 @@
 .phone-apps-wrapper {
   position: absolute;
   display: flex;
-  flex-direction: row;
-  top: 5%;
-  width: 100%;
-  height: 90%;
-  margin-top: 10px;
+  flex-flow: row wrap;
+  align-content: flex-start;
+  top: 6%;
+  width: 94%;
+  height: 86%;
   margin-left: 10px;
   gap: 18px;
 }
