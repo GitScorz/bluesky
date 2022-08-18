@@ -17,13 +17,11 @@ import { phoneState } from "../../hooks/state";
 export default function Details() {
   const [phoneData] = useRecoilState(phoneState.phoneData);
 
-  // Format the cash and bank values
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   });
 
-  // Sorry being a noob i am still learning React, I can make this better later...
   return (
     <div className="details-wrapper">
       <div className="details-account">

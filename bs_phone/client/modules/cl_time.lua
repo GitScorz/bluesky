@@ -1,11 +1,11 @@
 local function CalculateTimeToDisplay()
-	local hour = GetClockHours()
+  local hour = GetClockHours()
   local minute = GetClockMinutes()
 
   local obj = {}
 
-	if minute <= 9 then
-		minute = "0" .. minute
+  if minute <= 9 then
+    minute = "0" .. minute
   end
 
   if hour <= 9 then
@@ -21,7 +21,7 @@ end
 CreateThread(function()
   while true do
     if Phone:IsPhoneOpen() then
-      UI:SendUIMessage("hud:phone:updateTime", CalculateTimeToDisplay())
+      UI:SendUIMessage("phone:updatePhoneTime", CalculateTimeToDisplay())
     end
 
     Wait(1000)

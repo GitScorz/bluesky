@@ -1,4 +1,4 @@
-import { PhoneData } from "../../../types/phone";
+import { PhoneContact, PhoneData } from "../../../types/phone";
 
 export const DefaultPhoneTime = {
   hour: "00",
@@ -10,7 +10,7 @@ export const DefaultPhoneData: PhoneData = {
   cid: "steam:11000010",
   aliases: {
     email: "scorz@blue.sky",
-    twitter: "SCORZ_DEV",
+    twitter: "@Scorz_Dev",
   },
   cash: 500,
   bank: 5000,
@@ -20,4 +20,9 @@ export const DefaultPhoneData: PhoneData = {
     last: "Dev",
   },
   phoneNumber: "6175555555",
+  wallpaper: "https://imgur.com/Lm8aAxI.png",
+  brand: "android",
+  notifications: true,
 }
+
+export const DefaultContacts: PhoneContact[] = []

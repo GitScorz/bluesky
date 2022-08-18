@@ -10,14 +10,14 @@ export const usePhoneService = () => {
   const setPhoneTime = useSetRecoilState(phoneState.phoneTime);
   const setPhoneData = useSetRecoilState(phoneState.phoneData);
 
-  useNuiEvent(PHONE_EVENTS.OPEN, setVisibility);
+  useNuiEvent(PHONE_EVENTS.TOGGLE_OPEN, setVisibility);
   useNuiEvent(PHONE_EVENTS.UPDATE_PHONE_TIME, setPhoneTime);
   useNuiEvent(PHONE_EVENTS.UPDATE_PHONE_DATA, setPhoneData);
 }
 
 debugData<any>([
   {
-    action: PHONE_EVENTS.OPEN,
+    action: PHONE_EVENTS.TOGGLE_OPEN,
     data: true,
   },
   {

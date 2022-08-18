@@ -1,9 +1,10 @@
 RegisterNUICallback('hud:setFocus', function(state, cb)
-  UI:SetFocus(state)
   cb('ok')
+  UI:SetFocus(state)
 end)
 
 RegisterNUICallback('hud:sendAlert', function(data, cb)
+  cb('ok')
   local msg = data.message
 
   if (data.type == "error") then
@@ -11,40 +12,40 @@ RegisterNUICallback('hud:sendAlert', function(data, cb)
   else
     Notification:SendAlert(msg)
   end
-  cb('ok')
 end)
 
 --## PHONE ##--
 
-RegisterNUICallback('hud:phone:close', function(data, cb)
+RegisterNUICallback('phone:close', function(data, cb)
+  cb('ok')
   Phone:Close()
-  cb('ok')
 end)
 
-RegisterNUICallback('hud:phone:addContact', function(data, cb)
+RegisterNUICallback('phone:updatePhoneSettings', function(data, cb)
+  cb('ok')
+  Phone.Data:Update(data)
+end)
+
+RegisterNUICallback('phone:addContact', function(data, cb)
+  cb('ok')
   Phone.Contacts:Create(data.state)
+end)
+
+RegisterNUICallback('phone:editContact', function(data, cb)
   cb('ok')
-end)
-
-RegisterNUICallback('hud:phone:getContacts', function(data, cb)
-  cb(Phone.Contacts:Get())
-end)
-
-RegisterNUICallback('hud:phone:editContact', function(data, cb)
   Phone.Contacts:Update(data.state)
-  cb('ok')
 end)
 
-RegisterNUICallback('hud:phone:deleteContact', function(data, cb)
+RegisterNUICallback('phone:deleteContact', function(data, cb)
+  cb('ok')
   Phone.Contacts:Delete(data.id)
-  cb('ok')
 end)
 
-RegisterNUICallback('hud:phone:isNotificationActive', function(data, cb)
+RegisterNUICallback('phone:isNotificationActive', function(data, cb)
   cb(Phone.Notification:IsActive())
 end)
 
-RegisterNUICallback('hud:phone:shutdownNotification', function(data, cb)
+RegisterNUICallback('phone:shutdownNotification', function(data, cb)
   if Phone.Notification:IsActive() then
     cb(Phone.Notification:Close())
   end
@@ -52,16 +53,16 @@ end)
 
 --## RADIO ##--
 RegisterNUICallback('hud:radio:setPower', function(power, cb)
-  Voip.Voice:SetVoiceProperty('radioEnabled', power)
   cb('ok')
+  Voip.Voice:SetVoiceProperty('radioEnabled', power)
 end)
 
 RegisterNUICallback('hud:radio:setFrequency', function(frequency, cb)
-  Voip.Radio:SetRadioChannel(frequency)
   cb('ok')
+  Voip.Radio:SetRadioChannel(frequency)
 end)
 
 RegisterNUICallback('hud:radio:close', function(frequency, cb)
-  Radio:Close()
   cb('ok')
+  Radio:Close()
 end)

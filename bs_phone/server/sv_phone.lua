@@ -1,5 +1,5 @@
 local defaultSettings = {
-  wallpaper = 'wallpaper',
+  wallpaper = 'https://imgur.com/Lm8aAxI.png',
   brand = 'android',
   notifications = true,
 }
@@ -29,10 +29,8 @@ AddEventHandler('Core:Shared:Ready', function()
     'Middleware',
     'Wallet',
   }, function(error)
-    if #error > 0 then return end -- Do something to handle if not all dependencies loaded
+    if #error > 0 then return end
     RetrieveComponents()
-    -- DefaultData()
-    TriggerEvent('Phone:Server:RegisterMiddleware')
     TriggerEvent('Phone:Server:RegisterCallbacks')
   end)
 end)
@@ -40,8 +38,10 @@ end)
 RegisterServerEvent('Characters:Server:Spawn')
 AddEventHandler('Characters:Server:Spawn', function()
   local char = Fetch:Source(source):GetData('Character')
-  if not char:GetData('PhoneSettings') then char:SetData('PhoneSettings', defaultSettings) end
+  local phoneSettings = char:GetData('PhoneSettings')
   local cash = 0
+
+  if not phoneSettings then char:SetData('PhoneSettings', defaultSettings) end
 
   Wallet:Get(char, function(wallet)
     if wallet then
@@ -55,6 +55,9 @@ AddEventHandler('Characters:Server:Spawn', function()
     sid = src,
     cid = char:GetData('ID'),
     phoneNumber = char:GetData('Phone'),
+    wallpaper = phoneSettings.wallpaper,
+    brand = phoneSettings.brand,
+    notifications = phoneSettings.notifications,
     hasDriverLicense = true,
     cash = cash,
     bank = 0,
@@ -67,4 +70,16 @@ AddEventHandler('Characters:Server:Spawn', function()
       twitter = char:GetData('Twitter')
     }
   })
+end)
+
+
+AddEventHandler('Phone:Server:RegisterCallbacks', function()
+  Callbacks:RegisterServerCallback('Phone:Settings:Update', function(source, data, cb)
+    local src = source
+    local char = Fetch:Source(src):GetData('Character')
+    local phoneSettings = char:GetData('PhoneSettings')
+
+    phoneSettings[data.type] = data.value
+    char:SetData('PhoneSettings', phoneSettings)
+  end)
 end)

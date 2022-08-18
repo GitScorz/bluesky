@@ -8,15 +8,28 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tooltip } from "@mui/material";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import { PHONE_EVENTS } from "../../../../types/phone";
+import { fetchNui } from "../../../../utils/fetchNui";
 import { PHONE_STRINGS } from "../../config/config";
 import { phoneState } from "../../hooks/state";
 import "./NavigationBar.css";
 
 export default function NavigationBar() {
-  const [sounds, setSounds] = useRecoilState(phoneState.sounds);
+  const [phoneData, setPhoneData] = useRecoilState(phoneState.phoneData);
+
+  const handleToggle = useCallback(
+    (toggle: boolean) => {
+      setPhoneData({ ...phoneData, notifications: toggle });
+      fetchNui(PHONE_EVENTS.UPDATE_PHONE_SETTINGS, {
+        type: "notifications",
+        value: toggle,
+      });
+    },
+    [phoneData, setPhoneData]
+  );
 
   return useMemo(
     () => (
@@ -28,8 +41,8 @@ export default function NavigationBar() {
             arrow
           >
             <FontAwesomeIcon
-              icon={sounds ? faBell : faBellSlash}
-              onClick={() => setSounds(!sounds)}
+              icon={phoneData.notifications ? faBell : faBellSlash}
+              onClick={() => handleToggle(!phoneData.notifications)}
             />
           </Tooltip>
           <Tooltip
@@ -61,6 +74,6 @@ export default function NavigationBar() {
         </div>
       </div>
     ),
-    [sounds, setSounds]
+    [phoneData, handleToggle]
   );
 }

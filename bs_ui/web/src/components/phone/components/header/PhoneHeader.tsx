@@ -22,7 +22,7 @@ export default function PhoneHeader() {
       <>
         <div className="phone-header">
           <div className="phone-header-info">
-            <div style={{ position: "relative", width: "50%", left: "10px" }}>
+            <div style={{ position: "relative", width: "50%", left: "2px" }}>
               <span>
                 {time.hour}:{time.minute}
               </span>

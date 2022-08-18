@@ -24,13 +24,13 @@ export default function Modal({
   style,
   id,
 }: ModalProps) {
-  const [pParams, setpParams] = useState(params);
+  const [modalParams, setModalParams] = useState(params);
   const [disabledButtons, setDisabledButtons] = useState(false);
   const [noText, setNoText] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-  const [state, setState] = useState(pParams);
+  const [state, setState] = useState(modalParams);
 
   const timer = useRef<number>();
 
@@ -110,7 +110,7 @@ export default function Modal({
       }
     });
 
-    setpParams([]);
+    setModalParams([]);
     setDisabledButtons(true);
     setNoText(true);
 
@@ -146,8 +146,8 @@ export default function Modal({
   return (
     <div className="modal-wrapper" style={style}>
       <div className="modal-content">
-        {pParams.length > 0 &&
-          pParams.map((param: ModalParams, i: number) => (
+        {modalParams.length > 0 &&
+          modalParams.map((param: ModalParams, i: number) => (
             <div className="modal-params" key={param.id}>
               <TextField
                 name="input"
@@ -192,7 +192,7 @@ export default function Modal({
           </div>
         )}
 
-        {disabledButtons && pParams.length === 0 && noText && (
+        {disabledButtons && modalParams.length === 0 && noText && (
           <div className="modal-response">
             {success && (
               <FontAwesomeIcon

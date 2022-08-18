@@ -1,6 +1,26 @@
 import { atom } from "recoil";
-import { DisplayTime, PhoneData } from "../../../types/phone";
-import { DefaultPhoneData } from "../utils/constants";
+import { DisplayTime, ModalParams, PhoneContact, PhoneData } from "../../../types/phone";
+import { DefaultContacts, DefaultPhoneData } from "../utils/constants";
+
+export const modalState = {
+  open: atom<boolean>({
+    key: "modalState.open",
+    default: false,
+  }),
+
+  // params: atom<ModalParams>({
+  //   key: "modalState.params",
+  //   default: {
+  //     id: "",
+  //     label: "",
+  //     expected: "none",
+  //     input: "",
+  //     minLength: 0,
+  //     maxLength: 0,
+  //     icon: undefined,
+  //   },
+  // }),
+}
 
 export const phoneState = {
   visibility: atom<boolean>({
@@ -24,5 +44,12 @@ export const phoneState = {
   phoneData: atom<PhoneData>({
     key: 'phoneState.phoneData',
     default: DefaultPhoneData,
+  }),
+}
+
+export const contactsState = {
+  contacts: atom<PhoneContact[]>({
+    key: 'contactsState.contacts',
+    default: DefaultContacts
   }),
 }

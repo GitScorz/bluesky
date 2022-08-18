@@ -15,13 +15,13 @@ Phone.Notification = {
     }
 
     notificationActive = true
-    UI:SendUIMessage('hud:phone:toggle', true)
-    UI:SendUIMessage('hud:phone:sendNotification', {data})
+    UI:SendUIMessage('phone:toggle', true)
+    UI:SendUIMessage('phone:sendNotification', { data })
   end,
 
   Close = function(self)
     if not Phone.IsPhoneOpen() then
-      UI:SendUIMessage('hud:phone:toggle', false)
+      UI:SendUIMessage('phone:toggle', false)
     end
 
     notificationActive = false

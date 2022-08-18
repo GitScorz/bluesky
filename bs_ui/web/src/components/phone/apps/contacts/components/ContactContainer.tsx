@@ -120,7 +120,7 @@ export default function ContactContainer(props: PhoneContact) {
       {isDeleteOpen && (
         <Modal
           setIsOpen={setIsDeleteOpen}
-          callbackEvent="hud:phone:deleteContact"
+          callbackEvent="phone:deleteContact"
           style={{
             position: "fixed",
             width: "16%",
@@ -138,7 +138,7 @@ export default function ContactContainer(props: PhoneContact) {
       {isEditOpen && (
         <Modal
           setIsOpen={setIsEditOpen}
-          callbackEvent="hud:phone:editContact"
+          callbackEvent="phone:editContact"
           style={{
             position: "fixed",
             width: "16%",

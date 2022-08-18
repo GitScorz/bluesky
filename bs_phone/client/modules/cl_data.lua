@@ -1,13 +1,19 @@
-local selfData = nil
+local cachedData = nil
 
 Phone.Data = {
   Set = function(self, data)
-    selfData = data
+    cachedData = data
   end,
 
   Get = function(self)
-    UI:SendUIMessage('hud:phone:updatePhoneData', selfData)
+    UI:SendUIMessage('phone:updatePhoneData', cachedData)
   end,
+
+  --- @param data table
+  Update = function(self, data)
+    cachedData[data.type] = data.value
+    Callbacks:ServerCallback('Phone:Settings:Update', data)
+  end
 }
 
 RegisterNetEvent('Phone:Client:SetData')

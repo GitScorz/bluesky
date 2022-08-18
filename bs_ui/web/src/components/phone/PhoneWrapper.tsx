@@ -8,12 +8,13 @@ import "./phone.css";
 
 export default function PhoneWrapper({ children }: PropsWithChildren) {
   const [visibility, setVisibility] = useRecoilState(phoneState.visibility);
+  const [phoneData] = useRecoilState(phoneState.phoneData);
 
   useEffect(() => {
     const handleKeyEvent = (event: KeyboardEventInit) => {
       if (event.key === "Escape") {
         setVisibility(false);
-        fetchNui(PHONE_EVENTS.CLOSE);
+        fetchNui(PHONE_EVENTS.CLOSE, false);
       }
     };
 
@@ -32,14 +33,13 @@ export default function PhoneWrapper({ children }: PropsWithChildren) {
             <div
               className="phone-container"
               style={{
-                backgroundImage: "url(media/frames/android.png)",
+                backgroundImage: `url(media/frames/${phoneData.brand}.png)`,
               }}
             />
             <div
               className="phone-background"
               style={{
-                background:
-                  "linear-gradient(15deg, rgba(113,149,177,1) 0%, rgba(189,221,226,1) 100%)",
+                backgroundImage: `url(${phoneData.wallpaper})`,
               }}
             >
               {children}
@@ -48,6 +48,6 @@ export default function PhoneWrapper({ children }: PropsWithChildren) {
         </Slide>
       </>
     ),
-    [visibility, children]
+    [visibility, children, phoneData]
   );
 }

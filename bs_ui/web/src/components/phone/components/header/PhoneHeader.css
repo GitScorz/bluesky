@@ -18,7 +18,7 @@
 }
 
 .phone-header-info {
-  width: 25%;
+  width: 23%;
   justify-content: space-between;
   left: 10px;
   text-shadow: 1px 1px 0px #000,
@@ -35,7 +35,6 @@
 .phone-header-icons {
   gap: 6px;
   right: 10px;
-  filter: drop-shadow(-0.5px 1px 0px #000);
 }
 
 #phone-signal {

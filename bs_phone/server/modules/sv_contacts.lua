@@ -17,7 +17,7 @@ AddEventHandler('Phone:Contacts:Create', function(data)
     collection = 'phone_contacts',
     document = newData
   }, function(success, result)
-    if not success then 
+    if not success then
       TriggerEvent('Notificaton:SendError', src, 'Failed to create contact.')
     end
   end)
@@ -36,7 +36,6 @@ AddEventHandler('Phone:Contacts:Update', function(data)
       break
     end
   end
-
 
   Database.Game:updateOne({
     collection = 'phone_contacts',
@@ -68,7 +67,7 @@ AddEventHandler('Phone:Contacts:Delete', function(id)
       character = char:GetData('ID'),
       _id = id
     }
-  }, function (success, results)
+  }, function(success, results)
     if not success then
       TriggerEvent('Notificaton:SendError', src, 'Failed to delete contact.')
       return
@@ -80,13 +79,13 @@ AddEventHandler('Phone:Server:RegisterCallbacks', function()
   Callbacks:RegisterServerCallback('Phone:Contacts:Get', function(source, data, cb)
     local src = source
     local char = Fetch:Source(src):GetData('Character')
-    
+
     Database.Game:find({
       collection = 'phone_contacts',
       query = {
         character = char:GetData('ID'),
       }
-    }, function (success, results)
+    }, function(success, results)
       cb(results)
     end)
   end)

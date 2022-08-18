@@ -1,11 +1,12 @@
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 export enum PHONE_EVENTS {
-  OPEN = "phone:open",
+  TOGGLE_OPEN = "phone:toggle",
   CLOSE = "phone:close",
   UPDATE_PHONE_TIME = "phone:updatePhoneTime",
   UPDATE_PHONE_DATA = "phone:updatePhoneData",
-  UPDATE_CONTACTS = "phone:updateContacts",
+  UPDATE_PHONE_SETTINGS = "phone:updatePhoneSettings",
+  UPDATE_PHONE_CONTACTS = "phone:updatePhoneContacts",
 }
 
 export interface DisplayTime {
@@ -17,6 +18,9 @@ export interface PhoneData {
   sid: number;
   cid: string;
   phoneNumber: string;
+  wallpaper: string;
+  brand: "android" | "ios";
+  notifications: boolean;
   name: CharacterName;
   aliases: CharacterAliases;
   cash: number;
@@ -38,6 +42,7 @@ export interface PhoneContact {
   _id: string;
   name: string;
   phoneNumber: string;
+  character: string;
 }
 
 export interface ModalProps {
