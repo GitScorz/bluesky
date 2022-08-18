@@ -18,30 +18,27 @@ UI = {
 
   Hud = {
     Show = function(self)
-      UI:SendUIMessage('hud:status:visible', true)
+      UI:SendUIMessage('status:visible', true)
     end,
     Hide = function(self)
-      UI:SendUIMessage('hud:status:visible', false)
+      UI:SendUIMessage('status:visible', false)
     end,
     --- @param data table The data you wish to send along with this action
     Update = function(self, data)
-      UI:SendUIMessage('hud:status:update', data)
-    end,
-    Reset = function(self)
-      UI:SendUIMessage('hud:status:reset')
+      UI:SendUIMessage('status:updateData', data)
     end,
   },
 
   Vehicle = {
     Show = function(self)
-      UI:SendUIMessage('hud:vehicle:visible', true)
+      UI:SendUIMessage('vehicle:visible', true)
     end,
     Hide = function(self)
-      UI:SendUIMessage('hud:vehicle:visible', false)
+      UI:SendUIMessage('vehicle:visible', false)
     end,
     --- @param data table The data you wish to send along with this action
     Update = function(self, data)
-      UI:SendUIMessage('hud:vehicle:update', data)
+      UI:SendUIMessage('vehicle:updateData', data)
     end,
   },
 
@@ -49,7 +46,7 @@ UI = {
     ShowBank = function(self)
       UI:SendUIMessage('hud:balance:setBankVisible', true)
     end,
-    
+
     ShowCash = function(self)
       UI:SendUIMessage('hud:balance:setCashVisible', true)
     end,
@@ -64,16 +61,16 @@ UI = {
       UI:SendUIMessage('hud:balance:updateBank', cash)
     end,
   },
-  
+
   Voip = {
     --- @param data any
     UpdateTalking = function(self, data)
-      UI:SendUIMessage('hud:voip:updateTalkingStatus', data)
+      UI:SendUIMessage('voip:updateTalkingStatus', data)
     end,
 
     --- @param enabled boolean Whether or not to enable the voip listener
     ToggleRadio = function(self, enabled)
-      UI:SendUIMessage('hud:voip:toggleRadio', enabled)
+      UI:SendUIMessage('voip:toggleRadio', enabled)
     end,
   },
 

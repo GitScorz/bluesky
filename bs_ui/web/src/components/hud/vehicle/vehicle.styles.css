@@ -28,28 +28,28 @@
 
 #speed-text {
   font-size: 1.2rem;
-  text-shadow: 1px 1px 0px rgb(85, 85, 85)
-    -1px -1px 0px rgb(85, 85, 85),
-    0px -1px 0px rgb(85, 85, 85),
-    1px -1px 0px rgb(85, 85, 85),
-   -1px  0px 0px rgb(85, 85, 85),
-    1px  0px 0px rgb(85, 85, 85),
-   -1px  1px 0px rgb(85, 85, 85),
-    0px  1px 0px rgb(85, 85, 85),
-    1px  1px 0px rgb(85, 85, 85);
+  text-shadow:
+  -1px -1px 0 rgba(0, 0, 0, 0.5),
+   0   -1px 0 rgba(0, 0, 0, 0.5),
+   1px -1px 0 rgba(0, 0, 0, 0.5),
+   1px  0   0 rgba(0, 0, 0, 0.5),
+   1px  1px 0 rgba(0, 0, 0, 0.5),
+   0    1px 0 rgba(0, 0, 0, 0.5),
+  -1px  1px 0 rgba(0, 0, 0, 0.5),
+  -1px  0   0 rgba(0, 0, 0, 0.5);
 }
 
 #metric-text {
-  font-size: 1rem;
-  text-shadow: 1px 1px 0px rgb(85, 85, 85)
-    -1px -1px 0px rgb(85, 85, 85),
-    0px -1px 0px rgb(85, 85, 85),
-    1px -1px 0px rgb(85, 85, 85),
-   -1px  0px 0px rgb(85, 85, 85),
-    1px  0px 0px rgb(85, 85, 85),
-   -1px  1px 0px rgb(85, 85, 85),
-    0px  1px 0px rgb(85, 85, 85),
-    1px  1px 0px rgb(85, 85, 85);
+  font-size: .9rem;
+  text-shadow:
+  -1px -1px 0 rgba(0, 0, 0, 0.5),
+   0   -1px 0 rgba(0, 0, 0, 0.5),
+   1px -1px 0 rgba(0, 0, 0, 0.5),
+   1px  0   0 rgba(0, 0, 0, 0.5),
+   1px  1px 0 rgba(0, 0, 0, 0.5),
+   0    1px 0 rgba(0, 0, 0, 0.5),
+  -1px  1px 0 rgba(0, 0, 0, 0.5),
+  -1px  0   0 rgba(0, 0, 0, 0.5);
 }
 
 .hud-vehicle-fuel {

@@ -1,0 +1,36 @@
+.hud-wrapper {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  max-width: 50%;
+  gap: 7px;
+  left: 7px;
+  bottom: 5px;
+}
+
+.circle {
+  position: relative;
+  width: 55px;
+  height: 55px;
+}
+
+.circle-icon {
+  position: absolute;
+  background-color: #1a1a1a;
+  border-radius: 50%;
+  top: 6px;
+  left: 6px;
+  width: 79%;
+  height: 79%;
+}
+
+.hud-icon {
+  position: relative;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 50%;
+  color: #fff;
+}
