@@ -3,18 +3,24 @@ import {
   IconDefinition,
   findIconDefinition,
 } from "@fortawesome/fontawesome-svg-core";
-import { useState } from "react";
-import { useNuiEvent } from "../../../../hooks/useNuiEvent";
+import { useCallback, useMemo } from "react";
 import "./Notification.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { fetchNui } from "../../../../utils/fetchNui";
-import { NotificationIcon, NotificationProps } from "../../../../types/phone";
+import { NotificationIcon } from "../../../../types/phone";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { notificationState } from "../../hooks/state";
 
 export default function Notification() {
-  const [animation, setAnimation] = useState(false);
-  const [notifications, setNotifications] = useState<NotificationProps[]>([]);
+  const setActive = useSetRecoilState(notificationState.active);
+  const [animation, setAnimation] = useRecoilState(notificationState.animation);
 
-  const getIcon = (icon: NotificationIcon) => {
+  console.log("notify");
+
+  const [notifications, setNotifications] = useRecoilState(
+    notificationState.notifications
+  );
+
+  const getIcon = useCallback((icon: NotificationIcon) => {
     let iconName: IconLookup;
     let color = "#5babaa";
 
@@ -53,95 +59,98 @@ export default function Notification() {
       iconDefinition,
       color,
     };
-  };
+  }, []);
 
-  const reduce = (text: string) => {
+  const reduceText = useCallback((text: string) => {
     // Just a simple reducer to shorten the text
     if (text.length > 42) {
       return text.substring(0, 42) + "...";
     }
 
     return text;
-  };
+  }, []);
 
-  useNuiEvent("hud:phone:sendNotification", (data: NotificationProps[]) => {
-    setAnimation(true);
+  // useNuiEvent("hud:phone:sendNotification", (data: NotificationProps[]) => {
+  //   setAnimation(true);
 
-    data.forEach((notification) => {
+  //   data.forEach((notification) => {
+  //     setTimeout(() => {
+  //       if (notification.static) {
+  //         setNotifications([...notifications, notification]);
+  //       } else {
+  //         setNotifications([...notifications, notification]);
+  //         setTimeout(() => {
+  //           shutdownNotification(notification.id);
+  //         }, 4000);
+  //       }
+  //     }, 500);
+  //   });
+  // });
+
+  const clearNotification = useCallback(
+    (id: string) => {
+      setAnimation(false);
+      setActive(true);
       setTimeout(() => {
-        if (notification.static) {
-          setNotifications([...notifications, notification]);
-        } else {
-          setNotifications([...notifications, notification]);
-          setTimeout(() => {
-            shutdownNotification(notification.id);
-          }, 4000);
-        }
-      }, 500);
-    });
-  });
+        setNotifications(notifications.filter((n) => n.id !== id));
+        setAnimation(true);
+        setActive(false);
+      }, 150);
+    },
+    [notifications, setNotifications, setAnimation, setActive]
+  );
 
-  const shutdownNotification = (id: string) => {
-    setAnimation(false);
-    setTimeout(() => {
-      notifications.forEach((notification, index) => {
-        if (notification.id === id) {
-          setNotifications([
-            ...notifications,
-            ...notifications.splice(index, 1),
-          ]);
-        }
-      });
-      if (notifications.length === 0) {
-        fetchNui("hud:phone:shutdownNotification", {});
-      }
-    }, 150);
-  };
-
-  // Man idk i did it this way, make better :\
-
-  return (
-    <div
-      className="notification-wrapper"
-      style={{ visibility: notifications.length > 0 ? "visible" : "hidden" }}
-    >
-      {/* Reversing array */}
-      {notifications
-        .slice(0)
-        .reverse()
-        .map((notification, index) => (
-          <div
-            className="notification-container"
-            key={index}
-            style={{
-              cursor: "pointer",
-              animation: animation
-                ? "notification-open .2s ease-in-out"
-                : "notification-close .2s ease-in-out",
-            }}
-            onClick={() => shutdownNotification(notification.id)}
-          >
-            <div className="notification-header">
-              <div className="notification-title">
-                <div
-                  className="notification-icon"
-                  style={{
-                    backgroundColor: getIcon(notification.icon).color,
-                  }}
-                >
-                  <FontAwesomeIcon
-                    icon={getIcon(notification.icon).iconDefinition}
-                  />
+  return useMemo(
+    () => (
+      <>
+        <div
+          className="notification-wrapper"
+          style={{
+            visibility: notifications.length > 0 ? "visible" : "hidden",
+          }}
+        >
+          {/* Reversing array */}
+          {notifications
+            .slice(0)
+            .reverse()
+            .map((notification, index) => (
+              <div
+                className="notification-container"
+                key={index}
+                style={{
+                  cursor: "pointer",
+                  animation: animation
+                    ? "notification-open .2s ease-in-out"
+                    : "notification-close .2s ease-in-out",
+                }}
+                onClick={() => clearNotification(notification.id)}
+              >
+                <div className="notification-header">
+                  <div className="notification-title">
+                    <div
+                      className="notification-icon"
+                      style={{
+                        backgroundColor: getIcon(notification.icon).color,
+                      }}
+                    >
+                      <FontAwesomeIcon
+                        icon={getIcon(notification.icon).iconDefinition}
+                      />
+                    </div>
+                    <span style={{ fontSize: ".9rem" }}>
+                      {notification.title}
+                    </span>
+                  </div>
+                  <div className="notification-time">just now</div>
                 </div>
-                <span style={{ fontSize: ".9rem" }}>{notification.title}</span>
+                <div className="notification-description">
+                  <span>{reduceText(notification.description)}</span>
+                </div>
               </div>
-              <div className="notification-time">just now</div>
-            </div>
-            <div className="notification-description">
-              <span>{reduce(notification.description)}</span>
-            </div>
-          </div>
-        ))}
-    </div>
+            ))}
+        </div>
+      </>
+    ),
+    [notifications, clearNotification, getIcon, reduceText, animation]
   );
 }

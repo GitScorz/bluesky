@@ -5,18 +5,20 @@ import NavigationBar from "./components/navigationbar/NavigationBar";
 import Notification from "./components/notification/Notification";
 import { APPS } from "./config/apps";
 import { useContactsService } from "./hooks/useContactsService";
+import { useNotificationService } from "./hooks/useNotificationService";
 import { usePhoneService } from "./hooks/usePhoneService";
 import PhoneWrapper from "./PhoneWrapper";
 
 export default function Phone() {
   usePhoneService();
   useContactsService();
+  useNotificationService();
 
   return (
     <>
       <PhoneWrapper>
-        <PhoneHeader />
         <Notification />
+        <PhoneHeader />
         <div className="phone-app-container">
           <Routes>
             <Route path="/" element={<Home />} />

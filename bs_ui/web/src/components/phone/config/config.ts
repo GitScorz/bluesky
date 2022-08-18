@@ -32,3 +32,5 @@ export enum PHONE_STRINGS {
   CONTACT_NAME = "Name",
   DELETE_CONTACT_CONFIRM = "Are you sure you want to delete this contact?",
 }
+
+export const NOTIFICATION_TIMEOUT = 4000;

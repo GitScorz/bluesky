@@ -1,14 +1,18 @@
 import { Slide } from "@mui/material";
 import { PropsWithChildren, useEffect, useMemo } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { PHONE_EVENTS } from "../../types/phone";
 import { fetchNui } from "../../utils/fetchNui";
-import { phoneState } from "./hooks/state";
+import { notificationState, phoneState } from "./hooks/state";
 import "./phone.css";
 
 export default function PhoneWrapper({ children }: PropsWithChildren) {
   const [visibility, setVisibility] = useRecoilState(phoneState.visibility);
-  const [phoneData] = useRecoilState(phoneState.phoneData);
+  const isNotificationActive = useRecoilValue(notificationState.active);
+  const phoneData = useRecoilValue(phoneState.phoneData);
+  const notifications = useRecoilValue(notificationState.notifications);
+
+  console.log(isNotificationActive);
 
   useEffect(() => {
     const handleKeyEvent = (event: KeyboardEventInit) => {
@@ -27,9 +31,17 @@ export default function PhoneWrapper({ children }: PropsWithChildren) {
         <Slide
           direction="up"
           timeout={{ enter: 600, exit: 400 }}
-          in={visibility}
+          in={isNotificationActive || visibility}
         >
-          <div className="phone-wrapper" style={{ bottom: "10px" }}>
+          <div
+            className="phone-wrapper"
+            style={{
+              bottom:
+                notifications.length > 0 && isNotificationActive
+                  ? "-550px"
+                  : "10px",
+            }}
+          >
             <div
               className="phone-container"
               style={{
@@ -48,6 +60,6 @@ export default function PhoneWrapper({ children }: PropsWithChildren) {
         </Slide>
       </>
     ),
-    [visibility, children, phoneData]
+    [visibility, children, phoneData, isNotificationActive, notifications]
   );
 }
