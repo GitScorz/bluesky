@@ -1,6 +1,7 @@
 import { Slide } from "@mui/material";
 import { useState } from "react";
 import { useNuiEvent } from "../../hooks/useNuiEvent";
+import { InteractionData } from "../../types/interaction";
 import "./interaction.css";
 
 // debugData<UI.Interaction.Data>([
@@ -15,12 +16,12 @@ import "./interaction.css";
 
 export default function Interaction() {
   const [visible, setVisible] = useState(false);
-  const [interactionData, setInteractionData] = useState<UI.Interaction.Data>({
+  const [interactionData, setInteractionData] = useState<InteractionData>({
     action: "",
     colorType: "default",
   });
 
-  useNuiEvent("hud:action:showInteraction", (data: UI.Interaction.Data) => {
+  useNuiEvent("hud:action:showInteraction", (data: InteractionData) => {
     setVisible(true);
     setInteractionData((oldData) => ({ ...oldData, ...data }));
   });

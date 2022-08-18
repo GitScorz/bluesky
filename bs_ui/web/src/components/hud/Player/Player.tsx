@@ -14,8 +14,9 @@ import {
 import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 import { useNuiEvent } from "../../../hooks/useNuiEvent";
 import { forwardRef, useState } from "react";
+import { PlayerHudProps, TalkingStatus } from "../../../types/hud";
 
-const Player = forwardRef((props: UI.Status.HudProps, ref: any) => {
+const Player = forwardRef((props: PlayerHudProps, ref: any) => {
   const [isTalking, setIsTalking] = useState(false);
   const [isTalkingRadio, setIsTalkingRadio] = useState(false);
   const [onRadio, setOnRadio] = useState(false);
@@ -58,13 +59,10 @@ const Player = forwardRef((props: UI.Status.HudProps, ref: any) => {
     return color;
   };
 
-  useNuiEvent(
-    "hud:voip:updateTalkingStatus",
-    (state: UI.Status.TalkingStatus) => {
-      setIsTalking(state.talking);
-      setIsTalkingRadio(state.usingRadio);
-    }
-  );
+  useNuiEvent("hud:voip:updateTalkingStatus", (state: TalkingStatus) => {
+    setIsTalking(state.talking);
+    setIsTalkingRadio(state.usingRadio);
+  });
 
   useNuiEvent("hud:voip:toggleRadio", (state: boolean) => {
     setOnRadio(state);

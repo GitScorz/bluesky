@@ -1,9 +1,10 @@
 import { faGasPump, faUserSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CircularProgressbar } from "react-circular-progressbar";
+import { VehicleHudProps } from "../../../types/hud";
 import "./Vehicle.css";
 
-export default function Vehicle(props: UI.Vehicle.HudProps) {
+export default function Vehicle(props: VehicleHudProps) {
   const { fuel, seatbelt, speed } = props;
 
   const calcFuelColor = (value: number) => {

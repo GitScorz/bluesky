@@ -1,6 +1,7 @@
 import { Fade } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNuiEvent } from "../../hooks/useNuiEvent";
+import { UpdateBalance } from "../../types/balance";
 import { isEnvBrowser } from "../../utils/misc";
 import "./balance.css";
 
@@ -32,11 +33,11 @@ export default function Balance() {
   //   }
   // }, []);
 
-  useNuiEvent("hud:balance:updateCash", (data: UI.Balance.BalanceTypes) => {
+  useNuiEvent("hud:balance:updateCash", (data: UpdateBalance) => {
     setCash(data.cash);
   });
 
-  useNuiEvent("hud:balance:updateBank", (data: UI.Balance.BalanceTypes) => {
+  useNuiEvent("hud:balance:updateBank", (data: UpdateBalance) => {
     setBank(data.bank);
   });
 

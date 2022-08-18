@@ -1,20 +1,21 @@
 import { Fade } from "@mui/material";
-import { useEffect, useState } from 'react';
-import { useNuiEvent } from '../../hooks/useNuiEvent';
+import { useEffect, useState } from "react";
+import { useNuiEvent } from "../../hooks/useNuiEvent";
+import { PlayerHudProps, UpdateData, VehicleHudProps } from "../../types/hud";
 import { debugData } from "../../utils/debugData";
-import { isEnvBrowser } from '../../utils/misc';
-import Player from './Player/Player';
-import Vehicle from './Vehicle/Vehicle';
+import { isEnvBrowser } from "../../utils/misc";
+import Player from "./Player/Player";
+import Vehicle from "./Vehicle/Vehicle";
 
 debugData([
   {
-    action: 'hud:status:visible',
-    data: true, 
+    action: "hud:status:visible",
+    data: true,
   },
   {
-    action: 'hud:vehicle:visible',
+    action: "hud:vehicle:visible",
     data: false,
-  }
+  },
 ]);
 
 export default function Hud() {
@@ -22,15 +23,15 @@ export default function Hud() {
   const [vehicleVisible, setVehicleVisible] = useState(false);
 
   // Default values for the HUD
-  const [status, setStatus] = useState<UI.Status.HudProps>({ 
-    voice: 70, 
+  const [status, setStatus] = useState<PlayerHudProps>({
+    voice: 70,
     health: 0,
-    armor: 0, 
-    hunger: 0, 
-    thirst: 0 
+    armor: 0,
+    hunger: 0,
+    thirst: 0,
   });
 
-  const [vehicleData, setVehicleData] = useState<UI.Vehicle.HudProps>({
+  const [vehicleData, setVehicleData] = useState<VehicleHudProps>({
     fuel: 0,
     seatbelt: false,
     speed: 0,
@@ -53,36 +54,36 @@ export default function Hud() {
         speed: 150,
         fuel: 50,
         seatbelt: false,
-      })
+      });
     }
   }, []);
-  
-  useNuiEvent('hud:status:visible', (shouldShow: boolean) => {
+
+  useNuiEvent("hud:status:visible", (shouldShow: boolean) => {
     setHudVisible(shouldShow);
   });
 
-  useNuiEvent('hud:vehicle:visible', (shouldShow: boolean) => {
+  useNuiEvent("hud:vehicle:visible", (shouldShow: boolean) => {
     setVehicleVisible(shouldShow);
   });
 
-  useNuiEvent('hud:status:update', (data: UI.Status.Data) => {
+  useNuiEvent("hud:status:update", (data: UpdateData) => {
     if (!visibleHud) return; // If the HUD is not visible, don't update it improve performance
 
     switch (data.id) {
-      case 'voice':
-        const voiceStates = [30,  70, 100];
+      case "voice":
+        const voiceStates = [30, 70, 100];
         setStatus({ ...status, voice: voiceStates[data.value] });
         break;
-      case 'health':
+      case "health":
         setStatus({ ...status, health: data.value });
         break;
-      case 'armor':
+      case "armor":
         setStatus({ ...status, armor: data.value });
         break;
-      case 'hunger':
+      case "hunger":
         setStatus({ ...status, hunger: data.value });
         break;
-      case 'thirst':
+      case "thirst":
         setStatus({ ...status, thirst: data.value });
         break;
       default:
@@ -90,21 +91,20 @@ export default function Hud() {
     }
   });
 
-  useNuiEvent('hud:vehicle:update', (data: UI.Vehicle.HudProps) => {
+  useNuiEvent("hud:vehicle:update", (data: VehicleHudProps) => {
     if (!vehicleVisible) return;
     setVehicleData(data);
   });
 
-  useNuiEvent('hud:status:reset', function() {
-    setStatus({ 
+  useNuiEvent("hud:status:reset", function () {
+    setStatus({
       voice: 0,
-      health: 0, 
-      armor: 0, 
-      thirst: 0, 
-      hunger: 0 
+      health: 0,
+      armor: 0,
+      thirst: 0,
+      hunger: 0,
     });
   });
-
 
   return (
     <div>
