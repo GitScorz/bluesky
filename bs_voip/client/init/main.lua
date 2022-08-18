@@ -25,9 +25,9 @@ end)
 ---@param volume number between 0 and 100
 ---@param volumeType string the volume type (currently radio & call) to set the volume of (opt)
 function setVolume(volume, volumeType)
-	type_check({volume, "number"})
+	type_check({ volume, "number" })
 	local volume = volume / 100
-	
+
 	if volumeType then
 		local volumeTbl = volumes[volumeType]
 		if volumeTbl then
@@ -114,7 +114,7 @@ end
 ---@diagnostic disable-next-line: undefined-doc-param
 ---@param targets table expects multiple tables to be sent over
 function playerTargets(...)
-	local targets = {...}
+	local targets = { ... }
 	local addedPlayers = {
 		[playerServerId] = true
 	}
@@ -138,13 +138,9 @@ end
 
 --- function playMicClicks
 ---plays the mic click if the player has them enabled.
----@param clickType boolean whether to play the 'on' or 'off' click. 
+---@param clickType boolean whether to play the 'on' or 'off' click.
 function playMicClicks(clickType)
 	if micClicks ~= 'true' then return Logger:Trace('Voip', "Not playing mic clicks because client has them disabled") end
-	sendUIMessage({
-		sound = (clickType and "audio_on" or "audio_off"),
-		volume = (clickType and volumes["radio"] or 0.05)
-	})
 end
 
 --- function setVoiceProperty
@@ -200,7 +196,7 @@ end)
 
 -- 	_character = exports['bs_base']:FetchComponent('Player').LocalPlayer:GetData('Character')
 -- 	Utils:Print(_character:GetData())
-	
+
 -- 	if _character:GetData('Job').job ~= currentJob then
 -- 		if currentRadioChannel ~= 0 then
 -- 			VoipStuff.Remove:removePlayerFromRadio()

@@ -16,8 +16,6 @@ export const useHudService = () => {
 
   useNuiEvent(HUD_EVENTS.STATUS_VISIBLE, setStatusVisibility);
   useNuiEvent(HUD_EVENTS.STATUS_UPDATE_DATA, (data: StatusUpdateData) => {
-    if (!statusVisibility) return;
-
     switch (data.id) {
       case "voice":
         const voiceStates = [30, 70, 100];

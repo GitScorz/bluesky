@@ -16,10 +16,6 @@ function syncRadioData(radioTable, localPlyRadioName)
 		end
 	end
 
-	-- sendUIMessage({
-	-- 	radioChannel = radioChannel,
-	-- 	radioEnabled = radioEnabled
-	-- })
 	if GetConvarInt("voice_syncPlayerNames", 0) == 1 then
 		radioNames[playerServerId] = localPlyRadioName
 	end
@@ -71,10 +67,6 @@ function removePlayerFromRadio(plySource)
 			end
 		end
 
-		-- sendUIMessage({
-		-- 	radioChannel = 0,
-		-- 	radioEnabled = radioEnabled
-		-- })
 		radioNames = {}
 		radioData = {}
 		playerTargets(MumbleIsPlayerTalking(PlayerId()) and callData or {})

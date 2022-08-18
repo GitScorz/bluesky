@@ -30,7 +30,7 @@ RegisterCommand('+cycleproximity', function()
 		mode = 1
 	end
 
-	UI.Hud:Update({ id = "voice", value = mode - 1})
+	UI.Hud:Update({ id = "voice", value = mode - 1 })
 	setProximityState(Cfg.voiceModes[mode][1], false)
 	TriggerEvent('pma-voice:setTalkingMode', mode)
 end, false)
@@ -40,7 +40,7 @@ function RegisterKeybinds()
 end
 
 exports('setAllowProximityCycleState', function(state)
-	type_check({state, "boolean"})
+	type_check({ state, "boolean" })
 	disableProximityCycle = state
 end)
 
@@ -55,7 +55,7 @@ function setProximityState(proximityRange, isCustom)
 end
 
 exports("overrideProximityRange", function(range, disableCycle)
-	type_check({range, "number"})
+	type_check({ range, "number" })
 	setProximityState(range, true)
 	if disableCycle then
 		disableProximityCycle = true
