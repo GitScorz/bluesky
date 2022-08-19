@@ -2,8 +2,8 @@ UI = {
   Balance = {
     --- @param source number
     --- @param cash number
-    UpdateCash = function(self, source, cash)
-      TriggerClientEvent('UI:Client:UpdateCash', source, cash)
+    UpdateCash = function(self, source, currentCash, cash)
+      TriggerClientEvent('UI:Client:UpdateCash', source, currentCash, cash)
     end,
   }
 }

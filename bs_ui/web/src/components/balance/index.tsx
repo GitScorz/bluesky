@@ -1,71 +1,47 @@
 import { Fade } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useNuiEvent } from "../../hooks/useNuiEvent";
-import { UpdateBalance } from "../../types/balance";
-import { isEnvBrowser } from "../../utils/misc";
+import { useRecoilValue } from "recoil";
+import { balanceState } from "./hooks/state";
+import { useBalanceService } from "./hooks/useBalanceService";
 import "./balance.css";
+import { useMemo } from "react";
 
 export default function Balance() {
-  const [cashVisible, setCashVisible] = useState(false);
-  const [bankVisible, setBankVisible] = useState(false);
+  useBalanceService();
 
-  const [cash, setCash] = useState(0);
-  const [bank, setBank] = useState(0);
+  const cashState = useRecoilValue(balanceState.cashState);
+  const addState = useRecoilValue(balanceState.add);
+  const removeState = useRecoilValue(balanceState.remove);
 
-  const setVisibleTimeCash = () => {
-    setCashVisible(true);
-    setTimeout(() => {
-      setCashVisible(false);
-    }, 5000);
-  };
+  return useMemo(
+    () => (
+      <Fade timeout={{ enter: 100, exit: 200 }} in={cashState.visible}>
+        <div className="balance-wrapper" style={{ fontFamily: "Pricedown" }}>
+          <div className="containers">
+            {addState && addState.visible && (
+              <div className="add-container">
+                +{" "}
+                <span className="money">
+                  {addState.cash?.toString().substring(0)}
+                </span>
+              </div>
+            )}
 
-  const setVisibleTimeBank = () => {
-    setBankVisible(true);
-    setTimeout(() => {
-      setBankVisible(false);
-    }, 5000);
-  };
+            {removeState && removeState.visible && (
+              <div className="remove-container">
+                -{" "}
+                <span className="money">
+                  {removeState.cash?.toString().substring(1)}
+                </span>
+              </div>
+            )}
 
-  // useEffect(() => {
-  //   if (isEnvBrowser()) {
-  //     setVisibleTimeCash();
-  //     setVisibleTimeBank();
-  //   }
-  // }, []);
-
-  useNuiEvent("hud:balance:updateCash", (data: UpdateBalance) => {
-    setCash(data.cash);
-  });
-
-  useNuiEvent("hud:balance:updateBank", (data: UpdateBalance) => {
-    setBank(data.bank);
-  });
-
-  useNuiEvent("hud:balance:setBankVisible", (shouldShow: boolean) => {
-    setVisibleTimeBank();
-  });
-
-  useNuiEvent("hud:balance:setCashVisible", (shouldShow: boolean) => {
-    setVisibleTimeCash();
-  });
-
-  return (
-    <div className="balance-container" style={{ fontFamily: "Pricedown" }}>
-      <Fade timeout={{ enter: 500, exit: 500 }} in={bankVisible}>
-        <div className={`"bank-container`}>
-          <div className="bank-balance">
-            $ <span className="money">{bank}</span>
+            <div className="cash-container">
+              $ <span className="money">{cashState.cash}</span>
+            </div>
           </div>
         </div>
       </Fade>
-
-      <Fade timeout={{ enter: 500, exit: 500 }} in={cashVisible}>
-        <div className={`cash-container`}>
-          <div className="cash-balance">
-            $ <span className="money">{cash}</span>
-          </div>
-        </div>
-      </Fade>
-    </div>
+    ),
+    [cashState, addState, removeState]
   );
 }

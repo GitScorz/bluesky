@@ -43,22 +43,15 @@ UI = {
   },
 
   Balance = {
-    ShowBank = function(self)
-      UI:SendUIMessage('hud:balance:setBankVisible', true)
+    ShowCash = function(self, currentCash)
+      UI:SendUIMessage('balance:showCash', currentCash)
     end,
 
-    ShowCash = function(self)
-      UI:SendUIMessage('hud:balance:setCashVisible', true)
-    end,
-
-    --- @param cash number
-    UpdateCash = function(self, cash)
-      UI:SendUIMessage('hud:balance:updateCash', cash)
-    end,
-
-    --- @param cash number
-    UpdateBank = function(self, cash)
-      UI:SendUIMessage('hud:balance:updateBank', cash)
+    UpdateCash = function(self, currentCash, toUpdate)
+      UI:SendUIMessage('balance:updateCash', {
+        currentCash = currentCash,
+        toUpdate = toUpdate
+      })
     end,
   },
 
@@ -85,6 +78,7 @@ UI = {
 
       UI:SendUIMessage('hud:action:showInteraction', aux)
     end,
+
     Hide = function(self)
       UI:SendUIMessage('hud:action:hideInteraction')
     end,
@@ -95,4 +89,4 @@ AddEventHandler('Proxy:Shared:RegisterReady', function()
   exports['bs_base']:RegisterComponent('UI', UI)
 end)
 
-CreateThread(function() while true do collectgarbage() Wait(30000) end end) -- Garbage collection thread
+CreateThread(function() while true do collectgarbage("collect") Wait(30000) end end)

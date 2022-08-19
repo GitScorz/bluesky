@@ -15,16 +15,6 @@ AddEventHandler('Characters:Client:Logout', function()
   UI.Voip:ToggleRadio(false)
 end)
 
-RegisterNetEvent('UI:Client:ShowBank')
-AddEventHandler('UI:Client:ShowBank', function()
-  UI.Balance:ShowBank()
-end)
-
-RegisterNetEvent('UI:Client:ShowCash')
-AddEventHandler('UI:Client:ShowCash', function()
-  UI.Balance:ShowCash()
-end)
-
 RegisterNetEvent('UI:Client:ChangeHudState')
 AddEventHandler('UI:Client:ChangeHudState', function()
   if isHudVisible then
@@ -39,7 +29,12 @@ AddEventHandler('Status:Client:Update', function(status, value)
   UI.Hud:Update({ id = status, value = value })
 end)
 
+RegisterNetEvent('UI:Client:ShowCash')
+AddEventHandler('UI:Client:ShowCash', function(cash)
+  UI.Balance:ShowCash(cash)
+end)
+
 RegisterNetEvent('UI:Client:UpdateCash')
-AddEventHandler('UI:Client:UpdateCash', function(cash)
-  UI.Balance:UpdateCash(cash)
+AddEventHandler('UI:Client:UpdateCash', function(cur, cash)
+  UI.Balance:UpdateCash(cur, cash)
 end)
