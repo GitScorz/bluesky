@@ -4,6 +4,7 @@
   height: 20%;
   font-size: 3rem;
   text-shadow: 3px 3px #000;
+  color: #fff;
   user-select: none;
 }
 
@@ -11,25 +12,23 @@
   position: absolute;
   max-width: 100%;
   right: 0;
-  margin-right: 1vh;
-  margin-top: 10vh;
+  margin-right: 2vh;
+  margin-top: 18vh;
 }
 
-.cash-container {
-  position: relative;
-  color: #157811;
-}
-
-.add-container {
-  position: relative;
-  color: #157811;
-}
-
+.cash-container, 
+.add-container, 
 .remove-container {
   position: relative;
-  color: #ff0000;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
-.money {
-  color: #fff;
+.dollar-sign {
+  color: #157811;
+}
+
+.red {
+  color: #ff0000;
 }

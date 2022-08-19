@@ -19,7 +19,8 @@ export default function Balance() {
           <div className="containers">
             {addState && addState.visible && (
               <div className="add-container">
-                +{" "}
+                <span>+</span>
+                <span className="dollar-sign">$</span>
                 <span className="money">
                   {addState.cash?.toString().substring(0)}
                 </span>
@@ -27,16 +28,20 @@ export default function Balance() {
             )}
 
             {removeState && removeState.visible && (
-              <div className="remove-container">
-                -{" "}
-                <span className="money">
-                  {removeState.cash?.toString().substring(1)}
-                </span>
-              </div>
+              <>
+                <div className="remove-container">
+                  <span>-</span>
+                  <span className="red">$</span>
+                  <span className="money">
+                    {removeState.cash?.toString().substring(1)}
+                  </span>
+                </div>
+              </>
             )}
 
             <div className="cash-container">
-              $ <span className="money">{cashState.cash}</span>
+              <span className="dollar-sign">$</span>
+              <span className="money">{cashState.cash}</span>
             </div>
           </div>
         </div>
