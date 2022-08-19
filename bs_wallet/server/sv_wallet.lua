@@ -113,3 +113,17 @@ AddEventHandler('Characters:Server:CharacterCreated', function(cId)
     end
   end)
 end)
+
+RegisterServerEvent('Wallet:Server:GiveCash')
+AddEventHandler('Wallet:Server:GiveCash', function(cash)
+  local player = exports['bs_base']:FetchComponent('Fetch'):Source(source)
+  local char = player:GetData('Character')
+  Wallet:Give(char, cash)
+end)
+
+RegisterServerEvent('Wallet:Server:RemoveCash')
+AddEventHandler('Wallet:Server:RemoveCash', function(cash)
+  local player = exports['bs_base']:FetchComponent('Fetch'):Source(source)
+  local char = player:GetData('Character')
+  Wallet:Remove(char, cash)
+end)
