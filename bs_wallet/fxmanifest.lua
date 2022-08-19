@@ -6,3 +6,7 @@ server_only 'yes'
 server_scripts {
     'server/sv_*.lua',
 }
+
+shared_scripts {
+    'shared/sh_*.lua',
+}

@@ -36,10 +36,10 @@ function RegisterCallbacks()
 end
 
 WALLET = {
-    Create = function(self, char)
+    Create = function(self, cId)
         local doc = {
-            Char = char:GetData('ID'),
-            Cash = 0
+            Char = cId,
+            Cash = Config.InitialCash
         }
         Database.Game:insertOne({
             collection = 'wallets',
@@ -82,30 +82,11 @@ WALLET = {
     end
 }
 
-RegisterServerEvent('Characters:Server:Spawn')
-AddEventHandler('Characters:Server:Spawn', function()
-    local player = exports['bs_base']:FetchComponent('Fetch'):Source(source)
-    local char = player:GetData('Character')
-    Database.Game:findOne({
-        collection = 'wallets',
-        query = {
-            Char = char:GetData('ID')
-        }
-    }, function(success, results)
-        if not success then
-            return
-        end
-        if #results == 0 then
-            Wallet:Create(char)
-        end
-    end)
-end)
-
 RegisterNetEvent('Characters:Client:Updated')
 AddEventHandler('Characters:Client:Updated', function()
     local player = exports['bs_base']:FetchComponent('Fetch'):Source(source)
     local char = player:GetData('Character')
-    
+
     Wallet:Get(char, function(wallet)
         UI.Balance:UpdateCash(wallet.Cash)
     end)
@@ -113,4 +94,18 @@ end)
 
 AddEventHandler('Proxy:Shared:RegisterReady', function()
     exports['bs_base']:RegisterComponent('Wallet', WALLET)
+end)
+
+AddEventHandler('Characters:Server:CharacterCreated', function(cId)
+    Database.Game:findOne({
+        collection = 'wallets',
+        query = {
+            Char = cId
+        }
+    }, function(success, results)
+        if not success then return end
+        if #results == 0 then
+            Wallet:Create(cId)
+        end
+    end)
 end)
