@@ -10,4 +10,5 @@ a:hover,
 a:active {
   text-decoration: none;
   color: white;
+  cursor: default;
 }

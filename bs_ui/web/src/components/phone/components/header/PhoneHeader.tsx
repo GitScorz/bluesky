@@ -27,7 +27,7 @@ export default function PhoneHeader() {
                 {time.hour}:{time.minute}
               </span>
             </div>
-            <div># {phoneData.sid}</div>
+            <div>#{phoneData.sid}</div>
           </div>
           <div className="phone-header-icons">
             <FontAwesomeIcon icon={faSun} />

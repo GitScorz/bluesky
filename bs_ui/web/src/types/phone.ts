@@ -8,6 +8,7 @@ export enum PHONE_EVENTS {
   UPDATE_PHONE_SETTINGS = "phone:updatePhoneSettings",
   UPDATE_PHONE_CONTACTS = "phone:updatePhoneContacts",
   SEND_NOTIFICATION = "phone:sendNotification",
+  OPEN_CAMERA = "phone:openCamera",
 }
 
 export interface DisplayTime {

@@ -23,7 +23,7 @@ end)
 
 RegisterNUICallback('phone:updatePhoneSettings', function(data, cb)
   cb('ok')
-  Phone.Data:Update(data)
+  Phone.Data:UpdateSettings(data)
 end)
 
 RegisterNUICallback('phone:addContact', function(data, cb)
@@ -49,6 +49,12 @@ RegisterNUICallback('phone:shutdownNotification', function(data, cb)
   if Phone.Notification:IsActive() then
     cb(Phone.Notification:Close())
   end
+end)
+
+RegisterNUICallback('phone:openCamera', function(data, cb)
+  cb('ok')
+  Phone:Close()
+  Phone:SelfieMode()
 end)
 
 --## RADIO ##--

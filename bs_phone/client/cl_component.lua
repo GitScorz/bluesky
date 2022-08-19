@@ -58,6 +58,28 @@ Phone = {
     end
   end,
 
+  SelfieMode = function(self)
+    DestroyMobilePhone()
+    Wait(0)
+    CreateMobilePhone(0)
+    CellCamActivate(true, true)
+    CellCamDisableThisFrame(true)
+    CreateThread(function()
+      local selfieMode = true
+      while selfieMode == true do
+        if IsControlJustPressed(0, 177) then
+          selfieMode = false
+          DestroyMobilePhone()
+          Wait(0)
+          CellCamDisableThisFrame(false)
+          CellCamActivate(false, false)
+          Phone:Open()
+        end
+        Wait(0)
+      end
+    end)
+  end,
+
   IsInCall = function(self)
     -- return IsInActiveCall()
     return false

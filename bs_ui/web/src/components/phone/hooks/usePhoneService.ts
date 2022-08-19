@@ -18,7 +18,7 @@ export const usePhoneService = () => {
 debugData<any>([
   {
     action: PHONE_EVENTS.TOGGLE_OPEN,
-    data: false,
+    data: true,
   },
   {
     

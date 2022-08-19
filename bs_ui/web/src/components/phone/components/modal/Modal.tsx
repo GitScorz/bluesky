@@ -176,14 +176,20 @@ export default function Modal({
         {!disabledButtons && (
           <div className="modal-buttons">
             <Button
-              style={{ backgroundColor: "#f1a368", color: "black" }}
+              style={{
+                backgroundColor: "#f1a368",
+                color: "black",
+              }}
               onClick={() => setIsOpen(false)}
             >
               Cancel
             </Button>
             <Link to={"/contacts"}>
               <Button
-                style={{ backgroundColor: "#95ef79", color: "black" }}
+                style={{
+                  backgroundColor: "#95ef79",
+                  color: "black",
+                }}
                 onClick={() => handleSubmit()}
               >
                 Submit

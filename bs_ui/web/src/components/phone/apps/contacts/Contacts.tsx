@@ -40,7 +40,7 @@ export default function Contacts() {
       <>
         <div className="contacts-wrapper">
           <div className="contacts-add-new">
-            <Tooltip title={PHONE_STRINGS.ADD_CONTACT} placement="top" arrow>
+            <Tooltip title={PHONE_STRINGS.ADD_CONTACT} placement="left" arrow>
               <FontAwesomeIcon
                 icon={faUserPlus}
                 onClick={() => setIsOpen(true)}

@@ -80,7 +80,7 @@ UI = {
     Show = function(self, actionText, color)
       local aux = {
         action = actionText,
-        colorType = color,
+        colorType = color or "default",
       }
 
       UI:SendUIMessage('hud:action:showInteraction', aux)

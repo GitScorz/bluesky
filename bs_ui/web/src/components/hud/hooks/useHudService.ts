@@ -5,7 +5,7 @@ import { debugData } from "../../../utils/debugData";
 import { statusState, vehicleState } from "./state";
 
 export const useHudService = () => {
-  const [statusVisibility, setStatusVisibility] = useRecoilState(statusState.visibility);
+  const setStatusVisibility = useSetRecoilState(statusState.visibility);
   const [status, setStatus] = useRecoilState(statusState.status);
   
   const [vehicleVisible, setVehicleVisibility] = useRecoilState(vehicleState.visibility);

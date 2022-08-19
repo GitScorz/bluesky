@@ -37,7 +37,7 @@ export default function PhoneWrapper({ children }: PropsWithChildren) {
               bottom:
                 notifications.length > 0 && isNotificationActive
                   ? "-550px"
-                  : "10px",
+                  : "0",
             }}
           >
             <div

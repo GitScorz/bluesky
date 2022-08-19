@@ -76,7 +76,7 @@ export default function Player({
                 pathColor: voiceForeground("rgb(255, 255, 255)"),
                 pathTransitionDuration: 0.4,
               })}
-              strokeWidth={11}
+              strokeWidth={20}
             />
             <div className="circle-icon">
               <FontAwesomeIcon
@@ -94,7 +94,7 @@ export default function Player({
                 pathColor: foregroundRed(health, "rgb(59, 160, 122)"),
                 pathTransitionDuration: 2,
               })}
-              strokeWidth={11}
+              strokeWidth={20}
             />
             <div className="circle-icon">
               <FontAwesomeIcon
@@ -112,7 +112,7 @@ export default function Player({
                 pathColor: foregroundRed(armor, "rgb(27, 101, 181)"),
                 pathTransitionDuration: 2,
               })}
-              strokeWidth={11}
+              strokeWidth={20}
             />
             <div className="circle-icon">
               <FontAwesomeIcon className="hud-icon" icon={faShieldHalved} />
@@ -127,7 +127,7 @@ export default function Player({
                 pathColor: foregroundRed(hunger, "rgba(255, 118, 10)"),
                 pathTransitionDuration: 2,
               })}
-              strokeWidth={11}
+              strokeWidth={20}
             />
             <div className="circle-icon">
               <FontAwesomeIcon className="hud-icon" icon={faBurger} />
@@ -142,7 +142,7 @@ export default function Player({
                 pathColor: foregroundRed(thirst, "rgba(13, 121, 180)"),
                 pathTransitionDuration: 2,
               })}
-              strokeWidth={11}
+              strokeWidth={20}
             />
             <div className="circle-icon">
               <FontAwesomeIcon className="hud-icon" icon={faDroplet} />

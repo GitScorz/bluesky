@@ -39,28 +39,22 @@ RegisterServerEvent('Characters:Server:Spawn')
 AddEventHandler('Characters:Server:Spawn', function()
   local char = Fetch:Source(source):GetData('Character')
   local phoneSettings = char:GetData('PhoneSettings')
-  local cash = 0
-
   if not phoneSettings then char:SetData('PhoneSettings', defaultSettings) end
+
+  local src = char:GetData('Source')
 
   Wallet:Get(char, function(wallet)
     if wallet then
-      cash = wallet.cash
+      TriggerClientEvent('Phone:Client:SetData', src, { cash = wallet.Cash })
     end
   end)
 
-  local src = char:GetData('Source')
   TriggerClientEvent('Phone:Client:Settings', src, char:GetData('PhoneSettings'))
   TriggerClientEvent('Phone:Client:SetData', src, {
     sid = src,
     cid = char:GetData('ID'),
     phoneNumber = char:GetData('Phone'),
-    wallpaper = phoneSettings.wallpaper,
-    brand = phoneSettings.brand,
-    notifications = phoneSettings.notifications,
     hasDriverLicense = true,
-    cash = cash,
-    bank = 0,
     name = {
       first = char:GetData('First'),
       last = char:GetData('Last')

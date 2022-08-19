@@ -31,6 +31,10 @@ export default function NavigationBar() {
     [phoneData, setPhoneData]
   );
 
+  const handleCamera = useCallback(() => {
+    fetchNui(PHONE_EVENTS.OPEN_CAMERA, {});
+  }, []);
+
   return useMemo(
     () => (
       <div className="phone-navigation-bar">
@@ -50,7 +54,7 @@ export default function NavigationBar() {
             placement="top"
             arrow
           >
-            <FontAwesomeIcon icon={faCamera} />
+            <FontAwesomeIcon icon={faCamera} onClick={handleCamera} />
           </Tooltip>
           <Tooltip title={PHONE_STRINGS.NAVIGATION_HOME} placement="top" arrow>
             <Link to="/">
@@ -74,6 +78,6 @@ export default function NavigationBar() {
         </div>
       </div>
     ),
-    [phoneData, handleToggle]
+    [phoneData, handleToggle, handleCamera]
   );
 }

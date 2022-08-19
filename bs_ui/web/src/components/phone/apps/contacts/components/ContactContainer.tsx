@@ -123,10 +123,10 @@ export default function ContactContainer(props: PhoneContact) {
           callbackEvent="phone:deleteContact"
           style={{
             position: "fixed",
-            width: "16%",
+            width: "15.5%",
             height: "62.5%",
-            right: "15px",
-            bottom: "20px",
+            right: "11px",
+            bottom: "15px",
             top: "auto",
           }}
           text={PHONE_STRINGS.DELETE_CONTACT_CONFIRM}
@@ -141,10 +141,10 @@ export default function ContactContainer(props: PhoneContact) {
           callbackEvent="phone:editContact"
           style={{
             position: "fixed",
-            width: "16%",
+            width: "15.5%",
             height: "62.5%",
-            right: "15px",
-            bottom: "20px",
+            right: "11px",
+            bottom: "15px",
             top: "auto",
           }}
           params={[
