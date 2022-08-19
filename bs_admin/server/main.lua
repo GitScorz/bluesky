@@ -7,6 +7,7 @@ function RetrieveComponents()
     Utils = exports['bs_base']:FetchComponent('Utils')
     Jobs = exports['bs_base']:FetchComponent('Jobs')
     Chat = exports['bs_base']:FetchComponent('Chat')
+    Wallet = exports['bs_base']:FetchComponent('Wallet')
 end
 
 AddEventHandler('Core:Shared:Ready', function()
@@ -18,6 +19,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'Utils',
         'Jobs',
         'Chat',
+        'Wallet'
     }, function(error)
         if #error > 0 then return end -- Do something to handle if not all dependencies loaded
         RetrieveComponents()
@@ -32,7 +34,35 @@ function registerChatCommands()
     end, {
         help = '[Admin] Toggle NoClip',
     }, 0)
+
+    Chat:RegisterAdminCommand('givecash', function(src, args, raw)
+        local amount = tonumber(args[1])
+
+        if amount then
+            TriggerEvent('Admin:Wallet:AddCash', src, amount)
+        end
+    end, {
+        help = '[Admin] Give Cash',
+        params = {
+            {
+                name = 'amount',
+                help = 'Amount of cash to give'
+            }
+        }
+    }, 1)
 end
+
+RegisterServerEvent('Admin:Wallet:AddCash')
+AddEventHandler('Admin:Wallet:AddCash', function(source, amount)
+    local src = source
+    local player = Fetch:Source(src)
+    if player ~= nil then
+        local char = player:GetData('Character')
+        if char ~= nil then
+            Wallet:Give(char, amount)
+        end
+    end
+end)
 
 RegisterServerEvent('Admin:Revive:WithinRange')
 AddEventHandler('Admin:Revive:WithinRange', function(coords)
@@ -41,7 +71,7 @@ AddEventHandler('Admin:Revive:WithinRange', function(coords)
     if player ~= nil then
         local char = player:GetData('Character')
         if char ~= nil then
-            Logger:Trace('Admin', char:GetData('First')..' '..char:GetData('Last')..' has used Revive within Range')
+            Logger:Trace('Admin', char:GetData('First') .. ' ' .. char:GetData('Last') .. ' has used Revive within Range')
             TriggerClientEvent('Admin:Revive:Client:WithinRange', -1, coords)
         end
     end
@@ -54,7 +84,9 @@ AddEventHandler('Admin:Revive:Player', function(playerIdenter)
     if player ~= nil then
         local char = player:GetData('Character')
         if char ~= nil then
-            Logger:Trace('Admin', char:GetData('First')..' '..char:GetData('Last')..' has used Revive Player - Revived Player: '..playerIdenter)
+            Logger:Trace('Admin',
+                char:GetData('First') ..
+                ' ' .. char:GetData('Last') .. ' has used Revive Player - Revived Player: ' .. playerIdenter)
             TriggerClientEvent('Admin:Revive:Client:All', playerIdenter)
         end
     end
@@ -67,7 +99,8 @@ AddEventHandler('Admin:Revive:All', function()
     if player ~= nil then
         local char = player:GetData('Character')
         if char ~= nil then
-            Logger:Trace('Admin', char:GetData('First')..' '..char:GetData('Last')..' has used Revive All Server Players')
+            Logger:Trace('Admin', char:GetData('First') ..
+                ' ' .. char:GetData('Last') .. ' has used Revive All Server Players')
             TriggerClientEvent('Admin:Revive:Client:All', -1)
         end
     end
@@ -76,18 +109,20 @@ end)
 function RegisterCallbacks()
     Callbacks:RegisterServerCallback('Admin:receiveRecentDisconnects', function(source, data, cb)
         local RecentDisconnects = exports['bs_base']:FetchComponent('RecentDisconnects')
-        cb(RecentDisconnects)    
+        cb(RecentDisconnects)
     end)
 
     Callbacks:RegisterServerCallback('Admin:receiveActivePlayers', function(source, data, cb)
         local activePlayers = exports['bs_base']:FetchComponent('Fetch'):All()
         local playersToReturn = {}
-            for k, v in pairs(activePlayers) do
-                local player = v:GetData('Character')
-                if player ~= nil then
-                    table.insert(playersToReturn, {['name'] = player:GetData('First')..' '..player:GetData('Last'), ['source'] = v:GetData('Source'), ['sid'] = v:GetData('SID'), ['cid'] = player:GetData('ID')})
-                end
+        for k, v in pairs(activePlayers) do
+            local player = v:GetData('Character')
+            if player ~= nil then
+                table.insert(playersToReturn,
+                    { ['name'] = player:GetData('First') .. ' ' .. player:GetData('Last'),
+                        ['source'] = v:GetData('Source'), ['sid'] = v:GetData('SID'), ['cid'] = player:GetData('ID') })
             end
+        end
         cb(playersToReturn)
     end)
 
@@ -130,4 +165,3 @@ AddEventHandler('Admin:server:kickPlayer', function(plySrc, reason)
         end
     end
 end)
-
