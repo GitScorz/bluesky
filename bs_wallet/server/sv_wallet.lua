@@ -56,7 +56,7 @@ WALLET = {
       if not success then return end
       if #results > 0 then
         local _data = results[1]
-        _data.Modify = function(self, count)
+        _data.Modify = function(self, amount)
           Database.Game:updateOne({
             collection = 'wallets',
             query = {
@@ -64,7 +64,7 @@ WALLET = {
             },
             update = {
               ["$inc"] = {
-                Cash = count
+                Cash = amount
               }
             }
           })
@@ -77,20 +77,30 @@ WALLET = {
     end)
   end,
 
-  Give = function(self, char, cash)
+  Give = function(self, char, amount)
     Wallet:Get(char, function(wallet)
       if wallet then
-        UI.Balance:UpdateCash(char:GetData('Source'), wallet.Cash, cash)
-        wallet:Modify(cash)
+        UI.Balance:UpdateCash(char:GetData('Source'), wallet.Cash, amount)
+
+        TriggerClientEvent('Phone:Client:SetData', char:GetData('Source'), {
+          cash = wallet.Cash + amount
+        })
+
+        wallet:Modify(amount)
       end
     end)
   end,
 
-  Remove = function(self, char, cash)
+  Remove = function(self, char, amount)
     Wallet:Get(char, function(wallet)
       if wallet then
-        UI.Balance:UpdateCash(char:GetData('Source'), wallet.Cash, -cash)
-        wallet:Modify(-cash)
+        UI.Balance:UpdateCash(char:GetData('Source'), wallet.Cash, -amount)
+
+        TriggerClientEvent('Phone:Client:SetData', char:GetData('Source'), {
+          cash = wallet.Cash - amount
+        })
+
+        wallet:Modify(-amount)
       end
     end)
   end,
