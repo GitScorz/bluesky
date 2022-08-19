@@ -6,7 +6,7 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { InputAdornment, TextField, Tooltip } from "@mui/material";
+import { Fade, InputAdornment, TextField, Tooltip } from "@mui/material";
 import { useMemo, useState } from "react";
 import { useRecoilState } from "recoil";
 import { PhoneContact } from "../../../../types/phone";
@@ -38,73 +38,75 @@ export default function Contacts() {
   return useMemo(
     () => (
       <>
-        <div className="contacts-wrapper">
-          <div className="contacts-add-new">
-            <Tooltip title={PHONE_STRINGS.ADD_CONTACT} placement="left" arrow>
-              <FontAwesomeIcon
-                icon={faUserPlus}
-                onClick={() => setIsOpen(true)}
-              />
-            </Tooltip>
-          </div>
-          <div className="contacts-search">
-            <TextField
-              label={PHONE_STRINGS.SEARCH}
-              value={search}
-              onChange={handleSearch}
-              fullWidth
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <FontAwesomeIcon
-                      icon={faMagnifyingGlass}
-                      style={{ color: "#38b58f59" }}
-                    />
-                  </InputAdornment>
-                ),
-              }}
-              variant="standard"
-            />
-          </div>
-          <div className="contacts-list">
-            {filteredContacts.map((contact: PhoneContact) => {
-              return <ContactContainer key={contact._id} {...contact} />;
-            })}
-
-            {filteredContacts.length <= 0 && (
-              <div className="contacts-not-found">
+        <Fade in={true} timeout={{ enter: 300 }}>
+          <div className="contacts-wrapper">
+            <div className="contacts-add-new">
+              <Tooltip title={PHONE_STRINGS.ADD_CONTACT} placement="left" arrow>
                 <FontAwesomeIcon
-                  icon={faFaceFrown}
-                  style={{ fontSize: "5rem" }}
+                  icon={faUserPlus}
+                  onClick={() => setIsOpen(true)}
                 />
-                <span>{PHONE_STRINGS.NO_CONTACTS}</span>
-              </div>
+              </Tooltip>
+            </div>
+            <div className="contacts-search">
+              <TextField
+                label={PHONE_STRINGS.SEARCH}
+                value={search}
+                onChange={handleSearch}
+                fullWidth
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FontAwesomeIcon
+                        icon={faMagnifyingGlass}
+                        style={{ color: "#38b58f59" }}
+                      />
+                    </InputAdornment>
+                  ),
+                }}
+                variant="standard"
+              />
+            </div>
+            <div className="contacts-list">
+              {filteredContacts.map((contact: PhoneContact) => {
+                return <ContactContainer key={contact._id} {...contact} />;
+              })}
+
+              {filteredContacts.length <= 0 && (
+                <div className="contacts-not-found">
+                  <FontAwesomeIcon
+                    icon={faFaceFrown}
+                    style={{ fontSize: "5rem" }}
+                  />
+                  <span>{PHONE_STRINGS.NO_CONTACTS}</span>
+                </div>
+              )}
+            </div>
+
+            {isOpen && (
+              <Modal
+                setIsOpen={setIsOpen}
+                callbackEvent="phone:addContact"
+                params={[
+                  {
+                    id: "contact-name",
+                    label: PHONE_STRINGS.CONTACT_NAME,
+                    icon: faUser,
+                    minLength: 1,
+                  },
+                  {
+                    id: "contact-number",
+                    label: PHONE_STRINGS.PHONE_NUMBER,
+                    icon: faPhone,
+                    expected: "number",
+                    minLength: 10,
+                    maxLength: 10,
+                  },
+                ]}
+              />
             )}
           </div>
-
-          {isOpen && (
-            <Modal
-              setIsOpen={setIsOpen}
-              callbackEvent="phone:addContact"
-              params={[
-                {
-                  id: "contact-name",
-                  label: PHONE_STRINGS.CONTACT_NAME,
-                  icon: faUser,
-                  minLength: 1,
-                },
-                {
-                  id: "contact-number",
-                  label: PHONE_STRINGS.PHONE_NUMBER,
-                  icon: faPhone,
-                  expected: "number",
-                  minLength: 10,
-                  maxLength: 10,
-                },
-              ]}
-            />
-          )}
-        </div>
+        </Fade>
       </>
     ),
     [isOpen, filteredContacts, search]

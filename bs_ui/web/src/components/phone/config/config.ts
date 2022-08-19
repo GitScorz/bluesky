@@ -12,6 +12,7 @@ export enum PHONE_STRINGS {
   // Apps
   APP_DETAILS = "Details",
   APP_CONTACTS = "Contacts",
+  APP_SETTINGS = "Settings",
 
   // Details App
   CIVILIAN_ID = "Civilian ID",
@@ -31,6 +32,12 @@ export enum PHONE_STRINGS {
   EDIT_CONTACT = "Edit",
   CONTACT_NAME = "Name",
   DELETE_CONTACT_CONFIRM = "Are you sure you want to delete this contact?",
+
+  // Settings App
+  TITLE_SETTINGS = "Settings",
+  SAVE_SETTINGS = "Save",
+  INVALID_SETTINGS = "Invalid settings.",
+  SETTINGS_SAVED = "Settings saved.",
 }
 
 export const NOTIFICATION_TIMEOUT = 4000;

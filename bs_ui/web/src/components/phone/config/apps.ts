@@ -1,7 +1,8 @@
-import { faAddressBook, faBookBookmark, faCircleInfo, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faAddressBook, faCircleInfo, faGear } from "@fortawesome/free-solid-svg-icons";
 import { AppProps } from "../../../types/phone";
 import Contacts from "../apps/contacts/Contacts";
 import Details from "../apps/details/Details";
+import Settings from "../apps/settings/Settings";
 import { PHONE_STRINGS } from "./config";
 
 export const APPS: AppProps[] = [
@@ -18,9 +19,18 @@ export const APPS: AppProps[] = [
     label: PHONE_STRINGS.APP_CONTACTS,
     rootPath: "/contacts",
     style: {
-      background: "linear-gradient(323deg, rgba(18,147,10,1) 0%, rgba(181,236,207,1) 100%)",
+      background: "linear-gradient(0deg, rgba(15,39,68,1) 0%, rgba(54,90,120,1) 86%)",
     },
     icon: faAddressBook,
     component: Contacts,
+  },
+  {
+    label: PHONE_STRINGS.APP_SETTINGS,
+    rootPath: "/settings",
+    style: {
+      background: "#999999",
+    },
+    icon: faGear,
+    component: Settings,
   },
 ]

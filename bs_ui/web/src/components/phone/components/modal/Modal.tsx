@@ -13,7 +13,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ModalParams, ModalProps } from "../../../../types/phone";
 import { fetchNui } from "../../../../utils/fetchNui";
-import { SendAlert } from "../../utils/utils";
+import { SendAlert } from "../../../../utils/misc";
 import "./Modal.css";
 
 export default function Modal({

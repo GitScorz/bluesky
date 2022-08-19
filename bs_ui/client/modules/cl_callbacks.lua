@@ -3,7 +3,7 @@ RegisterNUICallback('hud:setFocus', function(state, cb)
   UI:SetFocus(state)
 end)
 
-RegisterNUICallback('hud:sendAlert', function(data, cb)
+RegisterNUICallback('ui:sendAlert', function(data, cb)
   cb('ok')
   local msg = data.message
 
