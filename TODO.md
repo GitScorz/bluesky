@@ -3,6 +3,7 @@
 - [x] Remake Inventory
 - [x] Remake Phone
 - [x] Remake Hud
-- [ ] Documentation on scripts. (*On progress*)
+- [x] Documentation on scripts.
 - [ ] Re-do UI with React & Typescript. (*On progress*)
 - [ ] Economy system. (*On progress*)
+- [ ] Fix Status 
