@@ -188,17 +188,18 @@ AddEventHandler('Bank:CounterReward', function(bank)
     if random >= 95 then
         local player = exports['bs_base']:FetchComponent('Fetch'):Source(source)
         local char = player:GetData('Character')
-        -- Inventory:AddItem(char:GetData('ID'), 'vaultcard', 1, {
-        --     bank = bank
-        -- }, 1)
+        Inventory:AddItem(char:GetData('ID'), 'vaultcard', 1, {
+            bank = bank
+        }, 1)
     end
 end)
 
 RegisterServerEvent('Bank:RemoveAccessCard')
 AddEventHandler('Bank:RemoveAccessCard', function(item)
+    local source = source
     local player = exports['bs_base']:FetchComponent('Fetch'):Source(source)
     local char = player:GetData('Character')
-    -- Inventory:RemoveItem(char:GetData('ID'), 'vaultcard', 1, item.Slot, 1)
+    Inventory:RemoveItem(source, char:GetData('ID'), 'vaultcard', 1, item.Slot, 1)
 end)
 
 RegisterServerEvent('Bank:MSpotReward')
@@ -218,5 +219,5 @@ AddEventHandler('Bank:VGSpotReward', function()
     local player = exports['bs_base']:FetchComponent('Fetch'):Source(source)
     local char = player:GetData('Character')
     local items = { 'rolex', 'ring', 'valuegoods' }
-    -- Inventory:AddItem(char:GetData('ID'), items[math.random(#items)], math.random(5), {}, 1)
+    Inventory:AddItem(char:GetData('ID'), items[math.random(#items)], math.random(5), {}, 1)
 end)

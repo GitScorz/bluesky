@@ -6,7 +6,7 @@ function RetrieveComponents()
     Utils = exports['bs_base']:FetchComponent('Utils')
     Chat = exports['bs_base']:FetchComponent('Chat')
     Tasks = exports['bs_base']:FetchComponent('Tasks')
-    -- Inventory = exports['bs_base']:FetchComponent('Inventory')
+    Inventory = exports['bs_base']:FetchComponent('Inventory')
     Default = exports['bs_base']:FetchComponent('Default')
 end
 
@@ -18,7 +18,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'Database',
         'Default',
         'Utils',
-        -- 'Inventory',
+        'Inventory',
         'Tasks',
     }, function(error)
         if #error > 0 then
@@ -99,29 +99,29 @@ function RegisterTasks()
 end
 
 function RegisterItemUse()
-    -- Inventory.Items:RegisterUse('card', 'Bank', function(source, item)
-    --     TriggerClientEvent('Bank:OpenATMUI', source, item.MetaData)
-    -- end)
+    Inventory.Items:RegisterUse('card', 'Bank', function(source, item)
+        TriggerClientEvent('Bank:OpenATMUI', source, item.MetaData)
+    end)
 end
 
 function RegisterChatCommands()
-    -- Chat:RegisterAdminCommand('bank', function(source, args, rawCommand)
-    --     TriggerClientEvent('Bank:OpenBankUI', source)
-    -- end, {
-    --     help = 'Debug Bank',
-    -- }, 0)
+    Chat:RegisterAdminCommand('bank', function(source, args, rawCommand)
+        TriggerClientEvent('Bank:OpenBankUI', source)
+    end, {
+        help = 'Debug Bank',
+    }, 0)
 
-    -- Chat:RegisterAdminCommand('loan', function(source, args, rawCommand)
-    --     TriggerClientEvent('Bank:TestLoan', source)
-    -- end, {
-    --     help = 'Debug Loan',
-    -- }, 0)
+    Chat:RegisterAdminCommand('loan', function(source, args, rawCommand)
+        TriggerClientEvent('Bank:TestLoan', source)
+    end, {
+        help = 'Debug Loan',
+    }, 0)
 
-    -- Chat:RegisterAdminCommand('bankreset', function(source, args, rawCommand)
-    --     TriggerEvent('Bank:ResetBanks')
-    -- end, {
-    --     help = 'Debug Loan',
-    -- }, 0)
+    Chat:RegisterAdminCommand('bankreset', function(source, args, rawCommand)
+        TriggerEvent('Bank:ResetBanks')
+    end, {
+        help = 'Debug Loan',
+    }, 0)
 end
 
 function RegisterCallbacks()
@@ -341,10 +341,10 @@ function RegisterCallbacks()
 
                 end)
             end)
-            -- Inventory:AddItem(char:GetData('ID'), 'card', 1, {
-            --     AccountNumber = data.AccountNumber,
-            --     CardNumber = cardNumber
-            -- }, 1)
+            Inventory:AddItem(char:GetData('ID'), 'card', 1, {
+                AccountNumber = data.AccountNumber,
+                CardNumber = cardNumber
+            }, 1)
             cb(true)
         end)
     end)
