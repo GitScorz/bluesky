@@ -44,7 +44,8 @@ function REGISTER_CALLBACKS()
 
   Callbacks:RegisterServerCallback('Inventory:Server:RemoveItem', function(source, data, cb)
     if data.item.charId and data.item.id and data.item.slot and data.item.invType then
-      Inventory:RemoveItem(data.item.charId, data.item.id, (data.amount or 1), data.item.slot, data.item.invType, cb)
+      Inventory:RemoveItem(source, data.item.charId, data.item.id, (data.amount or 1), data.item.slot, data.item.invType
+        , cb)
     end
   end)
 

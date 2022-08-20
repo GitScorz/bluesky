@@ -382,3 +382,8 @@ RegisterNetEvent('Inventory:AddItem')
 AddEventHandler('Inventory:AddItem', function(itemId, quantity)
   Inventory:ShowNotification(itemId, SHARED_ITEMS[itemId].label, 'Received', quantity)
 end)
+
+RegisterNetEvent('Inventory:RemoveItem')
+AddEventHandler('Inventory:RemoveItem', function(itemId, quantity)
+  Inventory:ShowNotification(itemId, SHARED_ITEMS[itemId].label, 'Removed', quantity)
+end)

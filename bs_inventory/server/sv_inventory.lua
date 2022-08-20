@@ -328,7 +328,7 @@ INVENTORY = {
 
   --# REMOVERS #--
 
-  RemoveItem = function(self, owner, itemId, amount, slot, invType, cb)
+  RemoveItem = function(self, src, owner, itemId, amount, slot, invType, cb)
     Inventory:GetSlot(owner, slot, invType, function(data)
 
       if data == nil then
@@ -336,6 +336,8 @@ INVENTORY = {
           { console = false })
         return
       end
+
+      TriggerClientEvent('Inventory:RemoveItem', src, itemId, amount)
 
       if data.quantity - amount <= 0 then
         Inventory:RemoveSlot(owner, data.slot, invType)
