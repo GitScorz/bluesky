@@ -33,7 +33,7 @@ export default function PhoneWrapper({ children }: PropsWithChildren) {
           <div
             className="phone-wrapper"
             style={{
-              bottom: isNotificationActive ? "-550px" : "0",
+              bottom: 0,
             }}
           >
             <div
