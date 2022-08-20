@@ -2,7 +2,7 @@ fx_version 'cerulean'
 game 'gta5'
 
 description 'Blue Sky Radio'
-name 'Blue Sky: bs_ui'
+name 'Blue Sky: [bs_radio]'
 author 'Scorz'
 version 'v1.0.0'
 

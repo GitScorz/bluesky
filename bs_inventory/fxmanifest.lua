@@ -1,8 +1,9 @@
 fx_version 'cerulean'
 game 'gta5'
 
+description 'Blue Sky Inventory'
+name 'Blue Sky: [bs_inventory]'
 author 'Scorz'
-description 'Bluesky Inventory.'
 version '1.0.0'
 
 lua54 'yes'
