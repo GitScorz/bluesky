@@ -17,13 +17,20 @@ export default function Home() {
                   style={{
                     width: "20%",
                     height: "10%",
-                    borderRadius: "1.5vh",
+                    borderRadius: "1.6vh",
                     ...app.style,
                   }}
                 >
                   <Link to={app.rootPath}>
                     <div className="phone-apps-icon">
-                      <FontAwesomeIcon icon={app.icon} />
+                      {app.icon && <FontAwesomeIcon icon={app.icon} />}
+                      {app.image && (
+                        <img
+                          className="app-image"
+                          src={app.image}
+                          alt={app.label}
+                        />
+                      )}
                     </div>
                   </Link>
                 </div>

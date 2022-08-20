@@ -19,7 +19,7 @@ export const APPS: AppProps[] = [
     label: PHONE_STRINGS.APP_CONTACTS,
     rootPath: "/contacts",
     style: {
-      background: "linear-gradient(0deg, rgba(15,39,68,1) 0%, rgba(54,90,120,1) 86%)",
+      background: "linear-gradient(356deg, rgba(0,44,74,1) 9%, rgba(0,65,110,1) 55%)",
     },
     icon: faAddressBook,
     component: Contacts,
@@ -28,9 +28,10 @@ export const APPS: AppProps[] = [
     label: PHONE_STRINGS.APP_SETTINGS,
     rootPath: "/settings",
     style: {
-      background: "#999999",
+      width: "20.5%",
+      height: "10.5%"
     },
-    icon: faGear,
+    image: "media/apps/settings.png",
     component: Settings,
   },
 ]

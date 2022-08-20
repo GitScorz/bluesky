@@ -5,10 +5,12 @@ import {
   Fade,
   FormControl,
   Input,
+  InputAdornment,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
+  TextField,
 } from "@mui/material";
 import React, { useCallback, useMemo, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -39,8 +41,7 @@ export default function Settings() {
     if (wallpaper.length === 0 || !isImage(wallpaper))
       return SendAlert(PHONE_STRINGS.INVALID_SETTINGS, "error");
 
-    setPhoneData({ ...phoneData, wallpaper: wallpaper });
-    setPhoneData({ ...phoneData, brand: brand });
+    setPhoneData({ ...phoneData, wallpaper: wallpaper, brand: brand });
 
     fetchNui(PHONE_EVENTS.UPDATE_PHONE_SETTINGS, {
       type: "wallpaper",
@@ -85,12 +86,19 @@ export default function Settings() {
               </div>
 
               <div className="settings-item">
-                <FontAwesomeIcon id="icon" icon={faSquarePiedPiper} />
-                <Input
+                <TextField
                   fullWidth
+                  variant="standard"
                   placeholder="Wallpaper (use imgur)"
                   value={wallpaper}
                   onChange={handleChange}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <FontAwesomeIcon id="icon" icon={faSquarePiedPiper} />
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </div>
 

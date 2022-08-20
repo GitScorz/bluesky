@@ -70,8 +70,9 @@ export interface AppProps {
   label: string;
   rootPath: string;
   style: React.CSSProperties;
-  icon: IconDefinition;
   component: React.ComponentType<any>;
+  icon?: IconDefinition;
+  image?: string;
 }
 
 export interface NotificationProps {

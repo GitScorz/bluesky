@@ -20,6 +20,20 @@ const Theme = createTheme({
         },
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          boxShadow: "1px 1px 5px #000",
+        },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        icon: {
+          color: "#fff",
+        },
+      },
+    },
   },
   palette: {
     primary: {
