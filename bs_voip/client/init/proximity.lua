@@ -8,6 +8,7 @@ function orig_addProximityCheck(ply)
 
 	return #(plyCoords - GetEntityCoords(tgtPed)) < distance
 end
+
 local addProximityCheck = orig_addProximityCheck
 
 function addNearbyPlayers()
@@ -80,7 +81,7 @@ CreateThread(function()
 		while not MumbleIsConnected() do
 			Wait(100)
 		end
-		-- Leave the check here as we don't want to do any of this logic 
+		-- Leave the check here as we don't want to do any of this logic
 		local curTalkingStatus = MumbleIsPlayerTalking(PlayerId()) == 1
 		if lastRadioStatus ~= radioPressed or lastTalkingStatus ~= curTalkingStatus then
 			lastRadioStatus = radioPressed
@@ -110,8 +111,12 @@ CreateThread(function()
 end)
 
 VOIP.Voice = {
+	RadioEnabled = function()
+		return radioEnabled
+	end,
+
 	--- Sets the specified voice property
-	SetVoiceProperty =function (self, type, value)
+	SetVoiceProperty = function(self, type, value)
 		setVoiceProperty(type, value)
 	end,
 
@@ -120,13 +125,14 @@ VOIP.Voice = {
 	--- @param channel? number
 	SetVoiceState = function(self, _voiceState, channel)
 		if _voiceState ~= "proximity" and _voiceState ~= "channel" then
-			Logger:Error('Voip', ("Didn't get a proper voice state, expected 'proximity' or 'channel', got '%s'"):format(_voiceState))
+			Logger:Error('Voip',
+				("Didn't get a proper voice state, expected 'proximity' or 'channel', got '%s'"):format(_voiceState))
 		end
 
 		voiceState = _voiceState
 
 		if voiceState == "channel" then
-			type_check({channel, "number"})
+			type_check({ channel, "number" })
 			-- 65535 is the highest a client id can go, so we add that to the base channel so we don't manage to get onto a players channel
 			channel = channel + 65535
 			MumbleSetVoiceChannel(channel)
@@ -155,7 +161,8 @@ AddEventHandler("onClientResourceStop", function(resource)
 			local isResource = string.match(proximityCheckRef, resource)
 			if isResource then
 				addProximityCheck = orig_addProximityCheck
-				Logger:Warn('Voip', ('Reset proximity check to default, the original resource [%s] which provided the function has restarted'):format(resource))
+				Logger:Warn('Voip',
+					('Reset proximity check to default, the original resource [%s] which provided the function has restarted'):format(resource))
 			end
 		end
 	end

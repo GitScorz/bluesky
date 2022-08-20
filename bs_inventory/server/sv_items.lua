@@ -9,16 +9,18 @@ INVENTORY.Items = {
   Use = function(self, source, item, cb)
     if item.id == nil then cb(false) return end
 
+    if Inventory:IsValidItem(item.id) then
+      TriggerClientEvent('Inventory:CloseUI', source)
+    end
+
+    Wait(500)
+
     TriggerClientEvent('Inventory:UsedItem', source, item)
 
     if ITEM_CALLBACKS[item.id] ~= nil then
       for k, callback in pairs(ITEM_CALLBACKS[item.id]) do
         callback(source, item)
       end
-    end
-
-    if Inventory:IsValidItem(item.id) then
-      TriggerClientEvent('Inventory:CloseUI', source)
     end
 
     cb(true)

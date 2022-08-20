@@ -18,7 +18,7 @@ AddEventHandler('Core:Shared:Ready', function()
     'UI',
     'Voip',
     'Radio'
-  }, function(error)  
+  }, function(error)
     if #error > 0 then return; end
     RetrieveComponents()
   end)
@@ -43,22 +43,22 @@ Radio = {
     local ped = PlayerPedId()
     local testdic = "cellphone@"
     local testanim = "cellphone_text_read_base"
-    
+
     RequestAnimDict(testdic)
     while not HasAnimDictLoaded(testdic) do
       Citizen.Wait(0)
     end
-    
+
     RequestModel(radioModel)
     while not HasModelLoaded(radioModel) do
       Citizen.Wait(1)
     end
-    
+
     radioProp = CreateObject(radioModel, 1.0, 1.0, 1.0, 1, 1, 0)
-    
+
     local bone = GetPedBoneIndex(ped, 28422)
     AttachEntityToEntity(radioProp, ped, bone, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1, 1, 0, 0, 2, 1)
-    
+
     TaskPlayAnim(ped, "cellphone@", "cellphone_text_read_base", 2.0, 3.0, -1, 49, 0, 0, 0, 0)
   end,
 
@@ -69,7 +69,7 @@ Radio = {
 
   DestroyProp = function(self)
     if radioProp ~= 0 then
-      Citizen.InvokeNative(0xAE3CBE5BF394C9C9 , Citizen.PointerValueIntInitialized(radioProp))
+      Citizen.InvokeNative(0xAE3CBE5BF394C9C9, Citizen.PointerValueIntInitialized(radioProp))
       radioProp = 0
     end
   end,
@@ -84,8 +84,29 @@ AddEventHandler('Characters:Client:Logout', function()
   _isloggedIn = false
 end)
 
-RegisterCommand("radio", function(src, args, raw) -- test command since we don't have a inventory yet
+RegisterNetEvent('Radio:Client:OpenRadio')
+AddEventHandler('Radio:Client:OpenRadio', function()
   if not radioOpen then
     Radio:Open()
   end
+end)
+
+RegisterNetEvent('Radio:Client:ChangeFrequency')
+AddEventHandler('Radio:Client:ChangeFrequency', function(frequency)
+  if not Voip.Voice.RadioEnabled then
+    Notification:Error('Your radio power is off.')
+    return
+  end
+
+  if frequency == nil then
+    Notification:Error('You must set a frequency.')
+    return
+  end
+
+  if frequency > 999 then
+    Notification:SendError("The radio can't reach that frequency..")
+    return
+  end
+
+  Voip.Radio:SetRadioChannel(frequency)
 end)
