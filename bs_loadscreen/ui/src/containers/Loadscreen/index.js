@@ -186,7 +186,7 @@ export default () => {
 					<div className={classes.text}>
 						Loading Into{' '}
 						<span className={classes.hightlight}>
-							React Roleplay
+							Blue Sky
 						</span>
 						<Dot className={classes.dot1}>.</Dot>
 						<Dot className={classes.dot2}>.</Dot>
