@@ -8,6 +8,7 @@
   justify-content: space-between;
   font-size: .9rem;
   user-select: none;
+  z-index: 1;
 }
 
 .phone-header-info,
@@ -18,7 +19,7 @@
 }
 
 .phone-header-info {
-  width: 23%;
+  width: 20%;
   justify-content: space-between;
   left: 10px;
   text-shadow:
