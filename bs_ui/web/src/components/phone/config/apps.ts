@@ -1,4 +1,4 @@
-import { faAddressBook, faCircleInfo, faGear } from "@fortawesome/free-solid-svg-icons";
+import { faCircleInfo, faIdBadge } from "@fortawesome/free-solid-svg-icons";
 import { AppProps } from "../../../types/phone";
 import Contacts from "../apps/contacts/Contacts";
 import Details from "../apps/details/Details";
@@ -21,7 +21,7 @@ export const APPS: AppProps[] = [
     style: {
       background: "linear-gradient(356deg, rgba(0,44,74,1) 9%, rgba(0,65,110,1) 55%)",
     },
-    icon: faAddressBook,
+    icon: faIdBadge,
     component: Contacts,
   },
   {

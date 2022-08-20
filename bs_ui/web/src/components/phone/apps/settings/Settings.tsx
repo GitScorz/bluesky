@@ -4,7 +4,6 @@ import {
   Button,
   Fade,
   FormControl,
-  Input,
   InputAdornment,
   InputLabel,
   MenuItem,
@@ -89,7 +88,7 @@ export default function Settings() {
                 <TextField
                   fullWidth
                   variant="standard"
-                  placeholder="Wallpaper (use imgur)"
+                  placeholder="Wallpaper"
                   value={wallpaper}
                   onChange={handleChange}
                   InputProps={{

@@ -74,7 +74,7 @@ export default function Player({
               styles={buildStyles({
                 trailColor: voiceBackground("rgba(255, 255, 255, 0.3)"),
                 pathColor: voiceForeground("rgb(255, 255, 255)"),
-                pathTransitionDuration: 0.4,
+                pathTransitionDuration: 0.5,
               })}
               strokeWidth={20}
             />

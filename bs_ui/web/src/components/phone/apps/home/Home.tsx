@@ -9,7 +9,7 @@ export default function Home() {
   return useMemo(
     () => (
       <>
-        <Fade in={true} timeout={{ enter: 300 }}>
+        <Fade in={true} timeout={{ enter: 400 }}>
           <div className="phone-apps-wrapper">
             {APPS.map((app, index) => (
               <Tooltip title={app.label} key={index} placement="top" arrow>

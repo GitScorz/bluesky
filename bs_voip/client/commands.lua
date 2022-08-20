@@ -20,7 +20,6 @@ end, false)
 
 RegisterCommand('+cycleproximity', function()
 	-- Proximity is either disabled, or manually overwritten.
-	if GetConvarInt('voice_enableProximityCycle', 1) ~= 1 or disableProximityCycle then return end
 	local newMode = mode + 1
 
 	-- If we're within the range of our voice modes, allow the increase, otherwise reset to the first state
@@ -30,7 +29,6 @@ RegisterCommand('+cycleproximity', function()
 		mode = 1
 	end
 
-	UI.Hud:Update({ id = "voice", value = mode - 1 })
 	setProximityState(Cfg.voiceModes[mode][1], false)
 	TriggerEvent('pma-voice:setTalkingMode', mode)
 end, false)
@@ -46,6 +44,7 @@ end)
 
 function setProximityState(proximityRange, isCustom)
 	local voiceModeData = Cfg.voiceModes[mode]
+	UI.Hud:Update({ id = "voice", value = mode - 1 })
 	MumbleSetTalkerProximity(proximityRange + 0.0)
 	LocalPlayer.state:set('proximity', {
 		index = mode,

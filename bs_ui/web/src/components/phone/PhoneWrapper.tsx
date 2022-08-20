@@ -10,7 +10,6 @@ export default function PhoneWrapper({ children }: PropsWithChildren) {
   const [visibility, setVisibility] = useRecoilState(phoneState.visibility);
   const isNotificationActive = useRecoilValue(notificationState.active);
   const phoneData = useRecoilValue(phoneState.phoneData);
-  const notifications = useRecoilValue(notificationState.notifications);
 
   useEffect(() => {
     const handleKeyEvent = (event: KeyboardEventInit) => {
@@ -34,10 +33,7 @@ export default function PhoneWrapper({ children }: PropsWithChildren) {
           <div
             className="phone-wrapper"
             style={{
-              bottom:
-                notifications.length > 0 && isNotificationActive
-                  ? "-550px"
-                  : "0",
+              bottom: isNotificationActive ? "-550px" : "0",
             }}
           >
             <div
@@ -58,6 +54,6 @@ export default function PhoneWrapper({ children }: PropsWithChildren) {
         </Slide>
       </>
     ),
-    [visibility, children, phoneData, isNotificationActive, notifications]
+    [visibility, children, phoneData, isNotificationActive]
   );
 }
