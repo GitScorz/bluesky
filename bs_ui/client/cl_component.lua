@@ -11,9 +11,13 @@ UI = {
   end,
 
   --- @param shouldFocus boolean Whether or not to focus the NUI frame
-  SetFocus = function(self, shouldFocus)
+  --- @param cursor? number The cursor location you wish to set
+  SetFocus = function(self, shouldFocus, cursor)
     SetNuiFocus(shouldFocus, shouldFocus)
-    Logger:Info("UI", ("Set focus status: %s"):format(shouldFocus))
+
+    if cursor then
+      SetCursorLocation(cursor, cursor)
+    end
   end,
 
   Hud = {

@@ -7,6 +7,7 @@ import Radio from "./radio";
 import { isEnvBrowser } from "../utils/misc";
 import { ThemeProvider } from "@mui/material";
 import Theme from "./Theme";
+import Peek from "./peek";
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
         <Interaction />
         <Phone />
         <Radio />
+        <Peek />
       </div>
     </ThemeProvider>
   );

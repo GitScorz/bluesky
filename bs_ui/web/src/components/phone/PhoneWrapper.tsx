@@ -3,24 +3,25 @@ import { PropsWithChildren, useEffect, useMemo } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { PHONE_EVENTS } from "../../types/phone";
 import { fetchNui } from "../../utils/fetchNui";
-import { notificationState, phoneState } from "./hooks/state";
+import { phoneState } from "./hooks/state";
 import "./phone.css";
 
 export default function PhoneWrapper({ children }: PropsWithChildren) {
   const [visibility, setVisibility] = useRecoilState(phoneState.visibility);
-  const isNotificationActive = useRecoilValue(notificationState.active);
   const phoneData = useRecoilValue(phoneState.phoneData);
 
   useEffect(() => {
     const handleKeyEvent = (event: KeyboardEventInit) => {
       if (event.key === "Escape") {
-        setVisibility(false);
-        fetchNui(PHONE_EVENTS.CLOSE, false);
+        if (visibility) {
+          fetchNui(PHONE_EVENTS.CLOSE, false);
+          setVisibility(false);
+        }
       }
     };
 
     window.addEventListener("keyup", handleKeyEvent);
-  }, [setVisibility]);
+  }, [visibility, setVisibility]);
 
   return useMemo(
     () => (
@@ -54,6 +55,6 @@ export default function PhoneWrapper({ children }: PropsWithChildren) {
         </Slide>
       </>
     ),
-    [visibility, children, phoneData, isNotificationActive]
+    [visibility, children, phoneData]
   );
 }

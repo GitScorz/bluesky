@@ -6,6 +6,7 @@ function RetrieveComponents()
   Notification = exports['bs_base']:FetchComponent('Notification')
   Voip = exports['bs_base']:FetchComponent('Voip')
   Radio = exports['bs_base']:FetchComponent('Radio')
+  Peek = exports['bs_base']:FetchComponent('Peek')
 end
 
 AddEventHandler('Core:Shared:Ready', function()
@@ -15,8 +16,9 @@ AddEventHandler('Core:Shared:Ready', function()
     'Phone',
     'Notification',
     'Voip',
-    'Radio'
-  }, function(error)  
+    'Radio',
+    'Peek',
+  }, function(error)
     if #error > 0 then return; end
     RetrieveComponents()
   end)

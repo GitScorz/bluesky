@@ -17,7 +17,7 @@ export default function Hud() {
 
   return useMemo(
     () => (
-      <div>
+      <>
         <Fade timeout={{ enter: 200, exit: 200 }} in={statusVisible}>
           <div className="hud-container">
             <Player {...status} />
@@ -28,7 +28,7 @@ export default function Hud() {
             <Vehicle {...vehicle} />
           </div>
         </Fade>
-      </div>
+      </>
     ),
     [statusVisible, status, vehicleVisible, vehicle]
   );
