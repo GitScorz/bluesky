@@ -13,16 +13,17 @@
   position: relative;
   width: 2.8vw;
   height: 2.8vw;
+  z-index: 2;
 }
 
 .circle-icon {
   position: absolute;
   background-color: #1a1a1a;
   border-radius: 50%;
-  top: 6px;
-  left: 6px;
-  width: 76%;
-  height: 76%;
+  top: 7px;
+  left: 7px;
+  width: 2.07vw;
+  height: 2.07vw;
 }
 
 .hud-icon {

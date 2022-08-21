@@ -13,6 +13,6 @@ export const useNewspaperService = () => {
 debugData([
   {
     action: NEWSPAPER_EVENTS.TOGGLE,
-    data: true,
+    data: false,
   },
 ])

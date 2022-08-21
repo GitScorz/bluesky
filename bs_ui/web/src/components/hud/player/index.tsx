@@ -30,7 +30,7 @@ export default function Player({
   }, []);
 
   const backgroundRed = useCallback((value: number, defaultColor: string) => {
-    return value > 30 ? defaultColor : "rgba(255, 0, 0, 0.3)";
+    return value > 30 ? defaultColor : "rgba(255, 0, 0, 0.4)";
   }, []);
 
   const voiceForeground = useCallback(
@@ -53,9 +53,9 @@ export default function Player({
       let color = defaultColor;
 
       if (talkingStatus.talking && !talkingStatus.usingRadio) {
-        color = "rgba(255, 255, 0, 0.3)";
+        color = "rgba(255, 255, 0, 0.4)";
       } else if (talkingStatus.talking && talkingStatus.usingRadio) {
-        color = "rgba(216, 66, 96, 0.3)";
+        color = "rgba(216, 66, 96, 0.4)";
       }
 
       return color;
@@ -72,11 +72,11 @@ export default function Player({
               value={voice}
               maxValue={100}
               styles={buildStyles({
-                trailColor: voiceBackground("rgba(255, 255, 255, 0.3)"),
+                trailColor: voiceBackground("rgba(255, 255, 255, 0.4)"),
                 pathColor: voiceForeground("rgb(255, 255, 255)"),
                 pathTransitionDuration: 0.5,
               })}
-              strokeWidth={20}
+              strokeWidth={13}
             />
             <div className="circle-icon">
               <FontAwesomeIcon
@@ -90,11 +90,11 @@ export default function Player({
               value={health}
               maxValue={100}
               styles={buildStyles({
-                trailColor: backgroundRed(health, "rgba(59, 160, 122, 0.3)"),
+                trailColor: backgroundRed(health, "rgba(59, 160, 122, 0.4)"),
                 pathColor: foregroundRed(health, "rgb(59, 160, 122)"),
                 pathTransitionDuration: 2,
               })}
-              strokeWidth={20}
+              strokeWidth={13}
             />
             <div className="circle-icon">
               <FontAwesomeIcon
@@ -108,11 +108,11 @@ export default function Player({
               value={armor}
               maxValue={100}
               styles={buildStyles({
-                trailColor: backgroundRed(armor, "rgba(27, 101, 181, 0.3)"),
+                trailColor: backgroundRed(armor, "rgba(27, 101, 181, 0.4)"),
                 pathColor: foregroundRed(armor, "rgb(27, 101, 181)"),
                 pathTransitionDuration: 2,
               })}
-              strokeWidth={20}
+              strokeWidth={13}
             />
             <div className="circle-icon">
               <FontAwesomeIcon className="hud-icon" icon={faShieldHalved} />
@@ -123,11 +123,11 @@ export default function Player({
               value={hunger}
               maxValue={100}
               styles={buildStyles({
-                trailColor: backgroundRed(hunger, "rgba(255, 118, 10, 0.3)"),
+                trailColor: backgroundRed(hunger, "rgba(255, 118, 10, 0.4)"),
                 pathColor: foregroundRed(hunger, "rgba(255, 118, 10)"),
                 pathTransitionDuration: 2,
               })}
-              strokeWidth={20}
+              strokeWidth={13}
             />
             <div className="circle-icon">
               <FontAwesomeIcon className="hud-icon" icon={faBurger} />
@@ -138,11 +138,11 @@ export default function Player({
               value={thirst}
               maxValue={100}
               styles={buildStyles({
-                trailColor: backgroundRed(thirst, "rgba(13, 121, 180, 0.3)"),
+                trailColor: backgroundRed(thirst, "rgba(13, 121, 180, 0.4)"),
                 pathColor: foregroundRed(thirst, "rgba(13, 121, 180)"),
                 pathTransitionDuration: 2,
               })}
-              strokeWidth={20}
+              strokeWidth={13}
             />
             <div className="circle-icon">
               <FontAwesomeIcon className="hud-icon" icon={faDroplet} />
