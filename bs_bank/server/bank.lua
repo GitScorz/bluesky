@@ -330,7 +330,7 @@ function RegisterCallbacks()
             end
             doc._id = insertedIds[1]
             cb(doc)
-            Wallet:Add(charm Config.CardCommissionAmount)
+            Wallet:Add(char, Config.CardCommissionAmount)
             Inventory:AddItem(char:GetData('ID'), 'card', 1, {
                 AccountNumber = data.AccountNumber,
                 CardNumber = cardNumber
