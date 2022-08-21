@@ -8,8 +8,9 @@
   - [ ] Shops
 - [ ] Remake Phone
   - [x] Phone Himself
-  - [ ] Notifications
+  - [x] Details
   - [x] Contacts
+  - [ ] Notifications
   - [ ] Messages
   - [ ] Calls
   - [x] Settings
