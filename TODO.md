@@ -1,6 +1,10 @@
 # TODO
 - [ ] Optimize client-side.
-- [x] Remake Inventory
+- [ ] Remake Inventory
+  - [x] Inventory
+  - [ ] Hotbar
+  - [ ] Crafting
+  - [x] Notification
 - [x] Remake Phone
 - [x] Remake Hud
 - [x] Documentation on scripts.
