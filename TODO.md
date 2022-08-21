@@ -5,9 +5,18 @@
   - [ ] Hotbar
   - [ ] Crafting
   - [x] Notification
-- [x] Remake Phone
+  - [ ] Shops
+- [ ] Remake Phone
+  - [x] Phone Himself
+  - [ ] Notifications
+  - [x] Contacts
+  - [ ] Messages
+  - [ ] Calls
+  - [x] Settings
 - [x] Remake Hud
-- [x] Documentation on scripts.
-- [ ] Re-do UI with React & Typescript. (*On progress*)
-- [ ] Economy system. (*On progress*)
+- [ ] Remake UI with React & Typescript. (*On progress*)
+- [ ] Economy system.
+  - [ ] Currency
+  - [x] Wallet
+  - [ ] Bank
 - [ ] Fix Status 
