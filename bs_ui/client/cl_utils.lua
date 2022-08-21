@@ -7,6 +7,7 @@ function RetrieveComponents()
   Voip = exports['bs_base']:FetchComponent('Voip')
   Radio = exports['bs_base']:FetchComponent('Radio')
   Peek = exports['bs_base']:FetchComponent('Peek')
+  News = exports['bs_base']:FetchComponent('News')
 end
 
 AddEventHandler('Core:Shared:Ready', function()
@@ -18,6 +19,7 @@ AddEventHandler('Core:Shared:Ready', function()
     'Voip',
     'Radio',
     'Peek',
+    'News'
   }, function(error)
     if #error > 0 then return; end
     RetrieveComponents()

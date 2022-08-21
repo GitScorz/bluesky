@@ -25,7 +25,7 @@ export const usePeekService = () => {
 debugData<any>([
   {
     action: PEEK_EVENTS.TOGGLE,
-    data: true
+    data: false
   },
   {
     action: PEEK_EVENTS.ENTER_TARGET,

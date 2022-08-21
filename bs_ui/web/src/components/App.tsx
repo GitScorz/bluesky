@@ -8,6 +8,7 @@ import { isEnvBrowser } from "../utils/misc";
 import { ThemeProvider } from "@mui/material";
 import Theme from "./Theme";
 import Peek from "./peek";
+import Newspaper from "./newspaper";
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
         <Phone />
         <Radio />
         <Peek />
+        <Newspaper />
       </div>
     </ThemeProvider>
   );
