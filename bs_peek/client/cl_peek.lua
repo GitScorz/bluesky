@@ -167,6 +167,7 @@ Peek = {
     targetActive = false
   end,
 
+  --- @param event string
   SelectOption = function(self, event)
     UI:SetFocus(false)
     success = false

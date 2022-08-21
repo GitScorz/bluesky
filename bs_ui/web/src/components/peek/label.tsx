@@ -22,7 +22,7 @@ export default function Label({ icon, label, event }: PeekData) {
       <div
         className="peek-label"
         style={{
-          color: hovered ? "#bad5e8" : "#fff",
+          color: hovered ? "#93d0fa" : "#fff",
         }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}

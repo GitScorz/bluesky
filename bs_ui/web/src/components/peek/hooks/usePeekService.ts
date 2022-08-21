@@ -27,4 +27,14 @@ debugData<any>([
     action: PEEK_EVENTS.TOGGLE,
     data: true
   },
+  {
+    action: PEEK_EVENTS.ENTER_TARGET,
+    data: [
+      {
+        icon: "user",
+        label: "User",
+        event: "peek:enterTarget"
+      },
+    ]
+  },
 ])
