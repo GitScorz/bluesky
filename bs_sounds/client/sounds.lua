@@ -3,6 +3,8 @@ local SoundLibrary = {
     text2 = 'text2.mp3',
     panic = 'panic.mp3',
     panicEnd = 'panic_clear.mp3',
+    newsOpen = 'newspaper_open.ogg',
+    newsClose = 'newspaper_close.ogg',
 }
 
 local _sounds = {}
@@ -21,7 +23,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'Logger',
         'Sounds',
         'UISounds',
-    }, function(error)  
+    }, function(error)
         if #error > 0 then return; end
         RetrieveComponents()
     end)
@@ -58,11 +60,12 @@ SOUNDS.Do = {
             })
         end,
         Distance = function(self, playerNetId, maxDistance, soundFile, soundVolume)
-            Logger:Trace('Sounds', ('^2Looping Sound %s Per Request From %s For Distance %s^7'):format(soundFile, playerNetId, maxDistance))
+            Logger:Trace('Sounds',
+                ('^2Looping Sound %s Per Request From %s For Distance %s^7'):format(soundFile, playerNetId, maxDistance))
             local lCoords = GetEntityCoords(PlayerPedId())
             local eCoords = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(playerNetId)))
             local distIs  = #(vector3(lCoords.x, lCoords.y, lCoords.z) - vector3(eCoords.x, eCoords.y, eCoords.z))
-            if(distIs <= maxDistance) then
+            if (distIs <= maxDistance) then
                 _sounds[playerNetId] = _sounds[playerNetId] or {}
                 _sounds[playerNetId][soundFile] = {
                     file = soundFile,
@@ -78,12 +81,13 @@ SOUNDS.Do = {
             else
                 Sounds.Stop:Looping(playerNetId, soundFile)
             end
-        
+
             Citizen.CreateThread(function()
                 while _sounds[playerNetId] ~= nil do
                     local lCoords = GetEntityCoords(PlayerPedId())
                     local eCoords = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(playerNetId)))
-                    local distIs  = #(vector3(lCoords.x, lCoords.y, lCoords.z) - vector3(eCoords.x, eCoords.y, eCoords.z))
+                    local distIs  = #
+                        (vector3(lCoords.x, lCoords.y, lCoords.z) - vector3(eCoords.x, eCoords.y, eCoords.z))
                     SendNUIMessage({
                         action = 'changeVol',
                         source = playerNetId,
@@ -111,11 +115,13 @@ SOUNDS.Do = {
             })
         end,
         Distance = function(self, playerNetId, maxDistance, soundFile, soundVolume)
-            Logger:Trace('Sounds', ('^2Playing Sound %s Once Per Request From %s For Distance %s^7'):format(soundFile, playerNetId, maxDistance))
+            Logger:Trace('Sounds',
+                ('^2Playing Sound %s Once Per Request From %s For Distance %s^7'):format(soundFile, playerNetId,
+                    maxDistance))
             local lCoords = GetEntityCoords(PlayerPedId())
             local eCoords = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(playerNetId)))
             local distIs  = #(vector3(lCoords.x, lCoords.y, lCoords.z) - vector3(eCoords.x, eCoords.y, eCoords.z))
-            if(distIs <= maxDistance) then
+            if (distIs <= maxDistance) then
                 _sounds[playerNetId] = _sounds[playerNetId] or {}
                 _sounds[playerNetId][soundFile] = {
                     file = soundFile,
