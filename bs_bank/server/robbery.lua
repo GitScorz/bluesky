@@ -207,10 +207,7 @@ AddEventHandler('Bank:MSpotReward', function()
     local source = source
     local player = exports['bs_base']:FetchComponent('Fetch'):Source(source)
     local char = player:GetData('Character')
-    Wallet:Get(char, function(wallet)
-        wallet:Modify(math.random(1000), function()
-        end)
-    end)
+    Wallet:Add(char, math.random(1000))
 end)
 
 RegisterServerEvent('Bank:VGSpotReward')

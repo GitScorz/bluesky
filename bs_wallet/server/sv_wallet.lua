@@ -77,7 +77,7 @@ WALLET = {
     end)
   end,
 
-  Give = function(self, char, amount)
+  Add = function(self, char, amount)
     Wallet:Get(char, function(wallet)
       if wallet then
         UI.Balance:UpdateCash(char:GetData('Source'), wallet.Cash, amount)
@@ -128,7 +128,7 @@ RegisterServerEvent('Wallet:Server:GiveCash')
 AddEventHandler('Wallet:Server:GiveCash', function(cash)
   local player = exports['bs_base']:FetchComponent('Fetch'):Source(source)
   local char = player:GetData('Character')
-  Wallet:Give(char, cash)
+  Wallet:Add(char, cash)
 end)
 
 RegisterServerEvent('Wallet:Server:RemoveCash')

@@ -59,7 +59,7 @@ AddEventHandler('Admin:Wallet:AddCash', function(source, amount)
     if player ~= nil then
         local char = player:GetData('Character')
         if char ~= nil then
-            Wallet:Give(char, amount)
+            Wallet:Add(char, amount)
         end
     end
 end)

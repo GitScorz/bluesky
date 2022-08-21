@@ -199,10 +199,7 @@ function RegisterCallbacks()
                 cb(nil)
                 return nil
             end
-            Wallet:Get(char, function(wallet)
-                wallet:Modify(tonumber(data.Amount), function()
-                end)
-            end)
+            Wallet:Add(char, tonumber(data.Amount))
             cb(true)
         end)
     end)
@@ -228,10 +225,7 @@ function RegisterCallbacks()
                 cb(nil)
                 return nil
             end
-            Wallet:Get(char, function(wallet)
-                wallet:Modify(tonumber(-data.Amount), function()
-                end)
-            end)
+            Wallet:Remove(char, tonumber(data.Amount))
             cb(true)
         end)
     end)
@@ -336,11 +330,7 @@ function RegisterCallbacks()
             end
             doc._id = insertedIds[1]
             cb(doc)
-            Wallet:Get(char, function(wallet)
-                wallet:Modify(Config.CardCommissionAmount, function()
-
-                end)
-            end)
+            Wallet:Add(charm Config.CardCommissionAmount)
             Inventory:AddItem(char:GetData('ID'), 'card', 1, {
                 AccountNumber = data.AccountNumber,
                 CardNumber = cardNumber
@@ -448,10 +438,7 @@ function RegisterCallbacks()
                 cb(nil)
                 return nil
             end
-            Wallet:Get(char, function(wallet)
-                wallet:Modify(tonumber(-data.Amount), function()
-                end)
-            end)
+            Wallet:Remove(char, data.Amount)
             cb(true)
         end)
     end)
