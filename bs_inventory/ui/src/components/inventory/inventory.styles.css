@@ -97,8 +97,3 @@ h1 {
   font-size: 2em;
   font-weight: bold;
 }
-
-.react-slidedown.my-dropdown-slidedown {
-  transition-duration: 1.2s;
-  transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
-}
