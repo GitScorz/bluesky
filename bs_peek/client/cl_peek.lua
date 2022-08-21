@@ -160,8 +160,6 @@ Peek = {
   end,
 
   Close = function(self)
-    UI:SetFocus(false)
-
     success = false
 
     targetActive = false
@@ -170,6 +168,8 @@ Peek = {
   --- @param event string
   SelectOption = function(self, event)
     UI:SetFocus(false)
+    UI:SendUIMessage("peek:toggle", false)
+
     success = false
     targetActive = false
 
