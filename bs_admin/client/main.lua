@@ -1,6 +1,7 @@
 local menuOpen = false
 local noClip = false
 local showCoords = false
+local debugMode = false
 local loggedIn = false
 
 local noClipIndex = 1 -- [[Used to determine the index of the speeds table.]]
@@ -102,13 +103,15 @@ ADMIN = {
         doAdminMenuToggle()
     end,
     getSettings = function(self)
-        return { ['needs'] = enableNeeds, ['noclip'] = noClip, ['coords'] = showCoords, ['menuOpen'] = menuOpen }
+        return { ['needs'] = enableNeeds, ['noclip'] = noClip, ['coords'] = showCoords, ['menuOpen'] = menuOpen,
+            ['debugMode'] = debugMode }
     end
 }
 
 AddEventHandler('Characters:Client:Spawn', function()
     noClip = false
     showCoords = false
+    debugMode = false
     loggedIn = true
     startAdminTick()
 end)
@@ -118,6 +121,7 @@ AddEventHandler('Characters:Client:Logout', function()
     loggedIn = false
     noClip = false
     showCoords = false
+    debugMode = false
 end)
 
 RegisterNetEvent('Admin:noclip:fromServer')
@@ -253,6 +257,16 @@ function doAdminMenuToggle()
                             end)
                             adminUtilities.Update:Item(data.id, (showCoords and "Disable Coords" or "Enable Coords"),
                                 { success = showCoords })
+                        end)
+
+                        adminUtilities.Add:Button((debugMode and "Disable Debug" or "Enable Debug"),
+                            { disabled = false, success = debugMode }, function(data)
+
+                            debugMode = not debugMode
+                            TriggerEvent('hud:enabledebug')
+
+                            adminUtilities.Update:Item(data.id, (debugMode and "Disable Debug" or "Enable Debug"),
+                                { success = debugMode })
                         end)
 
                         adminUtilities.Add:Button((Status:Check() and "Needs Enabled" or "Needs Disabled"),
