@@ -19,6 +19,7 @@ local function RetrieveComponents()
   Keybinds = exports['bs_base']:FetchComponent('Keybinds')
   UI = exports['bs_base']:FetchComponent('UI')
   RegisterKeybinds()
+  RegisterPeekZones()
 end
 
 AddEventHandler('Core:Shared:Ready', function()
