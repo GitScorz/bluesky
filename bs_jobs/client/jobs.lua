@@ -1,4 +1,3 @@
-
 AddEventHandler('Jobs:Shared:DependencyUpdate', RetrieveComponents)
 function RetrieveComponents()
     Callbacks = exports['bs_base']:FetchComponent('Callbacks')
@@ -19,10 +18,10 @@ AddEventHandler('Core:Shared:Ready', function()
         'Markers',
         'Menu',
         'Notification',
-    }, function(error)  
+    }, function(error)
         if #error > 0 then return; end
         RetrieveComponents()
-    end) 
+    end)
 end)
 
 JOBS = {
@@ -39,6 +38,11 @@ AddEventHandler('Jobs:Client:ViewJobInformation', function(jobData, jobDuty)
     if jobData.job == 'unemployed' then
         Notification:SendAlert('You\'re Unemployed')
     else
-        Notification:SendAlert('Your Job Is: '.. jobData.label .. ' - Grade: ' .. jobData.grade.label .. (jobData.workplace.id == 0 and '' or (' - Workplace: '.. jobData.workplace.label)) .. ' - Salary: '.. jobData.salary .. '. You Are '..(onDuty and 'On' or 'Off')..' Duty.', 12000)
+        Notification:SendAlert('Your Job Is: ' ..
+            jobData.label ..
+            ' - Grade: ' ..
+            jobData.grade.label ..
+            (jobData.workplace.id == 0 and '' or (' - Workplace: ' .. jobData.workplace.label)) ..
+            ' - Salary: ' .. jobData.salary .. '. You Are ' .. (onDuty and 'On' or 'Off') .. ' Duty.', 12000)
     end
 end)

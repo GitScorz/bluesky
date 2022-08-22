@@ -1,5 +1,5 @@
 _onDuty = {}
-_jobs = {} 
+_jobs = {}
 jobCenterJobs = {}
 
 AddEventHandler('Jobs:Shared:DependencyUpdate', RetrieveComponents)
@@ -83,27 +83,31 @@ JOBS = {
                 end
 
                 if silent == nil or not silent then
-                    Execute:Client(source, 'Notification', (toggle and 'Success' or 'Error'), 'You Went ' .. (toggle and 'On Duty' or 'Off Duty'))
+                    Execute:Client(source, 'Notification', (toggle and 'Success' or 'Error'),
+                        'You Went ' .. (toggle and 'On Duty' or 'Off Duty'))
                 end
                 Chat.Refresh:Commands(source)
                 TriggerClientEvent('Characters:Client:SetData', source, char:GetData())
             end
             if cb then
                 cb(_onDuty[jobData.job][source])
-            end 
+            end
         end,
         SetJob = function(self, source, job, grade, workplace, cb)
             local targetJob, targetGrade, targetWorkplace = _jobs[job], _jobs[job].grades[grade], _jobs[job].workplaces
             if (targetJob and targetGrade) and (targetWorkplace == nil or targetWorkplace[workplace]) then
                 if targetWorkplace ~= nil and targetWorkplace[workplace] then
-                    targetWorkplace = targetWorkplace[workplace] 
+                    targetWorkplace = targetWorkplace[workplace]
                 else
                     workplace, targetWorkplace = 0, 'None'
                 end
+
                 local char = Fetch:Source(source):GetData('Character')
                 local currentJob = char:GetData('Job')
-                if currentJob.job == 'unemployed' or job ~= currentJob.job or grade ~= currentJob.grade.id or workplace ~= currentJob.workplace.id then
+                if currentJob.job == 'unemployed' or job ~= currentJob.job or grade ~= currentJob.grade.id or
+                    workplace ~= currentJob.workplace.id then
                     self:ToggleDuty(source, false, true)
+
                     local newJob = {
                         job = targetJob.job,
                         salary = targetGrade.salary,
@@ -111,14 +115,23 @@ JOBS = {
                         grade = { id = grade, label = targetGrade.label, level = targetGrade.level },
                         workplace = { id = workplace, label = targetWorkplace },
                     }
+
                     char:SetData('Job', newJob)
                     TriggerClientEvent('Characters:Client:SetData', source, char:GetData())
-                    Chat.Send.System:Single(source, 'Your Job Was Set To ' .. newJob.label .. '.' .. (newJob.workplace.workplace ~= 0 and (' Workplace: ' .. newJob.workplace.label) or ' ') .. ', Grade: '.. newJob.grade.label)
+
+                    Chat.Send.System:Single(source,
+                        'Your Job Was Set To ' ..
+                        newJob.label ..
+                        '.' ..
+                        (newJob.workplace.workplace ~= 0 and (' Workplace: ' .. newJob.workplace.label) or ' ') ..
+                        ', Grade: ' .. newJob.grade.label)
                     cb(newJob)
                 elseif job == currentJob.job and grade == currentJob.grade.id and workplace == currentJob.workplace.id then
+                    print("hey yaaaaa")
                     cb(false, true)
                 end
             else
+                print("hey")
                 cb(false)
             end
         end,
@@ -139,7 +152,7 @@ JOBS = {
             return amount
         end
         return 0
-    end, 
+    end,
     GetOnDuty = function(self, job)
         if _jobs[job] and _onDuty[job] then
             return _onDuty[jobData.job]

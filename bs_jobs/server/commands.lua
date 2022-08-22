@@ -1,15 +1,23 @@
 function RegisterChatCommands()
-    
+
     Chat:RegisterAdminCommand('setjob', function(source, args, rawCommand)
         local target = tonumber(args[1])
         if target ~= nil then
             Jobs.Player:SetJob(target, args[2], args[3], tonumber(args[4]), function(success, alreadyJob)
                 if success then
                     if source ~= target then
-                        Chat.Send.System:Single(source, 'Successfully Set Server ID: '.. target .. 'To ' .. success.label .. '. (' .. (success.workplace.workplace ~= 0 and (' Workplace: ' .. success.workplace.label) or ' ') .. ', Grade: '.. success.grade.label .. ')')
+                        Chat.Send.System:Single(source,
+                            'Successfully Set Server ID: ' ..
+                            target ..
+                            'To ' ..
+                            success.label ..
+                            '. (' ..
+                            (success.workplace.workplace ~= 0 and (' Workplace: ' .. success.workplace.label) or ' ') ..
+                            ', Grade: ' .. success.grade.label .. ')')
                     end
                 else
-                    Chat.Send.System:Single(source, (alreadyJob and 'Player Already Has That Job' or 'Error Setting Job'))
+                    Chat.Send.System:Single(source, (alreadyJob and 'Player Already Has That Job' or 'Error Setting Job'
+                        ))
                 end
             end)
         end
@@ -30,10 +38,10 @@ function RegisterChatCommands()
         end
     end, {
         help = 'Remove A Job From Someone',
-        params = {{
-            name = 'ID', 
-            help = 'Server ID' 
-        }}
+        params = { {
+            name = 'ID',
+            help = 'Server ID'
+        } }
     }, 1)
 
     Chat:RegisterAdminCommand('toggleduty', function(source, args, rawCommand)
@@ -62,9 +70,11 @@ function RegisterChatCommands()
         help = 'Set your Job Callsign',
         params = {
             {
-                name = 'Number', 
-                help = 'Call Sign Number' 
+                name = 'Number',
+                help = 'Call Sign Number'
             },
-    }
-    }, 1, { { name = "police", gradelevel = 0 }, { name = "ems", gradelevel = 0 }, { name = "corrections", gradelevel = 0 }, { name = "fire", gradelevel = 0 } })
+        }
+    }, 1,
+        { { name = "police", gradelevel = 0 }, { name = "ems", gradelevel = 0 }, { name = "corrections", gradelevel = 0 },
+            { name = "fire", gradelevel = 0 } })
 end

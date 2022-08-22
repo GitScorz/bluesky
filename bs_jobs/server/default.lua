@@ -3,7 +3,7 @@ local _ran = false
 function DefaultData()
     if _ran then return end
     _ran = true
-    Default:Add('jobs', 1590769554 , {
+    Default:Add('jobs', 1590769554, {
         {
             job = 'mechanic',
             label = 'Mechanic',
@@ -119,7 +119,7 @@ function DefaultData()
             job = 'postal',
             label = 'Postal Worker',
             whitelisted = false,
-            jobcenter = { 
+            jobcenter = {
                 default = 'employee',
                 description = 'A job where you post stuff.',
                 requirements = 'Don\'t steal packages you prick.',
