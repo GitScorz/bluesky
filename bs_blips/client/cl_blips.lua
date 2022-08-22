@@ -1,6 +1,6 @@
 Blips = nil
 Logger = nil
-blips = {}
+local blips = {}
 
 AddEventHandler('Proxy:Shared:RegisterReady', function()
     exports['bs_base']:RegisterComponent('Blips', BLIPS)
@@ -10,6 +10,7 @@ AddEventHandler('Blips:Shared:DependencyUpdate', RetrieveComponents)
 function RetrieveComponents()
     Logger = exports['bs_base']:FetchComponent('Logger')
     Blips = exports['bs_base']:FetchComponent('Blips')
+    RegisterDefaultBlips()
 end
 
 AddEventHandler('Core:Shared:Ready', function()
@@ -17,9 +18,7 @@ AddEventHandler('Core:Shared:Ready', function()
         'Logger',
         'Blips',
     }, function(error)
-        if #error > 0 then
-            return ;
-        end
+        if #error > 0 then return end
         RetrieveComponents()
     end)
 end)
