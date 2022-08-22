@@ -7,7 +7,7 @@ INVENTORY.Items = {
   end,
 
   Use = function(self, source, item, cb)
-    if item.id == nil then cb(false) return end
+    if item == nil or item.id == nil then cb(false) return end
 
     if Inventory:IsValidItem(item.id) then
       TriggerClientEvent('Inventory:CloseUI', source)
