@@ -29,7 +29,7 @@ News = {
     AttachEntityToEntity(newspaper, ped, GetPedBoneIndex(ped, 18905), 0.26, 0.06, 0.16, 320.0, 310.0, 0.0, true, true,
       false, true, 1, true)
 
-    Sounds.Do.Play:Distance(GetPlayerServerId(PlayerId()), 10.0, "newsOpen", 1.0)
+    Sounds.Do.Play:Distance(GetPlayerServerId(PlayerId()), 5.0, "newsOpen", 0.5)
     UI:SetFocus(true)
     UI:SendUIMessage("newspaper:toggle", true)
   end,
@@ -40,7 +40,7 @@ News = {
     DeleteEntity(newspaper)
     newspaper = nil
 
-    Sounds.Do.Play:Distance(GetPlayerServerId(PlayerId()), 10.0, "newsClose", 1.0)
+    Sounds.Do.Play:Distance(GetPlayerServerId(PlayerId()), 5.0, "newsClose", 0.5)
     UI:SetFocus(false)
     UI:SendUIMessage("newspaper:toggle", false)
   end,
@@ -52,13 +52,12 @@ end)
 
 RegisterNetEvent('newspaper:open')
 AddEventHandler('newspaper:open', function()
-  Wait(100)
   News:Open()
 end)
 
 CreateThread(function()
   while Peek == nil do
-    Wait(0)
+    Wait(100)
   end
 
   local entities = {
