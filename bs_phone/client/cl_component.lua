@@ -1,6 +1,6 @@
 local phoneOpen = false
 local phoneModel = "prop_player_phone_01"
-local phoneProp = nil
+local phoneProp = 0
 
 Phone = {
   Open = function(self)
@@ -35,6 +35,8 @@ Phone = {
     while not HasModelLoaded(phoneModel) do
       Citizen.Wait(1)
     end
+
+    Phone:DestroyProp()
 
     phoneProp = CreateObject(phoneModel, 1.0, 1.0, 1.0, 1, 1, 0)
 
