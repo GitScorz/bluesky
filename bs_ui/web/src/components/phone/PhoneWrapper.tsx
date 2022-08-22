@@ -30,6 +30,8 @@ export default function PhoneWrapper({ children }: PropsWithChildren) {
           direction="up"
           timeout={{ enter: 600, exit: 400 }}
           in={visibility}
+          mountOnEnter
+          unmountOnExit
         >
           <div
             className="phone-wrapper"
