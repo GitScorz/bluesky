@@ -15,12 +15,20 @@ function StartThreads()
       end
 
       if not _paused then
-        UI.Hud:Update({ id = 'health', value = (GetEntityHealth(GLOBAL_PED) - 100) })
+        UI.Hud:Update({
+          id = 'health',
+          value = (GetEntityHealth(GLOBAL_PED) - 100)
+        })
+
         Wait(1000)
-        UI.Hud:Update({ id = 'armor', value = GetPedArmour(GLOBAL_PED) })
+
+        UI.Hud:Update({
+          id = 'armor',
+          value = GetPedArmour(GLOBAL_PED)
+        })
       else
         if not IsPauseMenuActive() then
-          UI.Hud.Show()
+          UI.Hud:Show()
 
           _paused = false
         end
@@ -38,7 +46,11 @@ function StartThreads()
         if GLOBAL_VEH and GetIsVehicleEngineRunning(GLOBAL_VEH) then
           DisplayRadar(true)
           UI.Vehicle:Show()
-          UI.Vehicle:Update({ speed = math.ceil(GetEntitySpeed(GLOBAL_VEH) * 2.236936), fuel = GetVehicleFuelLevel(GLOBAL_VEH), seatbelt = false })
+          UI.Vehicle:Update({
+            speed = math.ceil(GetEntitySpeed(GLOBAL_VEH) * 2.236936),
+            fuel = DecorGetFloat(GLOBAL_VEH, 'VEH_FUEL'),
+            seatbelt = false
+          })
         else
           DisplayRadar(false)
           UI.Vehicle:Hide()

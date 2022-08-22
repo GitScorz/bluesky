@@ -7,7 +7,7 @@ import "./vehicle.styles.css";
 
 export default function Vehicle({ speed, fuel, seatbelt }: VehicleHudProps) {
   const calcFuelColor = useCallback((value: number) => {
-    if (value < 30) {
+    if (value < 10) {
       return "#ff0000";
     }
 
