@@ -8,31 +8,21 @@ dependencies {
 lua54 'yes'
 
 client_scripts {
-	'client/utils/*',
-	'client/init/init.lua',
-	'client/init/main.lua',
-	'client/init/proximity.lua',
-	'client/module/*.lua',
+  'client/utils/*',
+  'client/init/init.lua',
+  'client/init/main.lua',
+  'client/init/proximity.lua',
+  'client/module/*.lua',
   'client/*.lua',
 }
 
 server_scripts {
   'server/**/*.lua',
-	'server/**/*.js'
 }
 
 shared_scripts {
   'shared/*.lua'
 }
-
-files {
-  'ui/*.ogg',
-  'ui/css/*.css',
-  'ui/js/*.js',
-  'ui/index.html',
-}
-
-ui_page 'ui/index.html'
 
 convar_category 'PMA-Voice' {
   "PMA-Voice Configuration Options",
