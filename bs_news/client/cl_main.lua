@@ -5,6 +5,7 @@ local function RetrieveComponents()
   Peek = exports['bs_base']:FetchComponent('Peek')
   UI = exports['bs_base']:FetchComponent('UI')
   Sounds = exports['bs_base']:FetchComponent('Sounds')
+  RegisterPeekZones()
 end
 
 AddEventHandler('Core:Shared:Ready', function()
@@ -55,11 +56,7 @@ AddEventHandler('newspaper:open', function()
   News:Open()
 end)
 
-CreateThread(function()
-  while Peek == nil do
-    Wait(100)
-  end
-
+function RegisterPeekZones()
   local entities = {
     1211559620,
     720581693,
@@ -78,4 +75,4 @@ CreateThread(function()
     job = { "all" },
     distance = 2.5
   })
-end)
+end

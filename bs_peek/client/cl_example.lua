@@ -1,4 +1,4 @@
-CreateThread(function()
+function RegisterPeekZones()
   Peek:AddBoxZone("Test", vector3(-1289.43, 307.84, 65.89), 0.8, 0.8, {
     name = "test",
     heading = 280,
@@ -16,4 +16,4 @@ CreateThread(function()
     job = { "police" },
     distance = 3
   })
-end)
+end
