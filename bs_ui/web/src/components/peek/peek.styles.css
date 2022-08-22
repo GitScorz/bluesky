@@ -23,18 +23,16 @@
   top: 51vh;
   left: 2.1vh;
   width: 100%;
-  min-height: 1%;
   max-height: 50%;
 }
 
 .peek-label {
   margin-top: 10px;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: bold;
   font-variant: small-caps;
   color: white;
   user-select: none;
-  white-space: nowrap;
   text-shadow:
     -1px -1px 0 rgba(0, 0, 0, 0.3),
     0   -1px 0 rgba(0, 0, 0, 0.3),
