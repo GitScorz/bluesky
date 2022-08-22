@@ -10,7 +10,6 @@ AddEventHandler('Blips:Shared:DependencyUpdate', RetrieveComponents)
 function RetrieveComponents()
   Logger = exports['bs_base']:FetchComponent('Logger')
   Blips = exports['bs_base']:FetchComponent('Blips')
-  RegisterDefaultBlips()
 end
 
 AddEventHandler('Core:Shared:Ready', function()
@@ -21,6 +20,11 @@ AddEventHandler('Core:Shared:Ready', function()
     if #error > 0 then return end
     RetrieveComponents()
   end)
+end)
+
+RegisterNetEvent('Characters:Client:Spawn')
+AddEventHandler('Characters:Client:Spawn', function()
+  RegisterDefaultBlips()
 end)
 
 RegisterNetEvent('Characters:Client:Logout')
