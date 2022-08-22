@@ -1,5 +1,5 @@
 Config = {}
-Config.DrawDistance = 100
+Config.DrawDistance = 10
 Config.RecallPrice = 200
 
 Config.Garages = {
