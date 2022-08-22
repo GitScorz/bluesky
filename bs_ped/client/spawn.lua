@@ -38,7 +38,7 @@ SPAWN = {
         RequestModel(model)
 
         while not HasModelLoaded(model) do
-          Citizen.Wait(500)
+            Citizen.Wait(500)
         end
         SetPlayerModel(PlayerId(), model)
         player = PlayerPedId()
@@ -62,8 +62,9 @@ SPAWN = {
 
         SetEntityMaxHealth(PlayerPedId(), 200)
         SetNuiFocus(false, false)
+        DisplayHud(false)
         TriggerEvent('Characters:Client:SetFocus', false)
-        
+
         Ped:ApplyToPed(LocalPed)
         if data.action ~= nil then
             TriggerEvent(data.action, data.data)
@@ -75,4 +76,3 @@ SPAWN = {
         TransitionFromBlurred(1500)
     end
 }
-

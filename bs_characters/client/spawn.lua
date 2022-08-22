@@ -12,7 +12,7 @@ Spawn = {
     end,
     Init = function(self)
         local ped = PlayerPedId()
---        ShutdownLoadingScreenNui()
+        --        ShutdownLoadingScreenNui()
         SetEntityCoords(ped, 0, 0, 0)
         FreezeEntityPosition(ped, true)
         SetEntityVisible(ped, false)
@@ -26,46 +26,47 @@ Spawn = {
         while not IsScreenFadedOut() do
             Citizen.Wait(10)
         end
-    
+
         local player = PlayerPedId()
         SetTimecycleModifier('default')
-    
+
         local model = `mp_f_freemode_01`
         if tonumber(data.Gender) == 0 then
             model = `mp_m_freemode_01`
         end
-    
+
         RequestModel(model)
-    
+
         while not HasModelLoaded(model) do
-          Citizen.Wait(500)
+            Citizen.Wait(500)
         end
         SetPlayerModel(PlayerId(), model)
         player = PlayerPedId()
         SetPedDefaultComponentVariation(player)
         SetEntityAsMissionEntity(player, true, true)
         SetModelAsNoLongerNeeded(model)
-    
+
         DestroyAllCams(true)
         RenderScriptCams(false, true, 1, true, true)
         FreezeEntityPosition(player, false)
-    
+
         NetworkSetEntityInvisibleToNetwork(player, false)
         SetEntityVisible(player, true)
         FreezeEntityPosition(player, false)
         SetPlayerInvincible(player, false)
-    
+
         cam = nil
-    
+
         SetPlayerInvincible(PlayerId(), false)
         SetCanAttackFriendly(player, true, true)
         NetworkSetFriendlyFireOption(true)
-    
+
         SetEntityMaxHealth(PlayerPedId(), 200)
         SetEntityHealth(player, data.HP)
         SetPedArmour(player, data.Armor)
         SetNuiFocus(false, false)
-        
+        DisplayHud(false)
+
         if data.action ~= nil then
             TriggerEvent(data.action, data.data)
         else
@@ -73,7 +74,7 @@ Spawn = {
             SetEntityHeading(player, data.spawn.location.h)
             DoScreenFadeIn(500)
         end
-    
+
         TransitionFromBlurred(500)
         cb("ok")
     end
