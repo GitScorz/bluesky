@@ -334,7 +334,7 @@ function RegisterCallbacks()
             Inventory:AddItem(char:GetData('ID'), 'card', 1, {
                 AccountNumber = data.AccountNumber,
                 CardNumber = cardNumber
-            }, 1)
+            }, 1, source)
             cb(true)
         end)
     end)

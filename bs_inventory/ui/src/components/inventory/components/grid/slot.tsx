@@ -9,6 +9,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import { MouseEvent, useCallback, useEffect, useMemo } from 'react';
 import { fetchNui } from '../../../../utils/fetchNui';
 import './slots.styles.css';
+import { GetOpenSlot } from '../../../../utils/slots';
 
 export default function Slot({
   index,
@@ -17,8 +18,14 @@ export default function Slot({
   owner,
   item,
 }: PropSlot) {
-  const [playerInventory] = useRecoilState(inventoryState.playerInventory);
-  const [secondaryInventory] = useRecoilState(inventoryState.secondInventory);
+  const [playerInventory, setPlayerInventory] = useRecoilState(
+    inventoryState.playerInventory,
+  );
+
+  const [secondaryInventory, setSecondInventory] = useRecoilState(
+    inventoryState.secondInventory,
+  );
+
   const [, setHoveredItem] = useRecoilState(inventoryState.hoverItem);
 
   const [hoveredSlot, setHoveredSlot] = useRecoilState(
@@ -115,6 +122,11 @@ export default function Slot({
               invTypeFrom: item.invType,
               invTypeTo: secondaryInventory.invType,
             };
+
+            const openSlot = GetOpenSlot(
+              secondaryInventory.inventory,
+              secondaryInventory.size,
+            );
           } else {
             data = {
               ownerFrom: secondaryInventory.owner,
@@ -125,9 +137,9 @@ export default function Slot({
               invTypeTo: 1,
             };
           }
-        }
 
-        fetchNui(INVENTORY_EVENTS.MOVE_NEXT, data);
+          fetchNui(INVENTORY_EVENTS.MOVE_NEXT, data, null);
+        }
       }
     },
     [item, secondaryInventory, playerInventory],

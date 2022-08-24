@@ -54,3 +54,10 @@ SHARED_ITEMS["heartstopper"] = {
   price = 20,
   isStackable = true,
 }
+
+SHARED_ITEMS["card"] = {
+  label = "Bank Card",
+  weight = 0,
+  price = 20,
+  isStackable = true,
+}

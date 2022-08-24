@@ -513,7 +513,7 @@ INVENTORY = {
       },
       options = {
         sort = {
-          Slot = 1
+          slot = 1
         }
       },
     }, function(success, results)
