@@ -70,22 +70,23 @@ JOBS = {
                 if toggle then
                     local cData = char:GetData()
                     cData.Server = CuntingConfig.Server.ID
-                    WebAPI.MDT:Request('POST', 'user/onDuty', {}, {
-                        user = player:GetData('ID'),
-                        character = cData
-                    })
+                    -- WebAPI.MDT:Request('POST', 'user/onDuty', {}, {
+                    --     user = player:GetData('ID'),
+                    --     character = cData
+                    -- })
                 else
-                    WebAPI.MDT:Request('POST', 'user/offDuty', {}, {
-                        job = jobData.job,
-                        user = player:GetData('ID'),
-                        charId = char:GetData('ID')
-                    })
+                    -- WebAPI.MDT:Request('POST', 'user/offDuty', {}, {
+                    --     job = jobData.job,
+                    --     user = player:GetData('ID'),
+                    --     charId = char:GetData('ID')
+                    -- })
                 end
 
                 if silent == nil or not silent then
-                    Execute:Client(source, 'Notification', (toggle and 'Success' or 'Error'),
-                        'You Went ' .. (toggle and 'On Duty' or 'Off Duty'))
+                    TriggerClientEvent('Notification:SendAlert', source,
+                        ('You went %s.'):format(toggle and 'on duty' or 'off duty'))
                 end
+
                 Chat.Refresh:Commands(source)
                 TriggerClientEvent('Characters:Client:SetData', source, char:GetData())
             end
