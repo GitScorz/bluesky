@@ -359,7 +359,6 @@ RegisterNUICallback('inventory:moveItem', function(data, cb)
       end
     end
   end)
-
 end)
 
 RegisterNUICallback('inventory:nextSlotInSecondary', function(data, cb)
@@ -370,6 +369,12 @@ RegisterNUICallback('inventory:nextSlotInSecondary', function(data, cb)
       Inventory.Player:Refresh()
       Inventory.Secondary:Refresh()
     end
+  end)
+end)
+
+RegisterNUICallback('inventory:getPlayerCash', function(data, cb)
+  Callbacks:ServerCallback('Wallet:GetCash', {}, function(cash)
+    cb(cash)
   end)
 end)
 

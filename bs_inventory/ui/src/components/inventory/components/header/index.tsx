@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { fetchNui } from '../../../../utils/fetchNui';
 import WeightBar from '../weightbar';
 import './header.styles.css';
 
@@ -16,10 +17,9 @@ export default function Header({
   const [cash, setCash] = useState(0);
 
   if (invType === 11) {
-    // TODO - when cash is implemented
-    // fetchNui('inventory:getPlayerCash', {}).then((res) => {
-    //   setCash(res);
-    // });
+    fetchNui('inventory:getPlayerCash', {}).then((res) => {
+      setCash(res);
+    });
   }
 
   const formatter = new Intl.NumberFormat(undefined, {
